@@ -2,11 +2,14 @@ package x;
 
 import java.util.Collection;
 
+import java.util.ArrayList;
+
 import soot.Scene;
 import soot.SceneTransformer;
 import soot.SootMethod;
 
 import x.analysis.programPattern.ProgramPatternAnalysis;
+import x.analysis.programPattern.ParsingTable;
 import x.analysis.thread.ThreadAnalysis;
 
 public class AnalysisMain
@@ -36,14 +39,20 @@ public class AnalysisMain
     private Collection<SootMethod> getThreads()
     {
         ThreadAnalysis ta=new ThreadAnalysis(scene.getCallGraph());
-        Collection<SootMethod> threads;
+        Collection<SootMethod> allThreads;
+        Collection<SootMethod> relevantThreads;
 
         ta.analyze();
-        // TODO filter out thread spawned inside our target module
         
-        threads=ta.getThreadsEntryMethod();
+        allThreads=ta.getThreadsEntryMethod();
 
-        return threads;
+        relevantThreads=new ArrayList<SootMethod>(allThreads.size());
+
+        for (SootMethod m: allThreads)
+            if (!m.isJavaLibraryMethod())
+                relevantThreads.add(m);
+        
+        return relevantThreads;
     }
 
     @Override
@@ -59,12 +68,13 @@ public class AnalysisMain
         {
             ProgramPatternAnalysis programPattern
                 =new ProgramPatternAnalysis(m,moduleName);
-        
+            ParsingTable parsingTable;
+
             programPattern.analyze();
 
-            new x.analysis.programPattern.ParsingTable(programPattern.getGrammar())
-            .buildParsingTable();
-            break;
+            parsingTable=new ParsingTable(programPattern.getGrammar());
+
+            parsingTable.buildParsingTable();
         }
         else
         new x.analysis.programPattern.ParsingTable(null).buildParsingTable();
