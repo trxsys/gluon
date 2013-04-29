@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<project name="X" default="compile" basedir=".">
+  <property name="src.dir" location="src" />
+  <property name="test.dir" location="test" />
+  <property name="build.dir" location="bin" />
+  <property name="lib.dir" location="lib" />
+  
+  <property name="soot.lib" location="${lib.dir}/soot-2.5.0.jar" />
+  <property name="getopt.lib" location="${lib.dir}/java-getopt-1.0.14.jar" />
+  
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp />
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build.dir}" />
+  </target>
+  
+  <target name="compile" depends="init">
+    <javac srcdir="${src.dir}" destdir="${build.dir}" debug="true"
+           includeantruntime="false">
+      <compilerarg value="-Xlint:unchecked" />
+
+      <classpath>
+	<pathelement location="${soot.lib}" />
+	<pathelement location="${getopt.lib}" />
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="tests" depends="init">
+    <javac srcdir="${test.dir}" debug="true" includeantruntime="false">
+    </javac>
+  </target>
+  
+  <target name="clean" description="clean up binaries">
+    <delete>
+      <fileset dir="." includes="**/*.class" />
+    </delete>
+    <delete dir="${src.class.dir}" />
+    <delete dir="${build.dir}" />
+  </target>
+</project>
