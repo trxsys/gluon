@@ -10,6 +10,7 @@ package x.analysis.programPattern;
 import x.cfg.Cfg;
 import x.cfg.Production;
 import x.cfg.LexicalElement;
+import x.cfg.NonTerminal;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -239,7 +240,7 @@ public class ProgramPatternAnalysis
 
     private void addStartToUnitProduction(Unit unit)
     {
-        x.cfg.NonTerminal head=grammar.getStart();
+        NonTerminal head=grammar.getStart();
         Production production=new Production(head);
         LexicalElement body=new PPNonTerminal(alias(unit));
         

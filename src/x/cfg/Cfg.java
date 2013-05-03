@@ -106,7 +106,7 @@ public class Cfg
 
     public boolean hasUniqueStart()
     {
-        return getProductionsOf(start) == 1;
+        return getProductionsOf(start).size() == 1;
     }
 
     private void rewrite(Map<NonTerminal,Collection<Production>> nonTermUsages,

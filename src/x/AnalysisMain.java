@@ -9,7 +9,7 @@ import soot.SceneTransformer;
 import soot.SootMethod;
 
 import x.analysis.programPattern.ProgramPatternAnalysis;
-import x.analysis.programPattern.ParsingTable;
+import x.cfg.parsing.ParsingTable;
 import x.analysis.thread.ThreadAnalysis;
 
 public class AnalysisMain
@@ -63,7 +63,6 @@ public class AnalysisMain
 
         assert scene.getMainMethod() != null;
 
-        if (true) // DEBUG
         for (SootMethod m: getThreads())
         {
             ProgramPatternAnalysis programPattern
@@ -76,7 +75,5 @@ public class AnalysisMain
 
             parsingTable.buildParsingTable();
         }
-        else
-        new x.analysis.programPattern.ParsingTable(null).buildParsingTable();
     }
 }
