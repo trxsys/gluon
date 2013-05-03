@@ -632,33 +632,43 @@ public class ParsingTable
             +"to generate the parsing table";
 
         // 18'540
-        System.out.println("start states "+System.currentTimeMillis());
+        if (DEBUG)
+            System.out.println("start states "+System.currentTimeMillis());
         buildStates();
-        System.out.println("end states "+System.currentTimeMillis());
+        if (DEBUG)
+            System.out.println("end states "+System.currentTimeMillis());
 
         assert initialState >= 0;
 
         // 0'572
-        System.out.println("start goto "+System.currentTimeMillis());
+        if (DEBUG)
+            System.out.println("start goto "+System.currentTimeMillis());
         buildGotoTable();
-        System.out.println("end goto "+System.currentTimeMillis());
+        if (DEBUG)
+            System.out.println("end goto "+System.currentTimeMillis());
 
         // 0'023
-        System.out.println("start first "+System.currentTimeMillis());
+        if (DEBUG)
+            System.out.println("start first "+System.currentTimeMillis());
         computeFirst();
-        System.out.println("end first "+System.currentTimeMillis());
+        if (DEBUG)
+            System.out.println("end first "+System.currentTimeMillis());
 
         // 2'100
-        System.out.println("start follow "+System.currentTimeMillis());
+        if (DEBUG)
+            System.out.println("start follow "+System.currentTimeMillis());
         computeFollow();
-        System.out.println("end follow "+System.currentTimeMillis());
+        if (DEBUG)
+            System.out.println("end follow "+System.currentTimeMillis());
 
         // 0'098
-        System.out.println("start action "+System.currentTimeMillis());
+        if (DEBUG)
+            System.out.println("start action "+System.currentTimeMillis());
         buildActionTable();
-        System.out.println("end action "+System.currentTimeMillis());
+        if (DEBUG)
+            System.out.println("end action "+System.currentTimeMillis());
 
-        if (DEBUG && false)
+        if (DEBUG)
         {
             debugPrintStates();
             debugPrintGotoTable();
