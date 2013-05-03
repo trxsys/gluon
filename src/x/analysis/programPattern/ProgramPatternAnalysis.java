@@ -304,6 +304,18 @@ public class ProgramPatternAnalysis
         visited=null;
     }
     
+    private void addNewStart()
+    {
+        NonTerminal oldStart=grammar.getStart();
+        NonTerminal newStart=new PPNonTerminal(oldStart.toString()+'\'');
+        Production prod=new Production(newStart);
+
+        prod.appendToBody(oldStart);
+
+        grammar.addProduction(prod);
+        grammar.setStart(newStart);
+    }
+
     public void analyze()
     {
         grammar.setStart(new PPNonTerminal(alias(entryMethod),
@@ -314,6 +326,10 @@ public class ProgramPatternAnalysis
         dprintln("Grammar size before optimizing: "+grammar.size());
         grammar.optimize();
         dprintln("Grammar size after optimizing: "+grammar.size());
+
+        addNewStart();
+
+        assert grammar.hasUniqueStart();
     }
     
     public Cfg getGrammar()

@@ -104,6 +104,11 @@ public class Cfg
         return nonterminals;
     }
 
+    public boolean hasUniqueStart()
+    {
+        return getProductionsOf(start) == 1;
+    }
+
     private void rewrite(Map<NonTerminal,Collection<Production>> nonTermUsages,
                          NonTerminal oldTerm, LexicalElement newElement)
     {

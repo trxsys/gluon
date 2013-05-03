@@ -1,5 +1,8 @@
 package x.cfg.parsing;
 
+import x.cfg.Production;
+import x.cfg.LexicalElement;
+
 class Item
 {
     private final Production prod;

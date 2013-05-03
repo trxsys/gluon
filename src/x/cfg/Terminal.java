@@ -1,7 +1,7 @@
 package x.cfg;
 
-public class Terminal
+public abstract class Terminal
     implements LexicalElement
 {
-
+    public abstract boolean isEOI();
 }

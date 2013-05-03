@@ -10,12 +10,13 @@ class PPTerminal
     
     public PPTerminal(SootMethod m)
     {
+        assert m != null;
         method=m;
     }
 
     public boolean isEOI()
     {
-        return method == null;
+        return false;
     }
 
     @Override
@@ -40,6 +41,6 @@ class PPTerminal
     @Override
     public String toString()
     {
-        return isEOI() ? "$" : method.getName();
+        return method.getName();
     }
 }

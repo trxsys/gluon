@@ -18,6 +18,7 @@ import java.util.HashMap;
 import x.cfg.Cfg;
 import x.cfg.NonTerminal;
 import x.cfg.Terminal;
+import x.cfg.EOITerminal;
 import x.cfg.Production;
 import x.cfg.LexicalElement;
 
@@ -27,7 +28,7 @@ public class ParsingTable
 {
     private static final boolean DEBUG=true;
 
-    public static final Terminal EOI_TERMINAL=new PPTerminal(null);
+    public static final Terminal EOI_TERMINAL=new EOITerminal();
 
     // state -> nonterm -> state
     private List<Map<NonTerminal,Integer>> gotoTable;
@@ -55,6 +56,7 @@ public class ParsingTable
         initialState=-1;
     }
 
+    /*
     private void mkTestGrammarConflict()
     {
         soot.SootMethod p=new soot.SootMethod("+",new ArrayList<Object>(),
@@ -156,6 +158,7 @@ public class ParsingTable
 
         grammar.setStart(new PPNonTerminal("E"));
     }
+    */
 
     private void debugPrintStates()
     {
@@ -213,18 +216,6 @@ public class ParsingTable
         }
 
         System.out.println();
-    }
-
-    private void addNewStart()
-    {
-        NonTerminal oldStart=grammar.getStart();
-        NonTerminal newStart=new PPNonTerminal(oldStart.toString()+'\'');
-        Production prod=new Production(newStart);
-
-        prod.appendToBody(oldStart);
-
-        grammar.addProduction(prod);
-        grammar.setStart(newStart);
     }
 
     private void closure(Set<Item> items)
@@ -637,7 +628,8 @@ public class ParsingTable
 
         assert gotoTable == null : "Parsing table should only be built only once";
 
-        addNewStart();
+        assert grammar.hasUniqueStart() : "Grammar must only have a start production "
+            +"to generate the parsing table";
 
         // 18'540
         System.out.println("start states "+System.currentTimeMillis());

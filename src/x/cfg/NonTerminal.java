@@ -1,6 +1,6 @@
 package x.cfg;
 
-public class NonTerminal
+public abstract class NonTerminal
     implements LexicalElement
 {
 
