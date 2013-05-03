@@ -1,4 +1,4 @@
-package x.analysis.programPattern.parsingAction;
+package x.cfg.parsing.parsingAction;
 
 public class ParsingActionShift
     implements ParsingAction
