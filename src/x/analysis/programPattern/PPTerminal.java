@@ -37,7 +37,7 @@ class PPTerminal
 
         return other.toString().equals(toString());
     }
-    
+  
     @Override
     public String toString()
     {
