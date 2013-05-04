@@ -19,7 +19,7 @@ public class ThreadAnalysis
 {
     private static final boolean DEBUG=true;
     
-    private CallGraph callGraph;
+    private final CallGraph callGraph;
     
     private Collection<SootMethod> threadsEntryMethod;
     
@@ -49,7 +49,7 @@ public class ThreadAnalysis
     private void analyzeReachableMethods(SootMethod entryMethod)
     {
         Queue<SootMethod> methodQueue=new LinkedList<SootMethod>();
-        Set<SootMethod> enqueuedMethods=new HashSet<SootMethod>();
+        Set<SootMethod> enqueuedMethods=new HashSet<SootMethod>(callGraph.size());
         
         methodQueue.add(entryMethod);
         enqueuedMethods.add(entryMethod);
@@ -59,8 +59,7 @@ public class ThreadAnalysis
             SootMethod method=methodQueue.poll();
             
             for (Iterator<Edge> it=callGraph.edgesOutOf(method); 
-                 it.hasNext();
-                 )
+                 it.hasNext(); )
             {
                 Edge e=it.next();
                 SootMethod m=e.tgt();
