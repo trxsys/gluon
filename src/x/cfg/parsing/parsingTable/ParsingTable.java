@@ -1,4 +1,4 @@
-package x.cfg.parsing;
+package x.cfg.parsing.parsingTable;
 
 /* This is a implementation of a LR(0) parsing table generator as described in
  * the dragon book (Compilers - Principles, Techniques, & Tools; second edition).

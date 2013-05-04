@@ -9,7 +9,7 @@ import soot.SceneTransformer;
 import soot.SootMethod;
 
 import x.analysis.programPattern.ProgramPatternAnalysis;
-import x.cfg.parsing.ParsingTable;
+import x.cfg.parsing.parsingTable.ParsingTable;
 import x.analysis.thread.ThreadAnalysis;
 
 public class AnalysisMain
