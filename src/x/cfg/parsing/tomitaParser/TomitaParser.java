@@ -31,12 +31,14 @@ public class TomitaParser
             System.out.println(this.getClass().getSimpleName()+": "+s);
     }
 
+    
+
     // Input should be an ArrayList for performance reasons
-    public List<ParsingAction> parse(ArrayList<Terminal> input)
+    public List<ParsingActionReduce> parse(ArrayList<Terminal> input)
     {
         Stack<Integer> stack=new Stack<Integer>();
         int pos=0;
-        List<ParsingAction> result=new LinkedList<ParsingAction>();
+        List<ParsingActionReduce> result=new LinkedList<ParsingActionReduce>();
 
         assert input.size() > 0 
             && input.get(input.size()-1) instanceof EOITerminal
@@ -64,6 +66,8 @@ public class TomitaParser
                 dprintln("error");
                 return null;
             }
+
+            // assert actions.size() > 1 : "Tomita not implemented!";
 
             // TODO proof of concept: only do first action
             {

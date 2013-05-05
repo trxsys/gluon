@@ -3,7 +3,7 @@ package x.analysis.programPattern;
 import soot.SootMethod;
 
 // Represents a call to the module under analysis
-class PPTerminal
+public class PPTerminal
     extends x.cfg.Terminal
 {
     private final SootMethod method; // module method
