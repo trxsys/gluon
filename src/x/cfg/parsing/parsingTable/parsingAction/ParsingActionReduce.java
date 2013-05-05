@@ -1,4 +1,4 @@
-package x.cfg.parsing.parsingAction;
+package x.cfg.parsing.parsingTable.parsingAction;
 
 import x.cfg.Production;
 

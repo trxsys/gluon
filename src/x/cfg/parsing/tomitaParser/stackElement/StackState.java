@@ -9,4 +9,9 @@ public class StackState
     {
         state=s;
     }
+
+    public int getState()
+    {
+        return state;
+    }
 }

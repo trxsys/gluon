@@ -6,14 +6,23 @@ import soot.SootMethod;
 class PPTerminal
     extends x.cfg.Terminal
 {
-    private SootMethod method;
-    
+    private final SootMethod method;
+    private final String string;
+
     public PPTerminal(SootMethod m)
     {
         assert m != null;
         method=m;
+        string=m.getName();
     }
 
+    public PPTerminal(String s)
+    {
+        method=null;
+        string=s;
+    }
+
+    @Override
     public boolean isEOI()
     {
         return false;
@@ -41,6 +50,6 @@ class PPTerminal
     @Override
     public String toString()
     {
-        return method.getName();
+        return string;
     }
 }

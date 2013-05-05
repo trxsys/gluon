@@ -22,7 +22,7 @@ import x.cfg.EOITerminal;
 import x.cfg.Production;
 import x.cfg.LexicalElement;
 
-import x.cfg.parsing.parsingAction.*;
+import x.cfg.parsing.parsingTable.parsingAction.*;
 
 public class ParsingTable
 {
@@ -297,7 +297,7 @@ public class ParsingTable
         return prods.iterator().next();
     }
 
-    private Set<Item> getInitialState()
+    private Set<Item> buildInitialState()
     {
         Set<Item> state=new HashSet<Item>();
 
@@ -337,13 +337,13 @@ public class ParsingTable
 
         states=new ArrayList<Set<Item>>(grammar.size()*3);
 
-        states.add(getInitialState());
+        states.add(buildInitialState());
         initialState=0;
 
         statesToAdd=new HashSet<Set<Item>>(grammar.size()*3);
         newStates=new HashSet<Set<Item>>(grammar.size()*3);
 
-        newStates.add(getInitialState());
+        newStates.add(buildInitialState());
 
         do
         {
@@ -711,5 +711,10 @@ public class ParsingTable
         actions=row.get(t);
 
         return actions;
+    }
+
+    public int getInitialState()
+    {
+        return initialState;
     }
 }
