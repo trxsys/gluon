@@ -140,7 +140,7 @@ public class TomitaParser
                 break;
             }
             
-            assert actions.size() > 1 : "Tomita not implemented!";
+            // assert actions.size() > 1 : "Tomita not implemented!";
             
             ParserConfiguration[] branches=initBranches(parserConf,actions.size());
 
