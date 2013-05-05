@@ -125,7 +125,7 @@ public class ProgramPatternAnalysis
         return aliasCreator.makeAlias(o);
     }
     
-    private void analyzeUnit(Unit unit, UnitGraph cfg)
+    private void analyzeUnit(SootMethod method, Unit unit, UnitGraph cfg)
     {
         LexicalElement prodBodyPrefix=null;
         
@@ -145,7 +145,10 @@ public class ProgramPatternAnalysis
                 && !calledMethod.isConstructor()
                 && calledMethod.isPublic()) // TODO what about static methods?
             {
-                prodBodyPrefix=new PPTerminal(calledMethod);
+                int atomicRegion=isAtomicMethod(method) 
+                                 ? method.getNumber() : -1;
+
+                prodBodyPrefix=new PPTerminal(calledMethod,atomicRegion);
                 
                 /* Instead of adding { S → A | A ∈ V } we add it here, only for
                  * production that includes terminals.
@@ -154,8 +157,7 @@ public class ProgramPatternAnalysis
             }
             else if (calledMethod.hasActiveBody())
             {
-                prodBodyPrefix=new PPNonTerminal(alias(calledMethod),
-                                                 isAtomicMethod(calledMethod)); 
+                prodBodyPrefix=new PPNonTerminal(alias(calledMethod)); 
                 
                 if (!enqueuedMethods.contains(calledMethod))
                 {
@@ -186,7 +188,7 @@ public class ProgramPatternAnalysis
             addUnitToLexicalElement(unit,prodBodyPrefix);
 
         for (Unit succ: cfg.getSuccsOf(unit))
-            analyzeUnit(succ,cfg);
+            analyzeUnit(method,succ,cfg);
     }
     
     private static boolean isAtomicMethod(SootMethod method)
@@ -252,7 +254,7 @@ public class ProgramPatternAnalysis
     private void addMethodToHeadProduction(SootMethod method, 
                                            Unit entryPoint)
     {
-        PPNonTerminal head=new PPNonTerminal(alias(method),isAtomicMethod(method));
+        PPNonTerminal head=new PPNonTerminal(alias(method));
         Production production=new Production(head);
         LexicalElement body=new PPNonTerminal(alias(entryPoint));
         
@@ -278,7 +280,7 @@ public class ProgramPatternAnalysis
         for (Unit head: cfg.getHeads())
         {
             addMethodToHeadProduction(method,head);
-            analyzeUnit(head,cfg);
+            analyzeUnit(method,head,cfg);
         }
     }
     
@@ -319,8 +321,7 @@ public class ProgramPatternAnalysis
 
     public void analyze()
     {
-        grammar.setStart(new PPNonTerminal(alias(entryMethod),
-                                           isAtomicMethod(entryMethod)));
+        grammar.setStart(new PPNonTerminal(alias(entryMethod)));
 
         analyzeReachableMethods(entryMethod);
         
