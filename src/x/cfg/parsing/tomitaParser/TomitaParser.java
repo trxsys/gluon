@@ -35,7 +35,7 @@ public class TomitaParser
     // Input should be an ArrayList for performance reasons
     public List<ParsingAction> parse(ArrayList<Terminal> input)
     {
-        Stack<StackElement> stack=new Stack<StackElement>();
+        Stack<Integer> stack=new Stack<Integer>();
         int pos=0;
         List<ParsingAction> result=new LinkedList<ParsingAction>();
 
@@ -43,7 +43,7 @@ public class TomitaParser
             && input.get(input.size()-1) instanceof EOITerminal
             : "input should end with $";
 
-        stack.push(new StackState(table.getInitialState()));
+        stack.push(table.getInitialState());
         
         end:
         while (true)
@@ -55,7 +55,7 @@ public class TomitaParser
             assert stack.size() > 0;
             assert pos < input.size();
 
-            s=((StackState)stack.peek()).getState();
+            s=stack.peek();
             t=input.get(pos);
             actions=table.actions(s,t);
 
@@ -74,7 +74,7 @@ public class TomitaParser
                 {
                     ParsingActionShift shift=(ParsingActionShift)action;
 
-                    stack.push(new StackState(shift.getState()));
+                    stack.push(shift.getState());
                     pos++;
 
                     dprintln("shift "+shift.getState());
@@ -87,9 +87,9 @@ public class TomitaParser
                     for (int i=0; i < p.bodyLength(); i++)
                         stack.pop();
                     
-                    s=((StackState)stack.peek()).getState();
+                    s=stack.peek();
 
-                    stack.push(new StackState(table.goTo(s,p.getHead())));
+                    stack.push(table.goTo(s,p.getHead()));
 
                     result.add(reduction);
 
