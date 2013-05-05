@@ -682,4 +682,34 @@ public class ParsingTable
         states=null;
         grammar=null;
     }
+
+    public int goTo(int state, NonTerminal n)
+    {
+        Map<NonTerminal,Integer> row;
+        Integer destState;
+
+        assert gotoTable != null;
+        assert 0 <= state && state < gotoTable.size();
+
+        row=gotoTable.get(state);
+
+        destState=row.get(n);
+
+        return destState == null ? -1 : destState;
+    }
+
+    public Collection<ParsingAction> actions(int state, Terminal t)
+    {
+        Map<Terminal,Collection<ParsingAction>> row;
+        Collection<ParsingAction> actions;
+
+        assert actionTable != null;
+        assert 0 <= state && state < gotoTable.size();
+
+        row=actionTable.get(state);
+
+        actions=row.get(t);
+
+        return actions;
+    }
 }
