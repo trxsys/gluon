@@ -4,23 +4,16 @@ class PPNonTerminal
     extends x.cfg.NonTerminal
 {
     private String s;
-    private boolean atomic;
     
     public PPNonTerminal(String s)
     {
-        this(s,false);
+        this.s=s;
     }
     
-    public PPNonTerminal(String s, boolean atomic)
-    {
-        this.s=s;
-        this.atomic=atomic;
-    }
-
     @Override
     public int hashCode()
     {
-        return s.hashCode()^(atomic ? 1 : 0);
+        return s.hashCode();
     }
 
     @Override
@@ -33,20 +26,12 @@ class PPNonTerminal
 
         other=(PPNonTerminal)o;
 
-        if (!other.s.equals(s))
-            return false;
-
-        return other.atomic == atomic;
+        return other.s.equals(s);
     }
     
     @Override
     public String toString()
     {
-        return (atomic ? "@" : "")+s;
-    }
-    
-    public boolean isAtomic()
-    {
-        return atomic;
+        return s;
     }
 }

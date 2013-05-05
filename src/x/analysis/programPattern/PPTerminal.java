@@ -6,20 +6,24 @@ import soot.SootMethod;
 class PPTerminal
     extends x.cfg.Terminal
 {
-    private final SootMethod method;
+    private final SootMethod method; // module method
     private final String string;
 
-    public PPTerminal(SootMethod m)
+    private final int atomicRegion; // < 0 if it is a non atomic access
+
+    public PPTerminal(SootMethod m, int a)
     {
         assert m != null;
         method=m;
         string=m.getName();
+        atomicRegion=a;
     }
 
     public PPTerminal(String s)
     {
         method=null;
         string=s;
+        atomicRegion=-1;
     }
 
     @Override
