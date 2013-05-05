@@ -10,7 +10,7 @@ public class ParsingActionShift
         state=s;
     }
 
-    public int state()
+    public int getState()
     {
         return state;
     }

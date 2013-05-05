@@ -6,6 +6,7 @@ import java.util.Stack;
 
 import java.util.ArrayList;
 
+import x.cfg.Production;
 import x.cfg.Terminal;
 import x.cfg.EOITerminal;
 
@@ -24,6 +25,12 @@ public class TomitaParser
         table=t;
     }
 
+    private void dprintln(String s)
+    {
+        if (DEBUG)
+            System.out.println(this.getClass().getSimpleName()+": "+s);
+    }
+
     // Input should be an ArrayList for performance reasons
     public void parse(ArrayList<Terminal> input)
     {
@@ -36,6 +43,7 @@ public class TomitaParser
 
         stack.push(new StackState(table.getInitialState()));
         
+        end:
         while (true)
         {
             int s=((StackState)stack.peek()).getState();
@@ -46,18 +54,41 @@ public class TomitaParser
 
             if (actions == null 
                  || actions.size() == 0)
-                break; // XXX ERROR
+            {
+                dprintln("error");
+                break end; // XXX ERROR
+            }
 
             // TODO proof of concept: only do first action
             {
-                ParsingAction a=actions.iterator().next();
+                ParsingAction action=actions.iterator().next();
 
-                if (a instanceof ParsingActionShift)
-                    ;
-                else if (a instanceof ParsingActionReduce)
-                    ;
-                else if (a instanceof ParsingActionAccept)
-                    ;
+                if (action instanceof ParsingActionShift)
+                {
+                    ParsingActionShift shift=(ParsingActionShift)action;
+
+                    stack.push(new StackState(shift.getState()));
+                    pos++;
+                }
+                else if (action instanceof ParsingActionReduce)
+                {
+                    ParsingActionReduce reduction=(ParsingActionReduce)action;
+                    Production p=reduction.getProduction();
+
+                    for (int i=0; i < p.bodyLength(); i++)
+                        stack.pop();
+                    
+                    s=((StackState)stack.peek()).getState();
+
+                    table.goTo(s,p.getHead());
+
+                    dprintln("reduce "+p);
+                }
+                else if (action instanceof ParsingActionAccept)
+                {
+                    dprintln("accept");
+                    break end; // XXX ACCEPT
+                }
                 else
                     assert false;
             }
