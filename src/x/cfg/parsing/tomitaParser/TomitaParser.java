@@ -13,7 +13,6 @@ import x.cfg.EOITerminal;
 
 import x.cfg.parsing.parsingTable.ParsingTable;
 import x.cfg.parsing.parsingTable.parsingAction.*;
-import x.cfg.parsing.tomitaParser.stackElement.*;
 
 public class TomitaParser
 {
