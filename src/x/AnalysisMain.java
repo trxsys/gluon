@@ -65,19 +65,21 @@ public class AnalysisMain
     private void checkThreadWord(TomitaParser parser,
                                  ArrayList<Terminal> word)
     {
-        List<ParsingActionReduce> reductions=parser.parse(word);
+        Collection<List<ParsingActionReduce>> reductionsSet=parser.parse(word);
         
-        if (reductions == null)
-            return; // everything ok
+        assert reductionsSet != null;
 
         System.out.print("Here we go:");
 
-        for (ParsingActionReduce red: reductions)
-            for (LexicalElement e: red.getProduction().getBody())
-                if (e instanceof PPTerminal)
-                    System.out.print(" "+e);
+        for (List<ParsingActionReduce> reductions: reductionsSet)
+        {
+            for (ParsingActionReduce red: reductions)
+                for (LexicalElement e: red.getProduction().getBody())
+                    if (e instanceof PPTerminal)
+                        System.out.print(" "+e);
 
-        System.out.println();
+            System.out.println();
+        }
     }
 
     private void checkThread(SootMethod thread)

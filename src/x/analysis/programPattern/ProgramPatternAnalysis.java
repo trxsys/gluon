@@ -141,7 +141,7 @@ public class ProgramPatternAnalysis
             boolean isTargetModule
                 =calledMethod.getDeclaringClass().getName().equals(moduleName);
             
-            if (isTargetModule 
+            if (isTargetModule
                 && !calledMethod.isConstructor()
                 && calledMethod.isPublic()) // TODO what about static methods?
             {
