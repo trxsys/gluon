@@ -66,7 +66,8 @@ public class ThreadAnalysis
 
                 assert m != null;
                 
-                if (enqueuedMethods.contains(m))
+                if (enqueuedMethods.contains(m)
+                    || (!x.Main.WITH_JAVA_LIB && m.isJavaLibraryMethod()))
                     continue;
                 
                 methodQueue.add(m);
@@ -80,8 +81,7 @@ public class ThreadAnalysis
     public void analyze()
     {
         for (Iterator<MethodOrMethodContext> it=callGraph.sourceMethods(); 
-             it.hasNext();
-             )
+             it.hasNext(); )
         {
             MethodOrMethodContext mc=it.next();
             SootMethod m;

@@ -19,31 +19,37 @@ public class Main
     private static String classPath=null;
     private static String mainClassName=null;
     private static String moduleClassName=null;
+
+    public static boolean WITH_JAVA_LIB=false;
     
     private static void help() 
     {
 		System.out.println("Usage: "+PROGNAME+" OPTIONS <main_class>");
 		System.out.println();
 		System.out.println("Options:");
-		System.out.println("  -m, --module <module>             "
+		System.out.println("  -m, --module <module>           "
                            +"Module to verify");
-		System.out.println("  -c, --classpath <class_path>      "
+		System.out.println("  -c, --classpath <class_path>    "
                            +"Java classpath");
-		System.out.println("  -h, --help                        "
+		System.out.println("  -j, --with-java-lib             "
+                           +"Do not refrain from analyzing java library code");
+		System.out.println("  -h, --help                      "
                            +"Display this help and exit");
     }
     
     private static void parseArguments(String[] args)
     {
-        LongOpt[] options = new LongOpt[3];
+        LongOpt[] options = new LongOpt[4];
         
         options[0] = new LongOpt("help", LongOpt.NO_ARGUMENT, null, 'h');
         options[1] = new LongOpt("classpath", LongOpt.REQUIRED_ARGUMENT,
                                  null, 'c');
         options[2] = new LongOpt("module", LongOpt.REQUIRED_ARGUMENT, 
                                  null, 'm');
+        options[3] = new LongOpt("with-java-lib", LongOpt.NO_ARGUMENT, 
+                                 null, 'j');
         
-        Getopt g = new Getopt(PROGNAME, args, "hc:m:", options);
+        Getopt g = new Getopt(PROGNAME, args, "hc:m:j", options);
         int c;
         
         g.setOpterr(true);
@@ -65,6 +71,11 @@ public class Main
             case 'm': 
                 {
                     moduleClassName=g.getOptarg();
+                    break;
+                }
+            case 'j': 
+                {
+                    WITH_JAVA_LIB=true;
                     break;
                 }
             }
