@@ -155,7 +155,9 @@ public class ProgramPatternAnalysis
                  */
                 addStartToUnitProduction(unit);
             }
-            else if (calledMethod.hasActiveBody())
+            else if (calledMethod.hasActiveBody()
+                     && !calledMethod.isJavaLibraryMethod() // don't need to dig here
+                     )
             {
                 prodBodyPrefix=new PPNonTerminal(alias(calledMethod)); 
                 
