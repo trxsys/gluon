@@ -3,7 +3,7 @@ package x.cfg.parsing.parsingTable.parsingAction;
 import x.cfg.Production;
 
 public class ParsingActionReduce
-    implements ParsingAction
+    extends ParsingAction
 {
     private Production production;
 
@@ -15,6 +15,25 @@ public class ParsingActionReduce
     public Production getProduction()
     {
         return production;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return production.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        ParsingActionReduce other;
+
+        if (!(o instanceof ParsingActionReduce))
+            return false;
+
+        other=(ParsingActionReduce)o;
+
+        return other.production.equals(production);
     }
 
     @Override

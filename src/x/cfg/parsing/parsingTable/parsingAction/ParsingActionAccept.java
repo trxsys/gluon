@@ -1,11 +1,23 @@
 package x.cfg.parsing.parsingTable.parsingAction;
 
 public class ParsingActionAccept
-    implements ParsingAction
+    extends ParsingAction
 {
     public ParsingActionAccept()
     {
 
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return 0x3d057799;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        return o instanceof ParsingActionAccept;
     }
 
     @Override

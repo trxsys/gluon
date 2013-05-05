@@ -480,7 +480,7 @@ public class ParsingTable
                     a=new ParsingActionShift(stateMap.get(destState));
 
                     if (!actionRow.containsKey(t))
-                        actionRow.put(t,new LinkedList<ParsingAction>());
+                        actionRow.put(t,new HashSet<ParsingAction>(8));
 
                     actionRow.get(t).add(a);
                 }
@@ -495,7 +495,7 @@ public class ParsingTable
                         a=new ParsingActionReduce(i.getProduction());
 
                         if (!actionRow.containsKey(t))
-                            actionRow.put(t,new LinkedList<ParsingAction>());
+                            actionRow.put(t,new HashSet<ParsingAction>(8));
 
                         actionRow.get(t).add(a);
                     }
@@ -507,7 +507,7 @@ public class ParsingTable
                     assert i.getProduction().bodyLength() == 1;
 
                     if (!actionRow.containsKey(EOI_TERMINAL))
-                        actionRow.put(EOI_TERMINAL,new LinkedList<ParsingAction>());
+                        actionRow.put(EOI_TERMINAL,new HashSet<ParsingAction>(8));
 
                     actionRow.get(EOI_TERMINAL).add(new ParsingActionAccept());
                 }
