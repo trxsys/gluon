@@ -46,10 +46,15 @@ public class TomitaParser
         end:
         while (true)
         {
-            int s=((StackState)stack.peek()).getState();
-            Terminal t=input.get(pos);
+            int s;
+            Terminal t;
             Collection<ParsingAction> actions;
-            
+
+            assert stack.size() > 0;
+            assert pos < input.size();
+
+            s=((StackState)stack.peek()).getState();
+            t=input.get(pos);
             actions=table.actions(s,t);
 
             if (actions == null 
@@ -69,6 +74,8 @@ public class TomitaParser
 
                     stack.push(new StackState(shift.getState()));
                     pos++;
+
+                    dprintln("shift "+shift.getState());
                 }
                 else if (action instanceof ParsingActionReduce)
                 {
@@ -80,7 +87,7 @@ public class TomitaParser
                     
                     s=((StackState)stack.peek()).getState();
 
-                    table.goTo(s,p.getHead());
+                    stack.push(new StackState(table.goTo(s,p.getHead())));
 
                     dprintln("reduce "+p);
                 }
