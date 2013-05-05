@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Stack;
 
+import java.util.LinkedList;
 import java.util.ArrayList;
 
 import x.cfg.Production;
@@ -32,10 +33,11 @@ public class TomitaParser
     }
 
     // Input should be an ArrayList for performance reasons
-    public void parse(ArrayList<Terminal> input)
+    public List<ParsingAction> parse(ArrayList<Terminal> input)
     {
         Stack<StackElement> stack=new Stack<StackElement>();
         int pos=0;
+        List<ParsingAction> result=new LinkedList<ParsingAction>();
 
         assert input.size() > 0 
             && input.get(input.size()-1) instanceof EOITerminal
@@ -61,7 +63,7 @@ public class TomitaParser
                  || actions.size() == 0)
             {
                 dprintln("error");
-                break end; // XXX ERROR
+                return null;
             }
 
             // TODO proof of concept: only do first action
@@ -89,6 +91,8 @@ public class TomitaParser
 
                     stack.push(new StackState(table.goTo(s,p.getHead())));
 
+                    result.add(reduction);
+
                     dprintln("reduce "+p);
                 }
                 else if (action instanceof ParsingActionAccept)
@@ -100,5 +104,7 @@ public class TomitaParser
                     assert false;
             }
         }
+
+        return result;
     }
 }
