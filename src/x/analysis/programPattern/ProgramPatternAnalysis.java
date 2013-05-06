@@ -1,7 +1,7 @@
 package x.analysis.programPattern;
 
 /* This analysis creates a grammar that describes the access patterns to
- * to the module unde analysis.
+ * to the module under analysis.
  *
  * The grammar is extracted from the flow control graph. It's terminals are
  * the methods of the module we are analyzing. 
@@ -70,6 +70,8 @@ class NonTerminalAliasCreator
         if (map.containsKey(o))
             return intToString(map.get(o));
         
+        // System.out.println(o+" = "+intToString(counter));
+
         map.put(o,counter);
         
         return intToString(counter++);
@@ -149,11 +151,6 @@ public class ProgramPatternAnalysis
                                  ? method.getNumber() : -1;
 
                 prodBodyPrefix=new PPTerminal(calledMethod,atomicRegion);
-                
-                /* Instead of adding { S → A | A ∈ V } we add it here, only for
-                 * production that includes terminals.
-                 */
-                addStartToUnitProduction(unit);
             }
             else if (calledMethod.hasActiveBody()
                      && (x.Main.WITH_JAVA_LIB
@@ -172,11 +169,14 @@ public class ProgramPatternAnalysis
         PPNonTerminal prodHead=new PPNonTerminal(alias(unit));
 
         for (Unit succ: cfg.getSuccsOf(unit))
+        {
+            PPNonTerminal succNonTerm=new PPNonTerminal(alias(succ));
+
             if (prodBodyPrefix == null)
-                addUnitToLexicalElement(unit,new PPNonTerminal(alias(succ)));
+                addUnitToLexicalElement(unit,succNonTerm);
             else
-                addUnitToTwoLexicalElements(unit,prodBodyPrefix,
-                                            new PPNonTerminal(alias(succ)));
+                addUnitToTwoLexicalElements(unit,prodBodyPrefix,succNonTerm);
+        }
 
         if (cfg.getSuccsOf(unit).size() == 0)
         {
@@ -186,8 +186,24 @@ public class ProgramPatternAnalysis
 
             addUnitToEmptyProduction(unit);
         }
-        else if (prodBodyPrefix != null)
+        
+        /* This block responsible for making the grammar recognize subwords.
+
+        if (prodBodyPrefix != null)
+        {
+            * Add prefixes *
             addUnitToLexicalElement(unit,prodBodyPrefix);
+        
+            * Instead of adding { S → A | A ∈ V } we add it here,
+             * only for production that branch.
+             *
+             * This add sufixes.
+             *
+            addStartToUnitProduction(unit);
+            for (Unit succ: cfg.getSuccsOf(unit))
+                addStartToUnitProduction(succ);
+        }
+        */
 
         for (Unit succ: cfg.getSuccsOf(unit))
             analyzeUnit(method,succ,cfg);
@@ -326,12 +342,16 @@ public class ProgramPatternAnalysis
         grammar.setStart(new PPNonTerminal(alias(entryMethod)));
 
         analyzeReachableMethods(entryMethod);
+
+        dprintln("Grammar: "+grammar);
         
         dprintln("Grammar size before optimizing: "+grammar.size());
         grammar.optimize();
         dprintln("Grammar size after optimizing: "+grammar.size());
 
         addNewStart();
+
+        dprintln("Grammar: "+grammar);
 
         assert grammar.hasUniqueStart();
     }
