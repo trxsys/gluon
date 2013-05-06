@@ -118,11 +118,13 @@ public class TomitaParser
     private void parseSingleParser(ParserConfiguration parserConf, 
                                    ArrayList<Terminal> input)
     {
-        for (int k=0; k < SINGLE_ROUND_STEPS; k++)
+        for (int k=0; k < SINGLE_ROUND_STEPS
+                      && parserConf.status != ParserStatus.ACCEPTED; k++)
         {
             int s;
             Terminal t;
             Collection<ParsingAction> actions;
+            ParserConfiguration[] branches;
 
             assert parserConf.status == ParserStatus.RUNNING;            
             assert parserConf.stack.size() > 0;
@@ -135,14 +137,13 @@ public class TomitaParser
             if (actions == null 
                 || actions.size() == 0)
             {
-                dprintln(parserConf.hashCode()+": error");
+                dprintln(parserConf.hashCode()+": error: actions("
+                         +s+","+t+")=∅");
                 parserConf.status=ParserStatus.ERROR;
                 break;
             }
             
-            // assert actions.size() > 1 : "Tomita not implemented!";
-            
-            ParserConfiguration[] branches=initBranches(parserConf,actions.size());
+            branches=initBranches(parserConf,actions.size());
 
             assert branches[0] == parserConf; // for performance reasons
 
@@ -158,11 +159,13 @@ public class TomitaParser
                 else
                     assert false;
 
+                // Add branched parser
+                if (i > 0){
+                    dprintln("new branch: "+branches[i].hashCode());
+                parseFifo.add(branches[i]);
+                }
                 i++;
-            }
-
-            if (parserConf.status == ParserStatus.ACCEPTED)
-                break;
+            } 
         }
     }
     
