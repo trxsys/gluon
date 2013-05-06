@@ -358,7 +358,7 @@ public class ParsingTable
                     if (first.get(n).size() != beforeSize)
                         fixPoint=false;
             }
-        } while (fixPoint);
+        } while (!fixPoint);
     }
 
     private Set<List<Terminal>> first(List<LexicalElement> s)
@@ -519,9 +519,6 @@ public class ParsingTable
 
     public void buildParsingTable()
     {
-        // mkTestGrammar();
-        // mkTestGrammarConflict();
-
         assert gotoTable == null : "Parsing table should only be built only once";
 
         assert grammar.hasUniqueStart() : "Grammar must only have a start production "
