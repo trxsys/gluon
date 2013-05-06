@@ -26,6 +26,16 @@ public class PPTerminal
         atomicRegion=-1;
     }
 
+    public boolean isAtomicRegion()
+    {
+        return atomicRegion >= 0;
+    }
+
+    public int getAtomicRegion()
+    {
+        return atomicRegion;
+    }
+
     @Override
     public boolean isEOI()
     {

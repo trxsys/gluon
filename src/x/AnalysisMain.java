@@ -69,16 +69,32 @@ public class AnalysisMain
         
         assert reductionsSet != null;
 
-        System.out.print("Here we go:");
+        System.out.println("Verifying spec "+word+":");
 
         for (List<ParsingActionReduce> reductions: reductionsSet)
         {
+            int atomicRegion=-1;
+            boolean error=false;
+
+            System.out.print("  ");
+
             for (ParsingActionReduce red: reductions)
                 for (LexicalElement e: red.getProduction().getBody())
                     if (e instanceof PPTerminal)
-                        System.out.print(" "+e);
+                    {
+                        PPTerminal term=(PPTerminal)e;
+                        
+                        System.out.print(" "+term+"["+term.getAtomicRegion()+"]");
 
-            System.out.println();
+                        if (!term.isAtomicRegion())
+                            error=true;
+                        else if (atomicRegion < 0) 
+                            atomicRegion=term.getAtomicRegion();
+                        else if (atomicRegion != term.getAtomicRegion())
+                            error=true;
+                    }
+            
+            System.out.println(error ? "  ERROR" : "OK");
         }
     }
 

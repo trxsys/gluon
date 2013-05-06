@@ -343,8 +343,6 @@ public class ProgramPatternAnalysis
 
         analyzeReachableMethods(entryMethod);
 
-        dprintln("Grammar: "+grammar);
-        
         dprintln("Grammar size before optimizing: "+grammar.size());
         grammar.optimize();
         dprintln("Grammar size after optimizing: "+grammar.size());
