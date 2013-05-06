@@ -1,4 +1,4 @@
-package x.cfg.parsing;
+package x.cfg.parsing.parsingTable;
 
 import x.cfg.Production;
 import x.cfg.LexicalElement;

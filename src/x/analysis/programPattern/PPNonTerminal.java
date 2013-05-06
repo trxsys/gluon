@@ -1,6 +1,6 @@
 package x.analysis.programPattern;
 
-class PPNonTerminal
+public class PPNonTerminal
     extends x.cfg.NonTerminal
 {
     private String s;

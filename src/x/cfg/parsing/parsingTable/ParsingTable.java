@@ -1,4 +1,4 @@
-package x.cfg.parsing;
+package x.cfg.parsing.parsingTable;
 
 /* This is a implementation of a LR(0) parsing table generator as described in
  * the dragon book (Compilers - Principles, Techniques, & Tools; second edition).
@@ -22,7 +22,7 @@ import x.cfg.EOITerminal;
 import x.cfg.Production;
 import x.cfg.LexicalElement;
 
-import x.cfg.parsing.parsingAction.*;
+import x.cfg.parsing.parsingTable.parsingAction.*;
 
 public class ParsingTable
 {
@@ -193,7 +193,7 @@ public class ParsingTable
         return prods.iterator().next();
     }
 
-    private Set<Item> getInitialState()
+    private Set<Item> buildInitialState()
     {
         Set<Item> state=new HashSet<Item>();
 
@@ -233,13 +233,13 @@ public class ParsingTable
 
         states=new ArrayList<Set<Item>>(grammar.size()*3);
 
-        states.add(getInitialState());
+        states.add(buildInitialState());
         initialState=0;
 
         statesToAdd=new HashSet<Set<Item>>(grammar.size()*3);
         newStates=new HashSet<Set<Item>>(grammar.size()*3);
 
-        newStates.add(getInitialState());
+        newStates.add(buildInitialState());
 
         do
         {
@@ -358,7 +358,7 @@ public class ParsingTable
                     if (first.get(n).size() != beforeSize)
                         fixPoint=false;
             }
-        } while (fixPoint);
+        } while (!fixPoint);
     }
 
     private Set<List<Terminal>> first(List<LexicalElement> s)
@@ -480,7 +480,7 @@ public class ParsingTable
                     a=new ParsingActionShift(stateMap.get(destState));
 
                     if (!actionRow.containsKey(t))
-                        actionRow.put(t,new LinkedList<ParsingAction>());
+                        actionRow.put(t,new HashSet<ParsingAction>(8));
 
                     actionRow.get(t).add(a);
                 }
@@ -495,7 +495,7 @@ public class ParsingTable
                         a=new ParsingActionReduce(i.getProduction());
 
                         if (!actionRow.containsKey(t))
-                            actionRow.put(t,new LinkedList<ParsingAction>());
+                            actionRow.put(t,new HashSet<ParsingAction>(8));
 
                         actionRow.get(t).add(a);
                     }
@@ -507,7 +507,7 @@ public class ParsingTable
                     assert i.getProduction().bodyLength() == 1;
 
                     if (!actionRow.containsKey(EOI_TERMINAL))
-                        actionRow.put(EOI_TERMINAL,new LinkedList<ParsingAction>());
+                        actionRow.put(EOI_TERMINAL,new HashSet<ParsingAction>(8));
 
                     actionRow.get(EOI_TERMINAL).add(new ParsingActionAccept());
                 }
@@ -519,9 +519,6 @@ public class ParsingTable
 
     public void buildParsingTable()
     {
-        // mkTestGrammar();
-        // mkTestGrammarConflict();
-
         assert gotoTable == null : "Parsing table should only be built only once";
 
         assert grammar.hasUniqueStart() : "Grammar must only have a start production "
@@ -577,5 +574,40 @@ public class ParsingTable
         stateMap=null;
         states=null;
         grammar=null;
+    }
+
+    public int goTo(int state, NonTerminal n)
+    {
+        Map<NonTerminal,Integer> row;
+        Integer destState;
+
+        assert gotoTable != null;
+        assert 0 <= state && state < gotoTable.size();
+
+        row=gotoTable.get(state);
+
+        destState=row.get(n);
+
+        return destState == null ? -1 : destState;
+    }
+
+    public Collection<ParsingAction> actions(int state, Terminal t)
+    {
+        Map<Terminal,Collection<ParsingAction>> row;
+        Collection<ParsingAction> actions;
+
+        assert actionTable != null;
+        assert 0 <= state && state < gotoTable.size();
+
+        row=actionTable.get(state);
+
+        actions=row.get(t);
+
+        return actions;
+    }
+
+    public int getInitialState()
+    {
+        return initialState;
     }
 }
