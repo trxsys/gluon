@@ -69,10 +69,7 @@ public class Production
 
         other=(Production)o;
 
-        if (!other.head.equals(head))
-            return false;
-
-        return other.body.equals(body);
+        return other.head.equals(head) && other.body.equals(body);
     }
 
     @Override
@@ -98,6 +95,6 @@ public class Production
 
         newBody.addAll(body);
 
-        return new Production(head,body);
+        return new Production(head,newBody);
     }
 }

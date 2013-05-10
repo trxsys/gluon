@@ -161,10 +161,21 @@ public class Main
         x.cfg.Terminal i=new x.analysis.programPattern.PPTerminal("i");
         x.cfg.Terminal j=new x.analysis.programPattern.PPTerminal("j");
         x.cfg.Production start=new x.cfg.Production(S);
+        x.cfg.Production bp=new x.cfg.Production(B);
+        x.cfg.Production cp=new x.cfg.Production(C);
 
         start.appendToBody(a);
+        start.appendToBody(B);
+        start.appendToBody(C);
+        start.appendToBody(d);
+        start.appendToBody(e);
+
+        bp.appendToBody(b);
+        cp.appendToBody(c);
 
         grammar.addProduction(start);
+        grammar.addProduction(bp);
+        grammar.addProduction(cp);
 
         grammar.setStart(S);
 

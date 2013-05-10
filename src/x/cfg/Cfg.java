@@ -51,9 +51,9 @@ public class Cfg
             productions.put(p.getHead(),c);
         }
         else if (!productions.get(p.getHead()).contains(p))
-        {
             productions.get(p.getHead()).add(p);
-        }
+        else
+            dprintln("    filtering "+p+": already there");
 
         lexicalElements.add(p.getHead());
         nonterminals.add(p.getHead());
@@ -208,7 +208,6 @@ public class Cfg
         {
             NonTerminal newProdHead=p.getHead().clone();
             ArrayList<LexicalElement> body=p.getBody();
-            boolean addedToEmpty=false;
 
             newProdHead.setName(newProdHead.getName()+"<");
 
@@ -230,19 +229,19 @@ public class Cfg
                 else
                 {
                     last=body.get(i-1);
+                    dprintln("  * "+nprod);
                     addProduction(nprod.clone());
-                    dprintln("  "+nprod);
                 }
                 
                 nprod.appendToBody(last);
 
-                addProduction(nprod);
                 dprintln("  "+nprod);
+                addProduction(nprod);
             }
 
             // Add empty production
-            addProduction(new Production(newProdHead)); 
             dprintln("  "+new Production(newProdHead));
+            addProduction(new Production(newProdHead)); 
 
             dprintln("");
         }
