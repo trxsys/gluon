@@ -187,24 +187,6 @@ public class ProgramPatternAnalysis
             addUnitToEmptyProduction(unit);
         }
         
-        /* This block responsible for making the grammar recognize subwords.
-
-        if (prodBodyPrefix != null)
-        {
-            * Add prefixes *
-            addUnitToLexicalElement(unit,prodBodyPrefix);
-        
-            * Instead of adding { S → A | A ∈ V } we add it here,
-             * only for production that branch.
-             *
-             * This add sufixes.
-             *
-            addStartToUnitProduction(unit);
-            for (Unit succ: cfg.getSuccsOf(unit))
-                addStartToUnitProduction(succ);
-        }
-        */
-
         for (Unit succ: cfg.getSuccsOf(unit))
             analyzeUnit(method,succ,cfg);
     }
@@ -254,17 +236,6 @@ public class ProgramPatternAnalysis
     {
         PPNonTerminal head=new PPNonTerminal(alias(unit));
         Production production=new Production(head);
-        
-        grammar.addProduction(production);
-    }
-
-    private void addStartToUnitProduction(Unit unit)
-    {
-        NonTerminal head=grammar.getStart();
-        Production production=new Production(head);
-        LexicalElement body=new PPNonTerminal(alias(unit));
-        
-        production.appendToBody(body);
         
         grammar.addProduction(production);
     }
@@ -339,15 +310,21 @@ public class ProgramPatternAnalysis
 
     public void analyze()
     {
-        grammar.setStart(new PPNonTerminal(alias(entryMethod)));
-
         analyzeReachableMethods(entryMethod);
+
+        grammar.setStart(new PPNonTerminal(alias(entryMethod)));
 
         dprintln("Grammar size before optimizing: "+grammar.size());
         grammar.optimize();
         dprintln("Grammar size after optimizing: "+grammar.size());
 
         addNewStart();
+
+        grammar.subwordClosure();
+
+        grammar.optimize();
+        dprintln("Grammar size after optimizing yet again "
+                 +"(after subword closure): "+grammar.size());
 
         dprintln("Grammar: "+grammar);
 

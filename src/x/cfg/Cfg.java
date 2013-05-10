@@ -5,11 +5,14 @@ import java.util.Set;
 import java.util.Map;
 
 import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
 public class Cfg
 {
+    private static final boolean DEBUG=true;
+
     private Map<NonTerminal,Collection<Production>> productions;
     private NonTerminal start;
 
@@ -20,6 +23,11 @@ public class Cfg
     public Set<Terminal> terminals;
     
     public Cfg()
+    {
+        clear();
+    }
+
+    private void clear()
     {
         productions=new HashMap<NonTerminal,Collection<Production>>();
         start=null;
@@ -34,13 +42,18 @@ public class Cfg
     {
         if (!productions.containsKey(p.getHead()))
         {
+            /* This must not be a set since production are modified in some
+             * methods. This whould cause corruption of both hash tables and trees.
+             */
             Collection<Production> c=new LinkedList<Production>();
 
             c.add(p);
             productions.put(p.getHead(),c);
         }
-        else
+        else if (!productions.get(p.getHead()).contains(p))
+        {
             productions.get(p.getHead()).add(p);
+        }
 
         lexicalElements.add(p.getHead());
         nonterminals.add(p.getHead());
@@ -60,6 +73,8 @@ public class Cfg
 
     public void setStart(NonTerminal s)
     {
+        assert nonterminals.contains(s);
+
         start=s;
     }
 
@@ -179,6 +194,88 @@ public class Cfg
             lexicalElements.remove(n);
             size--;
         }
+    }
+
+    private void dprintln(String s)
+    {
+        if (DEBUG)
+            System.out.println(this.getClass().getSimpleName()+": "+s);
+    }
+
+    private void addPrefixes(Collection<Production> prods)
+    {
+        for (Production p: prods)
+        {
+            NonTerminal newProdHead=p.getHead().clone();
+            ArrayList<LexicalElement> body=p.getBody();
+            boolean addedToEmpty=false;
+
+            newProdHead.setName(newProdHead.getName()+"<");
+
+            dprintln("sufixes of "+p+":");
+
+            for (int i=1; i <= p.bodyLength(); i++)
+            {
+                Production nprod=new Production(newProdHead);
+                LexicalElement last;
+
+                for (int j=0; j < i-1; j++)
+                    nprod.appendToBody(body.get(j));
+
+                if (body.get(i-1) instanceof NonTerminal)
+                {
+                    last=body.get(i-1).clone();
+                    ((NonTerminal)last).setName(last.getName()+"<");
+                }
+                else
+                {
+                    last=body.get(i-1);
+                    addProduction(nprod.clone());
+                    dprintln("  "+nprod);
+                }
+                
+                nprod.appendToBody(last);
+
+                addProduction(nprod);
+                dprintln("  "+nprod);
+            }
+
+            // Add empty production
+            addProduction(new Production(newProdHead)); 
+            dprintln("  "+new Production(newProdHead));
+
+            dprintln("");
+        }
+    }
+
+    /*
+     * For each nonterminal X, add 3 new ones X< , X> , X<>.
+     *
+     * The idea is that X< will generate all prefixes of strings generated 
+     * by X; X> will generate all suffixes, and X<> will generate all 
+     * substrings.
+     *
+     * The new start symbol will be S<> . 
+     *
+     * If the original grammar has a rule X -> Y Z, then the new grammar will
+     * have:
+     *
+     *     X< -> Y< | Y Z<
+     *     X> -> Z> | Y> Z
+     *     X<> -> Y> Z< | Y<> | Z<>
+     *
+     * From http://www.reddit.com/r/compsci/comments/1drkvk/     \
+     *        are_contextfree_languages_closed_under_subwords/ 
+     */
+    public void subwordClosure()
+    {
+        Collection<Production> prods=getProductions();
+
+        addPrefixes(prods);        
+
+        // setStart();
+
+        // assert false : "TODO";
     }
 
     @Override

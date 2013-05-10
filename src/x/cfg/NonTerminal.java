@@ -8,6 +8,11 @@ public abstract class NonTerminal
         super(name);
     }
 
+    public void setName(String newName)
+    {
+        name=newName;
+    }
+
     @Override
     public abstract NonTerminal clone();
 }
