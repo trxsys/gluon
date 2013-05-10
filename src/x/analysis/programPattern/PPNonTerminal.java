@@ -3,17 +3,15 @@ package x.analysis.programPattern;
 public class PPNonTerminal
     extends x.cfg.NonTerminal
 {
-    private String s;
-    
     public PPNonTerminal(String s)
     {
-        this.s=s;
+        super(s);
     }
     
     @Override
     public int hashCode()
     {
-        return s.hashCode();
+        return super.name.hashCode();
     }
 
     @Override
@@ -26,12 +24,6 @@ public class PPNonTerminal
 
         other=(PPNonTerminal)o;
 
-        return other.s.equals(s);
-    }
-    
-    @Override
-    public String toString()
-    {
-        return s;
+        return other.name.equals(super.name);
     }
 }

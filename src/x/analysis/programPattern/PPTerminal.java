@@ -7,22 +7,20 @@ public class PPTerminal
     extends x.cfg.Terminal
 {
     private final SootMethod method; // module method
-    private final String string;
 
     private final int atomicRegion; // < 0 if it is a non atomic access
 
     public PPTerminal(SootMethod m, int a)
     {
-        assert m != null;
-        method=m;
-        string=m.getName();
+        super(m.getName());
+        method=m;        
         atomicRegion=a;
     }
 
     public PPTerminal(String s)
     {
+        super(s);
         method=null;
-        string=s;
         atomicRegion=-1;
     }
 
@@ -58,12 +56,6 @@ public class PPTerminal
 
         other=(PPTerminal)o;
 
-        return other.toString().equals(toString());
-    }
-  
-    @Override
-    public String toString()
-    {
-        return string;
+        return other.name.equals(super.name);
     }
 }
