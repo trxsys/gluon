@@ -58,4 +58,10 @@ public class PPTerminal
 
         return other.name.equals(super.name);
     }
+
+    @Override
+    public PPTerminal clone()
+    {
+        return new PPTerminal(method,atomicRegion);
+    }
 }

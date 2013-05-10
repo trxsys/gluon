@@ -24,4 +24,10 @@ public final class EOITerminal
     {
         return o instanceof EOITerminal;
     }
+
+    @Override
+    public EOITerminal clone()
+    {
+        return new EOITerminal();
+    }
 }

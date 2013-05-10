@@ -26,4 +26,10 @@ public class PPNonTerminal
 
         return other.name.equals(super.name);
     }
+
+    @Override
+    public PPNonTerminal clone()
+    {
+        return new PPNonTerminal(super.name);
+    }
 }
