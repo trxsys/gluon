@@ -211,7 +211,7 @@ public class Cfg
 
             newProdHead.setName(newProdHead.getName()+"<");
 
-            dprintln("sufixes of "+p+":");
+            dprintln("prefixes of "+p+":");
 
             for (int i=1; i <= p.bodyLength(); i++)
             {
@@ -234,6 +234,57 @@ public class Cfg
                 }
                 
                 nprod.appendToBody(last);
+
+                dprintln("  "+nprod);
+                addProduction(nprod);
+            }
+
+            // Add empty production
+            dprintln("  "+new Production(newProdHead));
+            addProduction(new Production(newProdHead)); 
+
+            dprintln("");
+        }
+    }
+
+    private void addSuffixes(Collection<Production> prods)
+    {
+        for (Production p: prods)
+        {
+            NonTerminal newProdHead=p.getHead().clone();
+            ArrayList<LexicalElement> body=p.getBody();
+
+            newProdHead.setName(newProdHead.getName()+">");
+
+            dprintln("suffixes of "+p+":");
+
+            for (int i=p.bodyLength(); i >= 1; i--)
+            {
+                Production nprod=new Production(newProdHead);
+                LexicalElement first;
+
+                if (body.get(i-1) instanceof NonTerminal)
+                {
+                    first=body.get(i-1).clone();
+                    ((NonTerminal)first).setName(first.getName()+">");
+                }
+                else
+                {
+                    Production nprodSu=new Production(newProdHead);
+
+                    for (int j=i; j < p.bodyLength(); j++)
+                        nprodSu.appendToBody(body.get(j));
+
+                    dprintln("  * "+nprodSu);
+                    addProduction(nprodSu);
+
+                    first=body.get(i-1);
+                }
+
+                nprod.appendToBody(first);
+
+                for (int j=i; j < p.bodyLength(); j++)
+                    nprod.appendToBody(body.get(j));
 
                 dprintln("  "+nprod);
                 addProduction(nprod);
@@ -271,6 +322,7 @@ public class Cfg
         Collection<Production> prods=getProductions();
 
         addPrefixes(prods);        
+        addSuffixes(prods);
 
         // setStart();
 
