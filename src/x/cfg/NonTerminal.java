@@ -7,4 +7,7 @@ public abstract class NonTerminal
     {
         super(name);
     }
+
+    @Override
+    public abstract NonTerminal clone();
 }

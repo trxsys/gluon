@@ -9,4 +9,7 @@ public abstract class Terminal
     }
 
     public abstract boolean isEOI();
+
+    @Override
+    public abstract Terminal clone();
 }
