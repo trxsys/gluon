@@ -51,10 +51,10 @@ public class Cfg
             c.add(p);
             productions.put(p.getHead(),c);
         }
-        else if (!productions.get(p.getHead()).contains(p))
-            productions.get(p.getHead()).add(p);
-        else
+        else if (productions.get(p.getHead()).contains(p))
             dprintln("    filtering "+p+": already there");
+
+        productions.get(p.getHead()).add(p);
         
         lexicalElements.add(p.getHead());
         nonterminals.add(p.getHead());
@@ -413,9 +413,11 @@ public class Cfg
         addSuffixes(prods);
         addSubwords(prods);
         
-        // setStart();
-        
-        // assert false : "TODO";
+        NonTerminal newStart=start.clone();
+
+        newStart.setName(newStart.getName()+"<>");
+
+        setStart(newStart);
     }
     
     @Override
