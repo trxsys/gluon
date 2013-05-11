@@ -137,9 +137,68 @@ public class Main
         
         PackManager.v().runPacks();        
     }
+
+    private static void test()
+    {
+        x.cfg.Cfg grammar=new x.cfg.Cfg();
+        x.cfg.NonTerminal S=new x.analysis.programPattern.PPNonTerminal("S");
+        x.cfg.NonTerminal A=new x.analysis.programPattern.PPNonTerminal("A");
+        x.cfg.NonTerminal B=new x.analysis.programPattern.PPNonTerminal("B");
+        x.cfg.NonTerminal C=new x.analysis.programPattern.PPNonTerminal("C");
+        x.cfg.NonTerminal D=new x.analysis.programPattern.PPNonTerminal("D");
+        x.cfg.NonTerminal E=new x.analysis.programPattern.PPNonTerminal("E");
+        x.cfg.NonTerminal F=new x.analysis.programPattern.PPNonTerminal("F");
+        x.cfg.Terminal a=new x.analysis.programPattern.PPTerminal("a");
+        x.cfg.Terminal b=new x.analysis.programPattern.PPTerminal("b");
+        x.cfg.Terminal c=new x.analysis.programPattern.PPTerminal("c");
+        x.cfg.Terminal d=new x.analysis.programPattern.PPTerminal("d");
+        x.cfg.Terminal e=new x.analysis.programPattern.PPTerminal("e");
+        x.cfg.Terminal f=new x.analysis.programPattern.PPTerminal("f");
+        x.cfg.Terminal g=new x.analysis.programPattern.PPTerminal("g");
+        x.cfg.Terminal h=new x.analysis.programPattern.PPTerminal("h");
+        x.cfg.Terminal i=new x.analysis.programPattern.PPTerminal("i");
+        x.cfg.Terminal j=new x.analysis.programPattern.PPTerminal("j");
+        x.cfg.Production start=new x.cfg.Production(S);
+        x.cfg.Production bp=new x.cfg.Production(B);
+        x.cfg.Production cp=new x.cfg.Production(C);
+
+        start.appendToBody(a);
+        start.appendToBody(B);
+        start.appendToBody(C);
+        start.appendToBody(d);
+        start.appendToBody(e);
+
+        bp.appendToBody(b);
+        cp.appendToBody(c);
+
+        grammar.addProduction(start);
+        grammar.addProduction(bp);
+        grammar.addProduction(cp);
+
+        grammar.setStart(S);
+
+        System.out.println(grammar.toString());
+
+        System.out.println();
+        System.out.println("-----------------------");
+        System.out.println();
+
+        grammar.subwordClosure();
+
+        System.out.println();
+        System.out.println("-----------------------");
+        System.out.println();
+
+        System.out.println(grammar.toString());
+        
+        System.exit(0);
+    }
+
     
     public static void main(String[] args)
     {
+        // test();
+
         if (args.length == 0)
         {
             help();

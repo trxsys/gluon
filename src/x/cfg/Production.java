@@ -1,14 +1,13 @@
 package x.cfg;
 
-import java.util.List;
 import java.util.ArrayList;
 
 public class Production
 {
     private NonTerminal head;
-    private List<LexicalElement> body;
+    private ArrayList<LexicalElement> body; // it is important to garantee O(1) get(n)
 
-    public Production(NonTerminal h, List<LexicalElement> b)
+    public Production(NonTerminal h, ArrayList<LexicalElement> b)
     {
         this(h);
         body=b;
@@ -30,7 +29,7 @@ public class Production
         return head;
     }
 
-    public List<LexicalElement> getBody()
+    public ArrayList<LexicalElement> getBody()
     {
         return body;
     }
@@ -70,10 +69,7 @@ public class Production
 
         other=(Production)o;
 
-        if (!other.head.equals(head))
-            return false;
-
-        return other.body.equals(body);
+        return other.head.equals(head) && other.body.equals(body);
     }
 
     @Override
@@ -90,5 +86,15 @@ public class Production
             s+=" ε";
 
         return s;
+    }
+
+    public Production clone()
+    {
+        ArrayList<LexicalElement> newBody
+            =new ArrayList<LexicalElement>(body.size());
+
+        newBody.addAll(body);
+
+        return new Production(head,newBody);
     }
 }
