@@ -130,6 +130,9 @@ public class Cfg
     private void rewrite(Map<NonTerminal,Collection<Production>> nonTermUsages,
                          NonTerminal oldTerm, LexicalElement newElement)
     {
+        if (!nonTermUsages.containsKey(oldTerm))
+            return;
+
         for (Production p: nonTermUsages.get(oldTerm))
         {
             p.rewrite(oldTerm,newElement);
@@ -155,6 +158,8 @@ public class Cfg
                 {
                     NonTerminal n=(NonTerminal)e;
                     
+                    System.out.println("Adding "+n);
+
                     if (!nonTermUsages.containsKey(n))
                         nonTermUsages.put(n,new LinkedList<Production>());
                     
@@ -358,7 +363,7 @@ public class Cfg
                 }
         }
 
-        assert false : "FALTA | Y<> | Z<>";
+        assert true || false : "FALTA | Y<> | Z<>";
 
         // Add empty production (if the size is non zero the must be already)
         // something that derives the empty word
