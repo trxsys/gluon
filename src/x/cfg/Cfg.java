@@ -323,6 +323,49 @@ public class Cfg
         }
     }
     
+    private Collection<ArrayList<LexicalElement>>
+        getSubwords(ArrayList<LexicalElement> body)
+    {
+        Collection<ArrayList<LexicalElement>> subwords
+            =new LinkedList<ArrayList<LexicalElement>>();
+        
+        for (LexicalElement e: body)
+        {
+            LexicalElement sube;
+            
+            if (e instanceof NonTerminal)
+            {
+                NonTerminal n=(NonTerminal)e.clone();
+
+                n.setName(n.getName()+"<>");
+
+                sube=n;
+            }
+            else
+                sube=e;
+
+            ArrayList<LexicalElement> sub=new ArrayList<LexicalElement>(1);
+
+            sub.add(sube);
+
+            subwords.add(sub);
+        }
+
+        for (int i=body.size(); i >= 1; i--)
+        {
+            ArrayList<LexicalElement> suff=new ArrayList<LexicalElement>(i);
+
+            assert false : "TODO";
+
+            // suffixes.add(suff);
+        }
+
+        // Add empty production
+        subwords.add(new ArrayList<LexicalElement>());
+                
+        return subwords;
+    }
+    
     private void addSubwords(Collection<Production> prods)
     {
         for (Production p: prods)
@@ -333,8 +376,7 @@ public class Cfg
             
             dprintln("subwords of "+p+":");
             
-            // for (ArrayList<LexicalElement> sub: )
-            ArrayList<LexicalElement> sub=new ArrayList<LexicalElement>(); // TODO
+            for (ArrayList<LexicalElement> sub: getSubwords(p.getBody()))
             {
                 Production subProd=new Production(newProdHead,sub);
                 
