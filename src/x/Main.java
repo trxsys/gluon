@@ -138,8 +138,6 @@ public class Main
         PackManager.v().runPacks();        
     }
 
-
-
     private static void test()
     {
         x.cfg.Cfg grammar=new x.cfg.Cfg();
@@ -199,7 +197,7 @@ public class Main
     
     public static void main(String[] args)
     {
-        test();
+        // test();
 
         if (args.length == 0)
         {

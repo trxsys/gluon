@@ -318,9 +318,9 @@ public class ProgramPatternAnalysis
         grammar.optimize();
         dprintln("Grammar size after optimizing: "+grammar.size());
 
-        addNewStart();
-
         grammar.subwordClosure();
+
+        addNewStart();
 
         grammar.optimize();
         dprintln("Grammar size after optimizing yet again "

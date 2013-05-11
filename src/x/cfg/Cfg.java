@@ -44,15 +44,17 @@ public class Cfg
         if (!productions.containsKey(p.getHead()))
         {
             /* This must not be a set since production are modified in some
-             * methods. This whould cause corruption of both hash tables and trees.
+             * methods. This would cause corruption of both hash tables and trees.
              */
             Collection<Production> c=new LinkedList<Production>();
             
-            c.add(p);
             productions.put(p.getHead(),c);
         }
         else if (productions.get(p.getHead()).contains(p))
+        {
             dprintln("    filtering "+p+": already there");
+            return;
+        }
 
         productions.get(p.getHead()).add(p);
         
@@ -355,6 +357,8 @@ public class Cfg
                     subwords.add(sub);
                 }
         }
+
+        assert false : "FALTA | Y<> | Z<>";
 
         // Add empty production (if the size is non zero the must be already)
         // something that derives the empty word
