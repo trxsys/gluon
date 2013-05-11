@@ -329,39 +329,37 @@ public class Cfg
         Collection<ArrayList<LexicalElement>> subwords
             =new LinkedList<ArrayList<LexicalElement>>();
         
-        for (LexicalElement e: body)
+        for (int i=0; i <= body.size(); i++)
         {
-            LexicalElement sube;
-            
-            if (e instanceof NonTerminal)
-            {
-                NonTerminal n=(NonTerminal)e.clone();
+            ArrayList<LexicalElement> left;
+            ArrayList<LexicalElement> right;
+            Collection<ArrayList<LexicalElement>> leftSuffs;
+            Collection<ArrayList<LexicalElement>> rightPres;
 
-                n.setName(n.getName()+"<>");
+            left=new ArrayList<LexicalElement>(body.subList(0,i));
+            right=new ArrayList<LexicalElement>(body.subList(i,body.size()));
 
-                sube=n;
-            }
-            else
-                sube=e;
+            leftSuffs=getSuffixes(left);
+            rightPres=getPrefixes(right);
 
-            ArrayList<LexicalElement> sub=new ArrayList<LexicalElement>(1);
+            for (ArrayList<LexicalElement> leftSuff: leftSuffs)
+                for (ArrayList<LexicalElement> rightPre: rightPres)
+                {
+                    ArrayList<LexicalElement> sub
+                        =new ArrayList<LexicalElement>(leftSuff.size()
+                                                       +rightPre.size());
 
-            sub.add(sube);
+                    sub.addAll(leftSuff);
+                    sub.addAll(rightPre);
 
-            subwords.add(sub);
+                    subwords.add(sub);
+                }
         }
 
-        for (int i=body.size(); i >= 1; i--)
-        {
-            ArrayList<LexicalElement> suff=new ArrayList<LexicalElement>(i);
-
-            assert false : "TODO";
-
-            // suffixes.add(suff);
-        }
-
-        // Add empty production
-        subwords.add(new ArrayList<LexicalElement>());
+        // Add empty production (if the size is non zero the must be already)
+        // something that derives the empty word
+        if (body.size() == 0)
+            subwords.add(new ArrayList<LexicalElement>(0));
                 
         return subwords;
     }
