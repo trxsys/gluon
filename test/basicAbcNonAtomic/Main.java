@@ -1,4 +1,4 @@
-zspackage test.basicAbcNonAtomic;
+package test.basicAbcNonAtomic;
 
 @interface Atomic
 {
