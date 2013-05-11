@@ -157,8 +157,6 @@ public class Cfg
                 if (e instanceof NonTerminal)
                 {
                     NonTerminal n=(NonTerminal)e;
-                    
-                    System.out.println("Adding "+n);
 
                     if (!nonTermUsages.containsKey(n))
                         nonTermUsages.put(n,new LinkedList<Production>());
@@ -329,13 +327,10 @@ public class Cfg
             dprintln("");
         }
     }
-    
-    private Collection<ArrayList<LexicalElement>>
-        getSubwords(ArrayList<LexicalElement> body)
+
+    private void getSubwords(List<LexicalElement> body,
+                             Collection<ArrayList<LexicalElement>> subwords)
     {
-        Collection<ArrayList<LexicalElement>> subwords
-            =new LinkedList<ArrayList<LexicalElement>>();
-        
         for (int i=0; i <= body.size(); i++)
         {
             ArrayList<LexicalElement> left;
@@ -363,13 +358,25 @@ public class Cfg
                 }
         }
 
-        assert true || false : "FALTA | Y<> | Z<>";
-
-        // Add empty production (if the size is non zero the must be already)
-        // something that derives the empty word
+        // Add empty production (if the size is non zero there must be already
+        // something that derives the empty word)
         if (body.size() == 0)
             subwords.add(new ArrayList<LexicalElement>(0));
-                
+
+        for (int i=0; i < body.size(); i++)
+            for (int j=i+1; j <= body.size(); j++)
+                if (!(i == 0 && j == body.size()))
+                    getSubwords(body.subList(i,j),subwords);
+    }
+    
+    private Collection<ArrayList<LexicalElement>>
+        getSubwords(List<LexicalElement> body)
+    {
+        Collection<ArrayList<LexicalElement>> subwords
+            =new LinkedList<ArrayList<LexicalElement>>();
+
+        getSubwords(body,subwords);
+
         return subwords;
     }
     
