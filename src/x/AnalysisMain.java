@@ -131,11 +131,16 @@ public class AnalysisMain
     protected void internalTransform(String paramString, 
        @SuppressWarnings("rawtypes") java.util.Map paramMap) 
     {
-        scene=Scene.v();
+        Collection<SootMethod> threads;
 
+        scene=Scene.v();
         assert scene.getMainMethod() != null;
 
-        for (SootMethod m: getThreads())
+        threads=getThreads();
+
+        runMethodAtomicityAnalysis(threads);
+
+        for (SootMethod m: threads)
             checkThread(m);
     }
 }

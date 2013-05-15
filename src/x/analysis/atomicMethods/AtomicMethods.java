@@ -3,11 +3,14 @@ package x.analysis.atomicMethods;
 import java.util.Collection;
 import java.util.Iterator;
 
-import java.util.LinkedList;
 import java.util.Set;
+import java.util.Map;
 import java.util.List;
-import java.util.HashSet;
 import java.util.Queue;
+
+import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import soot.Kind;
 import soot.MethodOrMethodContext;
@@ -61,20 +64,31 @@ public class AtomicMethods
     private final CallGraph callGraph;
     private final Collection<SootMethod> threads;
 
-    private final Set<SootMethod> atomicMethods;
+    private final Map<SootMethod,Boolean> methodsAtomicity;
 
     public AtomicMethods(CallGraph cg, Collection<SootMethod> threads)
     {
         this.callGraph=cg;
         this.threads=threads;
 
-        this.atomicMethods=new HashSet<SootMethod>(2*callGraph.size());
+        this.methodsAtomicity=new HashMap<SootMethod,Boolean>(2*callGraph.size());
     }
     
     private void dprintln(String s)
     {
         if (DEBUG)
             System.out.println(this.getClass().getSimpleName()+": "+s);
+    }
+
+    private void debugPrintMethods()
+    {
+        System.out.println("Atomicity of executed methods:");
+
+        for (Map.Entry<SootMethod,Boolean> m: methodsAtomicity.entrySet())
+            System.out.println("  "+(m.getValue() ? "A" : "N")
+                               +" "+m.getKey().getSignature());
+
+        System.out.println();
     }
 
     private static boolean isAtomicMethod(SootMethod method)
@@ -97,38 +111,46 @@ public class AtomicMethods
     private void analyzeReachableMethods(SootMethod entryMethod)
     {
         Queue<MethodQueue> methodQueue=new LinkedList<MethodQueue>();
-        Set<SootMethod> enqueuedMethods=new HashSet<SootMethod>(2*callGraph.size());
-        
-        methodQueue.add(new MethodQueue(entryMethod,isAtomicMethod(entryMethod)));
-        // enqueuedMethods.add(entryMethod);
-        
-        atomicMethods.add(entryMethod);
+        Set<MethodQueue> enqueuedMethods
+            =new HashSet<MethodQueue>(2*callGraph.size());
+        MethodQueue entryMethodQueue
+            =new MethodQueue(entryMethod,isAtomicMethod(entryMethod));
 
+        methodQueue.add(entryMethodQueue);
+        enqueuedMethods.add(entryMethodQueue);
+        
         while (methodQueue.size() > 0)
         {
             MethodQueue mq=methodQueue.poll();
             SootMethod method=mq.method;
             boolean reachedAtomically=mq.reachedAtomically;
 
-            if (!reachedAtomically)
-                atomicMethods.remove(entryMethod);
+            if (!methodsAtomicity.containsKey(method))
+                methodsAtomicity.put(method,reachedAtomically);
+            else
+                methodsAtomicity.put(method,methodsAtomicity.get(method) 
+                                            && reachedAtomically);
 
             for (Iterator<Edge> it=callGraph.edgesOutOf(method); 
                  it.hasNext(); )
             {
                 Edge e=it.next();
                 SootMethod m=e.tgt();
+                MethodQueue succmq=new MethodQueue(m,reachedAtomically
+                                                     || isAtomicMethod(m));
 
                 assert m != null;
                 
-                if (true // enqueuedMethods.contains(m)
+                if (enqueuedMethods.contains(succmq)
                     || (!x.Main.WITH_JAVA_LIB && m.isJavaLibraryMethod()))
                     continue;
                 
-                // methodQueue.add(m);
-                atomicMethods.add(m);
+                if (e.isThreadRunCall())
+                    continue;
                 
-                // enqueuedMethods.add(m);
+                methodQueue.add(succmq);
+                
+                enqueuedMethods.add(succmq);
             }            
         }
     }
@@ -137,5 +159,8 @@ public class AtomicMethods
     {
         for (SootMethod th: threads)
             analyzeReachableMethods(th);
+
+        if (DEBUG)
+            debugPrintMethods();
     }
 }
