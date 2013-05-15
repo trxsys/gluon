@@ -33,10 +33,6 @@ import soot.jimple.InvokeExpr;
 import soot.jimple.internal.JReturnStmt;
 import soot.jimple.internal.JReturnVoidStmt;
 
-import soot.tagkit.AnnotationTag;
-import soot.tagkit.Tag;
-import soot.tagkit.VisibilityAnnotationTag;
-
 class NonTerminalAliasCreator
 {
     private static final char[] RADIX_CHARS
@@ -85,8 +81,6 @@ class NonTerminalAliasCreator
 
 public class ProgramPatternAnalysis
 {
-    private static final String ATOMIC_METHOD_ANNOTATION="Atomic";
-    
     private static final boolean DEBUG=true;
     
     private SootMethod entryMethod;
@@ -146,12 +140,7 @@ public class ProgramPatternAnalysis
             if (isTargetModule
                 && !calledMethod.isConstructor()
                 && calledMethod.isPublic()) // TODO what about static methods?
-            {
-                int atomicRegion=isAtomicMethod(method) 
-                                 ? method.getNumber() : -1;
-
-                prodBodyPrefix=new PPTerminal(calledMethod,atomicRegion);
-            }
+                prodBodyPrefix=new PPTerminal(calledMethod);
             else if (calledMethod.hasActiveBody()
                      && (x.Main.WITH_JAVA_LIB
                          || !calledMethod.isJavaLibraryMethod()))
@@ -191,22 +180,6 @@ public class ProgramPatternAnalysis
             analyzeUnit(method,succ,cfg);
     }
     
-    private static boolean isAtomicMethod(SootMethod method)
-    {
-        Tag tag = method.getTag("VisibilityAnnotationTag");
-        
-        if (tag == null)
-            return false;
-        
-        VisibilityAnnotationTag visibilityAnnotationTag = (VisibilityAnnotationTag) tag;
-        List<AnnotationTag> annotations = visibilityAnnotationTag.getAnnotations();
-        
-        for (AnnotationTag annotationTag : annotations) 
-            if (annotationTag.getType().endsWith("/"+ATOMIC_METHOD_ANNOTATION+";"))
-                return true;
-        
-        return false;
-    }
 
     private void addUnitToTwoLexicalElements(Unit unit,
                                              LexicalElement body1,

@@ -8,30 +8,16 @@ public class PPTerminal
 {
     private final SootMethod method; // module method
 
-    private final int atomicRegion; // < 0 if it is a non atomic access
-
-    public PPTerminal(SootMethod m, int a)
+    public PPTerminal(SootMethod m)
     {
         super(m.getName());
-        method=m;        
-        atomicRegion=a;
+        method=m;
     }
 
     public PPTerminal(String s)
     {
         super(s);
         method=null;
-        atomicRegion=-1;
-    }
-
-    public boolean isAtomicRegion()
-    {
-        return atomicRegion >= 0;
-    }
-
-    public int getAtomicRegion()
-    {
-        return atomicRegion;
     }
 
     @Override
@@ -62,6 +48,7 @@ public class PPTerminal
     @Override
     public PPTerminal clone()
     {
-        return new PPTerminal(method,atomicRegion);
+        return method != null ? new PPTerminal(method) 
+            : new PPTerminal(super.getName());
     }
 }
