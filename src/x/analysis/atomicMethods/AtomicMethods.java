@@ -20,6 +20,38 @@ import soot.tagkit.VisibilityAnnotationTag;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 
+class MethodQueue
+{
+    public final SootMethod method;
+    public final boolean reachedAtomically;
+
+    public MethodQueue(SootMethod m, boolean ra)
+    {
+        method=m;
+        reachedAtomically=ra;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return method.hashCode()^(reachedAtomically ? 0x04f667a1 : 0xecc363c6);
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        MethodQueue other;
+
+        if (!(o instanceof MethodQueue))
+            return false;
+
+        other=(MethodQueue)o;
+
+        return reachedAtomically == other.reachedAtomically
+            && method.equals(other.method);
+    }
+}
+
 public class AtomicMethods
 {
     private static final String ATOMIC_METHOD_ANNOTATION="Atomic";
@@ -29,10 +61,14 @@ public class AtomicMethods
     private final CallGraph callGraph;
     private final Collection<SootMethod> threads;
 
+    private final Set<SootMethod> atomicMethods;
+
     public AtomicMethods(CallGraph cg, Collection<SootMethod> threads)
     {
         this.callGraph=cg;
         this.threads=threads;
+
+        this.atomicMethods=new HashSet<SootMethod>(2*callGraph.size());
     }
     
     private void dprintln(String s)
@@ -58,31 +94,25 @@ public class AtomicMethods
         return false;
     }
 
-    /*
-    private void analyzeEdge(Edge edge)
-    {
-        SootMethod m=edge.tgt();
-
-        if (edge.isThreadRunCall())
-        {
-            
-            dprintln("Found thread entry method: "+m.getSignature());
-        }
-    }
-    */
-
     private void analyzeReachableMethods(SootMethod entryMethod)
     {
-        Queue<SootMethod> methodQueue=new LinkedList<SootMethod>();
-        Set<SootMethod> enqueuedMethods=new HashSet<SootMethod>(callGraph.size());
+        Queue<MethodQueue> methodQueue=new LinkedList<MethodQueue>();
+        Set<SootMethod> enqueuedMethods=new HashSet<SootMethod>(2*callGraph.size());
         
-        methodQueue.add(entryMethod);
-        enqueuedMethods.add(entryMethod);
+        methodQueue.add(new MethodQueue(entryMethod,isAtomicMethod(entryMethod)));
+        // enqueuedMethods.add(entryMethod);
         
+        atomicMethods.add(entryMethod);
+
         while (methodQueue.size() > 0)
         {
-            SootMethod method=methodQueue.poll();
-            
+            MethodQueue mq=methodQueue.poll();
+            SootMethod method=mq.method;
+            boolean reachedAtomically=mq.reachedAtomically;
+
+            if (!reachedAtomically)
+                atomicMethods.remove(entryMethod);
+
             for (Iterator<Edge> it=callGraph.edgesOutOf(method); 
                  it.hasNext(); )
             {
@@ -91,14 +121,14 @@ public class AtomicMethods
 
                 assert m != null;
                 
-                if (enqueuedMethods.contains(m)
+                if (true // enqueuedMethods.contains(m)
                     || (!x.Main.WITH_JAVA_LIB && m.isJavaLibraryMethod()))
                     continue;
                 
-                methodQueue.add(m);
-                enqueuedMethods.add(m);
-
-                // analyzeEdge(e);
+                // methodQueue.add(m);
+                atomicMethods.add(m);
+                
+                // enqueuedMethods.add(m);
             }            
         }
     }
