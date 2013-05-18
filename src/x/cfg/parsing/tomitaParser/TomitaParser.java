@@ -24,26 +24,80 @@ enum ParserStatus
 
 class ParserConfiguration
 {
-    public Stack<Integer> stack;
+    /* We need this so we don't lose reduction history due to stack pops
+     */
+    private final ParserConfiguration parentComplete;
+
+    private ParserConfiguration parent;
+
+    private Integer stackTop;
+
+    private ParsingActionReduce reduction;
+
     public int pos;
-    public List<ParsingActionReduce> reductions;
-    
     public ParserStatus status;
     
-    public ParserConfiguration()
+    public ParserConfiguration(ParserConfiguration p)
     {
-        stack=new Stack<Integer>();
-        pos=0;
-        reductions=new LinkedList<ParsingActionReduce>();
+        parentComplete=p;
+        parent=p;
+        stackTop=null;
+        pos=parent != null ? p.pos : 0;
+        reduction=null;
         
         status=ParserStatus.RUNNING;
+    }
+
+    public ParserConfiguration()
+    {
+        this(null);
+    }
+
+    public void setReduction(ParsingActionReduce r)
+    {
+        assert reduction == null;
+        reduction=r;
+    }
+
+    public List<ParsingActionReduce> getReductionList()
+    {
+        LinkedList<ParsingActionReduce> redlist
+            =new LinkedList<ParsingActionReduce>();
+        
+        for (ParserConfiguration pc=this; pc != null; pc=pc.parentComplete)
+            if (pc.reduction != null)
+                redlist.addFirst(pc.reduction);
+
+        return redlist;
+    }
+
+    public int stackPeek()
+    {
+        return stackTop != null ? stackTop : parent.stackPeek();
+    }
+
+    public void stackPush(int t)
+    {
+        assert stackTop == null;
+
+        stackTop=t;
+    }
+
+    public void stackPop()
+    {
+        if (stackTop != null)
+            stackTop=null;
+        else
+        {
+            assert parent != null;
+            assert parent.stackTop != null;
+            parent=parent.parent;
+        }
     }
 }
 
 public class TomitaParser
 {
-    private static final int SINGLE_ROUND_STEPS=256;
-    
     private static final boolean DEBUG=true;
     
     private final ParsingTable table;
@@ -64,7 +118,7 @@ public class TomitaParser
     private void shift(ParserConfiguration parserConf,
                        ParsingActionShift shift)
     {
-        parserConf.stack.push(shift.getState());
+        parserConf.stackPush(shift.getState());
         parserConf.pos++;
         
         dprintln(parserConf.hashCode()+": shift "+shift.getState());
@@ -77,13 +131,13 @@ public class TomitaParser
         int s;
         
         for (int i=0; i < p.bodyLength(); i++)
-            parserConf.stack.pop();
+            parserConf.stackPop();
         
-        s=parserConf.stack.peek();
+        s=parserConf.stackPeek();
         
-        parserConf.stack.push(table.goTo(s,p.getHead()));
+        parserConf.stackPush(table.goTo(s,p.getHead()));
         
-        parserConf.reductions.add(reduction);
+        parserConf.setReduction(reduction);
         
         dprintln(parserConf.hashCode()+": reduce "+p);
     }
@@ -99,18 +153,8 @@ public class TomitaParser
     {
         ParserConfiguration[] branches=new ParserConfiguration[n];
 
-        branches[0]=parserConf;
-        
-        for (int i=1; i < n; i++)
-        {
-            branches[i]=new ParserConfiguration();
-
-            // TODO: more efficient!
-            branches[i].stack=(Stack<Integer>)parserConf.stack.clone();
-            branches[i].pos=parserConf.pos;
-            branches[i].reductions=new LinkedList<ParsingActionReduce>();
-            branches[i].reductions.addAll(parserConf.reductions);
-        }
+        for (int i=0; i < n; i++)
+            branches[i]=new ParserConfiguration(parserConf);
 
         return branches;
     }
@@ -118,62 +162,51 @@ public class TomitaParser
     private void parseSingleParser(ParserConfiguration parserConf, 
                                    ArrayList<Terminal> input)
     {
-        for (int k=0; k < SINGLE_ROUND_STEPS
-                      && parserConf.status != ParserStatus.ACCEPTED; k++)
+        int s;
+        Terminal t;
+        Collection<ParsingAction> actions;
+        ParserConfiguration[] branches;
+        
+        assert parserConf.status == ParserStatus.RUNNING;            
+        assert parserConf.pos < input.size();
+        
+        s=parserConf.stackPeek();
+        t=input.get(parserConf.pos);
+        actions=table.actions(s,t);
+        
+        if (actions == null 
+            || actions.size() == 0)
         {
-            int s;
-            Terminal t;
-            Collection<ParsingAction> actions;
-            ParserConfiguration[] branches;
-
-            assert parserConf.status == ParserStatus.RUNNING;            
-            assert parserConf.stack.size() > 0;
-            assert parserConf.pos < input.size();
-            
-            s=parserConf.stack.peek();
-            t=input.get(parserConf.pos);
-            actions=table.actions(s,t);
-            
-            if (actions == null 
-                || actions.size() == 0)
-            {
-                dprintln(parserConf.hashCode()+": error: actions("
-                         +s+","+t+")=∅");
-                parserConf.status=ParserStatus.ERROR;
-                break;
-            }
-            
-            branches=initBranches(parserConf,actions.size());
-
-            assert branches[0] == parserConf; // for performance reasons
-
-            int i=0;
-            for (ParsingAction action: actions)
-            {
-                if (action instanceof ParsingActionShift)
-                    shift(branches[i],(ParsingActionShift)action);
-                else if (action instanceof ParsingActionReduce)
-                    reduce(branches[i],(ParsingActionReduce)action);
-                else if (action instanceof ParsingActionAccept)
-                    accept(branches[i]);
-                else
-                    assert false;
-
-                // Add branched parser
-                if (i > 0){
-                    dprintln("new branch: "+branches[i].hashCode());
-                parseFifo.add(branches[i]);
-                }
-                i++;
-            } 
+            dprintln(parserConf.hashCode()+": error: actions("+s+","+t+")=∅");
+            parserConf.status=ParserStatus.ERROR;
+            return;
         }
+        
+        branches=initBranches(parserConf,actions.size());
+        
+        int i=0;
+        for (ParsingAction action: actions)
+        {
+            if (action instanceof ParsingActionShift)
+                shift(branches[i],(ParsingActionShift)action);
+            else if (action instanceof ParsingActionReduce)
+                reduce(branches[i],(ParsingActionReduce)action);
+            else if (action instanceof ParsingActionAccept)
+                accept(branches[i]);
+            else
+                assert false;
+            
+            parseFifo.add(branches[i]);
+            
+            i++;
+        } 
     }
     
     private ParserConfiguration getInitialConfiguration()
     {
         ParserConfiguration initConfig=new ParserConfiguration();
         
-        initConfig.stack.push(table.getInitialState());
+        initConfig.stackPush(table.getInitialState());
         
         return initConfig;
     }
@@ -196,13 +229,12 @@ public class TomitaParser
         {
             ParserConfiguration parserConf=parseFifo.poll();
             
-            parseSingleParser(parserConf,input);
-            
             switch (parserConf.status)
             {
-            case RUNNING : parseFifo.add(parserConf); break;
-            case ACCEPTED: accepted.add(parserConf.reductions); break;
-            case ERROR   : break;
+            case RUNNING : parseSingleParser(parserConf,input); break;
+            case ACCEPTED: accepted.add(parserConf.getReductionList()); break;
+            case ERROR   : assert false : 
+                "Why do we have error configs in the parser fifo?"; break;
             }
         }
         
