@@ -49,7 +49,7 @@ public class ThreadAnalysis
     private void analyzeReachableMethods(SootMethod entryMethod)
     {
         Queue<SootMethod> methodQueue=new LinkedList<SootMethod>();
-        Set<SootMethod> enqueuedMethods=new HashSet<SootMethod>(callGraph.size());
+        Set<SootMethod> enqueuedMethods=new HashSet<SootMethod>(2*callGraph.size());
         
         methodQueue.add(entryMethod);
         enqueuedMethods.add(entryMethod);

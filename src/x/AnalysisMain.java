@@ -12,6 +12,7 @@ import soot.SootMethod;
 import x.analysis.thread.ThreadAnalysis;
 import x.analysis.programPattern.ProgramPatternAnalysis;
 import x.analysis.programPattern.PPTerminal;
+import x.analysis.atomicMethods.AtomicMethods;
 
 import x.cfg.LexicalElement;
 import x.cfg.Terminal;
@@ -22,17 +23,32 @@ import x.cfg.parsing.tomitaParser.TomitaParser;
 public class AnalysisMain
     extends SceneTransformer
 {
+    private static final boolean DEBUG=true;
+
     private static final AnalysisMain instance = new AnalysisMain();
 
     private Scene scene;
     private String moduleName; // module to analyze
+    private AtomicMethods atomicMethods;
 
     private AnalysisMain() 
     {
         scene=null;
         moduleName=null;
+        atomicMethods=null;
     }
     
+    private void dprint(String s)
+    {
+        if (DEBUG)
+            System.out.print(s);
+    }
+
+    private void dprintln(String s)
+    {
+        dprint(s+"\n");
+    }
+
     public static AnalysisMain instance() 
     {
         return instance;
@@ -73,28 +89,22 @@ public class AnalysisMain
 
         for (List<ParsingActionReduce> reductions: reductionsSet)
         {
-            int atomicRegion=-1;
-            boolean error=false;
-
-            System.out.print("  ");
+            dprint("  ");
 
             for (ParsingActionReduce red: reductions)
                 for (LexicalElement e: red.getProduction().getBody())
+                {
                     if (e instanceof PPTerminal)
                     {
                         PPTerminal term=(PPTerminal)e;
                         
-                        System.out.print(" "+term+"["+term.getAtomicRegion()+"]");
-
-                        if (!term.isAtomicRegion())
-                            error=true;
-                        else if (atomicRegion < 0) 
-                            atomicRegion=term.getAtomicRegion();
-                        else if (atomicRegion != term.getAtomicRegion())
-                            error=true;
+                        // System.out.print(" "+term);
                     }
-            
-            System.out.println(error ? "  ERROR" : "OK");
+
+                    dprint(red.getProduction()+" ; ");
+                }
+
+            dprintln("");
         }
     }
 
@@ -127,15 +137,27 @@ public class AnalysisMain
         checkThreadWord(parser,word);
     }
 
+    private void runMethodAtomicityAnalysis(Collection<SootMethod> threads)
+    {
+        atomicMethods=new AtomicMethods(scene.getCallGraph(),threads);
+
+        atomicMethods.analyze();
+    }
+
     @Override
     protected void internalTransform(String paramString, 
        @SuppressWarnings("rawtypes") java.util.Map paramMap) 
     {
-        scene=Scene.v();
+        Collection<SootMethod> threads;
 
+        scene=Scene.v();
         assert scene.getMainMethod() != null;
 
-        for (SootMethod m: getThreads())
+        threads=getThreads();
+
+        runMethodAtomicityAnalysis(threads);
+
+        for (SootMethod m: threads)
             checkThread(m);
     }
 }

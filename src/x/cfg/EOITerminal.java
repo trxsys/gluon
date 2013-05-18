@@ -5,6 +5,7 @@ public final class EOITerminal
 {
     public EOITerminal()
     {
+        super("$");
     }
 
     public boolean isEOI()
@@ -23,10 +24,10 @@ public final class EOITerminal
     {
         return o instanceof EOITerminal;
     }
-    
+
     @Override
-    public String toString()
+    public EOITerminal clone()
     {
-        return "$";
+        return new EOITerminal();
     }
 }

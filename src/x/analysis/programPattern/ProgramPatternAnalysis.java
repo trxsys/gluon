@@ -33,10 +33,6 @@ import soot.jimple.InvokeExpr;
 import soot.jimple.internal.JReturnStmt;
 import soot.jimple.internal.JReturnVoidStmt;
 
-import soot.tagkit.AnnotationTag;
-import soot.tagkit.Tag;
-import soot.tagkit.VisibilityAnnotationTag;
-
 class NonTerminalAliasCreator
 {
     private static final char[] RADIX_CHARS
@@ -85,8 +81,6 @@ class NonTerminalAliasCreator
 
 public class ProgramPatternAnalysis
 {
-    private static final String ATOMIC_METHOD_ANNOTATION="Atomic";
-    
     private static final boolean DEBUG=true;
     
     private SootMethod entryMethod;
@@ -146,12 +140,7 @@ public class ProgramPatternAnalysis
             if (isTargetModule
                 && !calledMethod.isConstructor()
                 && calledMethod.isPublic()) // TODO what about static methods?
-            {
-                int atomicRegion=isAtomicMethod(method) 
-                                 ? method.getNumber() : -1;
-
-                prodBodyPrefix=new PPTerminal(calledMethod,atomicRegion);
-            }
+                prodBodyPrefix=new PPTerminal(calledMethod);
             else if (calledMethod.hasActiveBody()
                      && (x.Main.WITH_JAVA_LIB
                          || !calledMethod.isJavaLibraryMethod()))
@@ -187,44 +176,10 @@ public class ProgramPatternAnalysis
             addUnitToEmptyProduction(unit);
         }
         
-        /* This block responsible for making the grammar recognize subwords.
-
-        if (prodBodyPrefix != null)
-        {
-            * Add prefixes *
-            addUnitToLexicalElement(unit,prodBodyPrefix);
-        
-            * Instead of adding { S → A | A ∈ V } we add it here,
-             * only for production that branch.
-             *
-             * This add sufixes.
-             *
-            addStartToUnitProduction(unit);
-            for (Unit succ: cfg.getSuccsOf(unit))
-                addStartToUnitProduction(succ);
-        }
-        */
-
         for (Unit succ: cfg.getSuccsOf(unit))
             analyzeUnit(method,succ,cfg);
     }
     
-    private static boolean isAtomicMethod(SootMethod method)
-    {
-        Tag tag = method.getTag("VisibilityAnnotationTag");
-        
-        if (tag == null)
-            return false;
-        
-        VisibilityAnnotationTag visibilityAnnotationTag = (VisibilityAnnotationTag) tag;
-        List<AnnotationTag> annotations = visibilityAnnotationTag.getAnnotations();
-        
-        for (AnnotationTag annotationTag : annotations) 
-            if (annotationTag.getType().endsWith("/"+ATOMIC_METHOD_ANNOTATION+";"))
-                return true;
-        
-        return false;
-    }
 
     private void addUnitToTwoLexicalElements(Unit unit,
                                              LexicalElement body1,
@@ -254,17 +209,6 @@ public class ProgramPatternAnalysis
     {
         PPNonTerminal head=new PPNonTerminal(alias(unit));
         Production production=new Production(head);
-        
-        grammar.addProduction(production);
-    }
-
-    private void addStartToUnitProduction(Unit unit)
-    {
-        NonTerminal head=grammar.getStart();
-        Production production=new Production(head);
-        LexicalElement body=new PPNonTerminal(alias(unit));
-        
-        production.appendToBody(body);
         
         grammar.addProduction(production);
     }
@@ -339,15 +283,21 @@ public class ProgramPatternAnalysis
 
     public void analyze()
     {
-        grammar.setStart(new PPNonTerminal(alias(entryMethod)));
-
         analyzeReachableMethods(entryMethod);
+
+        grammar.setStart(new PPNonTerminal(alias(entryMethod)));
 
         dprintln("Grammar size before optimizing: "+grammar.size());
         grammar.optimize();
         dprintln("Grammar size after optimizing: "+grammar.size());
 
+        grammar.subwordClosure();
+
         addNewStart();
+
+        grammar.optimize();
+        dprintln("Grammar size after optimizing yet again "
+                 +"(after subword closure): "+grammar.size());
 
         dprintln("Grammar: "+grammar);
 
