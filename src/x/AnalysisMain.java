@@ -12,6 +12,7 @@ import soot.SootMethod;
 import x.analysis.thread.ThreadAnalysis;
 import x.analysis.programPattern.ProgramPatternAnalysis;
 import x.analysis.programPattern.PPTerminal;
+import x.analysis.atomicMethods.AtomicMethods;
 
 import x.cfg.LexicalElement;
 import x.cfg.Terminal;
@@ -26,11 +27,13 @@ public class AnalysisMain
 
     private Scene scene;
     private String moduleName; // module to analyze
+    private AtomicMethods atomicMethods;
 
     private AnalysisMain() 
     {
         scene=null;
         moduleName=null;
+        atomicMethods=null;
     }
     
     public static AnalysisMain instance() 
@@ -73,9 +76,6 @@ public class AnalysisMain
 
         for (List<ParsingActionReduce> reductions: reductionsSet)
         {
-            int atomicRegion=-1;
-            boolean error=false;
-
             System.out.print("  ");
 
             for (ParsingActionReduce red: reductions)
@@ -84,17 +84,10 @@ public class AnalysisMain
                     {
                         PPTerminal term=(PPTerminal)e;
                         
-                        System.out.print(" "+term+"["+term.getAtomicRegion()+"]");
-
-                        if (!term.isAtomicRegion())
-                            error=true;
-                        else if (atomicRegion < 0) 
-                            atomicRegion=term.getAtomicRegion();
-                        else if (atomicRegion != term.getAtomicRegion())
-                            error=true;
+                        System.out.print(" "+term);
                     }
             
-            System.out.println(error ? "  ERROR" : "OK");
+            System.out.println();
         }
     }
 
@@ -127,15 +120,27 @@ public class AnalysisMain
         checkThreadWord(parser,word);
     }
 
+    private void runMethodAtomicityAnalysis(Collection<SootMethod> threads)
+    {
+        atomicMethods=new AtomicMethods(scene.getCallGraph(),threads);
+
+        atomicMethods.analyze();
+    }
+
     @Override
     protected void internalTransform(String paramString, 
        @SuppressWarnings("rawtypes") java.util.Map paramMap) 
     {
-        scene=Scene.v();
+        Collection<SootMethod> threads;
 
+        scene=Scene.v();
         assert scene.getMainMethod() != null;
 
-        for (SootMethod m: getThreads())
+        threads=getThreads();
+
+        runMethodAtomicityAnalysis(threads);
+
+        for (SootMethod m: threads)
             checkThread(m);
     }
 }
