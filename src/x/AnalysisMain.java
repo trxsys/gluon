@@ -23,6 +23,8 @@ import x.cfg.parsing.tomitaParser.TomitaParser;
 public class AnalysisMain
     extends SceneTransformer
 {
+    private static final boolean DEBUG=true;
+
     private static final AnalysisMain instance = new AnalysisMain();
 
     private Scene scene;
@@ -36,6 +38,17 @@ public class AnalysisMain
         atomicMethods=null;
     }
     
+    private void dprint(String s)
+    {
+        if (DEBUG)
+            System.out.print(s);
+    }
+
+    private void dprintln(String s)
+    {
+        dprint(s+"\n");
+    }
+
     public static AnalysisMain instance() 
     {
         return instance;
@@ -76,18 +89,22 @@ public class AnalysisMain
 
         for (List<ParsingActionReduce> reductions: reductionsSet)
         {
-            System.out.print("  ");
+            dprint("  ");
 
             for (ParsingActionReduce red: reductions)
                 for (LexicalElement e: red.getProduction().getBody())
+                {
                     if (e instanceof PPTerminal)
                     {
                         PPTerminal term=(PPTerminal)e;
                         
-                        System.out.print(" "+term);
+                        // System.out.print(" "+term);
                     }
-            
-            System.out.println();
+
+                    dprint(red.getProduction()+" ; ");
+                }
+
+            dprintln("");
         }
     }
 
