@@ -130,6 +130,8 @@ public class AnalysisMain
         
         parser=new TomitaParser(parsingTable);
         
+        System.exit(0);
+
         // XXX Test
         ArrayList<x.cfg.Terminal> word=new ArrayList<x.cfg.Terminal>();
         {

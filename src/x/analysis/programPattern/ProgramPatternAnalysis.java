@@ -293,11 +293,11 @@ public class ProgramPatternAnalysis
 
         grammar.subwordClosure();
 
-        addNewStart();
-
         grammar.optimize();
         dprintln("Grammar size after optimizing yet again "
                  +"(after subword closure): "+grammar.size());
+
+        addNewStart();
 
         dprintln("Grammar: "+grammar);
 

@@ -14,14 +14,14 @@ public class Cfg
 {
     private static final boolean DEBUG=false;
     
-    private Map<NonTerminal,Collection<Production>> productions;
+    private Map<NonTerminal,Set<Production>> productions;
     private NonTerminal start;
     
     private int size=0;
     
-    public Set<LexicalElement> lexicalElements;
-    public Set<NonTerminal> nonterminals;
-    public Set<Terminal> terminals;
+    private Set<LexicalElement> lexicalElements;
+    private Set<NonTerminal> nonterminals;
+    private Set<Terminal> terminals;
     
     public Cfg()
     {
@@ -30,7 +30,7 @@ public class Cfg
     
     private void clear()
     {
-        productions=new HashMap<NonTerminal,Collection<Production>>();
+        productions=new HashMap<NonTerminal,Set<Production>>();
         start=null;
         size=0;
         
@@ -43,10 +43,7 @@ public class Cfg
     {
         if (!productions.containsKey(p.getHead()))
         {
-            /* This must not be a set since production are modified in some
-             * methods. This would cause corruption of both hash tables and trees.
-             */
-            Collection<Production> c=new LinkedList<Production>();
+            Set<Production> c=new HashSet<Production>();
             
             productions.put(p.getHead(),c);
         }
@@ -157,8 +154,12 @@ public class Cfg
 
         for (Production p: prods)
         {
+            productions.get(p.getHead()).remove(p);
+
             p.rewrite(oldTerm,newElement);
             
+            productions.get(p.getHead()).add(p);
+
             // we must update nonTermUsages
             if (newElement instanceof NonTerminal)
             {
@@ -170,7 +171,7 @@ public class Cfg
     }
     
     private void erase(Map<NonTerminal,Collection<Production>> nonTermUsages,
-                         NonTerminal nonterm)
+                       NonTerminal nonterm)
     {
         Collection<Production> prods=nonTermUsages.get(nonterm);
 
@@ -179,8 +180,12 @@ public class Cfg
 
         for (Production p: prods)
         {
+            productions.get(p.getHead()).remove(p);
+
             p.erase(nonterm);
-            
+
+            productions.get(p.getHead()).add(p);
+
             // no need to update nonTermUsages
         }
     }
@@ -190,7 +195,7 @@ public class Cfg
         Map<NonTerminal,Collection<Production>> nonTermUsages=nonTermUsages();
         Collection<NonTerminal> toRemove=new LinkedList<NonTerminal>();
         
-        for (Collection<Production> prods: productions.values())
+        for (Set<Production> prods: productions.values())
             if (prods.size() == 1)
             {
                 Production prod=prods.iterator().next();
@@ -246,18 +251,59 @@ public class Cfg
         return true;
     }
 
+    private void addEpsilonFreeProductions(NonTerminal nonterm,
+                                           Map<NonTerminal,Collection<Production>> nonTermUsages)
+    {
+        Collection<Production> prods=nonTermUsages.get(nonterm);
+
+        if (prods == null)
+            return;
+
+        for (Production p: prods)
+        {
+            Production newProd;
+
+            newProd=p.clone();
+            
+            newProd.erase(nonterm);
+
+            assert p.bodyLength()-newProd.bodyLength() <= 1;
+
+            if (p.bodyLength()-newProd.bodyLength() == 1)
+            {
+                // we have a (probally) brand new production
+
+                addProduction(newProd);
+
+                // no need to update nonTermUsages
+            }
+        }
+    }
+
     private void optimizeEpsilonProductions()
     {
         Map<NonTerminal,Collection<Production>> nonTermUsages=nonTermUsages();
         
         for (Collection<Production> prods: productions.values())
+        {
+            Collection<Production> toRemove=new LinkedList<Production>();
+
             for (Production prod: prods)
                 if (prod.bodyLength() == 0 
                     && !prod.getHead().equals(start)
                     && onlyOneOccurence(prod.getHead(),nonTermUsages))
                 {
-                    
+                    toRemove.add(prod);
+
+                    addEpsilonFreeProductions(prod.getHead(),nonTermUsages);
                 }
+
+            for (Production p: toRemove)
+            {
+                prods.remove(p);
+                size--;
+            }
+        }
     }
 
     public void optimize()

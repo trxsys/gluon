@@ -563,7 +563,7 @@ public class ParsingTable
 
         if (DEBUG)
         {
-            debugPrintStates();
+            // debugPrintStates();
             debugPrintGotoTable();
             debugPrintActionTable();
         }
