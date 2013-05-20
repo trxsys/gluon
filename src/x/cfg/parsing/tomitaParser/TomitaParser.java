@@ -98,7 +98,7 @@ class ParserConfiguration
 
 public class TomitaParser
 {
-    private static final boolean DEBUG=true;
+    private static final boolean DEBUG=false;
     
     private final ParsingTable table;
     private Queue<ParserConfiguration> parseFifo;
@@ -174,8 +174,7 @@ public class TomitaParser
         t=input.get(parserConf.pos);
         actions=table.actions(s,t);
         
-        if (actions == null 
-            || actions.size() == 0)
+        if (actions == null || actions.size() == 0)
         {
             dprintln(parserConf.hashCode()+": error: actions("+s+","+t+")=∅");
             parserConf.status=ParserStatus.ERROR;

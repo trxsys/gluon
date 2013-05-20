@@ -12,7 +12,7 @@ import java.util.HashSet;
 
 public class Cfg
 {
-    private static final boolean DEBUG=true;
+    private static final boolean DEBUG=false;
     
     private Map<NonTerminal,Collection<Production>> productions;
     private NonTerminal start;
@@ -127,26 +127,6 @@ public class Cfg
         return getProductionsOf(start).size() == 1;
     }
     
-    private void rewrite(Map<NonTerminal,Collection<Production>> nonTermUsages,
-                         NonTerminal oldTerm, LexicalElement newElement)
-    {
-        if (!nonTermUsages.containsKey(oldTerm))
-            return;
-
-        for (Production p: nonTermUsages.get(oldTerm))
-        {
-            p.rewrite(oldTerm,newElement);
-            
-            // we must update prods
-            if (newElement instanceof NonTerminal)
-            {
-                assert nonTermUsages.containsKey((NonTerminal)newElement);
-                
-                nonTermUsages.get((NonTerminal)newElement).add(p);
-            }
-        }
-    }
-    
     private Map<NonTerminal,Collection<Production>> nonTermUsages()
     {
         Map<NonTerminal,Collection<Production>> nonTermUsages
@@ -167,7 +147,45 @@ public class Cfg
         return nonTermUsages;
     }
     
-    public void optimize()
+    private void rewrite(Map<NonTerminal,Collection<Production>> nonTermUsages,
+                         NonTerminal oldTerm, LexicalElement newElement)
+    {
+        Collection<Production> prods=nonTermUsages.get(oldTerm);
+
+        if (prods == null)
+            return;
+
+        for (Production p: prods)
+        {
+            p.rewrite(oldTerm,newElement);
+            
+            // we must update nonTermUsages
+            if (newElement instanceof NonTerminal)
+            {
+                assert nonTermUsages.containsKey((NonTerminal)newElement);
+                
+                nonTermUsages.get((NonTerminal)newElement).add(p);
+            }
+        }
+    }
+    
+    private void erase(Map<NonTerminal,Collection<Production>> nonTermUsages,
+                         NonTerminal nonterm)
+    {
+        Collection<Production> prods=nonTermUsages.get(nonterm);
+
+        if (prods == null)
+            return;
+
+        for (Production p: prods)
+        {
+            p.erase(nonterm);
+            
+            // no need to update nonTermUsages
+        }
+    }
+
+    private void optimizeSingletonProductions()
     {
         Map<NonTerminal,Collection<Production>> nonTermUsages=nonTermUsages();
         Collection<NonTerminal> toRemove=new LinkedList<NonTerminal>();
@@ -178,18 +196,21 @@ public class Cfg
                 Production prod=prods.iterator().next();
                 LexicalElement body; 
                 
-                if (prod.getBody().size() != 1 || prod.getHead().equals(start))
+                if (prod.getBody().size() > 1 || prod.getHead().equals(start))
                     continue;
                 
-                assert prod.getBody().size() == 1;
+                assert prod.getBody().size() <= 1;
                 
-                body=prod.getBody().get(0);
+                body=prod.getBody().size() == 1 ? prod.getBody().get(0) : null;
                 
-                if (body.equals(prod.getHead()))
+                if (prod.getHead().equals(body))
                     continue;
                 
-                rewrite(nonTermUsages,prod.getHead(),body);
-                
+                if (body != null)
+                    rewrite(nonTermUsages,prod.getHead(),body);
+                else
+                    erase(nonTermUsages,prod.getHead());
+
                 toRemove.add(prod.getHead());
             }
         
@@ -200,6 +221,49 @@ public class Cfg
             lexicalElements.remove(n);
             size--;
         }
+    }
+
+    private boolean onlyOneOccurence(NonTerminal n,
+                                     Map<NonTerminal,Collection<Production>> nonTermUsages)
+    {
+        Collection<Production> prods=nonTermUsages.get(n);
+
+        if (prods == null)
+            return true;
+
+        for (Production p: prods)
+        {
+            int c=0;
+
+            for (LexicalElement e: p.getBody())
+                if (e.equals(n))
+                    c++;
+
+            if (c > 1)
+                return false;
+        }
+
+        return true;
+    }
+
+    private void optimizeEpsilonProductions()
+    {
+        Map<NonTerminal,Collection<Production>> nonTermUsages=nonTermUsages();
+        
+        for (Collection<Production> prods: productions.values())
+            for (Production prod: prods)
+                if (prod.bodyLength() == 0 
+                    && !prod.getHead().equals(start)
+                    && onlyOneOccurence(prod.getHead(),nonTermUsages))
+                {
+                    
+                }
+    }
+
+    public void optimize()
+    {
+        optimizeSingletonProductions();
+        optimizeEpsilonProductions();
     }
     
     private void dprintln(String s)
