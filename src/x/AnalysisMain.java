@@ -122,69 +122,10 @@ public class AnalysisMain
             =new ProgramPatternAnalysis(thread,moduleName);
         ParsingTable parsingTable;
         TomitaParser parser;
+
+        programPattern.analyze();
         
-        if (true)
-        {
-        // XXX Test
-            x.cfg.Cfg grammar=new x.cfg.Cfg();
-
-        soot.SootMethod p=new soot.SootMethod("+",new ArrayList<Object>(),
-                                              soot.VoidType.v());
-        soot.SootMethod m=new soot.SootMethod("*",new ArrayList<Object>(),
-                                              soot.VoidType.v());
-        soot.SootMethod i=new soot.SootMethod("id",new ArrayList<Object>(),
-                                              soot.VoidType.v());
-        soot.SootMethod l=new soot.SootMethod("(",new ArrayList<Object>(),
-                                              soot.VoidType.v());
-        soot.SootMethod r=new soot.SootMethod(")",new ArrayList<Object>(),
-                                              soot.VoidType.v());
-
-        x.analysis.programPattern.PPTerminal plus=new x.analysis.programPattern.PPTerminal(p);
-        x.analysis.programPattern.PPTerminal mult=new x.analysis.programPattern.PPTerminal(m);
-        x.analysis.programPattern.PPTerminal id=new x.analysis.programPattern.PPTerminal(i);
-        x.analysis.programPattern.PPTerminal lpar=new x.analysis.programPattern.PPTerminal(l);
-        x.analysis.programPattern.PPTerminal rpar=new x.analysis.programPattern.PPTerminal(r);
-         x.cfg.Production e1=new  x.cfg.Production(new x.analysis.programPattern.PPNonTerminal("E"));
-         x.cfg.Production e2=new  x.cfg.Production(new x.analysis.programPattern.PPNonTerminal("E"));
-         x.cfg.Production e3=new  x.cfg.Production(new x.analysis.programPattern.PPNonTerminal("E"));
-         x.cfg.Production e4=new  x.cfg.Production(new x.analysis.programPattern.PPNonTerminal("E"));
-         x.cfg.Production e5=new  x.cfg.Production(new x.analysis.programPattern.PPNonTerminal("S"));
-
-        e1.appendToBody(new x.analysis.programPattern.PPNonTerminal("E"));
-        e1.appendToBody(plus);
-        e1.appendToBody(new x.analysis.programPattern.PPNonTerminal("E"));
-
-        e2.appendToBody(new x.analysis.programPattern.PPNonTerminal("E"));
-        e2.appendToBody(mult);
-        e2.appendToBody(new x.analysis.programPattern.PPNonTerminal("E"));
-
-        e3.appendToBody(lpar);
-        e3.appendToBody(new x.analysis.programPattern.PPNonTerminal("E"));
-        e3.appendToBody(rpar);
-
-        e4.appendToBody(id);
-
-        e5.appendToBody(new x.analysis.programPattern.PPNonTerminal("E"));
-
-        grammar.addProduction(e1);
-        grammar.addProduction(e2);
-        grammar.addProduction(e3);
-        grammar.addProduction(e4);
-
-        grammar.addProduction(e5);
-
-        grammar.setStart(new x.analysis.programPattern.PPNonTerminal("S"));
-
-
-            parsingTable=new ParsingTable(grammar);
-        }
-        else
-        {
-            programPattern.analyze();
-        
-            parsingTable=new ParsingTable(programPattern.getGrammar());
-        }
-
+        parsingTable=new ParsingTable(programPattern.getGrammar());
         parsingTable.buildParsingTable();
         
         parser=new TomitaParser(parsingTable);
