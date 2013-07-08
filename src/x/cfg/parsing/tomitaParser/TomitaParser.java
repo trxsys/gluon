@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import x.cfg.Production;
 import x.cfg.Terminal;
 import x.cfg.EOITerminal;
+import x.cfg.NonTerminal;
 
 import x.cfg.parsing.parsingTable.ParsingTable;
 import x.cfg.parsing.parsingTable.parsingAction.*;
@@ -98,7 +99,7 @@ class ParserConfiguration
 
 public class TomitaParser
 {
-    private static final boolean DEBUG=true;
+    private static final boolean DEBUG=false;
     
     private final ParsingTable table;
     private Queue<ParserConfiguration> parseFifo;
@@ -174,8 +175,7 @@ public class TomitaParser
         t=input.get(parserConf.pos);
         actions=table.actions(s,t);
         
-        if (actions == null 
-            || actions.size() == 0)
+        if (actions == null || actions.size() == 0)
         {
             dprintln(parserConf.hashCode()+": error: actions("+s+","+t+")=∅");
             parserConf.status=ParserStatus.ERROR;
@@ -241,5 +241,11 @@ public class TomitaParser
         parseFifo=null;
         
         return accepted;
+    }
+
+    public static void getParsingTree(List<Terminal> word,
+                                      List<ParsingActionReduce> reductions)
+    {
+        
     }
 }
