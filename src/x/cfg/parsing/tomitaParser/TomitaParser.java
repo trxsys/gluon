@@ -83,8 +83,9 @@ class ParserConfiguration
                 assert pc.shift == null;
                 alist.addFirst(pc.reduction);
             }
-            else
+            else if (pc.parentComplete != null)
             {
+                assert pc.shift != null;
                 alist.addFirst(pc.shift);
             }
 
