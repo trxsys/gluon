@@ -16,16 +16,29 @@ class ParseTreeNode
 {
     private LexicalElement elem;
     private ParseTreeNode parent;
+    public int count; /* For getLCA() */
 
     public ParseTreeNode(LexicalElement e)
     {
         elem=e;
         parent=null;
+        count=0;
     }
 
     public void setParent(ParseTreeNode p)
     {
         parent=p;
+    }
+
+
+    public ParseTreeNode getParent()
+    {
+        return parent;
+    }
+
+    public LexicalElement getElem()
+    {
+        return elem;
     }
 
     @Override
@@ -86,9 +99,20 @@ public class ParseTree
                 assert pos == word.size()-1; /* -1 because of $ */
     }
 
-    public NonTerminal getLCANonTerm(List<LexicalElement> word)
+    public NonTerminal getLCA()
     {
+        for (ParseTreeNode node: leafs)
+            while (node != null)
+            {
+                node.count++;
 
-        return null; // TODO
+                if (node.count == leafs.size()
+                    && node.getElem() instanceof NonTerminal)
+                    return (NonTerminal)node.getElem();
+
+                node=node.getParent();
+            }
+
+        return null;
     }
 }
