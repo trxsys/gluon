@@ -16,9 +16,11 @@ import x.analysis.atomicMethods.AtomicMethods;
 
 import x.cfg.LexicalElement;
 import x.cfg.Terminal;
+import x.cfg.NonTerminal;
 import x.cfg.parsing.parsingTable.ParsingTable;
-import x.cfg.parsing.parsingTable.parsingAction.ParsingActionReduce;
+import x.cfg.parsing.parsingTable.parsingAction.*;
 import x.cfg.parsing.tomitaParser.TomitaParser;
+import x.cfg.parsing.parseTree.ParseTree;
 
 public class AnalysisMain
     extends SceneTransformer
@@ -59,13 +61,11 @@ public class AnalysisMain
         moduleName=m;
     }
 
-    private void debugPrintReductions(List<ParsingActionReduce> reductions)
+    private void debugPrintActions(List<ParsingAction> actions)
     {
-        for (ParsingActionReduce red: reductions)
-            for (LexicalElement e: red.getProduction().getBody())
-            {
-                dprint(red.getProduction()+" ; ");
-            }
+        for (ParsingAction a: actions)
+            dprint(a+" ; ");
+
         dprintln("");
     }
     
@@ -89,29 +89,31 @@ public class AnalysisMain
     }
     
     private void checkThreadWordParse(ArrayList<Terminal> word, 
-                                      List<ParsingActionReduce> reductions)
+                                      List<ParsingAction> actions)
     {
-        int count=0;
-        int wordLen=word.size()-1; // -1 because of $
+        ParseTree ptree=new ParseTree();
+        NonTerminal lca;
 
-        dprint("  "); debugPrintReductions(reductions);
+        dprint("  "); debugPrintActions(actions);
 
-        // TomitaParser.getNonTerminalLCA(word,reductions);
+        ptree.buildTree(word,actions);
 
+        lca=ptree.getLCA();
 
+        System.out.println("  LCA: "+lca);
     }
     
     private void checkThreadWord(TomitaParser parser,
                                  ArrayList<Terminal> word)
     {
-        Collection<List<ParsingActionReduce>> reductionsSet=parser.parse(word);
+        Collection<List<ParsingAction>> actionsSet=parser.parse(word);
         
-        assert reductionsSet != null;
+        assert actionsSet != null;
         
         System.out.println("Verifying word "+word+":");
         
-        for (List<ParsingActionReduce> reductions: reductionsSet)
-            checkThreadWordParse(word,reductions);
+        for (List<ParsingAction> actions: actionsSet)
+            checkThreadWordParse(word,actions);
     }
     
     private void checkThread(SootMethod thread)
@@ -120,11 +122,10 @@ public class AnalysisMain
             =new ProgramPatternAnalysis(thread,moduleName);
         ParsingTable parsingTable;
         TomitaParser parser;
-        
+
         programPattern.analyze();
         
         parsingTable=new ParsingTable(programPattern.getGrammar());
-        
         parsingTable.buildParsingTable();
         
         parser=new TomitaParser(parsingTable);
@@ -132,9 +133,11 @@ public class AnalysisMain
         // XXX Test
         ArrayList<x.cfg.Terminal> word=new ArrayList<x.cfg.Terminal>();
         {
-            word.add(new PPTerminal("a"));
-            word.add(new PPTerminal("b"));
-            word.add(new PPTerminal("c"));
+            word.add(new PPTerminal("id"));
+            word.add(new PPTerminal("+"));
+            word.add(new PPTerminal("id"));
+            word.add(new PPTerminal("+"));
+            word.add(new PPTerminal("id"));
             
             word.add(new x.cfg.EOITerminal());
         }

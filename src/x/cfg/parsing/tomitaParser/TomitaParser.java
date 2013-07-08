@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import x.cfg.Production;
 import x.cfg.Terminal;
 import x.cfg.EOITerminal;
-import x.cfg.NonTerminal;
 
 import x.cfg.parsing.parsingTable.ParsingTable;
 import x.cfg.parsing.parsingTable.parsingAction.*;
@@ -34,6 +33,7 @@ class ParserConfiguration
     private Integer stackTop;
 
     private ParsingActionReduce reduction;
+    private ParsingActionShift shift;
 
     public int pos;
     public ParserStatus status;
@@ -60,16 +60,36 @@ class ParserConfiguration
         reduction=r;
     }
 
-    public List<ParsingActionReduce> getReductionList()
+    public void setShift(ParsingActionShift s)
     {
-        LinkedList<ParsingActionReduce> redlist
-            =new LinkedList<ParsingActionReduce>();
+        assert shift == null;
+        shift=s;
+    }
+
+    public List<ParsingAction> getActionList()
+    {
+        LinkedList<ParsingAction> alist
+            =new LinkedList<ParsingAction>();
         
         for (ParserConfiguration pc=this; pc != null; pc=pc.parentComplete)
-            if (pc.reduction != null)
-                redlist.addFirst(pc.reduction);
+            if (pc.status == ParserStatus.ACCEPTED)
+            {
+                assert pc.reduction == null;
+                assert pc.shift == null;
+                alist.addFirst(new ParsingActionAccept());
+            }
+            else if (pc.reduction != null)
+            {
+                assert pc.shift == null;
+                alist.addFirst(pc.reduction);
+            }
+            else if (pc.parentComplete != null)
+            {
+                assert pc.shift != null;
+                alist.addFirst(pc.shift);
+            }
 
-        return redlist;
+        return alist;
     }
 
     public int stackPeek()
@@ -121,7 +141,9 @@ public class TomitaParser
     {
         parserConf.stackPush(shift.getState());
         parserConf.pos++;
-        
+
+        parserConf.setShift(shift);
+
         dprintln(parserConf.hashCode()+": shift "+shift.getState());
     }
     
@@ -212,10 +234,10 @@ public class TomitaParser
     }
     
     // Input should be an ArrayList for performance reasons
-    public Collection<List<ParsingActionReduce>> parse(ArrayList<Terminal> input)
+    public Collection<List<ParsingAction>> parse(ArrayList<Terminal> input)
     {
-        Collection<List<ParsingActionReduce>> accepted
-            =new LinkedList<List<ParsingActionReduce>>();
+        Collection<List<ParsingAction>> accepted
+            =new LinkedList<List<ParsingAction>>();
         
         assert input.size() > 0 
             && input.get(input.size()-1) instanceof EOITerminal
@@ -232,7 +254,7 @@ public class TomitaParser
             switch (parserConf.status)
             {
             case RUNNING : parseSingleParser(parserConf,input); break;
-            case ACCEPTED: accepted.add(parserConf.getReductionList()); break;
+            case ACCEPTED: accepted.add(parserConf.getActionList()); break;
             case ERROR   : assert false : 
                 "Why do we have error configs in the parser fifo?"; break;
             }
@@ -241,11 +263,5 @@ public class TomitaParser
         parseFifo=null;
         
         return accepted;
-    }
-
-    public static void getParsingTree(List<Terminal> word,
-                                      List<ParsingActionReduce> reductions)
-    {
-        
     }
 }
