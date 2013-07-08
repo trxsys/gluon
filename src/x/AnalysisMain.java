@@ -19,6 +19,7 @@ import x.cfg.Terminal;
 import x.cfg.parsing.parsingTable.ParsingTable;
 import x.cfg.parsing.parsingTable.parsingAction.ParsingActionReduce;
 import x.cfg.parsing.tomitaParser.TomitaParser;
+import x.cfg.parsing.parseTree.ParseTree;
 
 public class AnalysisMain
     extends SceneTransformer
@@ -91,13 +92,11 @@ public class AnalysisMain
     private void checkThreadWordParse(ArrayList<Terminal> word, 
                                       List<ParsingActionReduce> reductions)
     {
-        int count=0;
-        int wordLen=word.size()-1; // -1 because of $
+        ParseTree ptree=new ParseTree();
 
         dprint("  "); debugPrintReductions(reductions);
 
-        // TomitaParser.getNonTerminalLCA(word,reductions);
-
+        ptree.buildTree(word,reductions);
 
     }
     
