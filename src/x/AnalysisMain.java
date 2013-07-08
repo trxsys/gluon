@@ -16,6 +16,7 @@ import x.analysis.atomicMethods.AtomicMethods;
 
 import x.cfg.LexicalElement;
 import x.cfg.Terminal;
+import x.cfg.NonTerminal;
 import x.cfg.parsing.parsingTable.ParsingTable;
 import x.cfg.parsing.parsingTable.parsingAction.*;
 import x.cfg.parsing.tomitaParser.TomitaParser;
@@ -91,10 +92,15 @@ public class AnalysisMain
                                       List<ParsingAction> actions)
     {
         ParseTree ptree=new ParseTree();
+        NonTerminal lca;
 
         dprint("  "); debugPrintActions(actions);
 
         ptree.buildTree(word,actions);
+
+        lca=ptree.getLCA();
+
+        System.out.println("  LCA: "+lca);
     }
     
     private void checkThreadWord(TomitaParser parser,
@@ -119,6 +125,7 @@ public class AnalysisMain
         
         if (true)
         {
+        // XXX Test
             x.cfg.Cfg grammar=new x.cfg.Cfg();
 
         soot.SootMethod p=new soot.SootMethod("+",new ArrayList<Object>(),
