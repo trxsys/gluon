@@ -17,7 +17,7 @@ import x.analysis.atomicMethods.AtomicMethods;
 import x.cfg.LexicalElement;
 import x.cfg.Terminal;
 import x.cfg.parsing.parsingTable.ParsingTable;
-import x.cfg.parsing.parsingTable.parsingAction.ParsingActionReduce;
+import x.cfg.parsing.parsingTable.parsingAction.*;
 import x.cfg.parsing.tomitaParser.TomitaParser;
 import x.cfg.parsing.parseTree.ParseTree;
 
@@ -60,13 +60,11 @@ public class AnalysisMain
         moduleName=m;
     }
 
-    private void debugPrintReductions(List<ParsingActionReduce> reductions)
+    private void debugPrintActions(List<ParsingAction> actions)
     {
-        for (ParsingActionReduce red: reductions)
-            for (LexicalElement e: red.getProduction().getBody())
-            {
-                dprint(red.getProduction()+" ; ");
-            }
+        for (ParsingAction a: actions)
+            dprint(a+" ; ");
+
         dprintln("");
     }
     
@@ -90,11 +88,11 @@ public class AnalysisMain
     }
     
     private void checkThreadWordParse(ArrayList<Terminal> word, 
-                                      List<ParsingActionReduce> reductions)
+                                      List<ParsingAction> actions)
     {
         ParseTree ptree=new ParseTree();
 
-        dprint("  "); debugPrintReductions(reductions);
+        dprint("  "); debugPrintActions(actions);
 
         ptree.buildTree(word,reductions);
 
@@ -103,14 +101,14 @@ public class AnalysisMain
     private void checkThreadWord(TomitaParser parser,
                                  ArrayList<Terminal> word)
     {
-        Collection<List<ParsingActionReduce>> reductionsSet=parser.parse(word);
+        Collection<List<ParsingAction>> actionsSet=parser.parse(word);
         
-        assert reductionsSet != null;
+        assert actionsSet != null;
         
         System.out.println("Verifying word "+word+":");
         
-        for (List<ParsingActionReduce> reductions: reductionsSet)
-            checkThreadWordParse(word,reductions);
+        for (List<ParsingAction> actions: actionsSet)
+            checkThreadWordParse(word,actions);
     }
     
     private void checkThread(SootMethod thread)
