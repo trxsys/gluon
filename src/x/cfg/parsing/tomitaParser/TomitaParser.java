@@ -33,6 +33,7 @@ class ParserConfiguration
     private Integer stackTop;
 
     private ParsingActionReduce reduction;
+    private ParsingActionShift shift;
 
     public int pos;
     public ParserStatus status;
@@ -59,16 +60,36 @@ class ParserConfiguration
         reduction=r;
     }
 
-    public List<ParsingActionReduce> getReductionList()
+    public void setShift(ParsingActionShift s)
     {
-        LinkedList<ParsingActionReduce> redlist
-            =new LinkedList<ParsingActionReduce>();
+        assert shift == null;
+        shift=s;
+    }
+
+    public List<ParsingAction> getActionList()
+    {
+        LinkedList<ParsingAction> alist
+            =new LinkedList<ParsingAction>();
         
         for (ParserConfiguration pc=this; pc != null; pc=pc.parentComplete)
-            if (pc.reduction != null)
-                redlist.addFirst(pc.reduction);
+            if (pc.status == ParserStatus.ACCEPTED)
+            {
+                assert pc.reduction == null;
+                assert pc.shift == null;
+                alist.addFirst(new ParsingActionAccept());
+            }
+            else if (pc.reduction != null)
+            {
+                assert pc.shift == null;
+                alist.addFirst(pc.reduction);
+            }
+            else if (pc.parentComplete != null)
+            {
+                assert pc.shift != null;
+                alist.addFirst(pc.shift);
+            }
 
-        return redlist;
+        return alist;
     }
 
     public int stackPeek()
@@ -98,7 +119,7 @@ class ParserConfiguration
 
 public class TomitaParser
 {
-    private static final boolean DEBUG=true;
+    private static final boolean DEBUG=false;
     
     private final ParsingTable table;
     private Queue<ParserConfiguration> parseFifo;
@@ -120,7 +141,9 @@ public class TomitaParser
     {
         parserConf.stackPush(shift.getState());
         parserConf.pos++;
-        
+
+        parserConf.setShift(shift);
+
         dprintln(parserConf.hashCode()+": shift "+shift.getState());
     }
     
@@ -174,8 +197,7 @@ public class TomitaParser
         t=input.get(parserConf.pos);
         actions=table.actions(s,t);
         
-        if (actions == null 
-            || actions.size() == 0)
+        if (actions == null || actions.size() == 0)
         {
             dprintln(parserConf.hashCode()+": error: actions("+s+","+t+")=∅");
             parserConf.status=ParserStatus.ERROR;
@@ -212,10 +234,10 @@ public class TomitaParser
     }
     
     // Input should be an ArrayList for performance reasons
-    public Collection<List<ParsingActionReduce>> parse(ArrayList<Terminal> input)
+    public Collection<List<ParsingAction>> parse(ArrayList<Terminal> input)
     {
-        Collection<List<ParsingActionReduce>> accepted
-            =new LinkedList<List<ParsingActionReduce>>();
+        Collection<List<ParsingAction>> accepted
+            =new LinkedList<List<ParsingAction>>();
         
         assert input.size() > 0 
             && input.get(input.size()-1) instanceof EOITerminal
@@ -232,7 +254,7 @@ public class TomitaParser
             switch (parserConf.status)
             {
             case RUNNING : parseSingleParser(parserConf,input); break;
-            case ACCEPTED: accepted.add(parserConf.getReductionList()); break;
+            case ACCEPTED: accepted.add(parserConf.getActionList()); break;
             case ERROR   : assert false : 
                 "Why do we have error configs in the parser fifo?"; break;
             }
