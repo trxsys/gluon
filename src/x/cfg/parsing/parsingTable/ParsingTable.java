@@ -79,7 +79,7 @@ public class ParsingTable
             System.out.print(i+"    ");
 
             for (Map.Entry<NonTerminal,Integer> entry: gotoTable.get(i).entrySet())
-                System.out.print(entry.getKey()+"->"+entry.getValue()+"  ");
+                System.out.print(entry.getKey()+"↦"+entry.getValue()+"  ");
 
             System.out.println();
         }

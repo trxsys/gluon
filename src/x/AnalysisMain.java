@@ -58,6 +58,16 @@ public class AnalysisMain
     {
         moduleName=m;
     }
+
+    private void debugPrintReductions(List<ParsingActionReduce> reductions)
+    {
+        for (ParsingActionReduce red: reductions)
+            for (LexicalElement e: red.getProduction().getBody())
+            {
+                dprint(red.getProduction()+" ; ");
+            }
+        dprintln("");
+    }
     
     private Collection<SootMethod> getThreads()
     {
@@ -84,22 +94,11 @@ public class AnalysisMain
         int count=0;
         int wordLen=word.size()-1; // -1 because of $
 
-        dprint("  ");
+        dprint("  "); debugPrintReductions(reductions);
 
-        for (ParsingActionReduce red: reductions)
-            for (LexicalElement e: red.getProduction().getBody())
-            {
-                if (e instanceof PPTerminal)
-                {
-                    PPTerminal term=(PPTerminal)e;
-                    
-                    // System.out.print(" "+term);
-                }
-                
-                dprint(red.getProduction()+" ; ");
-            }
+        // TomitaParser.getNonTerminalLCA(word,reductions);
 
-        dprintln("");
+
     }
     
     private void checkThreadWord(TomitaParser parser,
@@ -109,7 +108,7 @@ public class AnalysisMain
         
         assert reductionsSet != null;
         
-        System.out.println("Verifying spec "+word+":");
+        System.out.println("Verifying word "+word+":");
         
         for (List<ParsingActionReduce> reductions: reductionsSet)
             checkThreadWordParse(word,reductions);
@@ -130,8 +129,6 @@ public class AnalysisMain
         
         parser=new TomitaParser(parsingTable);
         
-        System.exit(0);
-
         // XXX Test
         ArrayList<x.cfg.Terminal> word=new ArrayList<x.cfg.Terminal>();
         {

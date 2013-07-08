@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import x.cfg.Production;
 import x.cfg.Terminal;
 import x.cfg.EOITerminal;
+import x.cfg.NonTerminal;
 
 import x.cfg.parsing.parsingTable.ParsingTable;
 import x.cfg.parsing.parsingTable.parsingAction.*;
@@ -240,5 +241,11 @@ public class TomitaParser
         parseFifo=null;
         
         return accepted;
+    }
+
+    public static void getParsingTree(List<Terminal> word,
+                                      List<ParsingActionReduce> reductions)
+    {
+        
     }
 }
