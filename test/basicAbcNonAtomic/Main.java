@@ -37,4 +37,3 @@ public class Main
         g();
     }
 }
-

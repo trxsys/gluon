@@ -12,6 +12,7 @@ import soot.SootMethod;
 import x.analysis.thread.ThreadAnalysis;
 import x.analysis.programPattern.ProgramPatternAnalysis;
 import x.analysis.programPattern.PPTerminal;
+import x.analysis.programPattern.PPNonTerminal;
 import x.analysis.atomicMethods.AtomicMethods;
 
 import x.cfg.LexicalElement;
@@ -25,7 +26,7 @@ import x.cfg.parsing.parseTree.ParseTree;
 public class AnalysisMain
     extends SceneTransformer
 {
-    private static final boolean DEBUG=true;
+    private static final boolean DEBUG=false;
     
     private static final AnalysisMain instance = new AnalysisMain();
     
@@ -33,7 +34,7 @@ public class AnalysisMain
     private String moduleName; // module to analyze
     private AtomicMethods atomicMethods;
     
-    private AnalysisMain() 
+    private AnalysisMain()
     {
         scene=null;
         moduleName=null;
@@ -61,12 +62,20 @@ public class AnalysisMain
         moduleName=m;
     }
 
-    private void debugPrintActions(List<ParsingAction> actions)
+    private void printActions(List<ParsingAction> actions)
     {
         for (ParsingAction a: actions)
-            dprint(a+" ; ");
+        {
+            if (a instanceof ParsingActionShift)
+                System.out.print("s ; ");
+            else if (a instanceof ParsingActionReduce)
+                System.out.print(((ParsingActionReduce)a).getProduction()
+                                   +" ; ");
+            else if (a instanceof ParsingActionAccept)
+                System.out.print(a.toString());
+        }
 
-        dprintln("");
+        System.out.println("");
     }
     
     private Collection<SootMethod> getThreads()
@@ -88,32 +97,47 @@ public class AnalysisMain
         return relevantThreads;
     }
     
-    private void checkThreadWordParse(ArrayList<Terminal> word, 
+    private int checkThreadWordParse(ArrayList<Terminal> word, 
                                       List<ParsingAction> actions)
     {
         ParseTree ptree=new ParseTree();
         NonTerminal lca;
+        SootMethod lcaMethod;
+        boolean atomic;
 
-        dprint("  "); debugPrintActions(actions);
+        System.out.print("    "); printActions(actions);
 
         ptree.buildTree(word,actions);
 
         lca=ptree.getLCA();
 
-        System.out.println("  LCA: "+lca);
+        assert lca instanceof PPNonTerminal;
+
+        lcaMethod=((PPNonTerminal)lca).getMethod();
+        atomic=atomicMethods.isAtomic(lcaMethod);
+
+        System.out.println("      Lowest common ancestor: "+lca);
+        System.out.println("      Method: "+lcaMethod.getName()+"()");
+        System.out.println("      Atomic: "+(atomic ? "YES" : "NO"));
+
+        return atomic ? 0 : -1;
     }
     
-    private void checkThreadWord(TomitaParser parser,
+    private int checkThreadWord(TomitaParser parser,
                                  ArrayList<Terminal> word)
     {
         Collection<List<ParsingAction>> actionsSet=parser.parse(word);
-        
+        boolean error=false;
+
         assert actionsSet != null;
         
-        System.out.println("Verifying word "+word+":");
+        System.out.println("  Verifying word "+word+":");
         
         for (List<ParsingAction> actions: actionsSet)
-            checkThreadWordParse(word,actions);
+            if (checkThreadWordParse(word,actions) != 0)
+                error=true;
+
+        return error ? -1 : 0;
     }
     
     private void checkThread(SootMethod thread)
@@ -130,14 +154,15 @@ public class AnalysisMain
         
         parser=new TomitaParser(parsingTable);
         
+        System.out.println("Checking thread "
+                           +thread.getDeclaringClass().getShortName()+":");
+
         // XXX Test
         ArrayList<x.cfg.Terminal> word=new ArrayList<x.cfg.Terminal>();
         {
-            word.add(new PPTerminal("id"));
-            word.add(new PPTerminal("+"));
-            word.add(new PPTerminal("id"));
-            word.add(new PPTerminal("+"));
-            word.add(new PPTerminal("id"));
+            word.add(new PPTerminal("a"));
+            word.add(new PPTerminal("b"));
+            word.add(new PPTerminal("c"));
             
             word.add(new x.cfg.EOITerminal());
         }

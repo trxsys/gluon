@@ -26,7 +26,7 @@ import x.cfg.parsing.parsingTable.parsingAction.*;
 
 public class ParsingTable
 {
-    private static final boolean DEBUG=true;
+    private static final boolean DEBUG=false;
 
     public static final Terminal EOI_TERMINAL=new EOITerminal();
 
