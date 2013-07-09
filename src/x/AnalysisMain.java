@@ -62,22 +62,33 @@ public class AnalysisMain
         moduleName=m;
     }
 
-    private void printActions(List<ParsingAction> actions)
+    private static String actionsStr(List<ParsingAction> actions)
     {
+        String r="";
+
         for (ParsingAction a: actions)
         {
             if (a instanceof ParsingActionShift)
-                System.out.print("s ; ");
+                r+="s ; ";
             else if (a instanceof ParsingActionReduce)
-                System.out.print(((ParsingActionReduce)a).getProduction()
-                                   +" ; ");
+                r+=((ParsingActionReduce)a).getProduction()+" ; ";
             else if (a instanceof ParsingActionAccept)
-                System.out.print(a.toString());
+                r+=a.toString();
         }
 
-        System.out.println("");
+        return r;
     }
     
+    private static String wordStr(ArrayList<Terminal> word)
+    {
+        String r="";
+
+        for (Terminal t: word)
+            r+=t.toString();
+
+        return r;
+    }
+
     private Collection<SootMethod> getThreads()
     {
         ThreadAnalysis ta=new ThreadAnalysis(scene.getCallGraph());
@@ -105,7 +116,7 @@ public class AnalysisMain
         SootMethod lcaMethod;
         boolean atomic;
 
-        System.out.print("    "); printActions(actions);
+        System.out.println("    "+actionsStr(actions));
 
         ptree.buildTree(word,actions);
 
@@ -124,18 +135,22 @@ public class AnalysisMain
     }
     
     private int checkThreadWord(TomitaParser parser,
-                                 ArrayList<Terminal> word)
+                                ArrayList<Terminal> word)
     {
         Collection<List<ParsingAction>> actionsSet=parser.parse(word);
         boolean error=false;
 
         assert actionsSet != null;
         
-        System.out.println("  Verifying word "+word+":");
+        System.out.println("  Verifying word "+wordStr(word)+":");
         
         for (List<ParsingAction> actions: actionsSet)
+        {
             if (checkThreadWordParse(word,actions) != 0)
                 error=true;
+
+            System.out.println();
+        }
 
         return error ? -1 : 0;
     }
