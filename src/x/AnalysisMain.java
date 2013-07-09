@@ -3,6 +3,7 @@ package x;
 import java.util.Collection;
 import java.util.List;
 
+import java.util.LinkedList;
 import java.util.ArrayList;
 
 import soot.Scene;
@@ -35,6 +36,7 @@ public class AnalysisMain
     private String moduleName; // name of the module to analyze
     private SootClass module;  // class of the module to analyze
     private AtomicMethods atomicMethods;
+    private Collection<ArrayList<Terminal>> contract;
     
     private AnalysisMain()
     {
@@ -42,6 +44,7 @@ public class AnalysisMain
         moduleName=null;
         module=null;
         atomicMethods=null;
+        contract=null;
     }
     
     private void dprint(String s)
@@ -86,8 +89,8 @@ public class AnalysisMain
     {
         String r="";
 
-        for (Terminal t: word)
-            r+=t.toString();
+        for (int i=0; i < word.size()-1; i++)
+            r+=(i > 1 ? " " : "")+word.get(i).toString();
 
         return r;
     }
@@ -112,7 +115,7 @@ public class AnalysisMain
     }
     
     private int checkThreadWordParse(ArrayList<Terminal> word, 
-                                      List<ParsingAction> actions)
+                                     List<ParsingAction> actions)
     {
         ParseTree ptree=new ParseTree();
         NonTerminal lca;
@@ -176,18 +179,8 @@ public class AnalysisMain
                            +thread.getDeclaringClass().getShortName()
                            +"."+thread.getName()+"():");
 
-        // XXX Test
-        ArrayList<x.cfg.Terminal> word=new ArrayList<x.cfg.Terminal>();
-        {
-            word.add(new PPTerminal("a"));
-            word.add(new PPTerminal("b"));
-            word.add(new PPTerminal("c"));
-            
-            word.add(new x.cfg.EOITerminal());
-        }
-        
-        // XXX for each word
-        checkThreadWord(parser,word);
+        for (ArrayList<Terminal> word: contract)
+            checkThreadWord(parser,word);
     }
     
     private void runMethodAtomicityAnalysis(Collection<SootMethod> threads)
@@ -208,6 +201,32 @@ public class AnalysisMain
         return null;
     }
 
+    private void extractContract()
+    {
+        contract=new LinkedList<ArrayList<Terminal>>();
+
+        /* TODO */
+        ArrayList<x.cfg.Terminal> word=new ArrayList<x.cfg.Terminal>();
+        {
+            word.add(new PPTerminal("a"));
+            word.add(new PPTerminal("b"));
+            word.add(new PPTerminal("c"));
+            
+            word.add(new x.cfg.EOITerminal());
+        }
+
+        ArrayList<x.cfg.Terminal> word1=new ArrayList<x.cfg.Terminal>();
+        {
+            word1.add(new PPTerminal("a"));
+            word1.add(new PPTerminal("b"));
+            
+            word1.add(new x.cfg.EOITerminal());
+        }
+
+        contract.add(word);
+        contract.add(word1);
+    }
+
     @Override
     protected void internalTransform(String paramString, 
                                      @SuppressWarnings("rawtypes") java.util.Map paramMap) 
@@ -224,6 +243,8 @@ public class AnalysisMain
             System.err.println(moduleName+": module's class not found");
             System.exit(-1);
         }
+        
+        extractContract();
 
         threads=getThreads();
         

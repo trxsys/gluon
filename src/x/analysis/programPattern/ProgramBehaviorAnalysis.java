@@ -66,8 +66,6 @@ class NonTerminalAliasCreator
         if (map.containsKey(o))
             return intToString(map.get(o));
         
-        // System.out.println(o+" = "+intToString(counter));
-
         map.put(o,counter);
         
         return intToString(counter++);
