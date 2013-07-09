@@ -1,11 +1,21 @@
 package x.analysis.programPattern;
 
+import soot.SootMethod;
+
 public class PPNonTerminal
     extends x.cfg.NonTerminal
 {
-    public PPNonTerminal(String s)
+    private SootMethod method;
+
+    public PPNonTerminal(String s, SootMethod m)
     {
         super(s);
+        method=m;
+    }
+
+    public SootMethod getMethod()
+    {
+        return method;
     }
     
     @Override
@@ -30,6 +40,6 @@ public class PPNonTerminal
     @Override
     public PPNonTerminal clone()
     {
-        return new PPNonTerminal(super.name);
+        return new PPNonTerminal(super.name,method);
     }
 }

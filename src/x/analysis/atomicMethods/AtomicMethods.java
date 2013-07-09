@@ -59,7 +59,7 @@ public class AtomicMethods
 {
     private static final String ATOMIC_METHOD_ANNOTATION="Atomic";
 
-    private static final boolean DEBUG=true;
+    private static final boolean DEBUG=false;
    
     private final CallGraph callGraph;
     private final Collection<SootMethod> threads;
@@ -162,5 +162,12 @@ public class AtomicMethods
 
         if (DEBUG)
             debugPrintMethods();
+    }
+
+    public boolean isAtomic(SootMethod m)
+    {
+        Boolean b=methodsAtomicity.get(m);
+
+        return b == null ? false : (boolean)b;
     }
 }

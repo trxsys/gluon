@@ -30,11 +30,24 @@ public class Main
         m.c();
     }
     
+    private static void q()
+    {
+        m.a();
+        m.b();
+        g();
+    }
+
+    @Atomic
+    private static void k()
+    {
+        q();
+    }
+    
     public static void main(String[] args)
     {
         m=new Module();
         f();
         g();
+        k();
     }
 }
-

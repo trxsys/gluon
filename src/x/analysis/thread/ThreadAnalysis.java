@@ -17,7 +17,7 @@ import soot.jimple.toolkits.callgraph.Edge;
 
 public class ThreadAnalysis
 {
-    private static final boolean DEBUG=true;
+    private static final boolean DEBUG=false;
     
     private final CallGraph callGraph;
     

@@ -81,7 +81,7 @@ class NonTerminalAliasCreator
 
 public class ProgramPatternAnalysis
 {
-    private static final boolean DEBUG=true;
+    private static final boolean DEBUG=false;
     
     private SootMethod entryMethod;
     private Cfg grammar;
@@ -145,7 +145,7 @@ public class ProgramPatternAnalysis
                      && (x.Main.WITH_JAVA_LIB
                          || !calledMethod.isJavaLibraryMethod()))
             {
-                prodBodyPrefix=new PPNonTerminal(alias(calledMethod)); 
+                prodBodyPrefix=new PPNonTerminal(alias(calledMethod),method); 
                 
                 if (!enqueuedMethods.contains(calledMethod))
                 {
@@ -155,16 +155,17 @@ public class ProgramPatternAnalysis
             }
         }
         
-        PPNonTerminal prodHead=new PPNonTerminal(alias(unit));
+        PPNonTerminal prodHead=new PPNonTerminal(alias(unit),method);
 
         for (Unit succ: cfg.getSuccsOf(unit))
         {
-            PPNonTerminal succNonTerm=new PPNonTerminal(alias(succ));
+            PPNonTerminal succNonTerm=new PPNonTerminal(alias(succ),method);
 
             if (prodBodyPrefix == null)
-                addUnitToLexicalElement(unit,succNonTerm);
+                addUnitToLexicalElement(unit,succNonTerm,method);
             else
-                addUnitToTwoLexicalElements(unit,prodBodyPrefix,succNonTerm);
+                addUnitToTwoLexicalElements(unit,prodBodyPrefix,succNonTerm,
+                                            method);
         }
 
         if (cfg.getSuccsOf(unit).size() == 0)
@@ -173,7 +174,7 @@ public class ProgramPatternAnalysis
                 +"should be a return statement, and therefore have no method "
                 +"calls";
 
-            addUnitToEmptyProduction(unit);
+            addUnitToEmptyProduction(unit,method);
         }
         
         for (Unit succ: cfg.getSuccsOf(unit))
@@ -183,9 +184,10 @@ public class ProgramPatternAnalysis
 
     private void addUnitToTwoLexicalElements(Unit unit,
                                              LexicalElement body1,
-                                             LexicalElement body2)
+                                             LexicalElement body2,
+                                             SootMethod method)
     {
-        PPNonTerminal head=new PPNonTerminal(alias(unit));
+        PPNonTerminal head=new PPNonTerminal(alias(unit),method);
         Production production=new Production(head);
         
         production.appendToBody(body1);
@@ -194,10 +196,10 @@ public class ProgramPatternAnalysis
         grammar.addProduction(production);        
     }
 
-    private void addUnitToLexicalElement(Unit unit,
-                                         LexicalElement body)
+    private void addUnitToLexicalElement(Unit unit, LexicalElement body,
+                                         SootMethod method)
     {
-        PPNonTerminal head=new PPNonTerminal(alias(unit));
+        PPNonTerminal head=new PPNonTerminal(alias(unit),method);
         Production production=new Production(head);
         
         production.appendToBody(body);
@@ -205,9 +207,9 @@ public class ProgramPatternAnalysis
         grammar.addProduction(production);        
     }
 
-    private void addUnitToEmptyProduction(Unit unit)
+    private void addUnitToEmptyProduction(Unit unit, SootMethod method)
     {
-        PPNonTerminal head=new PPNonTerminal(alias(unit));
+        PPNonTerminal head=new PPNonTerminal(alias(unit),method);
         Production production=new Production(head);
         
         grammar.addProduction(production);
@@ -216,9 +218,9 @@ public class ProgramPatternAnalysis
     private void addMethodToHeadProduction(SootMethod method, 
                                            Unit entryPoint)
     {
-        PPNonTerminal head=new PPNonTerminal(alias(method));
+        PPNonTerminal head=new PPNonTerminal(alias(method),method);
         Production production=new Production(head);
-        LexicalElement body=new PPNonTerminal(alias(entryPoint));
+        LexicalElement body=new PPNonTerminal(alias(entryPoint),method);
         
         production.appendToBody(body);
         
@@ -272,7 +274,8 @@ public class ProgramPatternAnalysis
     private void addNewStart()
     {
         NonTerminal oldStart=grammar.getStart();
-        NonTerminal newStart=new PPNonTerminal(oldStart.toString()+'\'');
+        NonTerminal newStart=new PPNonTerminal(oldStart.toString()+'\'',
+                                               entryMethod);
         Production prod=new Production(newStart);
 
         prod.appendToBody(oldStart);
@@ -285,7 +288,7 @@ public class ProgramPatternAnalysis
     {
         analyzeReachableMethods(entryMethod);
 
-        grammar.setStart(new PPNonTerminal(alias(entryMethod)));
+        grammar.setStart(new PPNonTerminal(alias(entryMethod),entryMethod));
 
         dprintln("Grammar size before optimizing: "+grammar.size());
         grammar.optimize();
