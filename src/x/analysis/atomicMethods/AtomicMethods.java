@@ -93,15 +93,15 @@ public class AtomicMethods
 
     private static boolean isAtomicMethod(SootMethod method)
     {
-        Tag tag = method.getTag("VisibilityAnnotationTag");
+        Tag tag=method.getTag("VisibilityAnnotationTag");
         
         if (tag == null)
             return false;
         
-        VisibilityAnnotationTag visibilityAnnotationTag = (VisibilityAnnotationTag) tag;
-        List<AnnotationTag> annotations = visibilityAnnotationTag.getAnnotations();
+        VisibilityAnnotationTag visibilityAnnotationTag=(VisibilityAnnotationTag)tag;
+        List<AnnotationTag> annotations=visibilityAnnotationTag.getAnnotations();
         
-        for (AnnotationTag annotationTag : annotations) 
+        for (AnnotationTag annotationTag: annotations) 
             if (annotationTag.getType().endsWith("/"+ATOMIC_METHOD_ANNOTATION+";"))
                 return true;
         

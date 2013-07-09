@@ -4,6 +4,13 @@ package test.basicAbcNonAtomic;
 {
 }
 
+@interface Contract
+{
+    String clauses();
+}
+
+@Contract(clauses = "a b c;"
+                   +"a b;")
 class Module
 {
     public Module() {}

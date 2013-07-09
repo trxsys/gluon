@@ -11,6 +11,11 @@ import soot.SceneTransformer;
 import soot.SootMethod;
 import soot.SootClass;
 
+import soot.tagkit.AnnotationTag;
+import soot.tagkit.Tag;
+import soot.tagkit.VisibilityAnnotationTag;
+import soot.tagkit.AnnotationStringElem;
+
 import x.analysis.thread.ThreadAnalysis;
 import x.analysis.programBehavior.ProgramBehaviorAnalysis;
 import x.analysis.programBehavior.PPTerminal;
@@ -29,6 +34,8 @@ public class AnalysisMain
     extends SceneTransformer
 {
     private static final boolean DEBUG=false;
+
+    private static final String CONTRACT_ANNOTATION="Contract";
     
     private static final AnalysisMain instance = new AnalysisMain();
     
@@ -90,7 +97,7 @@ public class AnalysisMain
         String r="";
 
         for (int i=0; i < word.size()-1; i++)
-            r+=(i > 1 ? " " : "")+word.get(i).toString();
+            r+=(i > 0 ? " " : "")+word.get(i).toString();
 
         return r;
     }
@@ -201,30 +208,61 @@ public class AnalysisMain
         return null;
     }
 
+    private List<String> extractContractClauses()
+    {
+         Tag tag=module.getTag("VisibilityAnnotationTag");
+         List<String> clauses=new ArrayList<String>(32);
+         
+         if (tag == null)
+            return null;
+
+        VisibilityAnnotationTag visibilityAnnotationTag=(VisibilityAnnotationTag) tag;
+        List<AnnotationTag> annotations=visibilityAnnotationTag.getAnnotations();
+        
+        for (AnnotationTag annotationTag: annotations) 
+            if (annotationTag.getType().endsWith("/"+CONTRACT_ANNOTATION+";")
+                && annotationTag.getNumElems() == 1
+                && annotationTag.getElemAt(0) instanceof AnnotationStringElem
+                && annotationTag.getElemAt(0).getName().equals("clauses"))
+            {
+                AnnotationStringElem e=(AnnotationStringElem)annotationTag.getElemAt(0);
+
+                for (String clause: e.getValue().split(";"))
+                    if (clause.trim().length() > 0)
+                        clauses.add(clause.trim());
+            }
+
+        return clauses;
+    }
+
     private void extractContract()
     {
+        List<String> contractClauses;
+
         contract=new LinkedList<ArrayList<Terminal>>();
+        
+        contractClauses=extractContractClauses();
 
-        /* TODO */
-        ArrayList<x.cfg.Terminal> word=new ArrayList<x.cfg.Terminal>();
+        if (contractClauses.size() == 0)
+            return;
+
+        /* TODO: this should be parses intro a StarFreeRegex.
+         * TODO: this should verify that the method in fact belongs to module
+         */
+        for (String clause: contractClauses)
         {
-            word.add(new PPTerminal("a"));
-            word.add(new PPTerminal("b"));
-            word.add(new PPTerminal("c"));
+            ArrayList<x.cfg.Terminal> word=new ArrayList<x.cfg.Terminal>();
             
+            for (String m: clause.split(" "))
+                if (m.trim().length() > 0)
+                    word.add(new PPTerminal(m.trim()));
+
             word.add(new x.cfg.EOITerminal());
+
+            contract.add(word);
         }
 
-        ArrayList<x.cfg.Terminal> word1=new ArrayList<x.cfg.Terminal>();
-        {
-            word1.add(new PPTerminal("a"));
-            word1.add(new PPTerminal("b"));
-            
-            word1.add(new x.cfg.EOITerminal());
-        }
-
-        contract.add(word);
-        contract.add(word1);
+        dprintln("contract: "+contract);
     }
 
     @Override
