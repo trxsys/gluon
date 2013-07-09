@@ -1,4 +1,4 @@
-package x.analysis.programPattern;
+package x.analysis.programBehavior;
 
 import soot.SootMethod;
 

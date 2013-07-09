@@ -1,4 +1,4 @@
-package x.analysis.programPattern;
+package x.analysis.programBehavior;
 
 /* This analysis creates a grammar that describes the access patterns to
  * to the module under analysis.
@@ -66,8 +66,6 @@ class NonTerminalAliasCreator
         if (map.containsKey(o))
             return intToString(map.get(o));
         
-        // System.out.println(o+" = "+intToString(counter));
-
         map.put(o,counter);
         
         return intToString(counter++);
@@ -79,14 +77,14 @@ class NonTerminalAliasCreator
     }
 }
 
-public class ProgramPatternAnalysis
+public class ProgramBehaviorAnalysis
 {
     private static final boolean DEBUG=false;
     
     private SootMethod entryMethod;
     private Cfg grammar;
     
-    private String moduleName; // module under analysis
+    private SootClass module; // module under analysis
     
     private Set<Unit> visited;
     
@@ -95,12 +93,12 @@ public class ProgramPatternAnalysis
     private Queue<SootMethod> methodQueue; // queue of methods to analyse
     private Set<SootMethod> enqueuedMethods;
     
-    public ProgramPatternAnalysis(SootMethod method, String module)
+    public ProgramBehaviorAnalysis(SootMethod method, SootClass modClass)
     {
         entryMethod=method;
+        module=modClass;
+
         grammar=new Cfg();
-        
-        moduleName=module;
         
         visited=null;
         
@@ -135,11 +133,11 @@ public class ProgramPatternAnalysis
             InvokeExpr expr=((Stmt)unit).getInvokeExpr();
             SootMethod calledMethod=expr.getMethod();
             boolean isTargetModule
-                =calledMethod.getDeclaringClass().getName().equals(moduleName);
+                =calledMethod.getDeclaringClass().equals(module);
             
             if (isTargetModule
                 && !calledMethod.isConstructor()
-                && calledMethod.isPublic()) // TODO what about static methods?
+                && calledMethod.isPublic())
                 prodBodyPrefix=new PPTerminal(calledMethod);
             else if (calledMethod.hasActiveBody()
                      && (x.Main.WITH_JAVA_LIB
