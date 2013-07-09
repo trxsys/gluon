@@ -1,4 +1,4 @@
-package x.analysis.programPattern;
+package x.analysis.programBehavior;
 
 /* This analysis creates a grammar that describes the access patterns to
  * to the module under analysis.
@@ -79,7 +79,7 @@ class NonTerminalAliasCreator
     }
 }
 
-public class ProgramPatternAnalysis
+public class ProgramBehaviorAnalysis
 {
     private static final boolean DEBUG=false;
     
@@ -95,7 +95,7 @@ public class ProgramPatternAnalysis
     private Queue<SootMethod> methodQueue; // queue of methods to analyse
     private Set<SootMethod> enqueuedMethods;
     
-    public ProgramPatternAnalysis(SootMethod method, SootClass modClass)
+    public ProgramBehaviorAnalysis(SootMethod method, SootClass modClass)
     {
         entryMethod=method;
         module=modClass;

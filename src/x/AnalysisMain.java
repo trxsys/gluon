@@ -11,9 +11,9 @@ import soot.SootMethod;
 import soot.SootClass;
 
 import x.analysis.thread.ThreadAnalysis;
-import x.analysis.programPattern.ProgramPatternAnalysis;
-import x.analysis.programPattern.PPTerminal;
-import x.analysis.programPattern.PPNonTerminal;
+import x.analysis.programBehavior.ProgramBehaviorAnalysis;
+import x.analysis.programBehavior.PPTerminal;
+import x.analysis.programBehavior.PPNonTerminal;
 import x.analysis.atomicMethods.AtomicMethods;
 
 import x.cfg.LexicalElement;
@@ -160,8 +160,8 @@ public class AnalysisMain
     
     private void checkThread(SootMethod thread)
     {
-        ProgramPatternAnalysis programPattern
-            =new ProgramPatternAnalysis(thread,module);
+        ProgramBehaviorAnalysis programPattern
+            =new ProgramBehaviorAnalysis(thread,module);
         ParsingTable parsingTable;
         TomitaParser parser;
 
