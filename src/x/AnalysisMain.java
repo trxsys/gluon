@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import soot.Scene;
 import soot.SceneTransformer;
 import soot.SootMethod;
+import soot.SootClass;
 
 import x.analysis.thread.ThreadAnalysis;
 import x.analysis.programPattern.ProgramPatternAnalysis;
@@ -31,13 +32,15 @@ public class AnalysisMain
     private static final AnalysisMain instance = new AnalysisMain();
     
     private Scene scene;
-    private String moduleName; // module to analyze
+    private String moduleName; // name of the module to analyze
+    private SootClass module;  // class of the module to analyze
     private AtomicMethods atomicMethods;
     
     private AnalysisMain()
     {
         scene=null;
         moduleName=null;
+        module=null;
         atomicMethods=null;
     }
     
@@ -194,6 +197,17 @@ public class AnalysisMain
         atomicMethods.analyze();
     }
     
+    private SootClass getModuleClass()
+    {
+        assert moduleName != null;
+
+        for (SootClass c: scene.getClasses())
+            if (c.getName().equals(moduleName))
+                return c;
+    
+        return null;
+    }
+
     @Override
     protected void internalTransform(String paramString, 
                                      @SuppressWarnings("rawtypes") java.util.Map paramMap) 
@@ -202,7 +216,15 @@ public class AnalysisMain
         
         scene=Scene.v();
         assert scene.getMainMethod() != null;
-        
+
+        module=getModuleClass();
+
+        if (module == null)
+        {
+            System.err.println(moduleName+": module's class not found");
+            System.exit(-1);
+        }
+
         threads=getThreads();
         
         runMethodAtomicityAnalysis(threads);
