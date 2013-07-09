@@ -170,7 +170,8 @@ public class AnalysisMain
         parser=new TomitaParser(parsingTable);
         
         System.out.println("Checking thread "
-                           +thread.getDeclaringClass().getShortName()+":");
+                           +thread.getDeclaringClass().getShortName()
+                           +"."+thread.getName()+"():");
 
         // XXX Test
         ArrayList<x.cfg.Terminal> word=new ArrayList<x.cfg.Terminal>();
