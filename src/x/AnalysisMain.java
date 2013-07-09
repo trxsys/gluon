@@ -161,7 +161,7 @@ public class AnalysisMain
     private void checkThread(SootMethod thread)
     {
         ProgramPatternAnalysis programPattern
-            =new ProgramPatternAnalysis(thread,moduleName);
+            =new ProgramPatternAnalysis(thread,module);
         ParsingTable parsingTable;
         TomitaParser parser;
 

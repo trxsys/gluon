@@ -86,7 +86,7 @@ public class ProgramPatternAnalysis
     private SootMethod entryMethod;
     private Cfg grammar;
     
-    private String moduleName; // module under analysis
+    private SootClass module; // module under analysis
     
     private Set<Unit> visited;
     
@@ -95,12 +95,12 @@ public class ProgramPatternAnalysis
     private Queue<SootMethod> methodQueue; // queue of methods to analyse
     private Set<SootMethod> enqueuedMethods;
     
-    public ProgramPatternAnalysis(SootMethod method, String module)
+    public ProgramPatternAnalysis(SootMethod method, SootClass modClass)
     {
         entryMethod=method;
+        module=modClass;
+
         grammar=new Cfg();
-        
-        moduleName=module;
         
         visited=null;
         
@@ -135,11 +135,11 @@ public class ProgramPatternAnalysis
             InvokeExpr expr=((Stmt)unit).getInvokeExpr();
             SootMethod calledMethod=expr.getMethod();
             boolean isTargetModule
-                =calledMethod.getDeclaringClass().getName().equals(moduleName);
+                =calledMethod.getDeclaringClass().equals(module);
             
             if (isTargetModule
                 && !calledMethod.isConstructor()
-                && calledMethod.isPublic()) // TODO what about static methods?
+                && calledMethod.isPublic())
                 prodBodyPrefix=new PPTerminal(calledMethod);
             else if (calledMethod.hasActiveBody()
                      && (x.Main.WITH_JAVA_LIB
