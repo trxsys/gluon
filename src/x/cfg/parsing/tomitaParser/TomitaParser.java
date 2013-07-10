@@ -2,9 +2,10 @@ package x.cfg.parsing.tomitaParser;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Stack;
 import java.util.Queue;
+import java.util.Set;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.ArrayList;
 
@@ -36,7 +37,7 @@ class ParserConfiguration
 
     public int pos;
     public ParserStatus status;
-    
+
     public ParserConfiguration(ParserConfiguration p)
     {
         parentComplete=p;
@@ -44,7 +45,7 @@ class ParserConfiguration
         stackTop=-1;
         pos=parent != null ? p.pos : 0;
         action=null;
-        
+
         status=ParserStatus.RUNNING;
     }
 
@@ -102,19 +103,40 @@ class ParserConfiguration
             parent=parent.parent;
         }
     }
+
+    @Override
+    public int hashCode()
+    {
+        return ((pos<<12)*65599)^(stackPeek()*65599)^status.ordinal();
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        ParserConfiguration other;
+
+        if (!(o instanceof ParserConfiguration))
+            return false;
+
+        other=(ParserConfiguration)o;
+
+        return other.pos == pos && other.stackPeek() == stackPeek()
+            && other.status == status;
+    }
 }
 
 public class TomitaParser
 {
     private static final boolean DEBUG=false;
-    
+
     private final ParsingTable table;
-    private LinkedList<ParserConfiguration> parseLifo;
-    
+    private Queue<ParserConfiguration> parseFifo;
+    private Set<ParserConfiguration> parseConfigs;
+
     public TomitaParser(ParsingTable t)
     {
         table=t;
-        parseLifo=null;
+        parseFifo=null;
     }
     
     private void dprintln(String s)
@@ -176,23 +198,23 @@ public class TomitaParser
         Terminal t;
         Collection<ParsingAction> actions;
         ParserConfiguration[] branches;
-        
+
         assert parserConf.status == ParserStatus.RUNNING;            
         assert parserConf.pos < input.size();
-        
+
         s=parserConf.stackPeek();
         t=input.get(parserConf.pos);
         actions=table.actions(s,t);
-        
+
         if (actions == null || actions.size() == 0)
         {
             dprintln(parserConf.hashCode()+": error: actions("+s+","+t+")=∅");
             parserConf.status=ParserStatus.ERROR;
             return;
         }
-        
+
         branches=initBranches(parserConf,actions.size());
-        
+
         int i=0;
         for (ParsingAction action: actions)
         {
@@ -204,9 +226,13 @@ public class TomitaParser
                 accept(branches[i]);
             else
                 assert false;
-            
-            parseLifo.add(branches[i]);
-            
+
+            // if (!parseConfigs.contains(branches[i]))
+            {
+                parseFifo.add(branches[i]);
+                parseConfigs.add(branches[i]);
+            }
+
             i++;
         }
     }
@@ -214,9 +240,9 @@ public class TomitaParser
     private ParserConfiguration getInitialConfiguration()
     {
         ParserConfiguration initConfig=new ParserConfiguration();
-        
+
         initConfig.stackPush(table.getInitialState());
-        
+
         return initConfig;
     }
     
@@ -224,18 +250,23 @@ public class TomitaParser
     public int parse(ArrayList<Terminal> input, ParserCallback pcb)
     {
         int ret=0;
+        ParserConfiguration initialConfig;
 
         assert input.size() > 0 
             && input.get(input.size()-1) instanceof EOITerminal
             : "input should end with $";
-        
-        parseLifo=new LinkedList<ParserConfiguration>();
-        
-        parseLifo.add(getInitialConfiguration());
 
-        while (parseLifo.size() > 0)
+        parseFifo=new LinkedList<ParserConfiguration>();
+        parseConfigs=new HashSet<ParserConfiguration>();
+
+        initialConfig=getInitialConfiguration();
+
+        parseFifo.add(initialConfig);
+        parseConfigs.add(initialConfig);
+
+        while (parseFifo.size() > 0)
         {
-            ParserConfiguration parserConf=parseLifo.pop();
+            ParserConfiguration parserConf=parseFifo.poll();
             
             switch (parserConf.status)
             {
@@ -246,11 +277,12 @@ public class TomitaParser
                     ret=z;
                 break;
             case ERROR   : assert false : 
-                "Why do we have error configs in the parser lifo?"; break;
+                "Why do we have error configs in the parser fifo?"; break;
             }
         }
         
-        parseLifo=null;
+        parseFifo=null;
+        parseConfigs=null;
 
         return ret;
     }
