@@ -10,7 +10,8 @@ package test.basicAbcNonAtomic;
 }
 
 @Contract(clauses = "a b c;"
-                   +"a b;")
+                   +"l l l;"
+                   +"i1 i2;")
 class Module
 {
     public Module() {}
@@ -18,6 +19,11 @@ class Module
     public void a() {}
     public void b() {}
     public void c() {}
+
+    public void l() {}
+
+    public void i1() {}
+    public void i2() {}
 }
 
 public class Main
@@ -49,6 +55,13 @@ public class Main
     {
         q();
     }
+
+    @Atomic
+    private static void foo()
+    {
+            m.i1();
+            m.i2();
+    }
     
     public static void main(String[] args)
     {
@@ -56,5 +69,18 @@ public class Main
         f();
         g();
         k();
+
+        while (Math.random() < 0.5)
+            m.l();
+
+        if (Math.random() < 0.5)
+        {
+            m.i1();
+            m.i2();
+        }
+        else
+        {
+            foo();
+        }
     }
 }
