@@ -29,6 +29,7 @@ import x.cfg.parsing.parsingTable.ParsingTable;
 import x.cfg.parsing.parsingTable.parsingAction.*;
 import x.cfg.parsing.tomitaParser.TomitaParser;
 import x.cfg.parsing.parseTree.ParseTree;
+import x.cfg.parsing.tomitaParser.ParserCallback;
 
 public class AnalysisMain
     extends SceneTransformer
@@ -148,24 +149,24 @@ public class AnalysisMain
     }
     
     private int checkThreadWord(TomitaParser parser,
-                                ArrayList<Terminal> word)
+                                final ArrayList<Terminal> word)
     {
-        Collection<List<ParsingAction>> actionsSet=parser.parse(word);
-        boolean error=false;
+        int ret;
 
-        assert actionsSet != null;
-        
         System.out.println("  Verifying word "+wordStr(word)+":");
+
+        ret=parser.parse(word, new ParserCallback(){
+                public int callback(List<ParsingAction> actions)
+                {
+                    int z = checkThreadWordParse(word,actions);
+                    
+                    System.out.println();
+                    
+                    return z;
+                }
+            });
         
-        for (List<ParsingAction> actions: actionsSet)
-        {
-            if (checkThreadWordParse(word,actions) != 0)
-                error=true;
-
-            System.out.println();
-        }
-
-        return error ? -1 : 0;
+        return ret;
     }
     
     private void checkThread(SootMethod thread)

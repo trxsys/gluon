@@ -30,10 +30,9 @@ class ParserConfiguration
 
     private ParserConfiguration parent;
 
-    private Integer stackTop;
+    private int stackTop;
 
-    private ParsingActionReduce reduction;
-    private ParsingActionShift shift;
+    private ParsingAction action;
 
     public int pos;
     public ParserStatus status;
@@ -42,9 +41,9 @@ class ParserConfiguration
     {
         parentComplete=p;
         parent=p;
-        stackTop=null;
+        stackTop=-1;
         pos=parent != null ? p.pos : 0;
-        reduction=null;
+        action=null;
         
         status=ParserStatus.RUNNING;
     }
@@ -56,14 +55,17 @@ class ParserConfiguration
 
     public void setReduction(ParsingActionReduce r)
     {
-        assert reduction == null;
-        reduction=r;
+        action=r;
     }
 
     public void setShift(ParsingActionShift s)
     {
-        assert shift == null;
-        shift=s;
+        action=s;
+    }
+
+    public void setAccept(ParsingActionAccept a)
+    {
+        action=a;
     }
 
     public List<ParsingAction> getActionList()
@@ -72,46 +74,31 @@ class ParserConfiguration
             =new LinkedList<ParsingAction>();
         
         for (ParserConfiguration pc=this; pc != null; pc=pc.parentComplete)
-            if (pc.status == ParserStatus.ACCEPTED)
-            {
-                assert pc.reduction == null;
-                assert pc.shift == null;
-                alist.addFirst(new ParsingActionAccept());
-            }
-            else if (pc.reduction != null)
-            {
-                assert pc.shift == null;
-                alist.addFirst(pc.reduction);
-            }
-            else if (pc.parentComplete != null)
-            {
-                assert pc.shift != null;
-                alist.addFirst(pc.shift);
-            }
+            alist.addFirst(pc.action);
 
         return alist;
     }
 
     public int stackPeek()
     {
-        return stackTop != null ? stackTop : parent.stackPeek();
+        return stackTop >= 0 ? stackTop : parent.stackPeek();
     }
 
     public void stackPush(int t)
     {
-        assert stackTop == null;
+        assert stackTop < 0;
 
         stackTop=t;
     }
 
     public void stackPop()
     {
-        if (stackTop != null)
-            stackTop=null;
+        if (stackTop >= 0)
+            stackTop=-1;
         else
         {
             assert parent != null;
-            assert parent.stackTop != null;
+            assert parent.stackTop >= 0;
             parent=parent.parent;
         }
     }
@@ -122,12 +109,12 @@ public class TomitaParser
     private static final boolean DEBUG=false;
     
     private final ParsingTable table;
-    private Queue<ParserConfiguration> parseFifo;
+    private LinkedList<ParserConfiguration> parseLifo;
     
     public TomitaParser(ParsingTable t)
     {
         table=t;
-        parseFifo=null;
+        parseLifo=null;
     }
     
     private void dprintln(String s)
@@ -218,10 +205,10 @@ public class TomitaParser
             else
                 assert false;
             
-            parseFifo.add(branches[i]);
+            parseLifo.add(branches[i]);
             
             i++;
-        } 
+        }
     }
     
     private ParserConfiguration getInitialConfiguration()
@@ -234,34 +221,37 @@ public class TomitaParser
     }
     
     // Input should be an ArrayList for performance reasons
-    public Collection<List<ParsingAction>> parse(ArrayList<Terminal> input)
+    public int parse(ArrayList<Terminal> input, ParserCallback pcb)
     {
-        Collection<List<ParsingAction>> accepted
-            =new LinkedList<List<ParsingAction>>();
-        
+        int ret=0;
+
         assert input.size() > 0 
             && input.get(input.size()-1) instanceof EOITerminal
             : "input should end with $";
         
-        parseFifo=new LinkedList<ParserConfiguration>();
+        parseLifo=new LinkedList<ParserConfiguration>();
         
-        parseFifo.add(getInitialConfiguration());
-        
-        while (parseFifo.size() > 0)
+        parseLifo.add(getInitialConfiguration());
+
+        while (parseLifo.size() > 0)
         {
-            ParserConfiguration parserConf=parseFifo.poll();
+            ParserConfiguration parserConf=parseLifo.pop();
             
             switch (parserConf.status)
             {
             case RUNNING : parseSingleParser(parserConf,input); break;
-            case ACCEPTED: accepted.add(parserConf.getActionList()); break;
+            case ACCEPTED: 
+                int z=pcb.callback(parserConf.getActionList());
+                if (z != 0)
+                    ret=z;
+                break;
             case ERROR   : assert false : 
-                "Why do we have error configs in the parser fifo?"; break;
+                "Why do we have error configs in the parser lifo?"; break;
             }
         }
         
-        parseFifo=null;
-        
-        return accepted;
+        parseLifo=null;
+
+        return ret;
     }
 }
