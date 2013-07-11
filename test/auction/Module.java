@@ -1,5 +1,12 @@
 package test.auction;
 
+
+@interface Contract
+{
+    String clauses();
+}
+
+@Contract(clauses ="a b c;")
 public class Module
 {
     public Module()

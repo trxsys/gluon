@@ -300,7 +300,7 @@ public class ProgramBehaviorAnalysis
 
         addNewStart();
 
-        System.out.println("Grammar: "+grammar);
+        dprintln("Grammar: "+grammar);
 
         assert grammar.hasUniqueStart();
     }
