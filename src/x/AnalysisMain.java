@@ -2,9 +2,11 @@ package x;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import java.util.LinkedList;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import soot.Scene;
 import soot.SceneTransformer;
@@ -123,14 +125,13 @@ public class AnalysisMain
     }
     
     private int checkThreadWordParse(ArrayList<Terminal> word, 
-                                     List<ParsingAction> actions)
+                                     List<ParsingAction> actions,
+                                     Set<SootMethod> reported)
     {
         ParseTree ptree=new ParseTree();
         NonTerminal lca;
         SootMethod lcaMethod;
         boolean atomic;
-
-        System.out.println("    "+actionsStr(actions));
 
         ptree.buildTree(word,actions);
 
@@ -139,11 +140,19 @@ public class AnalysisMain
         assert lca instanceof PPNonTerminal;
 
         lcaMethod=((PPNonTerminal)lca).getMethod();
+
+        if (reported.contains(lcaMethod))
+            return 0;
+
+        reported.add(lcaMethod);
+
         atomic=atomicMethods.isAtomic(lcaMethod);
 
-        System.out.println("      Lowest common ancestor: "+lca);
-        System.out.println("      Method: "+lcaMethod.getName()+"()");
+        dprintln("      Lowest common ancestor: "+lca);
+        System.out.println("      Method: "+lcaMethod.getDeclaringClass().getShortName()
+                           +"."+lcaMethod.getName()+"()");
         System.out.println("      Atomic: "+(atomic ? "YES" : "NO"));
+        System.out.println();
 
         return atomic ? 0 : -1;
     }
@@ -152,17 +161,14 @@ public class AnalysisMain
                                 final ArrayList<Terminal> word)
     {
         int ret;
+        final Set<SootMethod> reported=new HashSet<SootMethod>();
 
         System.out.println("  Verifying word "+wordStr(word)+":");
 
         ret=parser.parse(word, new ParserCallback(){
                 public int callback(List<ParsingAction> actions)
                 {
-                    int z = checkThreadWordParse(word,actions);
-                    
-                    System.out.println();
-                    
-                    return z;
+                    return checkThreadWordParse(word,actions,reported);
                 }
             });
         

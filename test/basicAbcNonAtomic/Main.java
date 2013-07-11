@@ -9,9 +9,9 @@ package test.basicAbcNonAtomic;
     String clauses();
 }
 
-@Contract(clauses = "a b c;"
-                   +"l l l;"
-                   +"i1 i2;")
+@Contract(clauses ="a b c;"
+                  +"l l l;"
+                  +"i1 i2;")
 class Module
 {
     public Module() {}
@@ -66,12 +66,17 @@ public class Main
     public static void main(String[] args)
     {
         m=new Module();
+
         f();
         g();
         k();
 
+        m.a();
+
         while (Math.random() < 0.5)
             m.l();
+
+        m.a();
 
         if (Math.random() < 0.5)
         {
