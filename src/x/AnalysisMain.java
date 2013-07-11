@@ -2,9 +2,11 @@ package x;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import java.util.LinkedList;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import soot.Scene;
 import soot.SceneTransformer;
@@ -29,6 +31,7 @@ import x.cfg.parsing.parsingTable.ParsingTable;
 import x.cfg.parsing.parsingTable.parsingAction.*;
 import x.cfg.parsing.tomitaParser.TomitaParser;
 import x.cfg.parsing.parseTree.ParseTree;
+import x.cfg.parsing.tomitaParser.ParserCallback;
 
 public class AnalysisMain
     extends SceneTransformer
@@ -122,14 +125,13 @@ public class AnalysisMain
     }
     
     private int checkThreadWordParse(ArrayList<Terminal> word, 
-                                     List<ParsingAction> actions)
+                                     List<ParsingAction> actions,
+                                     Set<SootMethod> reported)
     {
         ParseTree ptree=new ParseTree();
         NonTerminal lca;
         SootMethod lcaMethod;
         boolean atomic;
-
-        System.out.println("    "+actionsStr(actions));
 
         ptree.buildTree(word,actions);
 
@@ -138,34 +140,39 @@ public class AnalysisMain
         assert lca instanceof PPNonTerminal;
 
         lcaMethod=((PPNonTerminal)lca).getMethod();
+
+        if (reported.contains(lcaMethod))
+            return 0;
+
+        reported.add(lcaMethod);
+
         atomic=atomicMethods.isAtomic(lcaMethod);
 
-        System.out.println("      Lowest common ancestor: "+lca);
-        System.out.println("      Method: "+lcaMethod.getName()+"()");
+        dprintln("      Lowest common ancestor: "+lca);
+        System.out.println("      Method: "+lcaMethod.getDeclaringClass().getShortName()
+                           +"."+lcaMethod.getName()+"()");
         System.out.println("      Atomic: "+(atomic ? "YES" : "NO"));
+        System.out.println();
 
         return atomic ? 0 : -1;
     }
     
     private int checkThreadWord(TomitaParser parser,
-                                ArrayList<Terminal> word)
+                                final ArrayList<Terminal> word)
     {
-        Collection<List<ParsingAction>> actionsSet=parser.parse(word);
-        boolean error=false;
+        int ret;
+        final Set<SootMethod> reported=new HashSet<SootMethod>();
 
-        assert actionsSet != null;
-        
         System.out.println("  Verifying word "+wordStr(word)+":");
+
+        ret=parser.parse(word, new ParserCallback(){
+                public int callback(List<ParsingAction> actions)
+                {
+                    return checkThreadWordParse(word,actions,reported);
+                }
+            });
         
-        for (List<ParsingAction> actions: actionsSet)
-        {
-            if (checkThreadWordParse(word,actions) != 0)
-                error=true;
-
-            System.out.println();
-        }
-
-        return error ? -1 : 0;
+        return ret;
     }
     
     private void checkThread(SootMethod thread)

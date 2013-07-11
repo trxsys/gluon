@@ -468,6 +468,23 @@ public class Cfg
                 }
         }
 
+        for (int i=0; i < body.size(); i++)
+        {
+            ArrayList<LexicalElement> sub=new ArrayList<LexicalElement>(1);
+            NonTerminal e;
+
+            if (!(body.get(i) instanceof NonTerminal))
+                continue;
+
+            e=(NonTerminal)body.get(i).clone();
+
+            e.setName(e.getName()+"<>");
+
+            sub.add(e);
+
+            subwords.add(sub);
+        }
+
         // Add empty production (if the size is non zero there must be already
         // something that derives the empty word)
         if (body.size() == 0)
