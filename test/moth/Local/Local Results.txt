@@ -1,0 +1,57 @@
+SUBJECT: from C.Artho'03, very simple example, a thread makes a local copy
+of a shared variable, modifies the copy, and then updates the shared var.
+
+
+
+DOCUMENTED ANOMALIES: there could be a concurrent access that modifies the var,
+resulting in an anomaly such as a lost update. NOTICE this is interesting because
+paper gives this as an example of an anomaly they can not detect!
+
+
+
+EXPECTED RESULTS: detection of this anomaly
+
+
+
+RESULT:
+MORE THAN EXPECTED!
+instead of only the correct RwW anomaly, we found an RwR anomaly
+this is between Cell x field, and x.n
+again, maybe these cases should be tagged as accesses to the same field
+
+$$METHOD$$ method public static void main(java.lang.String[]):cartho_03.local.Local
+trace is null!
+
+
+$$METHOD$$ method public void run():cartho_03.local.Local
++--------+
+|  ATOM  |	Local.atom.java:14,2-8
+|   R: field int n:cartho_03.local.Local.Cell (1)
+|   R: field static cartho_03.local.Local.Cell x:cartho_03.local.Local (1)
++--------+
+    |
+    |
++--------+
+|  ATOM  |	Local.atom.java:18,2-8
+|   R: field static cartho_03.local.Local.Cell x:cartho_03.local.Local (1)
+|   W: field int n:cartho_03.local.Local.Cell (1)
++--------+
+
+
+
+Anomaly [atom1=Local.atom.java:14,2-8, atom2=Local.atom.java:18,2-8, threat=Local.atom.java:18,2-8] RwR [field1=field int n:cartho_03.local.Local.Cell, field2=field static cartho_03.local.Local.Cell x:cartho_03.local.Local]
+Anomaly [atom1=Local.atom.java:14,2-8, atom2=Local.atom.java:18,2-8, threat=Local.atom.java:18,2-8] RwW [field=field int n:cartho_03.local.Local.Cell]
+
+
+
+
+IDEA:
+
+this.field.subfield.x
+only x is accessed, reporting 3 reads achieves nothing and creates confusion
+[THEN AGAIN, what if we have T1:this.field.subfield.x==0,,this.field.m()  ||  T2:this.field=null  ??]
+
+this.field.subfield.method(...)
+field is not read (as explained above)
+if code of method() is available, evaluate it without reporting reading of subfield
+if unavailable, assume subfield is modified

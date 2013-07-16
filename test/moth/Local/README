@@ -1,0 +1,33 @@
+Description:
+This example was taken from [AHB03]. It is a very simple program, where a thread makes a local copy of a shared variable, modifies the copy, 
+and then updates the shared variable. The major part of the code is presented here. This test was provided by the original paper [AHB03] as an 
+example of an anomaly they can not detect.
+
+//Classe Main
+public void run(){
+	int tmp;
+	tmp = cell.getValue(); // Atomic
+	tmp++;
+	cell.setValue(tmp); // Atomic
+}
+
+//Classe Cell
+@Atomic
+int getValue() {
+	return n;
+}
+@Atomic
+void setValue(int tmp) {
+	n = tmp;
+}
+
+Documented Anomalies:
+1. This test has a possible stale value error since, between the read and write acess of the object of the class "Cell", another process could have updated
+the global variable's state resulting in a lost update.
+
+Results:
+Zero false positives and zero false negatives.
+
+
+Source:
+[AHB03] - Cyrille Artho, Klaus Havelund, e Armin Biere. High-level data races. Software Testing, Verification and Reliability, 13(4):207–227, Dezembro 2003.

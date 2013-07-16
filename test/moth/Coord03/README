@@ -1,0 +1,38 @@
+Description:
+This is an example from [AHB03] where a coordinate pair is represented by a single shared object. Parallel threads read and write the pair as a whole, 
+or accessing each variable in separate. The pseudo-code for this test is now presented:
+// Thread t1
+	d1 =  new Coord(1,2)
+	//Atomic
+	c.setXY(d1);
+
+// Thread t2 
+	x2 = c.getX();
+	use(x2);
+
+// Thread t3
+	//Atomic
+	x3 = c.getX();
+	//Atomic
+	y3 = c.getY(); 
+	use(x3,y3);
+
+// Thread t4
+	//Atomic
+	x4 = c.getX();
+	use(x4);
+	//Atomic
+	d4 = c.getXY();
+	x4 = d4.getX();
+	y4 = d4.getY();
+
+Documented Anomalies:
+1. The original paper [AHB03] considers that Thread 3 is the only one that is unsafe: since the readings of x and y are performed separately, the pair 
+could have changed between these accesses. Thread 4 is considered safe.
+
+Results:
+Zero false positives and zero false negatives.
+
+
+Source:
+[AHB03] - Cyrille Artho, Klaus Havelund, e Armin Biere. High-level data races. Software Testing, Verification and Reliability, 13(4):207–227, Dezembro 2003.

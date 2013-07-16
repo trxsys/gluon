@@ -1,0 +1,58 @@
+SUBJECT: praun+gross '03, example of Jigsaw CMS, contains interesting anomalies
+discovered during experiments of their approach.
+
+
+
+DOCUMENTED ANOMALIES: loadResourceStore() is not atomic; it first calls atomic
+checkClosed() which asserts the availability of the object. after that, it retrieves
+the entry, oblivious to a possible modification of this state by a current thread
+RwR
+
+
+
+EXPECTED RESULTS: the correct RwR. also, a false positive WrW resulting from
+calling shutdown() at the end.
+
+
+
+RESULTS:
+the false positive did not show up because entries.put(..) is not assumed to modify
+entries. we forced a write, and actually got 3 anomalies, this false positive was
+duplicated.
+
+$$METHOD$$ method public void run():pg03.jigsaw.ResourceStoreManager.Runner
++--------+
+|  ATOM  |	ResourceStoreManager.atom.java:12,2-8
+|   R: pg03.jigsaw.ResourceStoreManager.closed (1)
++--------+
+    |
+    |
++--------+
+|  ATOM  |	ResourceStoreManager.atom.java:34,2-8
+|   R: pg03.jigsaw.ResourceStoreManager.entries (2)
++--------+
+    |
+    |
++--------+
+|  ATOM  |	ResourceStoreManager.atom.java:45,2-8
+|   R: pg03.jigsaw.ResourceStoreManager.entries (1)
+|   W: pg03.jigsaw.ResourceStoreManager.closed (1)
++--------+
+
+$$METHOD$$ method public static void main(java.lang.String[]):pg03.jigsaw.ResourceStoreManager
+trace is null!
+
+Anomaly [atom1=ResourceStoreManager.atom.java:12,2-8, atom2=ResourceStoreManager.atom.java:34,2-8, threat=ResourceStoreManager.atom.java:45,2-8] RwR [field1=pg03.jigsaw.ResourceStoreManager.closed, field2=pg03.jigsaw.ResourceStoreManager.entries]
+
+
+
+
+
+
+OBSERVATION: assuming a write when the code for a method is unavailable would in this case
+lead to a false positive, even though the read/write interpretation would be more
+realistic. maybe the requirements for anomaly would have to change
+
+IDEA:
+this will probably bring many many problems, but change requirements:
+W(a),,W(b) || R(a)   -- if second writer also reads 'a', then no anomaly

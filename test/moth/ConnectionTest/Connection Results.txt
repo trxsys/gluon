@@ -1,0 +1,139 @@
+SUBJECT:
+Adapted example from beckham+bierhoff+aldrich:"Verifying Correct Usage of Atomic
+Blocks and Typestate", 2008.
+Example from second page, Figures 1 and 2. An object representing a network
+connection, and a GUI client. I did: implemented Counter class; added connect()
+method to Connection; made GUI extend Thread, the run() randomly chooses to
+send a message or to disconnect; and put a main method in GUI that spawns 10
+threads.
+
+
+
+DOCUMENTED ANOMALIES:
+Anomaly 1: GUI.trySendMessage calls two atomic methods, isConnected() and send(),
+	socket could have closed before message is sent.
+Anomaly 2: Connection.disconnect() handles socket atomically, but then resets
+	counter outside atom. counter could be reset at wrong time (when connection
+	has been reestablished)
+
+
+
+EXPECTED RESULTS:
+Anomaly 1 should not be detected (FALSE NEGATIVE), sittuation is R(a)--R(a,b);
+this issues anomaly RwR, which does not precisely semantically describe the sittuation
+(should be RwW)
+Anomaly 2 should be detected (OK), WrW, modifying two related variables in separate atoms
+but note!!!: if we only called socket.close and not socket=..., then there would be no anomaly!
+maybe make special case, for calling methods on field?
+Dont expect any other false positives.
+
+
+
+RESULT:
+NOTICE!!! final atom only has Read for counter, instead of read+write (increment)
+must expand unary operators!!!
+Anomaly 2 is the first, detected 3 times
+Anomaly 1 is "detected" as expected.
+NOTE: if we comment "this.socket = null;", all anomalies go away!
+this is because there is no writing to fields! but there is still an anomaly. so in this case,
+the only way to detect it would be to try to give some semantic to method calls... or go to byte code / JRE source code...
+
+$$METHOD$$ method public void run():bba08.GUI
++--------+
+|   IF   |
++--------+
+    |
+    |
+	+--------+
+	|  ATOM  |	Connection.atom.java:22,2-8
+	|   R: field private java.net.Socket socket:bba08.Connection (1)
+	|   W: field private java.net.Socket socket:bba08.Connection (1)
+	+--------+
+	    |
+	    |
+	+--------+
+	|  ATOM  |	Counter.atom.java:8,2-8
+	|   W: field int n:bba08.Counter (1)
+	+--------+
+	
+	    OR
+	
+	+--------+
+	|  ATOM  |	Connection.atom.java:30,2-8
+	|   R: field private java.net.Socket socket:bba08.Connection (1)
+	+--------+
+	    |
+	    |
+	+--------+
+	|  ATOM  |	Connection.atom.java:36,2-8
+	|   R: field private java.net.Socket socket:bba08.Connection (1)
+	|   R: field private final bba08.Counter counter:bba08.Connection (1)
+	|   R: field int n:bba08.Counter (1)
+	+--------+
+
+
+$$METHOD$$ method public static void main(java.lang.String[]):bba08.GUI
+trace is null!
+
+
+
+Anomaly [atom1=Connection.atom.java:22,2-8, atom2=Counter.atom.java:8,2-8, threat=Connection.atom.java:22,2-8] WrW [field1=field private java.net.Socket socket:bba08.Connection, field2=field int n:bba08.Counter]
+Anomaly [atom1=Connection.atom.java:22,2-8, atom2=Counter.atom.java:8,2-8, threat=Connection.atom.java:30,2-8] WrW [field1=field private java.net.Socket socket:bba08.Connection, field2=field int n:bba08.Counter]
+Anomaly [atom1=Connection.atom.java:22,2-8, atom2=Counter.atom.java:8,2-8, threat=Connection.atom.java:36,2-8] WrW [field1=field private java.net.Socket socket:bba08.Connection, field2=field int n:bba08.Counter]
+Anomaly [atom1=Connection.atom.java:30,2-8, atom2=Connection.atom.java:36,2-8, threat=Connection.atom.java:22,2-8] RwR [field1=field private java.net.Socket socket:bba08.Connection, field2=field private final bba08.Counter counter:bba08.Connection]
+Anomaly [atom1=Connection.atom.java:30,2-8, atom2=Connection.atom.java:36,2-8, threat=Connection.atom.java:22,2-8] RwR [field1=field private java.net.Socket socket:bba08.Connection, field2=field int n:bba08.Counter]
+
+
+
+
+
+
+RESULT SUMMARY:
+OK: 1, but close to not being detected...
+BAD SEMANTIC: 1
+
+
+
+
+IDEA:
+Notice all anomalies disapear if we do not set socket to null. in this case, there
+is no writing to variable, altough there is an inner modification of the socket field.
+if we assume that, all methods whose code we dont have (JRE) are modifiers...
+we could detect this anomaly.
+
+now, this anomaly would be detected because we have
+atom{
+	R(socket)
+	W(socket)			//because we assume socket.close() modifies
+}
+counter.reset()
+	-> atom{
+		R(n)
+		W(n)
+	}
+
+this is a RwR or WrW, between Connection.socket and Counter.n
+this is not exactly what we want.
+so, we know that this atom was reached by calling method on a field of Connection,
+which is the anomaly we want to catch.
+so we could use this call stack information to know that:
+counter.reset()
+	atom{
+		R(n)
+		W(n)
+		W(Connection.counter)
+	}
+
+and hence find an anomaly WrW between Connection.socket and Connection.counter
+
+
+NO WAIT!
+consider:
+
+	this.socket.close();
+
+maybe this should NOT even be a read!!
+we could distinguish between "this.socket==..." and "this.socket.(..)"
+if we deref to call method, semantic changes!
+consider "myMethod(this.socket);"
+again, is only read

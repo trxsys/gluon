@@ -1,0 +1,49 @@
+Description:
+This test simulates a network chat application. In this implementation, a class GUI (Graphical User Interface) uses the network connection services, 
+represented by a Java object, that randomly sends messages and disconnects. Another object represents a counter that counts the number of sended
+messages to the network. The most important parts of the code are now presented:
+	//Classe Connection
+	final Counter counter;
+	java.net.Socket socket;
+	
+	@Atomic
+	boolean isConnected(){
+		return !socket.isClosed();
+	}
+	
+	@Atomic
+	void send(String msg){
+		socket.write(msg);
+		counter.increment();
+	}
+	
+	@Atomic
+	void closeSocket(){
+		socket.close();
+	}
+	
+	void disconnect(){
+		closeSocket();
+		counter.reset(); //Atomic
+	}
+
+	//Classe GUI
+	void trySendMsg(String msg){
+		if(connection.isConnected()){
+			connection.send(msg);
+		}
+	}
+
+Documented Anomalies:
+1. The method "disconnect" resets the counter and closes the network connection. However, since these two operations are made in two distinct atomic
+methods, other process could see the inconsistent state between them, where the connection is closed but the counter has a positive number of sended messages.
+
+2. The method "trySendMessage" tests if the connection is closed in the atomic method "isConnected" and, if it is not, sends a message in a second method
+"send". However, another process could close the connection before the message is sent.
+
+Results:
+Zero false positives and zero false negatives.
+
+
+Source:
+[BBA08] - Nels E. Beckman, Kevin Bierhoff, e Jonathan Aldrich. Verifying correct usage of atomic blocks and typestate. SIGPLAN Not., 43(10):227–244, 2008.

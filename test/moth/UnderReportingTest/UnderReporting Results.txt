@@ -1,0 +1,35 @@
+SUBJECT: praun+gross 03 example of under reporting, figure 2
+
+
+
+DOCUMENTED ANOMALIES: run() calls inc() twice, one to check the state, and another
+to update it. state could change between.
+
+
+
+EXPECTED RESULTS: our approach should correctly flag a RwW!
+
+
+
+RESULTS:
+as expected. the only problem is the duplicated anomalies, should take care of that
+
+$$METHOD$$ method public void run():pg03.under.Main
++--------+
+|  ATOM  |	Counter.atom.java:9,2-8
+|   R: pg03.under.Counter.i (1)
+|   W: pg03.under.Counter.i (1)
++--------+
+    |
+    |
++--------+
+|  ATOM  |	Counter.atom.java:9,2-8
+|   R: pg03.under.Counter.i (1)
+|   W: pg03.under.Counter.i (1)
++--------+
+
+$$METHOD$$ method public static void main(java.lang.String[]):pg03.under.Main
+trace is null!
+
+Anomaly [atom1=Counter.atom.java:9,2-8, atom2=Counter.atom.java:9,2-8, threat=Counter.atom.java:9,2-8] RwW [field=pg03.under.Counter.i]
+Anomaly [atom1=Counter.atom.java:9,2-8, atom2=Counter.atom.java:9,2-8, threat=Counter.atom.java:9,2-8] RwW [field=pg03.under.Counter.i]

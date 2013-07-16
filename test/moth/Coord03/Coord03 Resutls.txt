@@ -1,0 +1,92 @@
+SUBJECT: threads from C.Artho'03
+A coordinate pair managed by a single shared object. threads read and write the pair
+as a whole, or accessing each variable in separate
+
+
+
+DOCUMENTED ANOMALIES:
+Thread3 is unsafe: reads X and Y in separate; the pair could have changed in between.
+
+
+
+OTHER ANOMALIES:
+it is arguable whether the other threads incur in anomalies or not. a more precise
+semantical specification would be required. from the remaining threads, T4 is the other
+one with multiple atoms. state could have changed between them, but it does not
+seem to harm execution
+
+
+
+EXPECTED RESULTS:
+Anomalies in T3 and T4
+
+
+
+RESULT:
+All detected exactly as expected.
+There are false positives with local var d4 in thread T4, this could only be solved
+with points-to analysis
+
+$$METHOD$$ method public static void main(java.lang.String[]):cartho_03.coord.Main
+trace is null!
+
+
+$$METHOD$$ method public void run():cartho_03.coord.Main.T4
++--------+
+|  ATOM  |	Coord.atom.java:12,2-8
+|   R: field private double x:cartho_03.coord.Coord (1)
++--------+
+    |
+    |
++--------+
+|  ATOM  |	Coord.atom.java:24,2-8
+|   R: field private double y:cartho_03.coord.Coord (1)
+|   R: field private double x:cartho_03.coord.Coord (1)
++--------+
+    |
+    |
++--------+
+|  ATOM  |	Coord.atom.java:12,2-8
+|   R: field private double x:cartho_03.coord.Coord (1)
++--------+
+    |
+    |
++--------+
+|  ATOM  |	Coord.atom.java:18,2-8
+|   R: field private double y:cartho_03.coord.Coord (1)
++--------+
+
+
+$$METHOD$$ method public void run():cartho_03.coord.Main.T3
++--------+
+|  ATOM  |	Coord.atom.java:12,2-8
+|   R: field private double x:cartho_03.coord.Coord (1)
++--------+
+    |
+    |
++--------+
+|  ATOM  |	Coord.atom.java:18,2-8
+|   R: field private double y:cartho_03.coord.Coord (1)
++--------+
+
+
+$$METHOD$$ method public void run():cartho_03.coord.Main.T2
++--------+
+|  ATOM  |	Coord.atom.java:12,2-8
+|   R: field private double x:cartho_03.coord.Coord (1)
++--------+
+
+
+$$METHOD$$ method public void run():cartho_03.coord.Main.T1
++--------+
+|  ATOM  |	Coord.atom.java:42,2-8
+|   R: field private double y:cartho_03.coord.Coord (1)
+|   R: field private double x:cartho_03.coord.Coord (1)
+|   W: field private double y:cartho_03.coord.Coord (1)
+|   W: field private double x:cartho_03.coord.Coord (1)
++--------+
+
+Anomaly [atom1=Coord.atom.java:12,2-8, atom2=Coord.atom.java:24,2-8, threat=Coord.atom.java:42,2-8] RwR [field1=field private double x:cartho_03.coord.Coord, field2=field private double y:cartho_03.coord.Coord]
+Anomaly [atom1=Coord.atom.java:24,2-8, atom2=Coord.atom.java:12,2-8, threat=Coord.atom.java:42,2-8] RwR [field1=field private double y:cartho_03.coord.Coord, field2=field private double x:cartho_03.coord.Coord]
+Anomaly [atom1=Coord.atom.java:12,2-8, atom2=Coord.atom.java:18,2-8, threat=Coord.atom.java:42,2-8] RwR [field1=field private double x:cartho_03.coord.Coord, field2=field private double y:cartho_03.coord.Coord]
+Anomaly [atom1=Coord.atom.java:12,2-8, atom2=Coord.atom.java:18,2-8, threat=Coord.atom.java:42,2-8] RwR [field1=field private double x:cartho_03.coord.Coord, field2=field private double y:cartho_03.coord.Coord]

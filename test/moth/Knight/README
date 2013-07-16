@@ -1,0 +1,45 @@
+Description:
+O teste seguinte foi retirado de [TLS10] e pretende apurar o número mínimo (óptimo) de movimentos que um cavalo tem que fazer para capturar outra peça 
+num tabuleiro de xadrez. Isto é conseguido através da exploração de todos os movimentos possíveis por parte dos diferentes processos, sendo que cada 
+solução é comparada com a melhor solução (partilhada) encontrada até ao momento.
+
+@Atomic
+public int get_solution(Point p){
+	return solution[p.x][p.y];
+}
+	
+@Atomic
+public void set_solution(Point p, int m){
+	solution[p.x][p.y]=m;
+}
+	
+private void check_and_set_solution() {
+	if (moves <= km.get_solution(me)){  // Atomic
+		// ... solution could have changed
+		km.set_solution(me, moves);  // Atomic
+	}
+	// ...	
+}
+
+// ...
+
+public void run() {
+	// ...
+	if (check_and_set_solution() < 0)
+		return;
+	// ...
+	new Solver(...).start();
+	// ...
+}
+
+Documented Anomalies:
+1. Este teste contém um stale-value error. Cada processo testa atomicamente se o número de passos da sua solução é inferior ao da melhor solução 
+partilhada por todos os processos e, nesse caso, actualiza a segunda noutro método atómico. No entanto, entre os dois métodos atómicos, outro processo 
+a executar o mesmo código podia ter alterado a melhor solução resultando numa actualização perdida.
+
+Results:
+Zero falsos negativos e zero falsos positivos.
+
+
+Source:
+[TLS10] - Bruno Teixeira, João Lourenço, e Diogo Sousa. A Static Approach for Detecting Concurrency Anomalies in Transactional Memory. Memory, 2010.

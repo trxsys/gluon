@@ -1,0 +1,47 @@
+Description:
+Este teste consiste num exemplo real do Jigsaw CMS que foi adaptado de [vG03]. Não existe ainda um consenso na semântica associada ao tratamento de 
+excepções dentro do escopo transaccional. Assim, o código deste exemplo foi reescrito de forma a evitar o uso de excepções mantendo, no entanto, a
+semântica do programa.
+O programa é constituído por um conjunto de objectos guardados na estrutura "entries" e uma variável booleana "closed" que representa a disponibilidade 
+desse mesmo conjunto. O método "loadResourceStore" retorna um elemento do conjunto se este estiver disponível, ou null caso contrário. Para isso, é 
+testada a condição de disponibilidade através do método atómico "checkClosed" e, caso esta seja verificada, o conjunto "entries" é acedido num segundo 
+método atómico "lookupEntry". Finalmente, o método atómico "shutdown" permite reiniciar o conjunto, colocando o valor da variável "closed" a true.
+
+boolean closed = false;
+Map entries = new HashMap();
+@Atomic
+boolean checkClosed() {
+	return closed;
+}
+@Atomic
+Entry lookupEntry(Object key) {
+	return (Entry) entries.get(key);
+}
+
+@Atomic
+void shutdown() {
+	entries.clear();
+	closed = true;
+}
+
+ResourceStore loadResourceStore() {
+	if(checkClosed()){
+		return null;
+	}
+	Entry e = lookupEntry(new Object());
+	return e.getStore();
+}
+
+Documented Anomalies:
+1. O programa descrito contém um high-level datarace já que o método "loadResourceStore" acede à variável condição e ao conjunto "entries" em métodos 
+atómicos distintos, fazendo com que outro processo pudesse alterar o estado do sistema entre os dois. Considere-se que um processo p1 executa o método 
+"loadResourceStore". Se outro processo p2 executar o método "shutdown" exactamente antes do primeiro obter um elemento do conjunto, então p1 irá tentar 
+aceder a um conjunto vazio gerando, possivelmente, uma excepção "NullPointerException".
+
+Results:
+Zero falsos negativos e zero falsos positivos.
+
+
+Source:
+[vG03] - Christoph von Praun e Thomas R. Gross. Static detection of atomicity violations in object-oriented programs. In Journal of Object Technology, 
+pág. 2004, 2003.

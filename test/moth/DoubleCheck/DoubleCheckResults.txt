@@ -1,0 +1,46 @@
+SUBJECT: test from C.Artho'04, fig 6
+
+
+
+DOCUMENTED ANOMALIES: this was also created as an example of a correct program
+take will raise an anomaly. it would be RwW, however it is a false positive since
+user ensures he can write. points-to would be needed to avoid this. paper says
+it would require model-checking, I dont know
+
+
+
+EXPECTED RESULTS: only this false RwW should be flagged. if it is the only false positive,
+this is acceptable.
+
+
+
+RESULTS:
+another false positive than expected! but this is because of subfields, maybe we
+should change rules for accesses.
+$$METHOD$$ method public static void main(java.lang.String[]):cartho_04.fig6.Fig6
+trace is null!
+
+$$METHOD$$ method public void run():cartho_04.fig6.Fig6
++--------+
+|  ATOM  |	Fig6.atom.java:21,3-9
+|   R: cartho_04.fig6.Fig6.Cell.field (1)
+|   R: cartho_04.fig6.Fig6.shared (1)
++--------+
+    |
+    |
++--------+
+|  ATOM  |	Fig6.atom.java:25,3-9
+|   R: cartho_04.fig6.Fig6.Cell.field (1)
+|   R: cartho_04.fig6.Fig6.shared (1)
+|   W: cartho_04.fig6.Fig6.Cell.field (1)
++--------+
+
+Anomaly [atom1=Fig6.atom.java:21,3-9, atom2=Fig6.atom.java:25,3-9, threat=Fig6.atom.java:25,3-9] RwR [field1=cartho_04.fig6.Fig6.Cell.field, field2=cartho_04.fig6.Fig6.shared]
+Anomaly [atom1=Fig6.atom.java:21,3-9, atom2=Fig6.atom.java:25,3-9, threat=Fig6.atom.java:25,3-9] RwW [field=cartho_04.fig6.Fig6.Cell.field]
+
+
+
+
+IDEA:
+
+this.field.subfield.subsub should count as a single read? this might bring problems...

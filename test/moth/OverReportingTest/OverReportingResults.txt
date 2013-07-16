@@ -1,0 +1,45 @@
+SUBJECT: praun+gross 03 over reporting example, fig 3
+
+
+
+DOCUMENTED ANOMALIES: none. this was created as an example of a correct program
+that generates a false positive. there is a blatant low-level datarace, which we
+hope does not interfer with the rest.
+
+
+
+EXPECTED RESULTS: none! this false positive should not arise in the current
+implementation. however, assuming reads or writes from unavailable methods
+could cause false positives.
+
+
+
+RESULTS:
+two false positives!
+the first one would be eliminated if we considered multiple dereferencing:
+RwR (keys, keys.length) -- accesses are in fact to the same field/object
+for the second one, we would have to change anomaly specification...
+
+$$METHOD$$ method public void run():pg03.over.MapClient
++--------+
+|  ATOM  |	Map.atom.java:12,3-9
+|   R: pg03.over.Map.keys (1)
+|   R: java.lang.Object[].length (1)
+|   W: pg03.over.Map.keys (1)
+|   W: pg03.over.Map.values (1)
+|   W: pg03.over.Map.init_done (1)
++--------+
+    |
+    |
++--------+
+|  ATOM  |	Map.atom.java:23,2-8
+|   R: pg03.over.Map.keys (2)
+|   R: java.lang.Object[].length (1)
+|   R: pg03.over.Map.values (1)
++--------+
+
+$$METHOD$$ method public static void main(java.lang.String[]):pg03.over.MapClient
+trace is null!
+
+Anomaly [atom1=Map.atom.java:12,3-9, atom2=Map.atom.java:23,2-8, threat=Map.atom.java:12,3-9] RwR [field1=pg03.over.Map.keys, field2=java.lang.Object[].length]
+Anomaly [atom1=Map.atom.java:12,3-9, atom2=Map.atom.java:23,2-8, threat=Map.atom.java:12,3-9] RwR [field1=pg03.over.Map.keys, field2=pg03.over.Map.values]

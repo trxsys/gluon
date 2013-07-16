@@ -1,0 +1,34 @@
+Description:
+Este teste foi retirado de [vG03] e consiste num programa cuja anomalia não foi detectada pela abordagem dos autores. Um contador é partilhado por 
+diversos processos que têm a possibilidade de o incrementar através do método atómico "inc". Este método, para além de incrementar o valor do contador,
+retorna o seu valor antigo. Em seguida, é ilustrada a classe que representa o contador, bem como o código de um processo que utiliza este método para
+duplicar o valor do mesmo.
+
+1 // Classe Counter
+2 int i ;
+3
+4 @Atomic
+5 int inc ( int a ) {
+6 		i += a ;
+7 		return i ;
+8 }
+9
+10 // Classe Thread
+11 static Counter c;
+12
+13 public void run () {
+14 		int i = c.inc(0);
+15 		c.inc(i); // Valor do contador pode t e r sido al terado
+16 }
+
+Documented Anomalies:
+1. O antigo valor da variável "i", retornado na linha 14, é usado como parâmetro da segunda chamada do mesmo método. No entanto, entre as duas chamadas 
+do método, outro processo podia ter alterado o valor do contador fazendo com que a variável temporária não reflectisse o verdadeiro valor de "i".
+
+Results:
+Zero falsos negativos e zero falsos positivos.
+
+
+Source:
+[vG03] - Christoph von Praun e Thomas R. Gross. Static detection of atomicity violations in object-oriented programs. In Journal of Object Technology, 
+pág. 2004, 2003.

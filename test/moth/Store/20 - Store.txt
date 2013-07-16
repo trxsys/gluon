@@ -1,0 +1,48 @@
+Description:
+Este teste foi especialmente concebido para validar a nossa ferramenta e consiste num programa que simula o funcionamento de uma loja. Neste programa, 
+são criados processos "Client" que, com base nos produtos da loja, fazem pedidos (carrinhos) com diversos produtos, processos "Worker" que estão 
+constantemente à espera de novos pedidos de clientes e, finalmente, processos "Supplier" que aleatoriamente vão fornecendo produtos à loja aumentando 
+o seu stock.
+Na loja, cada produto disponível, para além da sua informação descritiva, está associado a um número n que representa o número de unidades desse mesmo 
+produto na loja, e a um booleano "soldOut" que dita se este está esgotado ou não. Intuitivamente, em qualquer instante do programa este booleano deve 
+conter o valor da expressão (n == 0). Cada vez que é feita uma venda, estes atributos são actualizados em métodos atómicos distintos podendo gerar 
+estados inconsistentes. É disponibilizado ainda um método que permite verificar a consistência do produto, i.e., se o booleano "soldOut" é coerente 
+com o valor de "n".
+
+// Classe Worker
+
+public void run(){
+	while(true){
+		if(Store.hasOrders()){	// Atomic
+			String log = treateOrder();	// Atomic
+			Store.addLog(log);
+		}
+	}
+	waitForClients();
+}
+
+// Classe StoreProduct
+
+public void sellProduct(int units){
+	decNumber(units);	// Atomic
+	// Someone can read this inconsistent state
+	// (We have product but it is sold out)
+	setSoldOut(n == 0);	// Atomic
+}
+
+@Atomic
+public boolean isConsistent(){
+	return (soldOut && n == 0) || (n > 0 && !soldOut);
+}
+
+Documented Anomalies:
+1. O processo "Worker" testa se existe pelo menos um pedido pendente num método atómico e, se houver, vai buscar o primeiro pedido e trata-o noutro 
+método atómico. Entre estes, outro processo a executar o mesmo código poderia ter consumido todos os pedidos existentes fazendo com que o primeiro 
+tentasse tratar um pedido que não existe gerando, potencialmente, um "NullPointerException". 
+
+2. Entre os dois métodos atómicos do método "sellProduct" outro processo poderia testar a consistência desse produto podendo observar que o produto 
+não está esgotado apesar de não ter qualquer unidade (n = 0).
+
+
+Results:
+Zero falsos negativos e zero falsos positivos.

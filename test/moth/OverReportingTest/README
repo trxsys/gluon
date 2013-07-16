@@ -1,0 +1,52 @@
+Description:
+Este teste foi apresentado em [vG03] como um programa isento de dataraces que gera falsos positivos na abordagem dos autores. Um mapa, representado pelas 
+estruturas de dados "keys" e "values", é partilhado por um conjunto de processos, sendo inicializado uma única vez. Passada a fase de inicialização, 
+os processos fazem diversas leituras obtendo, assim, os elementos do mapa.
+
+//Classe Map
+Object[] keys, values;
+boolean init_done = false;
+@Atomic
+void init() {
+	if (!init_done){
+		// ... initialize keys and values
+	}
+}
+@Atomic
+Object get(Object key) {
+	Object res = null;
+	for (int i = 0; i < keys.length; i++) {
+		if (key.equals(keys[i])) {
+			res = values[i];
+			break;
+		}
+	}
+	return res;
+}
+//Classe Client
+static Map m;
+
+public static void main(String[] args) {
+	m = new Map();
+	new MapClient().start();
+	new MapClient().start();
+}
+
+public void run() {
+	// lazy initialization
+	m.init();
+	m.get(new Object());
+	// ...
+}
+
+Documented Anomalies:
+Não existe qualquer tipo de datarace neste teste. Este programa foi disponibilizado em [vG03] como um exemplo de um programa correcto que pode levar 
+à geração de falsos positivos.
+
+Results:
+Zero falsos negativos e zero falsos positivos.
+
+
+Source:
+[vG03] - Christoph von Praun e Thomas R. Gross. Static detection of atomicity violations in object-oriented programs. In Journal of Object Technology, 
+pág. 2004, 2003.

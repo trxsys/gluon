@@ -1,0 +1,35 @@
+Description:
+O teste descrito nesta secção foi adaptado de [IBM]. Um vector é partilhado por diversos processos, sendo disponibilizados métodos que permitem 
+verificar os índices que se encontram livres e marcar uma determinada posição do vector como livre ou ocupada.
+
+private void alloc_block(int i) throws Exception {
+	resultBuf[i] = vector.getFreeBlockIndex();  // Atomic
+	if (resultBuf[i] != -1)
+		vector.markAsAllocatedBlock(resultBuf[i]);  // Atomic
+}
+
+public void run() {
+	
+	// ...
+	for (int i = 0; i < resultBuf.length; i++) 
+		alloc_block(i);
+
+	for (int i = 0; i < resultBuf.length; i++) {
+		if (resultBuf[i] != -1)
+			vector.markAsFreeBlock(resultBuf[i]); // Atomic
+	}
+	
+	// ...
+}
+
+Documented Anomalies:
+1. Este teste contem um stale-value error no método "alloc_block". Este método é constituído por dois métodos atómicos sendo que o primeiro procura o 
+índice de um bloco livre, e o segundo marca-o como ocupado. No entanto, entre estes dois, outro processo podia ter alocado o mesmo bloco, criando uma 
+situação indesejada onde o mesmo bloco foi alocado por dois processos.
+
+Results:
+Zero falsos negativos e zero falsos positivos.
+
+
+Source:
+[IBM] - IBM’s Concurrency Testing Repository.

@@ -1,0 +1,32 @@
+SUBJECT: simple account example from Praun+Gross '03, fig 1
+
+
+
+DOCUMENTED ANOMALIES: method update has two atoms that should be a single. reads
+balance, and then uses it to update current state, but balance could have changed.
+RwW
+
+
+
+EXPECTED RESULTS: clean detection of anomaly
+
+
+
+RESULTS:
+exactly as expected
+$$METHOD$$ method public static void main(java.lang.String[]):pg03.account.Main
+trace is null!
+
+$$METHOD$$ method public void run():pg03.account.Update
++--------+
+|  ATOM  |	Account.atom.java:8,2-8
+|   R: pg03.account.Account.balance (1)
++--------+
+    |
+    |
++--------+
+|  ATOM  |	Account.atom.java:16,2-8
+|   W: pg03.account.Account.balance (1)
++--------+
+
+Anomaly [atom1=Account.atom.java:8,2-8, atom2=Account.atom.java:16,2-8, threat=Account.atom.java:16,2-8] RwW [field=pg03.account.Account.balance]

@@ -1,0 +1,53 @@
+SUBJECT: NASA example from C.Artho'03
+
+
+
+DOCUMENTED ANOMALIES:
+atoms of Task thread should be atomic as a whole.
+otherwise:
+	Task sets property;
+	Daemon makes checks, everything allright;
+	<Property is destroyed>;
+	Task sets achieved, even though property does not hold.
+Daemon has missed violation.
+
+
+
+EXPECTED RESULTS:
+should properly report WrW
+
+
+
+RESULTS:
+Note: first test of new output format. seems to work, and is much more readable.
+result seems to be as expected
+
+$$METHOD$$ method public void run():cartho_03.nasa.Task
++--------+
+|  ATOM  |	Task.atom.java:18,2-8
+|   W: cartho_03.nasa.Cell.value (1)
++--------+
+    |
+    |
++--------+
+|  ATOM  |	Task.atom.java:24,2-8
+|   W: cartho_03.nasa.Cell.achieved (1)
++--------+
+
+
+$$METHOD$$ method public void run():cartho_03.nasa.Daemon
++--------+
+|  ATOM  |	Daemon.atom.java:18,3-9
+|   R: cartho_03.nasa.Cell.value (1)
+|   R: cartho_03.nasa.Daemon.system_state (1)
+|   R: cartho_03.nasa.Daemon.table (2)
+|   R: cartho_03.nasa.Cell.achieved (1)
++--------+
+
+
+$$METHOD$$ method public static void main(java.lang.String[]):cartho_03.nasa.Main
+trace is null!
+
+
+
+Anomaly [atom1=Task.atom.java:18,2-8, atom2=Task.atom.java:24,2-8, threat=Daemon.atom.java:18,3-9] WrW [field1=cartho_03.nasa.Cell.value, field2=cartho_03.nasa.Cell.achieved]

@@ -1,0 +1,39 @@
+Description:
+Este teste foi apresentado em [AHB04] como um exemplo simples de um high-level datarace. O programa descreve um par de coordenadas cujos valores podem 
+ser reiniciados através do método reset ou trocados com o método atómico swap. A implementação destes dois métodos é ilustrada de seguida:
+
+@Atomic
+public void swap(){
+	int oldX = coord.x;
+	coord.x = coord.y;
+	coord.y = oldX;
+}
+public void reset(){
+	resetX();
+// inconsistent state (0, y)
+	resetY();
+}
+@Atomic
+public void resetX(){
+	coord.x = 0;
+}
+@Atomic
+public void resetY(){
+	coord.y = 0;
+}
+
+Documented Anomalies:
+1. A ocorrência do datarace deste programa está relacionada com o facto de operações que deveriam ser executadas atomicamente poderem ser intercaladas 
+com operações conflituosas. Sendo a operação "reset" constituída por dois blocos atómicos, é possível que outros processos observem o estado intermédio 
+<0,y> entre estes que, por não corresponder a nenhuma versão completa do par, é inconsistente. Por exemplo, se a operação "swap" fosse executada por 
+outro processo entre estes dois métodos, teríamos um estado final <y,0> que corresponde a um estado que não é atingível com uma execução sequencial 
+das operações "reset" e "swap".
+
+
+Results:
+Zero false positives and zero false negatives.
+
+
+Source:
+[AHB04] - Cyrille Artho, Klaus Havelund, e Armin Biere. Using block-local atomicity to detect stale-value concurrency errors. Automated Technology for 
+Verification and Analysis, pág. 150–164, 2004
