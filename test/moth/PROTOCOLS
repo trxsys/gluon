@@ -8,6 +8,9 @@ AccountTest
         update() getBalance()
         getBalance() update()
 
+AllocateVector
+        getFreeBlockIndex() markAsAllocatedBlock()
+
 Elevator
         checkUp(X) claimUp(_,X)
         checkDown(X) claimDown(_,X)
@@ -56,6 +59,3 @@ Coord04
         resetY() resetX()
         getX() getY() // swap (implicit calls)
         getY() getX() //          "
-
-AllocateVector
-        getFreeBlockIndex() maskAsAllocatedBlock()

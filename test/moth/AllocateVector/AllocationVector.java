@@ -1,12 +1,14 @@
 package test.moth.AllocateVector;
 
 import test.common.Atomic;
+import test.common.Contract;
 
 /**
  * class AllocationVector: Used to manage allocation and freeing of blocks.
  * BUG DOCUMENTATION: There is a synchronization GAP between the methods
  * "getFreeBlockIndex" and "markAsAllocatedBlock", in which anything can be done.
  */
+@Contract(clauses ="getFreeBlockIndex markAsAllocatedBlock;")
 public class AllocationVector {
 	/**
 	 * Character vector which holds information about allocated and free blocks,
