@@ -1,8 +1,12 @@
 package test.moth.Coord03;
 
 import test.common.Atomic;
+import test.common.Contract;
 
-
+@Contract(clauses = "getX getY;"
+                   +"getY getX;"
+                   +"setX setY;"
+                   +"setY setX;")
 public class Vars {
 	int x = 0;
 	int y = 0;

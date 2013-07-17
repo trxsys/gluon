@@ -1,7 +1,3 @@
-@Contract(clauses ="a b c;"
-                  +"l l l;"
-                  +"i1 i2;")
-
 AccountTest
         setBalance() getBalance()
         getBalance() setBalance()
@@ -18,6 +14,21 @@ ArithmeticDatabase
 ConnectionTest
         isConnected() send()
         resetSocket() resetCounter()
+
+Coord03
+        getX() getY()
+        getY() getX()
+        setX() setY()
+        setY() setX()
+
+@Contract(clauses = "a b c;"
+                   +"l l l;")
+
+Coord04
+        resetX() resetY()
+        resetY() resetX()
+        getX() getY() // swap (implicit calls)
+        getY() getX() //          "
 
 Elevator
         checkUp(X) claimUp(_,X)
@@ -48,13 +59,3 @@ UnderReportingTest
 VectorFail
         max() min()
         min() max()
-
-Coord03
-        getX() getY()
-        getY() getX()
-
-Coord04
-        resetX() resetY()
-        resetY() resetX()
-        getX() getY() // swap (implicit calls)
-        getY() getX() //          "
