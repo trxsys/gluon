@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.net.Socket;
 
 import test.common.Atomic;
+import test.common.Contract;
 
+@Contract(clauses = "isConnected send;"
+                   +"resetSocket resetCounter;")
 class Connection {
 
 	private final Counter counter;
@@ -20,14 +23,13 @@ class Connection {
 		this.socket = new Socket();
 	}
 	
-	public void disconnect() throws IOException {
-		resetSocket();
+	public void resetCounter() {
 		this.counter.reset();
 	}
 	
 	//Method created to englobe the transaction
 	@Atomic
-	private void resetSocket() throws IOException{
+	public void resetSocket() throws IOException{
 		this.socket.close();
 	}
 

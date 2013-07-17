@@ -27,6 +27,18 @@ class GUI extends Thread {
 		}
 	}
 
+    private void disconnect()
+    {
+        try {
+            this.connection.resetSocket();
+            this.connection.resetCounter();
+        }
+        catch (Exception _)
+        {
+
+        }
+    }
+
 	public void run() {
 		Random rand = new Random();
 		int command;
@@ -34,7 +46,7 @@ class GUI extends Thread {
 			do {
 				command = rand.nextInt(10);
 				if (command == 0)
-					this.connection.disconnect();
+                    disconnect();
 				else {
 					byte[] bytes = new byte[rand.nextInt(10)];
 					rand.nextBytes(bytes);

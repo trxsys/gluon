@@ -15,6 +15,10 @@ ArithmeticDatabase
         X=get_max_key() insert(X,_)
         iterator() insert()
 
+ConnectionTest
+        isConnected() send()
+        resetSocket() resetCounter()
+
 Elevator
         checkUp(X) claimUp(_,X)
         checkDown(X) claimDown(_,X)
@@ -44,10 +48,6 @@ UnderReportingTest
 VectorFail
         max() min()
         min() max()
-
-ConnectionTest
-        isConnected() send()
-        closeSocket() resetCounter()
 
 Coord03
         getX() getY()
