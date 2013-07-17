@@ -137,7 +137,7 @@ public class ProgramBehaviorAnalysis
             
             if (isTargetModule
                 && !calledMethod.isConstructor()
-                && calledMethod.isPublic())
+                && !calledMethod.isPrivate())
                 prodBodyPrefix=new PPTerminal(calledMethod);
             else if (calledMethod.hasActiveBody()
                      && (x.Main.WITH_JAVA_LIB
