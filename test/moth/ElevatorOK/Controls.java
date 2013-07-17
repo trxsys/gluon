@@ -1,4 +1,4 @@
-package test.moth.Elevator;
+package test.moth.ElevatorOK;
 
 /*
  * Copyright (C) 2000 by ETHZ/INF/CS

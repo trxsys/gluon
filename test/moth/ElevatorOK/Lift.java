@@ -1,4 +1,4 @@
-package test.moth.Elevator;
+package test.moth.ElevatorOK;
 
 /*
  * Copyright (C) 2000 by ETHZ/INF/CS
@@ -9,6 +9,8 @@ package test.moth.Elevator;
  */
 
 import java.util.*;
+
+import test.common.Atomic;
 
 // class that implements the elevator threads
 class Lift extends Thread {
@@ -252,6 +254,7 @@ class Lift extends Thread {
 	// Sets the floor's upFlag to true if he has not already been set to true
 	// Returns true if the elevator has successfully claimed the call, and
 	// False if the call was already claimed (upFlag was already true)
+    @Atomic
 	public boolean claimUp(Controls c, String lift, int floor) {
 		if (c.checkUp(floor)) {
 			if (c.claimUp(floor)) {
@@ -266,6 +269,7 @@ class Lift extends Thread {
 	// Sets the floor's downFlag to true if he has not already been set to true
 	// Returns true if the elevator has successfully claimed the call, and
 	// False if the call was already claimed (downFlag was already true)
+    @Atomic
 	public boolean claimDown(Controls c, String lift, int floor) {
 		if (c.checkDown(floor)) {
 			if (c.claimDown(floor)) {
