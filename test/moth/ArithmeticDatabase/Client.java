@@ -52,23 +52,18 @@ public class Client
 	private void insert_new_expression(RPN_Expression exp)
 	{
 		Integer foreign_key=null;
-		
-		//synchronized (exp_table) { synchronized (res_table) {
-		
+				
 		/* If there is a entry with exp.evaluate() in
 		 * exp_table use that entry instead of inserting
 		 * a new one 
 		 */
-		if ((foreign_key = get_key_by_result(exp.evaluate()))
-		    < 0)
+		if ((foreign_key = get_key_by_result(exp.evaluate())) < 0)
 		{
 			foreign_key = res_table.get_max_key();
 			foreign_key = (foreign_key == null) ? 0 : foreign_key+1;
 			res_table.insert(foreign_key,exp.evaluate());
 		}
 		exp_table.insert(exp,foreign_key);
-		//	} } 
-		
 	}
 	
 	public void run()

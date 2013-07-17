@@ -5,7 +5,10 @@ import java.util.LinkedList;
 import java.util.Iterator;
 
 import test.common.Atomic;
+import test.common.Contract;
 
+@Contract(clauses ="get_max_key insert;"
+                  +"iterator insert;")
 public class Table<K extends Comparable<K>,V> implements Iterable<Pair<K,V>>
 {
 	private List<Pair<K,V>> table;

@@ -11,6 +11,10 @@ AccountTest
 AllocateVector
         getFreeBlockIndex() markAsAllocatedBlock()
 
+ArithmeticDatabase
+        X=get_max_key() insert(X,_)
+        iterator() insert()
+
 Elevator
         checkUp(X) claimUp(_,X)
         checkDown(X) claimDown(_,X)
@@ -40,11 +44,6 @@ UnderReportingTest
 VectorFail
         max() min()
         min() max()
-
-ArithmeticDatabase
-        For the res_table module: X=get_max_key() insert(X,_)
-        For the exp_table module: find(X) insert(X)
-
 
 ConnectionTest
         isConnected() send()
