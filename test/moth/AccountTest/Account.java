@@ -1,7 +1,13 @@
 package test.moth.AccountTest;
 
 import test.common.Atomic;
+import test.common.Contract;
 
+@Contract(clauses =
+         "setBalance getBalance;"
+        +"getBalance setBalance;"
+        +"update getBalance;"
+        +"getBalance update;")
 public class Account {
 
 	protected int balance;
@@ -22,18 +28,12 @@ public class Account {
 	}
 	
 	@Atomic
-	int getBalance() {
+	public int getBalance() {
 		return balance;
 	}
 
 	@Atomic
-	private void setBalance(int newValue){
+    public void setBalance(int newValue){
 		balance = newValue;
-	}
-	
-	void update (int a) {
-		int tmp = getBalance();
-		tmp = tmp + a;
-		setBalance(tmp);
 	}
 }

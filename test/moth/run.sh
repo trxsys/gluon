@@ -11,7 +11,7 @@ for f in $tests; do
         cd $f
 
         echo -e "\033[32mRunning $f\033[m"
-        time ./run.sh -pc > result
+        time ./run.sh > result
 
         if [ $? != 0 ]; then
             echo -e "\033[31mError: Aborting\033[m"
