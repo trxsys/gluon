@@ -228,88 +228,9 @@ public class Cfg
         }
     }
 
-    private boolean onlyOneOccurence(NonTerminal n,
-                                     Map<NonTerminal,Collection<Production>> nonTermUsages)
-    {
-        Collection<Production> prods=nonTermUsages.get(n);
-
-        if (prods == null)
-            return true;
-
-        for (Production p: prods)
-        {
-            int c=0;
-
-            for (LexicalElement e: p.getBody())
-                if (e.equals(n))
-                    c++;
-
-            if (c > 1)
-                return false;
-        }
-
-        return true;
-    }
-
-    private void addEpsilonFreeProductions(NonTerminal nonterm,
-                                           Map<NonTerminal,Collection<Production>> nonTermUsages)
-    {
-        Collection<Production> prods=nonTermUsages.get(nonterm);
-
-        if (prods == null)
-            return;
-
-        for (Production p: prods)
-        {
-            Production newProd;
-
-            newProd=p.clone();
-            
-            newProd.erase(nonterm);
-
-            assert p.bodyLength()-newProd.bodyLength() <= 1;
-
-            if (p.bodyLength()-newProd.bodyLength() == 1)
-            {
-                // we have a (probally) brand new production
-
-                addProduction(newProd);
-
-                // no need to update nonTermUsages
-            }
-        }
-    }
-
-    private void optimizeEpsilonProductions()
-    {
-        Map<NonTerminal,Collection<Production>> nonTermUsages=nonTermUsages();
-        
-        for (Collection<Production> prods: productions.values())
-        {
-            Collection<Production> toRemove=new LinkedList<Production>();
-
-            for (Production prod: prods)
-                if (prod.bodyLength() == 0 
-                    && !prod.getHead().equals(start)
-                    && onlyOneOccurence(prod.getHead(),nonTermUsages))
-                {
-                    toRemove.add(prod);
-
-                    addEpsilonFreeProductions(prod.getHead(),nonTermUsages);
-                }
-
-            for (Production p: toRemove)
-            {
-                prods.remove(p);
-                size--;
-            }
-        }
-    }
-
     public void optimize()
     {
         optimizeSingletonProductions();
-        optimizeEpsilonProductions();
     }
     
     private void dprintln(String s)
