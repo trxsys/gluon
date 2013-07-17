@@ -21,9 +21,6 @@ Coord03
         setX() setY()
         setY() setX()
 
-@Contract(clauses = "a b c;"
-                   +"l l l;")
-
 Coord04
         resetX() resetY()
         resetY() resetX()
