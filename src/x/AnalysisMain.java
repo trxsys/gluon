@@ -221,7 +221,7 @@ public class AnalysisMain
          List<String> clauses=new ArrayList<String>(32);
          
          if (tag == null)
-            return null;
+            return clauses;
 
         VisibilityAnnotationTag visibilityAnnotationTag=(VisibilityAnnotationTag) tag;
         List<AnnotationTag> annotations=visibilityAnnotationTag.getAnnotations();
