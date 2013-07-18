@@ -1,0 +1,32 @@
+
+@@@@@@@@@@@@@
+@@	  1)   @@
+@@	 RwW   @@
+@@@@@@@@@@@@@
+
+	In between, the others workers could have treated all the orders so, in the method "treateOrder",
+	we get a null order.
+	 
+	while(true){
+		if(Store.hasOrders()){	//Atomic
+			String log = treateOrder();	// Atomic
+			Store.addLog(log);
+		}
+		waitClients();
+	}
+
+@@@@@@@@@@@@@
+@@	  2)   @@
+@@	 WrW   @@
+@@@@@@@@@@@@@
+	
+	The suppliers choose a random product to supply the Store. Then, the number of units of that product 
+	is incremented and the variable "soldOut" is equivalent to (n == 0) so, it is false.
+	Between this to updates, another thread could see the inconsistent state of n>0 and soldOut = true
+	
+	public void incProduct(int aux){
+		incNumber(aux);
+		// Someone can read this inconsistent state
+		// ( We have product but it is sold out)
+		setSoldOut(false);
+	}

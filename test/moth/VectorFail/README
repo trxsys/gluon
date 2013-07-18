@@ -1,0 +1,47 @@
+Description:
+Este teste foi desenvolvido por nós como um exemplo de um programa que contém uma anomalia que não é detectada pela nossa abordagem. O programa é 
+constituído por diversos processos que partilham um vector de números, onde é verificada a propriedade que dita que o valor máximo do vector é sempre 
+duas vezes superior ao valor mínimo do mesmo. Cada processo actualiza periodicamente os elementos do vector partilhado, mantendo sempre a propriedade 
+referida e testando-a no final de cada actualização. Nesta implementação simples, o vector tem apenas dois elementos guardando ainda informação
+sobre qual dos dois representa o máximo do vector.
+
+1 // Classe Thread
+2 public void run() {
+3 	while(true){
+4 		Random r = new Random();
+5 		int val = r.nextInt(10);
+6 		vector.setElements(val, val*2);
+7 		
+8 		int max = vector.getMax();
+9 		int min = vector.getMin();
+10 			
+11		assert(max == 2*min);
+12	}
+13 }
+
+14 // Classe Vector
+15 @Atomic
+16 public int getMax() {
+17 	if(firstIsGreater)
+18 		return first;
+19 	return second;		
+20 }
+
+@Atomic
+public int getMin() {
+	if(!firstIsGreater)
+		return first;
+	return second;		
+}
+
+Documented Anomalies:
+1. O datarace presente neste teste está relacionado com o facto das leituras dos valores máximo e mínimo serem feitas em blocos distintos. Entre as 
+chamadas dos métodos atómicos "getMax" e "getMin", outro processo a executar o mesmo código pode actualizar os elementos do vector. Se isto acontecer, 
+então a verificação da propriedade, na linha 11, será feita com dois valores que pertencem a duas versões distintas do vector
+
+Results:
+Um falso negativo.
+O datarace descrito não foi detectado pela nossa abordagem. Esta anomalia está relacionada com acessos parciais ao vector, mais precisamente aos 
+valores máximo e mínimo. No entanto, segundo a nossa abordagem, ambos os elementos do vector ("first" e "second") são acedidos nos métodos "getMax" e 
+"getMin". Devido à existência de código condicional, estes métodos deveriam gerar duas views cada, permitindo assim detectar o conflito. Nenhum outro 
+conflito foi reportado.

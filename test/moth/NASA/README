@@ -1,0 +1,43 @@
+Description:
+This test was presented in AHB03 and it addresses a real flaw in a NASA's Remote Agent spacecraft controller. In this example, a set of processes (Tasks)
+try to execute achieving first a set of properties stored in a table, that have to be kept during their execution. To adquire a given property, a task
+updates its value with the observed state, and updates a flag's value ("achieved") to true, saying that the property verifies. Another object "Deamon"
+monitors the system's state verifying if it is consistent with the adquired properties from the table.
+
+
+//Classe Task
+@Atomic
+private void setValue(Object v,int N){
+	table[N].value = v;
+}
+@Atomic
+private void setAchieved(Object v, int N){
+	table[N].achieved = true;
+}
+
+//Classe Deamon
+public void run() {
+	...
+	while (true) {
+		tryIssueWarning(N);
+	}
+	@Atomic
+	private void tryIssueWarning(int N){
+		if (table[N].achieved && system_state[N] != table[N].value)
+			issueWarning();
+	}
+}
+
+Documented Anomalies:
+1. The datarace presented in this test is related to the fact that each property is adquired in more than one atomic method. Imagine that a specific task
+adquires a property and is about to execute the second atomic method "setAchieved". Now imagine that, meanwhile, that property is broken due to an external
+event. The "Deamon" object will see a property that is not verified that is consistent to the current value of the "achieved" flag (false). However,
+when the task reexecutes, it will updates the flag's value to "true" creating an inconsistent state that was not detected by the Deamon.
+
+
+Results:
+Zero false positives and zero false negatives.
+
+
+Source:
+[AHB03] - Cyrille Artho, Klaus Havelund, e Armin Biere. High-level data races. Software Testing, Verification and Reliability, 13(4):207–227, Dezembro 2003.

@@ -1,0 +1,29 @@
+Description:
+O exemplo descrito nesta secção foi retirado de [FF04] e simula o funcionamento da classe java.lang.StringBuffer. Este teste pretende apontar uma 
+anomalia detectada pelos autores nesta classe do JRE. Neste documento é ilustrado o fragmento de código onde ocorre o conflito. Neste programa, 
+o método append foi redefinido sendo que os métodos "length" e "getChars" são delegados no objecto da classe do JRE.
+
+1 public MystringBuffer append(MyStringBuffer other){
+2 	
+3 	int len = other.length(); // Atomic
+4 	
+5 	// ...other threads may change other.length(),
+6 	// ...so len does not reflect the length of "other" anymore
+7
+8	char[] value = new char[len];
+9	other.getChars(0, len, value, 0); // Atomic
+10
+11	//...
+12 }
+
+Documented Anomalies:
+1. Existe uma ocorrência de um stale-value error neste programa. O tamanho do buffer "other" é copiado para a variável "len" na linha 3. Quando esta 
+cópia é usada, na linha 8, o tamanho do buffer "other" poderia ter sido alterado resultando na criação de um buffer com um tamanho errado.
+
+Results:
+Zero falsos negativos e zero falsos positivos.
+
+
+Source:
+[FF04] - Cormac Flanagan e Stephen N Freund. Atomizer: a dynamic atomicity checker for multithreaded programs. In POPL ’04: Proceedings of the 31st
+ACM SIGPLAN-SIGACT symposium on Principles of programming languages, pág. 256–267, New York, NY, USA, 2004. ACM.

@@ -1,0 +1,30 @@
+Description:
+Este exemplo consiste num programa simples que simula diversos depósitos concorrentes numa conta bancária, e foi adaptado de [vG03]. 
+Neste documento é ilustrada a classe Account, onde um depósito é constituído por dois métodos atómicos. O saldo da conta bancária é lido num método
+atómico, incrementado fora do escopo transaccional, e actualizado novamente.
+
+1 public MystringBuffer append(MyStringBuffer other){
+2 	
+3 	int len = other.length(); // Atomic
+4 	
+5 	// ...other threads may change other.length(),
+6 	// ...so len does not reflect the length of "other" anymore
+7
+8	char[] value = new char[len];
+9	other.getChars(0, len, value, 0); // Atomic
+10
+11	//...
+12 }
+
+Documented Anomalies:
+1. Existe um stale-value error relacionado com o facto da actualização do saldo da conta bancária ser feita através de dois métodos atómicos distintos. 
+Entre estes dois, outro processo a executar o mesmo código poderia ter alterado o valor do saldo fazendo com que o valor da variável tmp ficasse obsoleto.
+Esta situação podia gerar uma actualização perdida.
+
+Results:
+Zero falsos negativos e zero falsos positivos.
+
+
+Source:
+[vG03] - Christoph von Praun e Thomas R. Gross. Static detection of atomicity violations in object-oriented programs. In Journal of Object Technology, 
+pág. 2004, 2003.

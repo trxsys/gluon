@@ -1,0 +1,58 @@
+AccountTest
+        setBalance() getBalance()
+        getBalance() setBalance()
+        update() getBalance()
+        getBalance() update()
+
+AllocateVector
+        getFreeBlockIndex() markAsAllocatedBlock()
+
+ArithmeticDatabase
+        X=get_max_key() insert(X,_)
+        iterator() insert()
+
+ConnectionTest
+        isConnected() send()
+        resetSocket() resetCounter()
+
+Coord03
+        getX() getY()
+        getY() getX()
+        setX() setY()
+        setY() setX()
+
+Coord04
+        resetX() resetY()
+        resetY() resetX()
+        getX() getY() // swap (implicit calls)
+        getY() getX() //          "
+
+Elevator
+        checkUp(X) claimUp(_,X)
+        checkDown(X) claimDown(_,X)
+
+Jigsaw
+        loopupEntry() checkClosed()
+
+Knight
+        get_solution(X)  set_solution(X,_)
+
+Local
+        getValue() setValue()
+
+MyStringBuffer
+        X=length() getChars(_,X,_,_,_)
+        X=length() getChars(_,_,_,X,_)
+
+NASA
+        getAchieved(X) getValue(X)
+
+Store
+        hasOrders() treatOrder()
+
+UnderReportingTest
+        inc() inc()*
+
+VectorFail
+        max() min()
+        min() max()

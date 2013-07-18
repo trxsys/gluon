@@ -1,0 +1,30 @@
+SUBJECT: java.lang.StringBuffer example from Flanagan+Freund '04
+
+
+
+DOCUMENTED ANOMALIES: on append(), we read size of other buffer, then use it to
+create array of correct size. other buffer could have changed meanwhile.
+
+
+
+EXPECTED RESULTS: nothing! both atoms are readers. this is actually a very
+tricky case. ideally it should be RwW, but we would have to know what happens
+inside length() and getChars(..). then again, if we disregard both methods as R+W,
+we would have RwR + WrW
+
+
+
+RESULTS:
+nothing to say.
+
+$$METHOD$$ method public static void main(java.lang.String[]):ff04.stringBuffer.MyStringBuffer
++--------+
+|  ATOM  |	MyStringBuffer.atom.java:38,2-8
+|   R: ff04.stringBuffer.MyStringBuffer.buffer (1)
++--------+
+    |
+    |
++--------+
+|  ATOM  |	MyStringBuffer.atom.java:45,2-8
+|   R: ff04.stringBuffer.MyStringBuffer.buffer (1)
++--------+
