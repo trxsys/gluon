@@ -34,9 +34,6 @@ Elevator
 Jigsaw
         loopupEntry() checkClosed()
 
-+@Contract(clauses = "checkUp claimUp;"
-+                   +"checkDown claimDown;")
-
 Knight
         get_solution(X)  set_solution(X,_)
 
@@ -49,6 +46,10 @@ MyStringBuffer
 
 NASA
         getAchieved(X) getValue(X)
+
+
++@Contract(clauses = "checkUp claimUp;"
++                   +"checkDown claimDown;")
 
 Store
         hasOrder() treatOrder()

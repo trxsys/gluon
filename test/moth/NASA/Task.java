@@ -1,14 +1,37 @@
 package test.moth.NASA;
 
 import test.common.Atomic;
+import test.common.Contract;
 
-public class Task extends Thread {
+@Contract(clauses = "setValue setAchieved;")
+class TaskManager extends Thread {
 
 	public Cell[] table;
 
-	public Task(Cell[] table) {
+	public TaskManager(Cell[] table) {
 		super();
 		this.table = table;
+	}
+
+	@Atomic
+	public void setValue(Object v,int N){
+		table[N].value = v;
+	}
+
+	@Atomic
+	public void setAchieved(Object v, int N){
+		table[N].achieved = true;
+	}
+}
+
+
+public class Task extends Thread {
+
+	public TaskManager tm;
+
+	public Task(Cell[] table) {
+		super();
+        tm=new TaskManager(table);
 	}
 
 	public void run() {
@@ -17,16 +40,8 @@ public class Task extends Thread {
 
 		Object v = new Object();
 
-		setValue(v,N);
+		tm.setValue(v,N);
 		/* achieve property */
-		setAchieved(v,N);
-	}
-	@Atomic
-	private void setValue(Object v,int N){
-		table[N].value = v;
-	}
-	@Atomic
-	private void setAchieved(Object v, int N){
-		table[N].achieved = true;
+		tm.setAchieved(v,N);
 	}
 }
