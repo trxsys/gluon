@@ -4,7 +4,32 @@ import java.util.List;
 import java.util.Random;
 
 import test.common.Atomic;
+import test.common.Contract;
 
+@Contract(clauses = "hasOrders treatOrder;")
+class WorkerAux
+{
+    public static boolean hasOrders()
+    {
+        return Store.hasOrders();
+    }
+
+	@Atomic
+    public static String treatOrder()
+    {
+		Order order = Store.getOrder();
+		int total = 0;
+		List<Pair<Product,Integer>> list = order.getList();
+		while(list.size() > 0){
+			Pair<Product, Integer> pair = list.remove(0);
+			Product p = pair.getFirst();
+			int n = pair.getSecond();
+			total += Store.getPrice(p);
+			Store.sell(p,n);
+		}
+		return "Sell{"+42+" Client = "+order.getClient()+" | Nº prod = "+order.size()+"\n\n";
+    }
+}
 
 public class Worker extends Thread implements Person{
 
@@ -33,27 +58,12 @@ public class Worker extends Thread implements Person{
 		boolean b = tres == 3;
 		while(b){	//while true
 //			System.out.println("Worker "+name+" has orders?");
-			if(Store.hasOrders()){
-				String log = treateOrder();
+			if(WorkerAux.hasOrders()){
+				String log = WorkerAux.treatOrder();
 				Store.addLog(log);
 			}
 			waitClients();
 		}
-	}
-
-	@Atomic
-	private String treateOrder() {
-		Order order = Store.getOrder();
-		int total = 0;
-		List<Pair<Product,Integer>> list = order.getList();
-		while(list.size() > 0){
-			Pair<Product, Integer> pair = list.remove(0);
-			Product p = pair.getFirst();
-			int n = pair.getSecond();
-			total += Store.getPrice(p);
-			Store.sell(p,n);
-		}
-		return "Sell{"+num_employer+" Client = "+order.getClient()+" | Nº prod = "+order.size()+"\n\n";
 	}
 
 	/**

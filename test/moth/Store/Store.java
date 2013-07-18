@@ -6,7 +6,6 @@ import java.util.Random;
 
 import test.common.Atomic;
 
-
 public class Store {
 	
 	// init is done?

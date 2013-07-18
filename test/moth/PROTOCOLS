@@ -47,12 +47,11 @@ MyStringBuffer
 NASA
         getAchieved(X) getValue(X)
 
+Store
+        hasOrders() treatOrder()
 
 +@Contract(clauses = "checkUp claimUp;"
 +                   +"checkDown claimDown;")
-
-Store
-        hasOrder() treatOrder()
 
 UnderReportingTest
         inc() inc()*
