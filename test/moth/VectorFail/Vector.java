@@ -1,7 +1,10 @@
 package test.moth.VectorFail;
 
 import test.common.Atomic;
+import test.common.Contract;
 
+@Contract(clauses = "getMax getMin;"
+                   +"getMin getMax;")
 public class Vector{
 
 	public int first;
