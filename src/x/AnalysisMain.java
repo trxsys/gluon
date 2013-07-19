@@ -133,9 +133,13 @@ public class AnalysisMain
         SootMethod lcaMethod;
         boolean atomic;
 
+        x.util.Timer.start("built-parse-tree");
         ptree.buildTree(word,actions);
+        x.util.Timer.stop("built-parse-tree");
 
+        x.util.Timer.start("lca-parse-tree");
         lca=ptree.getLCA();
+        x.util.Timer.stop("lca-parse-tree");
 
         assert lca instanceof PPNonTerminal;
 
@@ -165,28 +169,41 @@ public class AnalysisMain
 
         System.out.println("  Verifying word "+wordStr(word)+":");
 
+        x.util.Timer.start("parsing");
         ret=parser.parse(word, new ParserCallback(){
                 public int callback(List<ParsingAction> actions)
                 {
-                    return checkThreadWordParse(word,actions,reported);
+                    int ret;
+
+                    x.util.Timer.stop("parsing");
+                    ret=checkThreadWordParse(word,actions,reported);
+                    x.util.Timer.start("parsing");
+
+                    return ret;
                 }
             });
+        x.util.Timer.stop("parsing");
         
         return ret;
     }
     
     private void checkThread(SootMethod thread)
     {
-        ProgramBehaviorAnalysis programPattern
+        ProgramBehaviorAnalysis programBehavior
             =new ProgramBehaviorAnalysis(thread,module);
         ParsingTable parsingTable;
         TomitaParser parser;
 
-        programPattern.analyze();
-        
-        parsingTable=new ParsingTable(programPattern.getGrammar());
+        x.util.Timer.start("analysis-behavior");
+        programBehavior.analyze();
+        x.util.Timer.stop("analysis-behavior");
+
+        parsingTable=new ParsingTable(programBehavior.getGrammar());
+
+        x.util.Timer.start("build-parsing-table");
         parsingTable.buildParsingTable();
-        
+        x.util.Timer.stop("build-parsing-table");
+
         parser=new TomitaParser(parsingTable);
         
         System.out.println("Checking thread "
@@ -281,6 +298,8 @@ public class AnalysisMain
         scene=Scene.v();
         assert scene.getMainMethod() != null;
 
+        x.util.Timer.stop("soot-init");
+
         module=getModuleClass();
 
         if (module == null)
@@ -291,9 +310,13 @@ public class AnalysisMain
         
         extractContract();
 
+        x.util.Timer.start("analysis-threads");
         threads=getThreads();
-        
+        x.util.Timer.stop("analysis-threads");
+
+        x.util.Timer.start("analysis-atomicity");
         runMethodAtomicityAnalysis(threads);
+        x.util.Timer.stop("analysis-atomicity");
         
         for (SootMethod m: threads)
             checkThread(m);

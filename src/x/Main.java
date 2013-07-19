@@ -21,6 +21,7 @@ public class Main
     private static String moduleClassName=null;
 
     public static boolean WITH_JAVA_LIB=false;
+    public static boolean TIME=false;
     
     private static void help() 
     {
@@ -33,13 +34,15 @@ public class Main
                            +"Java classpath");
 		System.out.println("  -j, --with-java-lib             "
                            +"Do not refrain from analyzing java library code");
+		System.out.println("  -t, --time                      "
+                           +"Output information about several run times");
 		System.out.println("  -h, --help                      "
                            +"Display this help and exit");
     }
     
     private static void parseArguments(String[] args)
     {
-        LongOpt[] options = new LongOpt[4];
+        LongOpt[] options = new LongOpt[5];
         
         options[0] = new LongOpt("help", LongOpt.NO_ARGUMENT, null, 'h');
         options[1] = new LongOpt("classpath", LongOpt.REQUIRED_ARGUMENT,
@@ -48,8 +51,9 @@ public class Main
                                  null, 'm');
         options[3] = new LongOpt("with-java-lib", LongOpt.NO_ARGUMENT, 
                                  null, 'j');
+        options[4] = new LongOpt("time", LongOpt.NO_ARGUMENT, null, 't');
         
-        Getopt g = new Getopt(PROGNAME, args, "hc:m:j", options);
+        Getopt g = new Getopt(PROGNAME, args, "hc:m:jt", options);
         int c;
         
         g.setOpterr(true);
@@ -78,6 +82,11 @@ public class Main
                     WITH_JAVA_LIB=true;
                     break;
                 }
+            case 't': 
+                {
+                    TIME=true;
+                    break;
+                }
             }
         
         if (g.getOptind() != args.length-1)
@@ -93,7 +102,9 @@ public class Main
     private static void run()
     {
         Transform t;
-        
+
+        x.util.Timer.start("soot-init");
+
         Options.v().set_whole_program(true);
         Options.v().set_whole_shimple(true);
         
@@ -134,10 +145,21 @@ public class Main
         Scene.v().loadNecessaryClasses();
         
         Scene.v().setMainClass(c);
-        
+
         PackManager.v().runPacks();        
     }
     
+    private static void dumpRunTimes()
+    {
+        System.out.println();
+        System.out.println("Run Time:");
+
+        for (String id: x.util.Timer.getIds())
+            System.out.printf("  %40s  %5d.%03dms\n",id,
+                              x.util.Timer.getTime(id)/1000,
+                              x.util.Timer.getTime(id)%1000);
+    }
+
     public static void main(String[] args)
     {
         if (args.length == 0)
@@ -162,7 +184,12 @@ public class Main
             System.exit(-1);
             return;
         }
-        
+
+        x.util.Timer.start("total");
         run();
+        x.util.Timer.stop("total");
+
+        if (TIME)
+            dumpRunTimes();
     }
 }

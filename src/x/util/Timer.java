@@ -37,6 +37,8 @@ public class Timer
         assert running.containsKey(id);
 
         delta=now-running.get(id);
+
+        assert delta >= 0;
         
         running.remove(id);
 
