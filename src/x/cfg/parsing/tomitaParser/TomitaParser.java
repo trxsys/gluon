@@ -121,6 +121,9 @@ class ParserConfiguration
     }
 }
 
+/* This is a partial implementation of the tomita parser. In particular we do not
+ * merge configuration states as described in the full tomita implementation.
+ */
 public class TomitaParser
 {
     private static final boolean DEBUG=false;
@@ -222,7 +225,7 @@ public class TomitaParser
             else
                 assert false;
 
-            if (!parserConf.isLoop(branches[i],input.size()))
+            if (!parserConf.isLoop(branches[i],input.size()-1))
                 parseLifo.add(branches[i]);
 
             i++;
