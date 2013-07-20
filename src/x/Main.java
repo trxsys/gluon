@@ -21,6 +21,9 @@ public class Main
     private static String moduleClassName=null;
 
     public static boolean WITH_JAVA_LIB=false;
+    public static boolean TIME=false;
+    public static boolean PROFILING_VARS=false;
+    public static boolean NO_GRAMMAR_OPTIMIZE=false;
     
     private static void help() 
     {
@@ -33,13 +36,19 @@ public class Main
                            +"Java classpath");
 		System.out.println("  -j, --with-java-lib             "
                            +"Do not refrain from analyzing java library code");
+		System.out.println("  -t, --time                      "
+                           +"Output information about several run times");
+		System.out.println("  -p, --prof-vars                 "
+                           +"Output profiling variables");
+		System.out.println("  -n, --no-grammar-opt            "
+                           +"Disable grammar optimization");
 		System.out.println("  -h, --help                      "
                            +"Display this help and exit");
     }
     
     private static void parseArguments(String[] args)
     {
-        LongOpt[] options = new LongOpt[4];
+        LongOpt[] options = new LongOpt[7];
         
         options[0] = new LongOpt("help", LongOpt.NO_ARGUMENT, null, 'h');
         options[1] = new LongOpt("classpath", LongOpt.REQUIRED_ARGUMENT,
@@ -48,8 +57,11 @@ public class Main
                                  null, 'm');
         options[3] = new LongOpt("with-java-lib", LongOpt.NO_ARGUMENT, 
                                  null, 'j');
-        
-        Getopt g = new Getopt(PROGNAME, args, "hc:m:j", options);
+        options[4] = new LongOpt("time", LongOpt.NO_ARGUMENT, null, 't');
+        options[5] = new LongOpt("prof-vars", LongOpt.NO_ARGUMENT, null, 'p');
+        options[6] = new LongOpt("no-grammar-opt", LongOpt.NO_ARGUMENT, null, 'n');
+
+        Getopt g = new Getopt(PROGNAME, args, "hc:m:jtpn", options);
         int c;
         
         g.setOpterr(true);
@@ -78,6 +90,21 @@ public class Main
                     WITH_JAVA_LIB=true;
                     break;
                 }
+            case 't': 
+                {
+                    TIME=true;
+                    break;
+                }
+            case 'p': 
+                {
+                    PROFILING_VARS=true;
+                    break;
+                }
+            case 'n': 
+                {
+                    NO_GRAMMAR_OPTIMIZE=true;
+                    break;
+                }
             }
         
         if (g.getOptind() != args.length-1)
@@ -93,7 +120,9 @@ public class Main
     private static void run()
     {
         Transform t;
-        
+
+        x.profiling.Timer.start("soot-init");
+
         Options.v().set_whole_program(true);
         Options.v().set_whole_shimple(true);
         
@@ -134,10 +163,30 @@ public class Main
         Scene.v().loadNecessaryClasses();
         
         Scene.v().setMainClass(c);
-        
+
         PackManager.v().runPacks();        
     }
     
+    private static void dumpRunTimes()
+    {
+        System.out.println();
+        System.out.println("Run Time:");
+
+        for (String id: x.profiling.Timer.getIds())
+            System.out.printf("  %40s  %5d.%03dms\n",id,
+                              x.profiling.Timer.getTime(id)/1000,
+                              x.profiling.Timer.getTime(id)%1000);
+    }
+
+    private static void dumpProfilingVars()
+    {
+        System.out.println();
+        System.out.println("Profiling Vars:");
+
+        for (String id: x.profiling.Profiling.getIds())
+            System.out.printf("  %40s  %5d\n",id,x.profiling.Profiling.get(id));
+    }
+
     public static void main(String[] args)
     {
         if (args.length == 0)
@@ -162,7 +211,15 @@ public class Main
             System.exit(-1);
             return;
         }
-        
+
+        x.profiling.Timer.start("total");
         run();
+        x.profiling.Timer.stop("total");
+
+        if (TIME)
+            dumpRunTimes();
+
+        if (PROFILING_VARS)
+            dumpProfilingVars();
     }
 }

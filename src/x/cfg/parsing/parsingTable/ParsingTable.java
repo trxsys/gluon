@@ -28,7 +28,7 @@ public class ParsingTable
 {
     private static final boolean DEBUG=false;
 
-    public static final Terminal EOI_TERMINAL=new EOITerminal();
+    private static final Terminal EOI_TERMINAL=new EOITerminal();
 
     // state -> nonterm -> state
     private List<Map<NonTerminal,Integer>> gotoTable;
@@ -609,5 +609,10 @@ public class ParsingTable
     public int getInitialState()
     {
         return initialState;
+    }
+
+    public int numberOfStates()
+    {
+        return actionTable.size();
     }
 }

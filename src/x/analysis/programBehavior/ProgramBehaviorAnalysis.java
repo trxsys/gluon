@@ -125,6 +125,10 @@ public class ProgramBehaviorAnalysis
         
         if (visited.contains(unit))
             return; // Unit already taken care of
+
+        x.profiling.Profiling.inc("cfg-nodes."
+                                  +entryMethod.getDeclaringClass().getShortName()
+                                  +"."+entryMethod.getName());
         
         visited.add(unit);
         
@@ -288,15 +292,23 @@ public class ProgramBehaviorAnalysis
 
         grammar.setStart(new PPNonTerminal(alias(entryMethod),entryMethod));
 
-        dprintln("Grammar size before optimizing: "+grammar.size());
-        grammar.optimize();
-        dprintln("Grammar size after optimizing: "+grammar.size());
+        if (!x.Main.NO_GRAMMAR_OPTIMIZE)
+        {
+            x.profiling.Timer.start("analysis-behavior-grammar-opt");
+            grammar.optimize();
+            x.profiling.Timer.stop("analysis-behavior-grammar-opt");
+        }
 
+        x.profiling.Timer.start("analysis-behavior-grammar-add-subwords");
         grammar.subwordClosure();
+        x.profiling.Timer.stop("analysis-behavior-grammar-add-subwords");
 
-        grammar.optimize();
-        dprintln("Grammar size after optimizing yet again "
-                 +"(after subword closure): "+grammar.size());
+        if (!x.Main.NO_GRAMMAR_OPTIMIZE)
+        {
+            x.profiling.Timer.start("analysis-behavior-grammar-opt");
+            grammar.optimize();
+            x.profiling.Timer.stop("analysis-behavior-grammar-opt");
+        }
 
         addNewStart();
 
