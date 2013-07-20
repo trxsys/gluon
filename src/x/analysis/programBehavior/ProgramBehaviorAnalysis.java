@@ -125,6 +125,10 @@ public class ProgramBehaviorAnalysis
         
         if (visited.contains(unit))
             return; // Unit already taken care of
+
+        x.profiling.Profiling.inc("cfg-nodes."
+                                  +entryMethod.getDeclaringClass().getShortName()
+                                  +"."+entryMethod.getName());
         
         visited.add(unit);
         
