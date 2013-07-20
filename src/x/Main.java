@@ -103,7 +103,7 @@ public class Main
     {
         Transform t;
 
-        x.util.Timer.start("soot-init");
+        x.profiling.Timer.start("soot-init");
 
         Options.v().set_whole_program(true);
         Options.v().set_whole_shimple(true);
@@ -154,10 +154,10 @@ public class Main
         System.out.println();
         System.out.println("Run Time:");
 
-        for (String id: x.util.Timer.getIds())
+        for (String id: x.profiling.Timer.getIds())
             System.out.printf("  %40s  %5d.%03dms\n",id,
-                              x.util.Timer.getTime(id)/1000,
-                              x.util.Timer.getTime(id)%1000);
+                              x.profiling.Timer.getTime(id)/1000,
+                              x.profiling.Timer.getTime(id)%1000);
     }
 
     public static void main(String[] args)
@@ -185,9 +185,9 @@ public class Main
             return;
         }
 
-        x.util.Timer.start("total");
+        x.profiling.Timer.start("total");
         run();
-        x.util.Timer.stop("total");
+        x.profiling.Timer.stop("total");
 
         if (TIME)
             dumpRunTimes();

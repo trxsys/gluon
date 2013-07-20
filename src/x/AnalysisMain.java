@@ -133,13 +133,13 @@ public class AnalysisMain
         SootMethod lcaMethod;
         boolean atomic;
 
-        x.util.Timer.start("built-parse-tree");
+        x.profiling.Timer.start("built-parse-tree");
         ptree.buildTree(word,actions);
-        x.util.Timer.stop("built-parse-tree");
+        x.profiling.Timer.stop("built-parse-tree");
 
-        x.util.Timer.start("lca-parse-tree");
+        x.profiling.Timer.start("lca-parse-tree");
         lca=ptree.getLCA();
-        x.util.Timer.stop("lca-parse-tree");
+        x.profiling.Timer.stop("lca-parse-tree");
 
         assert lca instanceof PPNonTerminal;
 
@@ -169,20 +169,20 @@ public class AnalysisMain
 
         System.out.println("  Verifying word "+wordStr(word)+":");
 
-        x.util.Timer.start("parsing");
+        x.profiling.Timer.start("parsing");
         ret=parser.parse(word, new ParserCallback(){
                 public int callback(List<ParsingAction> actions)
                 {
                     int ret;
 
-                    x.util.Timer.stop("parsing");
+                    x.profiling.Timer.stop("parsing");
                     ret=checkThreadWordParse(word,actions,reported);
-                    x.util.Timer.start("parsing");
+                    x.profiling.Timer.start("parsing");
 
                     return ret;
                 }
             });
-        x.util.Timer.stop("parsing");
+        x.profiling.Timer.stop("parsing");
         
         return ret;
     }
@@ -194,15 +194,15 @@ public class AnalysisMain
         ParsingTable parsingTable;
         TomitaParser parser;
 
-        x.util.Timer.start("analysis-behavior");
+        x.profiling.Timer.start("analysis-behavior");
         programBehavior.analyze();
-        x.util.Timer.stop("analysis-behavior");
+        x.profiling.Timer.stop("analysis-behavior");
 
         parsingTable=new ParsingTable(programBehavior.getGrammar());
 
-        x.util.Timer.start("build-parsing-table");
+        x.profiling.Timer.start("build-parsing-table");
         parsingTable.buildParsingTable();
-        x.util.Timer.stop("build-parsing-table");
+        x.profiling.Timer.stop("build-parsing-table");
 
         parser=new TomitaParser(parsingTable);
         
@@ -298,7 +298,7 @@ public class AnalysisMain
         scene=Scene.v();
         assert scene.getMainMethod() != null;
 
-        x.util.Timer.stop("soot-init");
+        x.profiling.Timer.stop("soot-init");
 
         module=getModuleClass();
 
@@ -310,13 +310,13 @@ public class AnalysisMain
         
         extractContract();
 
-        x.util.Timer.start("analysis-threads");
+        x.profiling.Timer.start("analysis-threads");
         threads=getThreads();
-        x.util.Timer.stop("analysis-threads");
+        x.profiling.Timer.stop("analysis-threads");
 
-        x.util.Timer.start("analysis-atomicity");
+        x.profiling.Timer.start("analysis-atomicity");
         runMethodAtomicityAnalysis(threads);
-        x.util.Timer.stop("analysis-atomicity");
+        x.profiling.Timer.stop("analysis-atomicity");
         
         for (SootMethod m: threads)
             checkThread(m);
