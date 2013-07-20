@@ -22,6 +22,7 @@ public class Main
 
     public static boolean WITH_JAVA_LIB=false;
     public static boolean TIME=false;
+    public static boolean PROFILING_VARS=false;
     
     private static void help() 
     {
@@ -36,13 +37,15 @@ public class Main
                            +"Do not refrain from analyzing java library code");
 		System.out.println("  -t, --time                      "
                            +"Output information about several run times");
+		System.out.println("  -p, --prof-vars                 "
+                           +"Output profiling variables");
 		System.out.println("  -h, --help                      "
                            +"Display this help and exit");
     }
     
     private static void parseArguments(String[] args)
     {
-        LongOpt[] options = new LongOpt[5];
+        LongOpt[] options = new LongOpt[6];
         
         options[0] = new LongOpt("help", LongOpt.NO_ARGUMENT, null, 'h');
         options[1] = new LongOpt("classpath", LongOpt.REQUIRED_ARGUMENT,
@@ -52,8 +55,9 @@ public class Main
         options[3] = new LongOpt("with-java-lib", LongOpt.NO_ARGUMENT, 
                                  null, 'j');
         options[4] = new LongOpt("time", LongOpt.NO_ARGUMENT, null, 't');
+        options[5] = new LongOpt("prof-vars", LongOpt.NO_ARGUMENT, null, 'p');
         
-        Getopt g = new Getopt(PROGNAME, args, "hc:m:jt", options);
+        Getopt g = new Getopt(PROGNAME, args, "hc:m:jtp", options);
         int c;
         
         g.setOpterr(true);
@@ -85,6 +89,11 @@ public class Main
             case 't': 
                 {
                     TIME=true;
+                    break;
+                }
+            case 'p': 
+                {
+                    PROFILING_VARS=true;
                     break;
                 }
             }
@@ -160,6 +169,15 @@ public class Main
                               x.profiling.Timer.getTime(id)%1000);
     }
 
+    private static void dumpProfilingVars()
+    {
+        System.out.println();
+        System.out.println("Profiling Vars:");
+
+        for (String id: x.profiling.Profiling.getIds())
+            System.out.printf("  %40s  %5d\n",id,x.profiling.Profiling.get(id));
+    }
+
     public static void main(String[] args)
     {
         if (args.length == 0)
@@ -191,5 +209,8 @@ public class Main
 
         if (TIME)
             dumpRunTimes();
+
+        if (PROFILING_VARS)
+            dumpProfilingVars();
     }
 }

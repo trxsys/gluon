@@ -24,7 +24,22 @@ public class Profiling
 
     public static int get(String id)
     {
-        return values.get(id);
+        Integer v=values.get(id);
+
+        assert v != null;
+
+        return v;
+    }
+
+
+    public static void inc(String id)
+    {
+        Integer v=values.get(id);
+
+        if (v == null)
+            set(id,0);
+
+        set(id,get(id)+1);
     }
 
     public static Set<String> getIds()

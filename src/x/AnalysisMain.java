@@ -24,6 +24,7 @@ import x.analysis.programBehavior.PPTerminal;
 import x.analysis.programBehavior.PPNonTerminal;
 import x.analysis.atomicMethods.AtomicMethods;
 
+import x.cfg.Cfg;
 import x.cfg.LexicalElement;
 import x.cfg.Terminal;
 import x.cfg.NonTerminal;
@@ -123,8 +124,9 @@ public class AnalysisMain
         
         return relevantThreads;
     }
-    
-    private int checkThreadWordParse(ArrayList<Terminal> word, 
+
+    private int checkThreadWordParse(SootMethod thread,
+                                     ArrayList<Terminal> word, 
                                      List<ParsingAction> actions,
                                      Set<SootMethod> reported)
     {
@@ -145,8 +147,18 @@ public class AnalysisMain
 
         lcaMethod=((PPNonTerminal)lca).getMethod();
 
+        x.profiling.Profiling.inc("parse-trees."
+                                  +thread.getDeclaringClass().getShortName()
+                                  +"."+thread.getName()
+                                  +"-"+wordStr(word).replace(' ','_'));
+
         if (reported.contains(lcaMethod))
             return 0;
+
+        x.profiling.Profiling.inc("parse-trees-uniq-lca."
+                                  +thread.getDeclaringClass().getShortName()
+                                  +"."+thread.getName()
+                                  +"-"+wordStr(word).replace(' ','_'));
 
         reported.add(lcaMethod);
 
@@ -161,7 +173,8 @@ public class AnalysisMain
         return atomic ? 0 : -1;
     }
     
-    private int checkThreadWord(TomitaParser parser,
+    private int checkThreadWord(final SootMethod thread,
+                                TomitaParser parser,
                                 final ArrayList<Terminal> word)
     {
         int ret;
@@ -176,7 +189,7 @@ public class AnalysisMain
                     int ret;
 
                     x.profiling.Timer.stop("parsing");
-                    ret=checkThreadWordParse(word,actions,reported);
+                    ret=checkThreadWordParse(thread,word,actions,reported);
                     x.profiling.Timer.start("parsing");
 
                     return ret;
@@ -193,16 +206,28 @@ public class AnalysisMain
             =new ProgramBehaviorAnalysis(thread,module);
         ParsingTable parsingTable;
         TomitaParser parser;
+        Cfg grammar;
 
         x.profiling.Timer.start("analysis-behavior");
         programBehavior.analyze();
         x.profiling.Timer.stop("analysis-behavior");
 
-        parsingTable=new ParsingTable(programBehavior.getGrammar());
+        grammar=programBehavior.getGrammar();
+
+        x.profiling.Profiling.set("grammar-productions."
+                                  +thread.getDeclaringClass().getShortName()
+                                  +"."+thread.getName(),grammar.size());
+
+        parsingTable=new ParsingTable(grammar);
 
         x.profiling.Timer.start("build-parsing-table");
         parsingTable.buildParsingTable();
         x.profiling.Timer.stop("build-parsing-table");
+
+        x.profiling.Profiling.set("parsing-table-state-number."
+                                  +thread.getDeclaringClass().getShortName()
+                                  +"."+thread.getName(),
+                                  parsingTable.numberOfStates());
 
         parser=new TomitaParser(parsingTable);
         
@@ -211,7 +236,7 @@ public class AnalysisMain
                            +"."+thread.getName()+"():");
 
         for (ArrayList<Terminal> word: contract)
-            checkThreadWord(parser,word);
+            checkThreadWord(thread,parser,word);
     }
     
     private void runMethodAtomicityAnalysis(Collection<SootMethod> threads)
@@ -313,6 +338,8 @@ public class AnalysisMain
         x.profiling.Timer.start("analysis-threads");
         threads=getThreads();
         x.profiling.Timer.stop("analysis-threads");
+
+        x.profiling.Profiling.set("threads",threads.size());
 
         x.profiling.Timer.start("analysis-atomicity");
         runMethodAtomicityAnalysis(threads);

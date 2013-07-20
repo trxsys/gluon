@@ -288,13 +288,9 @@ public class ProgramBehaviorAnalysis
 
         grammar.setStart(new PPNonTerminal(alias(entryMethod),entryMethod));
 
-        dprintln("Grammar size before optimizing: "+grammar.size());
-
         x.profiling.Timer.start("analysis-behavior-grammar-opt");
         grammar.optimize();
         x.profiling.Timer.stop("analysis-behavior-grammar-opt");
-
-        dprintln("Grammar size after optimizing: "+grammar.size());
 
         x.profiling.Timer.start("analysis-behavior-grammar-add-subwords");
         grammar.subwordClosure();
@@ -303,9 +299,6 @@ public class ProgramBehaviorAnalysis
         x.profiling.Timer.start("analysis-behavior-grammar-opt");
         grammar.optimize();
         x.profiling.Timer.stop("analysis-behavior-grammar-opt");
-
-        dprintln("Grammar size after optimizing yet again "
-                 +"(after subword closure): "+grammar.size());
 
         addNewStart();
 
