@@ -23,6 +23,7 @@ public class Main
     public static boolean WITH_JAVA_LIB=false;
     public static boolean TIME=false;
     public static boolean PROFILING_VARS=false;
+    public static boolean NO_GRAMMAR_OPTIMIZE=false;
     
     private static void help() 
     {
@@ -39,13 +40,15 @@ public class Main
                            +"Output information about several run times");
 		System.out.println("  -p, --prof-vars                 "
                            +"Output profiling variables");
+		System.out.println("  -n, --no-grammar-opt            "
+                           +"Disable grammar optimization");
 		System.out.println("  -h, --help                      "
                            +"Display this help and exit");
     }
     
     private static void parseArguments(String[] args)
     {
-        LongOpt[] options = new LongOpt[6];
+        LongOpt[] options = new LongOpt[7];
         
         options[0] = new LongOpt("help", LongOpt.NO_ARGUMENT, null, 'h');
         options[1] = new LongOpt("classpath", LongOpt.REQUIRED_ARGUMENT,
@@ -56,8 +59,9 @@ public class Main
                                  null, 'j');
         options[4] = new LongOpt("time", LongOpt.NO_ARGUMENT, null, 't');
         options[5] = new LongOpt("prof-vars", LongOpt.NO_ARGUMENT, null, 'p');
-        
-        Getopt g = new Getopt(PROGNAME, args, "hc:m:jtp", options);
+        options[6] = new LongOpt("no-grammar-opt", LongOpt.NO_ARGUMENT, null, 'n');
+
+        Getopt g = new Getopt(PROGNAME, args, "hc:m:jtpn", options);
         int c;
         
         g.setOpterr(true);
@@ -94,6 +98,11 @@ public class Main
             case 'p': 
                 {
                     PROFILING_VARS=true;
+                    break;
+                }
+            case 'n': 
+                {
+                    NO_GRAMMAR_OPTIMIZE=true;
                     break;
                 }
             }

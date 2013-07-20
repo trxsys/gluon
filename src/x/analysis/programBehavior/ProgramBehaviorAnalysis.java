@@ -288,17 +288,23 @@ public class ProgramBehaviorAnalysis
 
         grammar.setStart(new PPNonTerminal(alias(entryMethod),entryMethod));
 
-        x.profiling.Timer.start("analysis-behavior-grammar-opt");
-        grammar.optimize();
-        x.profiling.Timer.stop("analysis-behavior-grammar-opt");
+        if (!x.Main.NO_GRAMMAR_OPTIMIZE)
+        {
+            x.profiling.Timer.start("analysis-behavior-grammar-opt");
+            grammar.optimize();
+            x.profiling.Timer.stop("analysis-behavior-grammar-opt");
+        }
 
         x.profiling.Timer.start("analysis-behavior-grammar-add-subwords");
         grammar.subwordClosure();
         x.profiling.Timer.stop("analysis-behavior-grammar-add-subwords");
 
-        x.profiling.Timer.start("analysis-behavior-grammar-opt");
-        grammar.optimize();
-        x.profiling.Timer.stop("analysis-behavior-grammar-opt");
+        if (!x.Main.NO_GRAMMAR_OPTIMIZE)
+        {
+            x.profiling.Timer.start("analysis-behavior-grammar-opt");
+            grammar.optimize();
+            x.profiling.Timer.stop("analysis-behavior-grammar-opt");
+        }
 
         addNewStart();
 
