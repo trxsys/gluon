@@ -1,0 +1,97 @@
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word hasOrders treatOrder:
+Checking thread Supplier.run():
+  Verifying word hasOrders treatOrder:
+Checking thread Worker.run():
+  Verifying word hasOrders treatOrder:
+      Method: Worker.run()
+      Atomic: NO
+
+Checking thread Client.run():
+  Verifying word hasOrders treatOrder:
+
+Run Time:
+                        analysis-atomicity      0.002s
+                            lca-parse-tree      0.012s
+       final:analysis-behavior-grammar-opt      0.008s
+                       final:total-parsing      0.534s
+    analysis-behavior-grammar-add-subwords      0.009s
+                                   parsing      0.434s
+                          analysis-threads      0.006s
+                               final:total     37.163s
+                 final:build-parsing-table      0.106s
+                           final:soot-init     36.483s
+                   final:analysis-behavior      0.027s
+                          built-parse-tree      0.051s
+
+Profiling Vars:
+          final:parsing-table-state-number    410
+     parsing-table-state-number.Client.run     30
+      parsing-table-state-number.Main.main    265
+                final:parse-trees-uniq-lca      1
+                           final:cfg-nodes    559
+  parse-trees.Worker.run-hasOrders_treatOrder   3706
+            grammar-productions.Client.run    128
+                         final:parse-trees   3706
+     parsing-table-state-number.Worker.run     47
+                       cfg-nodes.Main.main    257
+  parse-trees-uniq-lca.Worker.run-hasOrders_treatOrder      1
+          grammar-productions.Supplier.run    178
+                                   threads      4
+                      cfg-nodes.Client.run    141
+             grammar-productions.Main.main    476
+            grammar-productions.Worker.run    110
+                 final:grammar-productions    892
+   parsing-table-state-number.Supplier.run     68
+                      cfg-nodes.Worker.run     39
+                    cfg-nodes.Supplier.run    122
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word hasOrders treatOrder:
+Checking thread Supplier.run():
+  Verifying word hasOrders treatOrder:
+Checking thread Worker.run():
+  Verifying word hasOrders treatOrder:
+      Method: Worker.run()
+      Atomic: NO
+
+Checking thread Client.run():
+  Verifying word hasOrders treatOrder:
+
+Run Time:
+                        analysis-atomicity      0.003s
+                            lca-parse-tree      0.077s
+                       final:total-parsing      5.243s
+    analysis-behavior-grammar-add-subwords      0.039s
+                                   parsing      4.023s
+                          analysis-threads      0.006s
+                               final:total     43.595s
+                 final:build-parsing-table      1.372s
+                           final:soot-init     36.874s
+                   final:analysis-behavior      0.092s
+                          built-parse-tree      0.813s
+
+Profiling Vars:
+          final:parsing-table-state-number   3177
+     parsing-table-state-number.Client.run    754
+      parsing-table-state-number.Main.main   1517
+                final:parse-trees-uniq-lca      1
+                           final:cfg-nodes    559
+  parse-trees.Worker.run-hasOrders_treatOrder  379545
+            grammar-productions.Client.run   1406
+                         final:parse-trees  379545
+     parsing-table-state-number.Worker.run    211
+                       cfg-nodes.Main.main    257
+  parse-trees-uniq-lca.Worker.run-hasOrders_treatOrder      1
+          grammar-productions.Supplier.run   1273
+                                   threads      4
+                      cfg-nodes.Client.run    141
+             grammar-productions.Main.main   2664
+            grammar-productions.Worker.run    419
+                 final:grammar-productions   5762
+   parsing-table-state-number.Supplier.run    695
+                      cfg-nodes.Worker.run     39
+                    cfg-nodes.Supplier.run    122

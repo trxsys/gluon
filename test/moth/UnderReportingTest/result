@@ -1,0 +1,77 @@
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word inc inc:
+Checking thread Main.run():
+  Verifying word inc inc:
+      Method: Main.run()
+      Atomic: NO
+
+
+Run Time:
+                        analysis-atomicity      0.001s
+                            lca-parse-tree      0.000s
+       final:analysis-behavior-grammar-opt      0.001s
+                       final:total-parsing      0.002s
+    analysis-behavior-grammar-add-subwords      0.000s
+                                   parsing      0.002s
+                          analysis-threads      0.008s
+                               final:total     37.162s
+                 final:build-parsing-table      0.003s
+                           final:soot-init     37.140s
+                   final:analysis-behavior      0.001s
+                          built-parse-tree      0.000s
+
+Profiling Vars:
+          final:parsing-table-state-number     19
+     parse-trees-uniq-lca.Main.run-inc_inc      1
+      parsing-table-state-number.Main.main      8
+                final:parse-trees-uniq-lca      1
+                           final:cfg-nodes     23
+              grammar-productions.Main.run     31
+                         final:parse-trees      4
+                       cfg-nodes.Main.main     17
+       parsing-table-state-number.Main.run     11
+                                   threads      2
+             grammar-productions.Main.main     25
+                 final:grammar-productions     56
+                        cfg-nodes.Main.run      6
+              parse-trees.Main.run-inc_inc      4
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word inc inc:
+Checking thread Main.run():
+  Verifying word inc inc:
+      Method: Main.run()
+      Atomic: NO
+
+
+Run Time:
+                        analysis-atomicity      0.001s
+                            lca-parse-tree      0.000s
+                       final:total-parsing      0.003s
+    analysis-behavior-grammar-add-subwords      0.003s
+                                   parsing      0.002s
+                          analysis-threads      0.005s
+                               final:total     36.723s
+                 final:build-parsing-table      0.034s
+                           final:soot-init     36.671s
+                   final:analysis-behavior      0.004s
+                          built-parse-tree      0.000s
+
+Profiling Vars:
+          final:parsing-table-state-number    131
+     parse-trees-uniq-lca.Main.run-inc_inc      1
+      parsing-table-state-number.Main.main     99
+                final:parse-trees-uniq-lca      1
+                           final:cfg-nodes     23
+              grammar-productions.Main.run     73
+                         final:parse-trees     12
+                       cfg-nodes.Main.main     17
+       parsing-table-state-number.Main.run     32
+                                   threads      2
+             grammar-productions.Main.main    190
+                 final:grammar-productions    263
+                        cfg-nodes.Main.run      6
+              parse-trees.Main.run-inc_inc     12

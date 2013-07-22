@@ -1,0 +1,137 @@
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word getX getY:
+  Verifying word getY getX:
+  Verifying word setX setY:
+  Verifying word setY setX:
+Checking thread T4.run():
+  Verifying word getX getY:
+  Verifying word getY getX:
+  Verifying word setX setY:
+  Verifying word setY setX:
+Checking thread T3.run():
+  Verifying word getX getY:
+      Method: T3.run()
+      Atomic: YES
+
+  Verifying word getY getX:
+  Verifying word setX setY:
+  Verifying word setY setX:
+Checking thread T2.run():
+  Verifying word getX getY:
+  Verifying word getY getX:
+  Verifying word setX setY:
+  Verifying word setY setX:
+Checking thread T1.run():
+  Verifying word getX getY:
+  Verifying word getY getX:
+  Verifying word setX setY:
+  Verifying word setY setX:
+
+Run Time:
+                        analysis-atomicity      0.001s
+                            lca-parse-tree      0.000s
+       final:analysis-behavior-grammar-opt      0.000s
+                       final:total-parsing      0.002s
+    analysis-behavior-grammar-add-subwords      0.005s
+                                   parsing      0.001s
+                          analysis-threads      0.006s
+                               final:total     36.922s
+                 final:build-parsing-table      0.008s
+                           final:soot-init     36.892s
+                   final:analysis-behavior      0.007s
+                          built-parse-tree      0.001s
+
+Profiling Vars:
+          final:parsing-table-state-number     62
+         parsing-table-state-number.T4.run     19
+                          cfg-nodes.T1.run      6
+                grammar-productions.T3.run     41
+      parsing-table-state-number.Main.main     17
+                final:parse-trees-uniq-lca      1
+                           final:cfg-nodes    112
+              parse-trees.T3.run-getX_getY      4
+                         final:parse-trees      4
+                          cfg-nodes.T4.run     29
+                       cfg-nodes.Main.main     54
+                grammar-productions.T4.run     55
+     parse-trees-uniq-lca.T3.run-getX_getY      1
+                grammar-productions.T1.run     15
+                grammar-productions.T2.run     25
+                          cfg-nodes.T3.run     13
+                                   threads      5
+         parsing-table-state-number.T1.run      6
+         parsing-table-state-number.T3.run     14
+             grammar-productions.Main.main     51
+         parsing-table-state-number.T2.run      6
+                 final:grammar-productions    187
+                          cfg-nodes.T2.run     10
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word getX getY:
+  Verifying word getY getX:
+  Verifying word setX setY:
+  Verifying word setY setX:
+Checking thread T4.run():
+  Verifying word getX getY:
+  Verifying word getY getX:
+  Verifying word setX setY:
+  Verifying word setY setX:
+Checking thread T3.run():
+  Verifying word getX getY:
+      Method: T3.run()
+      Atomic: YES
+
+  Verifying word getY getX:
+  Verifying word setX setY:
+  Verifying word setY setX:
+Checking thread T2.run():
+  Verifying word getX getY:
+  Verifying word getY getX:
+  Verifying word setX setY:
+  Verifying word setY setX:
+Checking thread T1.run():
+  Verifying word getX getY:
+  Verifying word getY getX:
+  Verifying word setX setY:
+  Verifying word setY setX:
+
+Run Time:
+                        analysis-atomicity      0.002s
+                            lca-parse-tree      0.000s
+                       final:total-parsing      0.006s
+    analysis-behavior-grammar-add-subwords      0.011s
+                                   parsing      0.004s
+                          analysis-threads      0.006s
+                               final:total     37.133s
+                 final:build-parsing-table      0.157s
+                           final:soot-init     36.940s
+                   final:analysis-behavior      0.016s
+                          built-parse-tree      0.001s
+
+Profiling Vars:
+          final:parsing-table-state-number    639
+         parsing-table-state-number.T4.run    181
+                          cfg-nodes.T1.run      6
+                grammar-productions.T3.run    148
+      parsing-table-state-number.Main.main    308
+                final:parse-trees-uniq-lca      1
+                           final:cfg-nodes    112
+              parse-trees.T3.run-getX_getY     54
+                         final:parse-trees     54
+                          cfg-nodes.T4.run     29
+                       cfg-nodes.Main.main     54
+                grammar-productions.T4.run    328
+     parse-trees-uniq-lca.T3.run-getX_getY      1
+                grammar-productions.T1.run     66
+                grammar-productions.T2.run    114
+                          cfg-nodes.T3.run     13
+                                   threads      5
+         parsing-table-state-number.T1.run     24
+         parsing-table-state-number.T3.run     73
+             grammar-productions.Main.main    569
+         parsing-table-state-number.T2.run     53
+                 final:grammar-productions   1225
+                          cfg-nodes.T2.run     10

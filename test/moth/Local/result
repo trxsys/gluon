@@ -1,0 +1,81 @@
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Local.main():
+  Verifying word getValue setValue:
+  Verifying word setValue getValue:
+Checking thread Local.run():
+  Verifying word getValue setValue:
+      Method: Local.run()
+      Atomic: NO
+
+  Verifying word setValue getValue:
+
+Run Time:
+                        analysis-atomicity      0.001s
+                            lca-parse-tree      0.000s
+       final:analysis-behavior-grammar-opt      0.001s
+                       final:total-parsing      0.002s
+    analysis-behavior-grammar-add-subwords      0.000s
+                                   parsing      0.002s
+                          analysis-threads      0.005s
+                               final:total     36.921s
+                 final:build-parsing-table      0.001s
+                           final:soot-init     36.902s
+                   final:analysis-behavior      0.003s
+                          built-parse-tree      0.000s
+
+Profiling Vars:
+          final:parsing-table-state-number     15
+   parse-trees.Local.run-getValue_setValue      4
+            grammar-productions.Local.main     15
+                final:parse-trees-uniq-lca      1
+                           final:cfg-nodes     18
+  parse-trees-uniq-lca.Local.run-getValue_setValue      1
+                         final:parse-trees      4
+             grammar-productions.Local.run     31
+     parsing-table-state-number.Local.main      3
+      parsing-table-state-number.Local.run     12
+                       cfg-nodes.Local.run      7
+                                   threads      2
+                 final:grammar-productions     46
+                      cfg-nodes.Local.main     11
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Local.main():
+  Verifying word getValue setValue:
+  Verifying word setValue getValue:
+Checking thread Local.run():
+  Verifying word getValue setValue:
+      Method: Local.run()
+      Atomic: NO
+
+  Verifying word setValue getValue:
+
+Run Time:
+                        analysis-atomicity      0.001s
+                            lca-parse-tree      0.000s
+                       final:total-parsing      0.002s
+    analysis-behavior-grammar-add-subwords      0.002s
+                                   parsing      0.001s
+                          analysis-threads      0.006s
+                               final:total     36.594s
+                 final:build-parsing-table      0.019s
+                           final:soot-init     36.557s
+                   final:analysis-behavior      0.003s
+                          built-parse-tree      0.001s
+
+Profiling Vars:
+          final:parsing-table-state-number    100
+   parse-trees.Local.run-getValue_setValue     12
+            grammar-productions.Local.main    124
+                final:parse-trees-uniq-lca      1
+                           final:cfg-nodes     18
+  parse-trees-uniq-lca.Local.run-getValue_setValue      1
+                         final:parse-trees     12
+             grammar-productions.Local.run     82
+     parsing-table-state-number.Local.main     62
+      parsing-table-state-number.Local.run     38
+                       cfg-nodes.Local.run      7
+                                   threads      2
+                 final:grammar-productions    206
+                      cfg-nodes.Local.main     11

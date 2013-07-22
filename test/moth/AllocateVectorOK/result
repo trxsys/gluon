@@ -1,0 +1,77 @@
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word getFreeBlockIndex markAsAllocatedBlock:
+Checking thread TestThread1.run():
+  Verifying word getFreeBlockIndex markAsAllocatedBlock:
+      Method: TestThread1.alloc_block()
+      Atomic: YES
+
+
+Run Time:
+                        analysis-atomicity      0.001s
+                            lca-parse-tree      0.005s
+       final:analysis-behavior-grammar-opt      0.002s
+                       final:total-parsing      0.072s
+    analysis-behavior-grammar-add-subwords      0.005s
+                                   parsing      0.055s
+                          analysis-threads      0.006s
+                               final:total     40.429s
+                 final:build-parsing-table      0.036s
+                           final:soot-init     40.299s
+                   final:analysis-behavior      0.011s
+                          built-parse-tree      0.006s
+
+Profiling Vars:
+          final:parsing-table-state-number    157
+                 cfg-nodes.TestThread1.run     38
+  parse-trees.TestThread1.run-getFreeBlockIndex_markAsAllocatedBlock    990
+  parse-trees-uniq-lca.TestThread1.run-getFreeBlockIndex_markAsAllocatedBlock      1
+      parsing-table-state-number.Main.main     96
+                final:parse-trees-uniq-lca      1
+                           final:cfg-nodes    197
+                         final:parse-trees    990
+                       cfg-nodes.Main.main    159
+       grammar-productions.TestThread1.run    114
+                                   threads      2
+             grammar-productions.Main.main    277
+                 final:grammar-productions    391
+  parsing-table-state-number.TestThread1.run     61
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word getFreeBlockIndex markAsAllocatedBlock:
+Checking thread TestThread1.run():
+  Verifying word getFreeBlockIndex markAsAllocatedBlock:
+      Method: TestThread1.alloc_block()
+      Atomic: YES
+
+
+Run Time:
+                        analysis-atomicity      0.001s
+                            lca-parse-tree      0.007s
+                       final:total-parsing      0.452s
+    analysis-behavior-grammar-add-subwords      0.016s
+                                   parsing      0.350s
+                          analysis-threads      0.005s
+                               final:total     42.124s
+                 final:build-parsing-table      0.418s
+                           final:soot-init     41.208s
+                   final:analysis-behavior      0.033s
+                          built-parse-tree      0.051s
+
+Profiling Vars:
+          final:parsing-table-state-number   1058
+                 cfg-nodes.TestThread1.run     38
+  parse-trees.TestThread1.run-getFreeBlockIndex_markAsAllocatedBlock   9683
+  parse-trees-uniq-lca.TestThread1.run-getFreeBlockIndex_markAsAllocatedBlock      1
+      parsing-table-state-number.Main.main    838
+                final:parse-trees-uniq-lca      1
+                           final:cfg-nodes    197
+                         final:parse-trees   9683
+                       cfg-nodes.Main.main    159
+       grammar-productions.TestThread1.run    404
+                                   threads      2
+             grammar-productions.Main.main   1594
+                 final:grammar-productions   1998
+  parsing-table-state-number.TestThread1.run    220

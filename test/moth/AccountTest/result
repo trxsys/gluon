@@ -1,0 +1,99 @@
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word setBalance getBalance:
+  Verifying word getBalance setBalance:
+  Verifying word update getBalance:
+  Verifying word getBalance update:
+Checking thread Update.run():
+  Verifying word setBalance getBalance:
+      Method: Update.run()
+      Atomic: NO
+
+  Verifying word getBalance setBalance:
+      Method: Update.update()
+      Atomic: NO
+
+  Verifying word update getBalance:
+  Verifying word getBalance update:
+
+Run Time:
+                        analysis-atomicity      0.001s
+                            lca-parse-tree      0.000s
+       final:analysis-behavior-grammar-opt      0.001s
+                       final:total-parsing      0.004s
+    analysis-behavior-grammar-add-subwords      0.001s
+                                   parsing      0.002s
+                          analysis-threads      0.005s
+                               final:total     36.717s
+                 final:build-parsing-table      0.005s
+                           final:soot-init     36.693s
+                   final:analysis-behavior      0.003s
+                          built-parse-tree      0.001s
+
+Profiling Vars:
+          final:parsing-table-state-number     30
+                      cfg-nodes.Update.run     15
+      parsing-table-state-number.Main.main      8
+                final:parse-trees-uniq-lca      2
+                           final:cfg-nodes     36
+                         final:parse-trees     59
+  parse-trees-uniq-lca.Update.run-getBalance_setBalance      1
+                       cfg-nodes.Main.main     21
+            grammar-productions.Update.run     37
+     parsing-table-state-number.Update.run     22
+  parse-trees.Update.run-setBalance_getBalance      4
+  parse-trees-uniq-lca.Update.run-setBalance_getBalance      1
+                                   threads      2
+             grammar-productions.Main.main     25
+                 final:grammar-productions     62
+  parse-trees.Update.run-getBalance_setBalance     55
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word setBalance getBalance:
+  Verifying word getBalance setBalance:
+  Verifying word update getBalance:
+  Verifying word getBalance update:
+Checking thread Update.run():
+  Verifying word setBalance getBalance:
+      Method: Update.run()
+      Atomic: NO
+
+  Verifying word getBalance setBalance:
+      Method: Update.update()
+      Atomic: NO
+
+  Verifying word update getBalance:
+  Verifying word getBalance update:
+
+Run Time:
+                        analysis-atomicity      0.001s
+                            lca-parse-tree      0.003s
+                       final:total-parsing      0.092s
+    analysis-behavior-grammar-add-subwords      0.003s
+                                   parsing      0.076s
+                          analysis-threads      0.006s
+                               final:total     36.700s
+                 final:build-parsing-table      0.051s
+                           final:soot-init     36.539s
+                   final:analysis-behavior      0.005s
+                          built-parse-tree      0.007s
+
+Profiling Vars:
+          final:parsing-table-state-number    210
+                      cfg-nodes.Update.run     15
+      parsing-table-state-number.Main.main    115
+                final:parse-trees-uniq-lca      2
+                           final:cfg-nodes     36
+                         final:parse-trees    858
+  parse-trees-uniq-lca.Update.run-getBalance_setBalance      1
+                       cfg-nodes.Main.main     21
+            grammar-productions.Update.run    171
+     parsing-table-state-number.Update.run     95
+  parse-trees.Update.run-setBalance_getBalance     18
+  parse-trees-uniq-lca.Update.run-setBalance_getBalance      1
+                                   threads      2
+             grammar-productions.Main.main    226
+                 final:grammar-productions    397
+  parse-trees.Update.run-getBalance_setBalance    840

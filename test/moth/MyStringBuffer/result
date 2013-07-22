@@ -1,0 +1,67 @@
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word length getChars:
+      Method: Main.append()
+      Atomic: NO
+
+
+Run Time:
+                        analysis-atomicity      0.001s
+                            lca-parse-tree      0.000s
+       final:analysis-behavior-grammar-opt      0.001s
+                       final:total-parsing      0.002s
+    analysis-behavior-grammar-add-subwords      0.000s
+                                   parsing      0.001s
+                          analysis-threads      0.006s
+                               final:total     35.672s
+                 final:build-parsing-table      0.004s
+                           final:soot-init     35.653s
+                   final:analysis-behavior      0.002s
+                          built-parse-tree      0.000s
+
+Profiling Vars:
+          final:parsing-table-state-number     18
+  parse-trees-uniq-lca.Main.main-length_getChars      1
+      parsing-table-state-number.Main.main     18
+                                   threads      1
+                final:parse-trees-uniq-lca      1
+             grammar-productions.Main.main     47
+                           final:cfg-nodes     24
+     parse-trees.Main.main-length_getChars      8
+                 final:grammar-productions     47
+                         final:parse-trees      8
+                       cfg-nodes.Main.main     24
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word length getChars:
+      Method: Main.append()
+      Atomic: NO
+
+
+Run Time:
+                        analysis-atomicity      0.001s
+                            lca-parse-tree      0.001s
+                       final:total-parsing      0.026s
+    analysis-behavior-grammar-add-subwords      0.003s
+                                   parsing      0.017s
+                          analysis-threads      0.005s
+                               final:total     37.372s
+                 final:build-parsing-table      0.040s
+                           final:soot-init     37.291s
+                   final:analysis-behavior      0.004s
+                          built-parse-tree      0.005s
+
+Profiling Vars:
+          final:parsing-table-state-number    147
+  parse-trees-uniq-lca.Main.main-length_getChars      1
+      parsing-table-state-number.Main.main    147
+                                   threads      1
+                final:parse-trees-uniq-lca      1
+             grammar-productions.Main.main    267
+                           final:cfg-nodes     24
+     parse-trees.Main.main-length_getChars    248
+                 final:grammar-productions    267
+                         final:parse-trees    248
+                       cfg-nodes.Main.main     24

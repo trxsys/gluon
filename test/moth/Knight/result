@@ -1,0 +1,77 @@
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word get_solution set_solution:
+Checking thread Solver.run():
+  Verifying word get_solution set_solution:
+      Method: Solver.check_and_set_solution()
+      Atomic: NO
+
+
+Run Time:
+                        analysis-atomicity      0.001s
+                            lca-parse-tree      0.000s
+       final:analysis-behavior-grammar-opt      0.003s
+                       final:total-parsing      0.002s
+    analysis-behavior-grammar-add-subwords      0.004s
+                                   parsing      0.001s
+                          analysis-threads      0.005s
+                               final:total     36.130s
+                 final:build-parsing-table      0.033s
+                           final:soot-init     36.072s
+                   final:analysis-behavior      0.010s
+                          built-parse-tree      0.001s
+
+Profiling Vars:
+          final:parsing-table-state-number    133
+                      cfg-nodes.Solver.run    135
+      parsing-table-state-number.Main.main     34
+                final:parse-trees-uniq-lca      1
+                           final:cfg-nodes    209
+  parse-trees.Solver.run-get_solution_set_solution     15
+                         final:parse-trees     15
+                       cfg-nodes.Main.main     74
+            grammar-productions.Solver.run    271
+  parse-trees-uniq-lca.Solver.run-get_solution_set_solution      1
+                                   threads      2
+             grammar-productions.Main.main     72
+                 final:grammar-productions    343
+     parsing-table-state-number.Solver.run     99
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word get_solution set_solution:
+Checking thread Solver.run():
+  Verifying word get_solution set_solution:
+      Method: Solver.check_and_set_solution()
+      Atomic: NO
+
+
+Run Time:
+                        analysis-atomicity      0.001s
+                            lca-parse-tree      0.001s
+                       final:total-parsing      0.030s
+    analysis-behavior-grammar-add-subwords      0.013s
+                                   parsing      0.021s
+                          analysis-threads      0.005s
+                               final:total     37.226s
+                 final:build-parsing-table      0.372s
+                           final:soot-init     36.786s
+                   final:analysis-behavior      0.028s
+                          built-parse-tree      0.006s
+
+Profiling Vars:
+          final:parsing-table-state-number   1020
+                      cfg-nodes.Solver.run    135
+      parsing-table-state-number.Main.main    343
+                final:parse-trees-uniq-lca      1
+                           final:cfg-nodes    209
+  parse-trees.Solver.run-get_solution_set_solution    236
+                         final:parse-trees    236
+                       cfg-nodes.Main.main     74
+            grammar-productions.Solver.run   1352
+  parse-trees-uniq-lca.Solver.run-get_solution_set_solution      1
+                                   threads      2
+             grammar-productions.Main.main    717
+                 final:grammar-productions   2069
+     parsing-table-state-number.Solver.run    677

@@ -1,0 +1,77 @@
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word lookupEntry checkClosed:
+Checking thread Runner.run():
+  Verifying word lookupEntry checkClosed:
+      Method: Runner.loadResourceStore()
+      Atomic: YES
+
+
+Run Time:
+                        analysis-atomicity      0.001s
+                            lca-parse-tree      0.000s
+       final:analysis-behavior-grammar-opt      0.001s
+                       final:total-parsing      0.002s
+    analysis-behavior-grammar-add-subwords      0.001s
+                                   parsing      0.001s
+                          analysis-threads      0.005s
+                               final:total     36.949s
+                 final:build-parsing-table      0.007s
+                           final:soot-init     36.925s
+                   final:analysis-behavior      0.002s
+                          built-parse-tree      0.000s
+
+Profiling Vars:
+          final:parsing-table-state-number     43
+      parsing-table-state-number.Main.main      9
+                final:parse-trees-uniq-lca      1
+                           final:cfg-nodes     47
+            grammar-productions.Runner.run     74
+                      cfg-nodes.Runner.run     21
+                         final:parse-trees     11
+                       cfg-nodes.Main.main     26
+  parse-trees-uniq-lca.Runner.run-lookupEntry_checkClosed      1
+                                   threads      2
+  parse-trees.Runner.run-lookupEntry_checkClosed     11
+             grammar-productions.Main.main     31
+     parsing-table-state-number.Runner.run     34
+                 final:grammar-productions    105
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word lookupEntry checkClosed:
+Checking thread Runner.run():
+  Verifying word lookupEntry checkClosed:
+      Method: Runner.loadResourceStore()
+      Atomic: YES
+
+
+Run Time:
+                        analysis-atomicity      0.001s
+                            lca-parse-tree      0.000s
+                       final:total-parsing      0.022s
+    analysis-behavior-grammar-add-subwords      0.005s
+                                   parsing      0.017s
+                          analysis-threads      0.005s
+                               final:total     36.541s
+                 final:build-parsing-table      0.071s
+                           final:soot-init     36.428s
+                   final:analysis-behavior      0.007s
+                          built-parse-tree      0.003s
+
+Profiling Vars:
+          final:parsing-table-state-number    274
+      parsing-table-state-number.Main.main    149
+                final:parse-trees-uniq-lca      1
+                           final:cfg-nodes     47
+            grammar-productions.Runner.run    245
+                      cfg-nodes.Runner.run     21
+                         final:parse-trees    164
+                       cfg-nodes.Main.main     26
+  parse-trees-uniq-lca.Runner.run-lookupEntry_checkClosed      1
+                                   threads      2
+  parse-trees.Runner.run-lookupEntry_checkClosed    164
+             grammar-productions.Main.main    279
+     parsing-table-state-number.Runner.run    125
+                 final:grammar-productions    524

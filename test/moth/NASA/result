@@ -1,0 +1,87 @@
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word setValue setAchieved:
+Checking thread Task.run():
+  Verifying word setValue setAchieved:
+      Method: Task.run()
+      Atomic: NO
+
+Checking thread Daemon.run():
+  Verifying word setValue setAchieved:
+
+Run Time:
+                        analysis-atomicity      0.002s
+                            lca-parse-tree      0.000s
+       final:analysis-behavior-grammar-opt      0.001s
+                       final:total-parsing      0.002s
+    analysis-behavior-grammar-add-subwords      0.001s
+                                   parsing      0.001s
+                          analysis-threads      0.006s
+                               final:total     37.376s
+                 final:build-parsing-table      0.005s
+                           final:soot-init     37.354s
+                   final:analysis-behavior      0.003s
+                          built-parse-tree      0.000s
+
+Profiling Vars:
+            grammar-productions.Daemon.run     37
+          final:parsing-table-state-number     40
+                        cfg-nodes.Task.run     10
+  parse-trees.Task.run-setValue_setAchieved      4
+      parsing-table-state-number.Main.main     11
+                final:parse-trees-uniq-lca      1
+                           final:cfg-nodes     67
+                         final:parse-trees      4
+                       cfg-nodes.Main.main     35
+     parsing-table-state-number.Daemon.run     17
+                      cfg-nodes.Daemon.run     22
+       parsing-table-state-number.Task.run     12
+                                   threads      3
+             grammar-productions.Main.main     33
+  parse-trees-uniq-lca.Task.run-setValue_setAchieved      1
+              grammar-productions.Task.run     31
+                 final:grammar-productions    101
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word setValue setAchieved:
+Checking thread Task.run():
+  Verifying word setValue setAchieved:
+      Method: Task.run()
+      Atomic: NO
+
+Checking thread Daemon.run():
+  Verifying word setValue setAchieved:
+
+Run Time:
+                        analysis-atomicity      0.001s
+                            lca-parse-tree      0.000s
+                       final:total-parsing      0.005s
+    analysis-behavior-grammar-add-subwords      0.006s
+                                   parsing      0.002s
+                          analysis-threads      0.006s
+                               final:total     36.511s
+                 final:build-parsing-table      0.109s
+                           final:soot-init     36.375s
+                   final:analysis-behavior      0.010s
+                          built-parse-tree      0.001s
+
+Profiling Vars:
+            grammar-productions.Daemon.run    244
+          final:parsing-table-state-number    373
+                        cfg-nodes.Task.run     10
+  parse-trees.Task.run-setValue_setAchieved     24
+      parsing-table-state-number.Main.main    199
+                final:parse-trees-uniq-lca      1
+                           final:cfg-nodes     67
+                         final:parse-trees     24
+                       cfg-nodes.Main.main     35
+     parsing-table-state-number.Daemon.run    129
+                      cfg-nodes.Daemon.run     22
+       parsing-table-state-number.Task.run     45
+                                   threads      3
+             grammar-productions.Main.main    372
+  parse-trees-uniq-lca.Task.run-setValue_setAchieved      1
+              grammar-productions.Task.run    109
+                 final:grammar-productions    725

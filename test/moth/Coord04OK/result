@@ -1,0 +1,81 @@
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread CoordMain.main():
+  Verifying word resetX resetY:
+  Verifying word resetY resetX:
+Checking thread CoordMain.run():
+  Verifying word resetX resetY:
+      Method: CoordMain.reset()
+      Atomic: YES
+
+  Verifying word resetY resetX:
+
+Run Time:
+                        analysis-atomicity      0.001s
+                            lca-parse-tree      0.000s
+       final:analysis-behavior-grammar-opt      0.000s
+                       final:total-parsing      0.002s
+    analysis-behavior-grammar-add-subwords      0.001s
+                                   parsing      0.001s
+                          analysis-threads      0.005s
+                               final:total     36.970s
+                 final:build-parsing-table      0.006s
+                           final:soot-init     36.948s
+                   final:analysis-behavior      0.002s
+                          built-parse-tree      0.001s
+
+Profiling Vars:
+          final:parsing-table-state-number     34
+  parsing-table-state-number.CoordMain.main      8
+                   cfg-nodes.CoordMain.run     11
+                final:parse-trees-uniq-lca      1
+                           final:cfg-nodes     33
+  parse-trees-uniq-lca.CoordMain.run-resetX_resetY      1
+                         final:parse-trees      9
+   parse-trees.CoordMain.run-resetX_resetY      9
+  parsing-table-state-number.CoordMain.run     26
+                                   threads      2
+        grammar-productions.CoordMain.main     25
+                 final:grammar-productions     80
+                  cfg-nodes.CoordMain.main     22
+         grammar-productions.CoordMain.run     55
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread CoordMain.main():
+  Verifying word resetX resetY:
+  Verifying word resetY resetX:
+Checking thread CoordMain.run():
+  Verifying word resetX resetY:
+      Method: CoordMain.reset()
+      Atomic: YES
+
+  Verifying word resetY resetX:
+
+Run Time:
+                        analysis-atomicity      0.001s
+                            lca-parse-tree      0.000s
+                       final:total-parsing      0.004s
+    analysis-behavior-grammar-add-subwords      0.003s
+                                   parsing      0.003s
+                          analysis-threads      0.005s
+                               final:total     39.139s
+                 final:build-parsing-table      0.051s
+                           final:soot-init     39.067s
+                   final:analysis-behavior      0.006s
+                          built-parse-tree      0.000s
+
+Profiling Vars:
+          final:parsing-table-state-number    193
+  parsing-table-state-number.CoordMain.main    121
+                   cfg-nodes.CoordMain.run     11
+                final:parse-trees-uniq-lca      1
+                           final:cfg-nodes     33
+  parse-trees-uniq-lca.CoordMain.run-resetX_resetY      1
+                         final:parse-trees     29
+   parse-trees.CoordMain.run-resetX_resetY     29
+  parsing-table-state-number.CoordMain.run     72
+                                   threads      2
+        grammar-productions.CoordMain.main    235
+                 final:grammar-productions    372
+                  cfg-nodes.CoordMain.main     22
+         grammar-productions.CoordMain.run    137
