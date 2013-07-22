@@ -33,12 +33,17 @@ public class Profiling
 
     public static void inc(String id)
     {
+        inc(id,1);
+    }
+
+    public static void inc(String id, int delta)
+    {
         Integer v=values.get(id);
 
         if (v == null)
             set(id,0);
 
-        set(id,get(id)+1);
+        set(id,get(id)+delta);
     }
 
     public static Set<String> getIds()

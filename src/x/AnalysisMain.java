@@ -151,6 +151,7 @@ public class AnalysisMain
                                   +thread.getDeclaringClass().getShortName()
                                   +"."+thread.getName()
                                   +"-"+wordStr(word).replace(' ','_'));
+        x.profiling.Profiling.inc("final:parse-trees");
 
         if (reported.contains(lcaMethod))
             return 0;
@@ -159,6 +160,7 @@ public class AnalysisMain
                                   +thread.getDeclaringClass().getShortName()
                                   +"."+thread.getName()
                                   +"-"+wordStr(word).replace(' ','_'));
+        x.profiling.Profiling.inc("final:parse-trees-uniq-lca");
 
         reported.add(lcaMethod);
 
@@ -182,6 +184,7 @@ public class AnalysisMain
 
         System.out.println("  Verifying word "+wordStr(word)+":");
 
+        x.profiling.Timer.start("final:total-parsing");
         x.profiling.Timer.start("parsing");
         ret=parser.parse(word, new ParserCallback(){
                 public int callback(List<ParsingAction> actions)
@@ -196,6 +199,7 @@ public class AnalysisMain
                 }
             });
         x.profiling.Timer.stop("parsing");
+        x.profiling.Timer.stop("final:total-parsing");
         
         return ret;
     }
@@ -208,25 +212,28 @@ public class AnalysisMain
         TomitaParser parser;
         Cfg grammar;
 
-        x.profiling.Timer.start("analysis-behavior");
+        x.profiling.Timer.start("final:analysis-behavior");
         programBehavior.analyze();
-        x.profiling.Timer.stop("analysis-behavior");
+        x.profiling.Timer.stop("final:analysis-behavior");
 
         grammar=programBehavior.getGrammar();
 
         x.profiling.Profiling.set("grammar-productions."
                                   +thread.getDeclaringClass().getShortName()
                                   +"."+thread.getName(),grammar.size());
+        x.profiling.Profiling.inc("final:grammar-productions",grammar.size());
 
         parsingTable=new ParsingTable(grammar);
 
-        x.profiling.Timer.start("build-parsing-table");
+        x.profiling.Timer.start("final:build-parsing-table");
         parsingTable.buildParsingTable();
-        x.profiling.Timer.stop("build-parsing-table");
+        x.profiling.Timer.stop("final:build-parsing-table");
 
         x.profiling.Profiling.set("parsing-table-state-number."
                                   +thread.getDeclaringClass().getShortName()
                                   +"."+thread.getName(),
+                                  parsingTable.numberOfStates());
+        x.profiling.Profiling.inc("final:parsing-table-state-number",
                                   parsingTable.numberOfStates());
 
         parser=new TomitaParser(parsingTable);
@@ -323,7 +330,7 @@ public class AnalysisMain
         scene=Scene.v();
         assert scene.getMainMethod() != null;
 
-        x.profiling.Timer.stop("soot-init");
+        x.profiling.Timer.stop("final:soot-init");
 
         module=getModuleClass();
 

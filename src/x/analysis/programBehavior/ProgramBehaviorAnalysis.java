@@ -129,6 +129,8 @@ public class ProgramBehaviorAnalysis
         x.profiling.Profiling.inc("cfg-nodes."
                                   +entryMethod.getDeclaringClass().getShortName()
                                   +"."+entryMethod.getName());
+        x.profiling.Profiling.inc("final:cfg-nodes");
+
         
         visited.add(unit);
         
@@ -294,9 +296,9 @@ public class ProgramBehaviorAnalysis
 
         if (!x.Main.NO_GRAMMAR_OPTIMIZE)
         {
-            x.profiling.Timer.start("analysis-behavior-grammar-opt");
+            x.profiling.Timer.start("final:analysis-behavior-grammar-opt");
             grammar.optimize();
-            x.profiling.Timer.stop("analysis-behavior-grammar-opt");
+            x.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
         }
 
         x.profiling.Timer.start("analysis-behavior-grammar-add-subwords");
@@ -305,9 +307,9 @@ public class ProgramBehaviorAnalysis
 
         if (!x.Main.NO_GRAMMAR_OPTIMIZE)
         {
-            x.profiling.Timer.start("analysis-behavior-grammar-opt");
+            x.profiling.Timer.start("final:analysis-behavior-grammar-opt");
             grammar.optimize();
-            x.profiling.Timer.stop("analysis-behavior-grammar-opt");
+            x.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
         }
 
         addNewStart();

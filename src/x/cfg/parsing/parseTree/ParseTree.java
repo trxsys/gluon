@@ -56,23 +56,18 @@ public class ParseTree
     
     public ParseTree()
     {
-        leafs=new LinkedList<ParseTreeNode>();        
+        leafs=null;
     }
 
     public void buildTree(List<Terminal> word, List<ParsingAction> actions)
     {
         Stack<ParseTreeNode> stack=new Stack<ParseTreeNode>();
         int pos=0;
+
+        leafs=new ArrayList<ParseTreeNode>(word.size());
         
         for (ParsingAction a: actions)
-            if (a instanceof ParsingActionShift)
-            {
-                ParseTreeNode node=new ParseTreeNode(word.get(pos));
-                stack.push(node);
-                leafs.add(node);
-                pos++;
-            }
-            else if (a instanceof ParsingActionReduce)
+            if (a instanceof ParsingActionReduce)
             {
                 ParsingActionReduce red=(ParsingActionReduce)a;
                 int len=red.getProduction().bodyLength();
@@ -95,12 +90,21 @@ public class ParseTree
 
                 stack.push(parent);
             }
+            else if (a instanceof ParsingActionShift)
+            {
+                ParseTreeNode node=new ParseTreeNode(word.get(pos));
+                stack.push(node);
+                leafs.add(node);
+                pos++;
+            }
             else if (a instanceof ParsingActionAccept)
                 assert pos == word.size()-1; /* -1 because of $ */
     }
 
     public NonTerminal getLCA()
     {
+        assert leafs != null;
+        
         for (ParseTreeNode node: leafs)
             while (node != null)
             {
