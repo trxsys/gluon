@@ -39,6 +39,15 @@ public class Production
         return body.size();
     }
 
+    public boolean hasTerminals()
+    {
+        for (int i=0; i < body.size(); i++)
+            if (body.get(i) instanceof Terminal)
+                return true;
+
+        return false;
+    }
+
     public void rewrite(LexicalElement oldElement, LexicalElement newElement)
     {
         for (int i=0; i < body.size(); i++)

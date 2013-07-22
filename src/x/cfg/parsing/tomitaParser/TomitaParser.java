@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import x.cfg.Production;
 import x.cfg.Terminal;
+import x.cfg.NonTerminal;
 import x.cfg.EOITerminal;
 
 import x.cfg.parsing.parsingTable.ParsingTable;
@@ -24,6 +25,17 @@ enum ParserStatus
     ERROR
 }
 
+class ParserStackNode {
+    public final int state;
+    public final int generateTerminals;
+
+    public ParserStackNode(int s, int t)
+    {
+        state=s;
+        generateTerminals=t;
+    }
+};
+
 class ParserConfiguration
 {
     /* We need this so we don't lose reduction history due to stack pops
@@ -32,7 +44,7 @@ class ParserConfiguration
 
     private ParserConfiguration parent;
 
-    private int stackTop;
+    ParserStackNode stackTop; 
 
     private ParsingAction action;
 
@@ -43,7 +55,7 @@ class ParserConfiguration
     {
         parentComplete=p;
         parent=p;
-        stackTop=-1;
+        stackTop=null;
         pos=parent != null ? p.pos : 0;
         action=null;
 
@@ -71,49 +83,58 @@ class ParserConfiguration
         return alist;
     }
 
-    public int stackPeek()
+    public ParserStackNode stackPeek()
     {
-        return stackTop >= 0 ? stackTop : parent.stackPeek();
+        return stackTop != null ? stackTop : parent.stackPeek();
     }
 
-    public void stackPush(int t)
+    public void stackPush(ParserStackNode t)
     {
-        assert stackTop < 0;
+        assert stackTop == null;
 
         stackTop=t;
     }
 
     public void stackPop()
     {
-        if (stackTop >= 0)
-            stackTop=-1;
+        if (stackTop != null)
+            stackTop=null;
         else
         {
             assert parent != null;
-            assert parent.stackTop >= 0;
+            assert parent.stackTop != null;
             parent=parent.parent;
         }
     }
 
-    public boolean isLoop(ParserConfiguration conf, int wordSize)
+    public boolean isLoop(ParserConfiguration conf)
     {
-        ParsingActionReduce red;
+        NonTerminal redHead;
         int loops=0;
+        int genTerminals=conf.stackPeek().generateTerminals;
 
         if (!(conf.action instanceof ParsingActionReduce))
             return false;
 
-        red=(ParsingActionReduce)conf.action;
+        redHead=((ParsingActionReduce)conf.action).getProduction().getHead();
 
         for (ParserConfiguration pc=this; pc != null; pc=pc.parentComplete)
         {
-            if (pc.pos != conf.pos)
-                break;
+            ParsingActionReduce ancRed;
+            NonTerminal ancRedHead;
+            int ancGenTerminals;
 
-            if (red.equals(pc.action))
-                loops++;
+            if (!(pc.action instanceof ParsingActionReduce))
+                return false;
 
-            if (loops > wordSize)
+            ancRed=(ParsingActionReduce)pc.action;
+            ancRedHead=ancRed.getProduction().getHead();
+            ancGenTerminals=pc.stackPeek().generateTerminals;
+
+            if (ancGenTerminals < genTerminals)
+                return false;
+
+            if (redHead.equals(ancRedHead))
                 return true;
         }
 
@@ -146,7 +167,7 @@ public class TomitaParser
     private void shift(ParserConfiguration parserConf,
                        ParsingActionShift shift)
     {
-        parserConf.stackPush(shift.getState());
+        parserConf.stackPush(new ParserStackNode(shift.getState(),1));
         parserConf.pos++;
 
         parserConf.setAction(shift);
@@ -159,13 +180,18 @@ public class TomitaParser
     {
         Production p=reduction.getProduction();
         int s;
-        
+        int genTerminals=0;
+
         for (int i=0; i < p.bodyLength(); i++)
+        {
+            genTerminals+=parserConf.stackPeek().generateTerminals;
             parserConf.stackPop();
+        }
         
-        s=parserConf.stackPeek();
+        s=parserConf.stackPeek().state;
         
-        parserConf.stackPush(table.goTo(s,p.getHead()));
+        parserConf.stackPush(new ParserStackNode(table.goTo(s,p.getHead()),
+                                                 genTerminals));
         
         parserConf.setAction(reduction);
         
@@ -200,7 +226,7 @@ public class TomitaParser
         assert parserConf.status == ParserStatus.RUNNING;
         assert parserConf.pos < input.size();
 
-        s=parserConf.stackPeek();
+        s=parserConf.stackPeek().state;
         t=input.get(parserConf.pos);
         actions=table.actions(s,t);
 
@@ -225,7 +251,7 @@ public class TomitaParser
             else
                 assert false;
 
-            if (!parserConf.isLoop(branches[i],input.size()-1))
+            if (!parserConf.isLoop(branches[i]))
                 parseLifo.add(branches[i]);
 
             i++;
@@ -236,7 +262,7 @@ public class TomitaParser
     {
         ParserConfiguration initConfig=new ParserConfiguration();
 
-        initConfig.stackPush(table.getInitialState());
+        initConfig.stackPush(new ParserStackNode(table.getInitialState(),0));
 
         return initConfig;
     }

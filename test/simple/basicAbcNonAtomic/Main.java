@@ -4,7 +4,7 @@ import test.common.Atomic;
 import test.common.Contract;
 
 @Contract(clauses ="a b c;"
-                  +"l l l;"
+                  +"l l l l l l l l;"
                   +"i1 i2;")
 class Module
 {

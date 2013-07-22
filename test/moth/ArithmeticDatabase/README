@@ -1,0 +1,47 @@
+Description:
+O exemplo descrito neste documento foi retirado de [TLS10]. O programa pretende simular uma base de dados com acessos concorrentes a duas 
+tabelas que guardam informação sobre o valor de expressões regulares. A primeira tabela, "exp_table", guarda o conjunto das expressões regulares e a 
+segunda, "res_table", faz a correspondência entre cada expressão e o seu resultado. Existindo uma chave externa entre as duas tabelas, cada inserção 
+na base de dados é dividida em duas, uma em cada tabela. O método "get_key_by_result" recebe uma chave e acede à tabela "res_table" retornando o 
+valor da respectiva expressão. O método não atómico "insert_new_expression" permite a inserção de uma nova expressão regular. Para tal, testa se esta 
+já existe, depois utiliza o valor da chave mais elevada para a introduzir na tabela de resultados, deixando a inserção na tabela "exp_table" para o 
+final. Contudo, todas as operações referidas estão encapsuladas em métodos atómicos distintos permitindo que estas sejam intercaladas pela execução
+de outros processos.
+
+@Atomic
+private int get_key_by_result(int result){
+	for (Pair<Integer,Integer> t: res_table)
+		if (t.v == result)
+			return t.k;
+	return -1;
+}
+	
+private void insert_new_expression(RPN_Expression exp){
+	Integer foreign_key=null;
+	if ((foreign_key = get_key_by_result(exp.evaluate())) < 0){
+		foreign_key=res_table.get_max_key(); // Atomic
+		foreign_key=(foreign_key == null) ? 0 : foreign_key+1;
+		res_table.insert(foreign_key,exp.evaluate()); // Atomic
+	}
+	exp_table.insert(exp,foreign_key);
+}
+
+Documented Anomalies:
+1. O método "insert_new_expression" começa por testar atomicamente se a expressão já existe na base de dados, verificando se o seu valor é menor que 
+zero. Se este não existir, o processo insere a expressão noutro método atómico sendo que, entre estes dois, outro processo poderia ter inserido a 
+mesma expressão regular resultando na dupla inserção do mesmo elemento.
+
+2. A situação anterior pode ser igualmente aplicada no método atómico "get_max_key". Este método só deveria ser chamado se a expressão regular a 
+inserir não existisse. No entanto, entre os dois métodos atómicos, outro processo podia ter inserido essa mesma expressão.
+
+3. O valor da chave mais elevada é obtido atomicamente e é usado na inserção de um novo elemento no método atómico "insert". Entre estes dois métodos 
+atómicos, outro processo podia ter introduzido ou removido um elemento da base de dados, fazendo com que a variável local que guardava o valor da chave 
+mais elevada ficasse obsoleto.
+
+Results:
+Um falso positivo.
+Os três dataraces referidos foram correctamente detectados pelo Dependency Sensor. Para além destes, foi reportado mais um conflito (falso positivo) 
+relacionado com uma falsa dependência entre duas iterações do método "get_key_by_result".
+
+Source:
+[TLS10] - Bruno Teixeira, João Lourenço, e Diogo Sousa. A Static Approach for Detecting Concurrency Anomalies in Transactional Memory. Memory, 2010.
