@@ -5,4 +5,4 @@ mainClass=$package.Elevator
 module=$package.Controls
 
 cd ../../..; ./x.sh -pt --classpath . --module "$module" "$mainClass"
-cd ../../..; ./x.sh --no-grammar-opt -pt --classpath . --module "$module" "$mainClass"
+./x.sh --no-grammar-opt -pt --classpath . --module "$module" "$mainClass"

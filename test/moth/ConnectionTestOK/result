@@ -15,28 +15,28 @@ Checking thread GUI.run():
 
 Run Time:
                         analysis-atomicity      0.001s
-                            lca-parse-tree      0.015s
+                            lca-parse-tree      0.001s
        final:analysis-behavior-grammar-opt      0.001s
-                       final:total-parsing      0.574s
-    analysis-behavior-grammar-add-subwords      0.002s
-                                   parsing      0.357s
-                          analysis-threads      0.005s
-                               final:total     41.716s
-                 final:build-parsing-table      0.024s
-                           final:soot-init     41.101s
-                   final:analysis-behavior      0.005s
-                          built-parse-tree      0.087s
+                       final:total-parsing      0.042s
+    analysis-behavior-grammar-add-subwords      0.005s
+                                   parsing      0.036s
+                          analysis-threads      0.006s
+                               final:total     41.030s
+                 final:build-parsing-table      0.025s
+                           final:soot-init     40.941s
+                   final:analysis-behavior      0.008s
+                          built-parse-tree      0.003s
 
 Profiling Vars:
           final:parsing-table-state-number     95
        parsing-table-state-number.GUI.main     20
-  parse-trees.GUI.run-resetSocket_resetCounter  44900
+  parse-trees.GUI.run-resetSocket_resetCounter    196
                 final:parse-trees-uniq-lca      2
   parse-trees-uniq-lca.GUI.run-isConnected_send      1
                            final:cfg-nodes     69
-                         final:parse-trees  90238
+                         final:parse-trees    398
               grammar-productions.GUI.main     60
-      parse-trees.GUI.run-isConnected_send  45338
+      parse-trees.GUI.run-isConnected_send    202
                          cfg-nodes.GUI.run     39
                                    threads      2
   parse-trees-uniq-lca.GUI.run-resetSocket_resetCounter      1
@@ -61,27 +61,27 @@ Checking thread GUI.run():
 
 Run Time:
                         analysis-atomicity      0.001s
-                            lca-parse-tree      0.082s
-                       final:total-parsing      5.922s
+                            lca-parse-tree      0.005s
+                       final:total-parsing      0.199s
     analysis-behavior-grammar-add-subwords      0.006s
-                                   parsing      5.034s
-                          analysis-threads      0.006s
-                               final:total     46.725s
-                 final:build-parsing-table      0.122s
-                           final:soot-init     40.660s
-                   final:analysis-behavior      0.009s
-                          built-parse-tree      0.576s
+                                   parsing      0.164s
+                          analysis-threads      0.005s
+                               final:total     41.582s
+                 final:build-parsing-table      0.148s
+                           final:soot-init     41.213s
+                   final:analysis-behavior      0.010s
+                          built-parse-tree      0.015s
 
 Profiling Vars:
           final:parsing-table-state-number    394
        parsing-table-state-number.GUI.main    166
-  parse-trees.GUI.run-resetSocket_resetCounter  124439
+  parse-trees.GUI.run-resetSocket_resetCounter   1645
                 final:parse-trees-uniq-lca      2
   parse-trees-uniq-lca.GUI.run-isConnected_send      1
                            final:cfg-nodes     69
-                         final:parse-trees  285717
+                         final:parse-trees   3447
               grammar-productions.GUI.main    324
-      parse-trees.GUI.run-isConnected_send  161278
+      parse-trees.GUI.run-isConnected_send   1802
                          cfg-nodes.GUI.run     39
                                    threads      2
   parse-trees-uniq-lca.GUI.run-resetSocket_resetCounter      1

@@ -11,16 +11,16 @@ Checking thread Daemon.run():
   Verifying word setValue setAchieved:
 
 Run Time:
-                        analysis-atomicity      0.002s
+                        analysis-atomicity      0.001s
                             lca-parse-tree      0.000s
-       final:analysis-behavior-grammar-opt      0.001s
-                       final:total-parsing      0.002s
-    analysis-behavior-grammar-add-subwords      0.001s
-                                   parsing      0.001s
-                          analysis-threads      0.006s
-                               final:total     37.376s
+       final:analysis-behavior-grammar-opt      0.003s
+                       final:total-parsing      0.003s
+    analysis-behavior-grammar-add-subwords      0.000s
+                                   parsing      0.002s
+                          analysis-threads      0.005s
+                               final:total     35.870s
                  final:build-parsing-table      0.005s
-                           final:soot-init     37.354s
+                           final:soot-init     35.847s
                    final:analysis-behavior      0.003s
                           built-parse-tree      0.000s
 
@@ -57,15 +57,15 @@ Checking thread Daemon.run():
 Run Time:
                         analysis-atomicity      0.001s
                             lca-parse-tree      0.000s
-                       final:total-parsing      0.005s
+                       final:total-parsing      0.003s
     analysis-behavior-grammar-add-subwords      0.006s
                                    parsing      0.002s
                           analysis-threads      0.006s
-                               final:total     36.511s
-                 final:build-parsing-table      0.109s
-                           final:soot-init     36.375s
+                               final:total     37.260s
+                 final:build-parsing-table      0.093s
+                           final:soot-init     37.137s
                    final:analysis-behavior      0.010s
-                          built-parse-tree      0.001s
+                          built-parse-tree      0.000s
 
 Profiling Vars:
             grammar-productions.Daemon.run    244

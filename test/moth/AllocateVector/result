@@ -10,27 +10,27 @@ Checking thread TestThread1.run():
 
 Run Time:
                         analysis-atomicity      0.001s
-                            lca-parse-tree      0.002s
+                            lca-parse-tree      0.000s
        final:analysis-behavior-grammar-opt      0.003s
-                       final:total-parsing      0.072s
+                       final:total-parsing      0.007s
     analysis-behavior-grammar-add-subwords      0.004s
-                                   parsing      0.045s
-                          analysis-threads      0.005s
-                               final:total     40.774s
-                 final:build-parsing-table      0.037s
-                           final:soot-init     40.643s
-                   final:analysis-behavior      0.010s
-                          built-parse-tree      0.014s
+                                   parsing      0.006s
+                          analysis-threads      0.006s
+                               final:total     42.583s
+                 final:build-parsing-table      0.038s
+                           final:soot-init     42.513s
+                   final:analysis-behavior      0.011s
+                          built-parse-tree      0.000s
 
 Profiling Vars:
           final:parsing-table-state-number    157
                  cfg-nodes.TestThread1.run     38
-  parse-trees.TestThread1.run-getFreeBlockIndex_markAsAllocatedBlock    990
+  parse-trees.TestThread1.run-getFreeBlockIndex_markAsAllocatedBlock     85
   parse-trees-uniq-lca.TestThread1.run-getFreeBlockIndex_markAsAllocatedBlock      1
       parsing-table-state-number.Main.main     96
                 final:parse-trees-uniq-lca      1
                            final:cfg-nodes    197
-                         final:parse-trees    990
+                         final:parse-trees     85
                        cfg-nodes.Main.main    159
        grammar-productions.TestThread1.run    114
                                    threads      2
@@ -49,26 +49,26 @@ Checking thread TestThread1.run():
 
 Run Time:
                         analysis-atomicity      0.001s
-                            lca-parse-tree      0.007s
-                       final:total-parsing      0.399s
-    analysis-behavior-grammar-add-subwords      0.016s
-                                   parsing      0.309s
+                            lca-parse-tree      0.003s
+                       final:total-parsing      0.336s
+    analysis-behavior-grammar-add-subwords      0.015s
+                                   parsing      0.295s
                           analysis-threads      0.005s
-                               final:total     42.538s
-                 final:build-parsing-table      0.408s
-                           final:soot-init     41.686s
+                               final:total     41.948s
+                 final:build-parsing-table      0.406s
+                           final:soot-init     41.164s
                    final:analysis-behavior      0.032s
-                          built-parse-tree      0.038s
+                          built-parse-tree      0.026s
 
 Profiling Vars:
           final:parsing-table-state-number   1058
                  cfg-nodes.TestThread1.run     38
-  parse-trees.TestThread1.run-getFreeBlockIndex_markAsAllocatedBlock   9683
+  parse-trees.TestThread1.run-getFreeBlockIndex_markAsAllocatedBlock   1126
   parse-trees-uniq-lca.TestThread1.run-getFreeBlockIndex_markAsAllocatedBlock      1
       parsing-table-state-number.Main.main    838
                 final:parse-trees-uniq-lca      1
                            final:cfg-nodes    197
-                         final:parse-trees   9683
+                         final:parse-trees   1126
                        cfg-nodes.Main.main    159
        grammar-productions.TestThread1.run    404
                                    threads      2

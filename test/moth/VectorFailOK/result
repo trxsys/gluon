@@ -13,14 +13,14 @@ Checking thread MyThread.run():
 Run Time:
                         analysis-atomicity      0.001s
                             lca-parse-tree      0.000s
-       final:analysis-behavior-grammar-opt      0.000s
-                       final:total-parsing      0.002s
+       final:analysis-behavior-grammar-opt      0.001s
+                       final:total-parsing      0.003s
     analysis-behavior-grammar-add-subwords      0.002s
-                                   parsing      0.002s
-                          analysis-threads      0.005s
-                               final:total     40.949s
-                 final:build-parsing-table      0.011s
-                           final:soot-init     40.920s
+                                   parsing      0.001s
+                          analysis-threads      0.006s
+                               final:total     42.089s
+                 final:build-parsing-table      0.010s
+                           final:soot-init     42.061s
                    final:analysis-behavior      0.004s
                           built-parse-tree      0.000s
 
@@ -31,14 +31,14 @@ Profiling Vars:
                 final:parse-trees-uniq-lca      1
                            final:cfg-nodes     54
   parse-trees-uniq-lca.MyThread.run-getMax_getMin      1
-                         final:parse-trees     44
+                         final:parse-trees     11
                        cfg-nodes.Main.main     31
           grammar-productions.MyThread.run     82
    parsing-table-state-number.MyThread.run     40
                                    threads      2
              grammar-productions.Main.main     45
                  final:grammar-productions    127
-    parse-trees.MyThread.run-getMax_getMin     44
+    parse-trees.MyThread.run-getMax_getMin     11
 Warning: java.dyn.InvokeDynamic is a phantom class!
 [Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
@@ -53,16 +53,16 @@ Checking thread MyThread.run():
 
 Run Time:
                         analysis-atomicity      0.001s
-                            lca-parse-tree      0.003s
-                       final:total-parsing      0.046s
-    analysis-behavior-grammar-add-subwords      0.007s
-                                   parsing      0.028s
-                          analysis-threads      0.005s
-                               final:total     40.536s
-                 final:build-parsing-table      0.086s
-                           final:soot-init     40.384s
-                   final:analysis-behavior      0.009s
-                          built-parse-tree      0.008s
+                            lca-parse-tree      0.000s
+                       final:total-parsing      0.026s
+    analysis-behavior-grammar-add-subwords      0.004s
+                                   parsing      0.023s
+                          analysis-threads      0.006s
+                               final:total     41.615s
+                 final:build-parsing-table      0.075s
+                           final:soot-init     41.495s
+                   final:analysis-behavior      0.008s
+                          built-parse-tree      0.001s
 
 Profiling Vars:
           final:parsing-table-state-number    295
@@ -71,11 +71,11 @@ Profiling Vars:
                 final:parse-trees-uniq-lca      1
                            final:cfg-nodes     54
   parse-trees-uniq-lca.MyThread.run-getMax_getMin      1
-                         final:parse-trees    648
+                         final:parse-trees    162
                        cfg-nodes.Main.main     31
           grammar-productions.MyThread.run    257
    parsing-table-state-number.MyThread.run    140
                                    threads      2
              grammar-productions.Main.main    320
                  final:grammar-productions    577
-    parse-trees.MyThread.run-getMax_getMin    648
+    parse-trees.MyThread.run-getMax_getMin    162

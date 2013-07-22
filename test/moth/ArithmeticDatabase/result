@@ -1,0 +1,91 @@
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word get_max_key insert:
+  Verifying word iterator insert:
+Checking thread Client.run():
+  Verifying word get_max_key insert:
+      Method: Client.insert_new_expression()
+      Atomic: NO
+
+  Verifying word iterator insert:
+      Method: Client.insert_new_expression()
+      Atomic: NO
+
+
+Run Time:
+                        analysis-atomicity      0.002s
+                            lca-parse-tree      0.002s
+       final:analysis-behavior-grammar-opt      0.004s
+                       final:total-parsing      0.229s
+    analysis-behavior-grammar-add-subwords      0.007s
+                                   parsing      0.202s
+                          analysis-threads      0.006s
+                               final:total     37.492s
+                 final:build-parsing-table      0.090s
+                           final:soot-init     37.142s
+                   final:analysis-behavior      0.017s
+                          built-parse-tree      0.007s
+
+Profiling Vars:
+          final:parsing-table-state-number    329
+  parse-trees-uniq-lca.Client.run-iterator_insert      1
+     parsing-table-state-number.Client.run    165
+      parsing-table-state-number.Main.main    164
+                final:parse-trees-uniq-lca      2
+                           final:cfg-nodes    343
+  parse-trees.Client.run-get_max_key_insert      8
+            grammar-productions.Client.run    324
+                         final:parse-trees   2078
+                       cfg-nodes.Main.main    169
+  parse-trees-uniq-lca.Client.run-get_max_key_insert      1
+                                   threads      2
+             grammar-productions.Main.main    408
+                      cfg-nodes.Client.run    174
+                 final:grammar-productions    732
+    parse-trees.Client.run-iterator_insert   2070
+Warning: java.dyn.InvokeDynamic is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Checking thread Main.main():
+  Verifying word get_max_key insert:
+  Verifying word iterator insert:
+Checking thread Client.run():
+  Verifying word get_max_key insert:
+      Method: Client.insert_new_expression()
+      Atomic: NO
+
+  Verifying word iterator insert:
+      Method: Client.insert_new_expression()
+      Atomic: NO
+
+
+Run Time:
+                        analysis-atomicity      0.002s
+                            lca-parse-tree      0.030s
+                       final:total-parsing     10.224s
+    analysis-behavior-grammar-add-subwords      0.027s
+                                   parsing      9.473s
+                          analysis-threads      0.006s
+                               final:total     49.088s
+                 final:build-parsing-table      0.735s
+                           final:soot-init     38.054s
+                   final:analysis-behavior      0.061s
+                          built-parse-tree      0.575s
+
+Profiling Vars:
+          final:parsing-table-state-number   1914
+  parse-trees-uniq-lca.Client.run-iterator_insert      1
+     parsing-table-state-number.Client.run   1004
+      parsing-table-state-number.Main.main    910
+                final:parse-trees-uniq-lca      2
+                           final:cfg-nodes    343
+  parse-trees.Client.run-get_max_key_insert    224
+            grammar-productions.Client.run   1821
+                         final:parse-trees  155292
+                       cfg-nodes.Main.main    169
+  parse-trees-uniq-lca.Client.run-get_max_key_insert      1
+                                   threads      2
+             grammar-productions.Main.main   1753
+                      cfg-nodes.Client.run    174
+                 final:grammar-productions   3574
+    parse-trees.Client.run-iterator_insert  155068

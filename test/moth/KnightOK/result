@@ -12,14 +12,14 @@ Run Time:
                         analysis-atomicity      0.001s
                             lca-parse-tree      0.000s
        final:analysis-behavior-grammar-opt      0.003s
-                       final:total-parsing      0.002s
-    analysis-behavior-grammar-add-subwords      0.004s
-                                   parsing      0.001s
+                       final:total-parsing      0.004s
+    analysis-behavior-grammar-add-subwords      0.005s
+                                   parsing      0.003s
                           analysis-threads      0.005s
-                               final:total     36.282s
-                 final:build-parsing-table      0.032s
-                           final:soot-init     36.226s
-                   final:analysis-behavior      0.010s
+                               final:total     37.232s
+                 final:build-parsing-table      0.033s
+                           final:soot-init     37.173s
+                   final:analysis-behavior      0.012s
                           built-parse-tree      0.000s
 
 Profiling Vars:
@@ -49,15 +49,15 @@ Checking thread Solver.run():
 
 Run Time:
                         analysis-atomicity      0.001s
-                            lca-parse-tree      0.001s
-                       final:total-parsing      0.035s
+                            lca-parse-tree      0.000s
+                       final:total-parsing      0.028s
     analysis-behavior-grammar-add-subwords      0.014s
-                                   parsing      0.024s
+                                   parsing      0.020s
                           analysis-threads      0.006s
-                               final:total     37.217s
-                 final:build-parsing-table      0.319s
-                           final:soot-init     36.822s
-                   final:analysis-behavior      0.029s
+                               final:total     36.869s
+                 final:build-parsing-table      0.385s
+                           final:soot-init     36.415s
+                   final:analysis-behavior      0.028s
                           built-parse-tree      0.006s
 
 Profiling Vars:

@@ -11,14 +11,14 @@ Checking thread Main.run():
 Run Time:
                         analysis-atomicity      0.001s
                             lca-parse-tree      0.000s
-       final:analysis-behavior-grammar-opt      0.000s
+       final:analysis-behavior-grammar-opt      0.002s
                        final:total-parsing      0.002s
     analysis-behavior-grammar-add-subwords      0.000s
-                                   parsing      0.001s
+                                   parsing      0.002s
                           analysis-threads      0.006s
-                               final:total     37.629s
-                 final:build-parsing-table      0.004s
-                           final:soot-init     37.610s
+                               final:total     37.023s
+                 final:build-parsing-table      0.003s
+                           final:soot-init     37.004s
                    final:analysis-behavior      0.002s
                           built-parse-tree      0.000s
 
@@ -50,15 +50,15 @@ Checking thread Main.run():
 Run Time:
                         analysis-atomicity      0.001s
                             lca-parse-tree      0.000s
-                       final:total-parsing      0.002s
-    analysis-behavior-grammar-add-subwords      0.002s
-                                   parsing      0.001s
+                       final:total-parsing      0.003s
+    analysis-behavior-grammar-add-subwords      0.004s
+                                   parsing      0.003s
                           analysis-threads      0.006s
-                               final:total     35.828s
-                 final:build-parsing-table      0.034s
-                           final:soot-init     35.775s
-                   final:analysis-behavior      0.004s
-                          built-parse-tree      0.001s
+                               final:total     37.092s
+                 final:build-parsing-table      0.038s
+                           final:soot-init     37.034s
+                   final:analysis-behavior      0.005s
+                          built-parse-tree      0.000s
 
 Profiling Vars:
           final:parsing-table-state-number    131

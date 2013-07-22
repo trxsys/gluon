@@ -11,18 +11,18 @@ Checking thread Local.run():
   Verifying word setValue getValue:
 
 Run Time:
-                        analysis-atomicity      0.001s
+                        analysis-atomicity      0.002s
                             lca-parse-tree      0.000s
-       final:analysis-behavior-grammar-opt      0.001s
+       final:analysis-behavior-grammar-opt      0.000s
                        final:total-parsing      0.002s
-    analysis-behavior-grammar-add-subwords      0.000s
-                                   parsing      0.002s
-                          analysis-threads      0.005s
-                               final:total     36.921s
-                 final:build-parsing-table      0.001s
-                           final:soot-init     36.902s
-                   final:analysis-behavior      0.003s
-                          built-parse-tree      0.000s
+    analysis-behavior-grammar-add-subwords      0.001s
+                                   parsing      0.001s
+                          analysis-threads      0.006s
+                               final:total     37.075s
+                 final:build-parsing-table      0.003s
+                           final:soot-init     37.057s
+                   final:analysis-behavior      0.002s
+                          built-parse-tree      0.001s
 
 Profiling Vars:
           final:parsing-table-state-number     15
@@ -57,12 +57,12 @@ Run Time:
                        final:total-parsing      0.002s
     analysis-behavior-grammar-add-subwords      0.002s
                                    parsing      0.001s
-                          analysis-threads      0.006s
-                               final:total     36.594s
+                          analysis-threads      0.005s
+                               final:total     36.142s
                  final:build-parsing-table      0.019s
-                           final:soot-init     36.557s
+                           final:soot-init     36.105s
                    final:analysis-behavior      0.003s
-                          built-parse-tree      0.001s
+                          built-parse-tree      0.000s
 
 Profiling Vars:
           final:parsing-table-state-number    100

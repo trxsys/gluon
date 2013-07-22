@@ -13,18 +13,18 @@ Checking thread Client.run():
   Verifying word hasOrders treatOrder:
 
 Run Time:
-                        analysis-atomicity      0.003s
-                            lca-parse-tree      0.015s
-       final:analysis-behavior-grammar-opt      0.009s
-                       final:total-parsing      0.573s
-    analysis-behavior-grammar-add-subwords      0.010s
-                                   parsing      0.466s
+                        analysis-atomicity      0.002s
+                            lca-parse-tree      0.001s
+       final:analysis-behavior-grammar-opt      0.010s
+                       final:total-parsing      0.013s
+    analysis-behavior-grammar-add-subwords      0.008s
+                                   parsing      0.008s
                           analysis-threads      0.006s
-                               final:total     37.863s
-                 final:build-parsing-table      0.104s
-                           final:soot-init     37.143s
-                   final:analysis-behavior      0.028s
-                          built-parse-tree      0.047s
+                               final:total     38.027s
+                 final:build-parsing-table      0.086s
+                           final:soot-init     37.888s
+                   final:analysis-behavior      0.025s
+                          built-parse-tree      0.003s
 
 Profiling Vars:
           final:parsing-table-state-number    410
@@ -32,9 +32,9 @@ Profiling Vars:
       parsing-table-state-number.Main.main    265
                 final:parse-trees-uniq-lca      1
                            final:cfg-nodes    559
-  parse-trees.Worker.run-hasOrders_treatOrder   3706
+  parse-trees.Worker.run-hasOrders_treatOrder    114
             grammar-productions.Client.run    128
-                         final:parse-trees   3706
+                         final:parse-trees    114
      parsing-table-state-number.Worker.run     47
                        cfg-nodes.Main.main    257
   parse-trees-uniq-lca.Worker.run-hasOrders_treatOrder      1
@@ -62,17 +62,17 @@ Checking thread Client.run():
   Verifying word hasOrders treatOrder:
 
 Run Time:
-                        analysis-atomicity      0.002s
-                            lca-parse-tree      0.080s
-                       final:total-parsing      4.946s
-    analysis-behavior-grammar-add-subwords      0.051s
-                                   parsing      3.810s
+                        analysis-atomicity      0.003s
+                            lca-parse-tree      0.016s
+                       final:total-parsing      0.602s
+    analysis-behavior-grammar-add-subwords      0.038s
+                                   parsing      0.444s
                           analysis-threads      0.006s
-                               final:total     44.341s
-                 final:build-parsing-table      1.570s
-                           final:soot-init     37.698s
-                   final:analysis-behavior      0.113s
-                          built-parse-tree      0.730s
+                               final:total     38.646s
+                 final:build-parsing-table      1.344s
+                           final:soot-init     36.592s
+                   final:analysis-behavior      0.093s
+                          built-parse-tree      0.070s
 
 Profiling Vars:
           final:parsing-table-state-number   3177
@@ -80,9 +80,9 @@ Profiling Vars:
       parsing-table-state-number.Main.main   1517
                 final:parse-trees-uniq-lca      1
                            final:cfg-nodes    559
-  parse-trees.Worker.run-hasOrders_treatOrder  379545
+  parse-trees.Worker.run-hasOrders_treatOrder  18193
             grammar-productions.Client.run   1406
-                         final:parse-trees  379545
+                         final:parse-trees  18193
      parsing-table-state-number.Worker.run    211
                        cfg-nodes.Main.main    257
   parse-trees-uniq-lca.Worker.run-hasOrders_treatOrder      1

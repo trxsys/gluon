@@ -11,17 +11,17 @@ Checking thread CoordMain.run():
   Verifying word resetY resetX:
 
 Run Time:
-                        analysis-atomicity      0.002s
+                        analysis-atomicity      0.001s
                             lca-parse-tree      0.000s
        final:analysis-behavior-grammar-opt      0.000s
                        final:total-parsing      0.002s
-    analysis-behavior-grammar-add-subwords      0.001s
+    analysis-behavior-grammar-add-subwords      0.002s
                                    parsing      0.001s
-                          analysis-threads      0.006s
-                               final:total     37.815s
-                 final:build-parsing-table      0.007s
-                           final:soot-init     37.792s
-                   final:analysis-behavior      0.002s
+                          analysis-threads      0.005s
+                               final:total     36.111s
+                 final:build-parsing-table      0.006s
+                           final:soot-init     36.089s
+                   final:analysis-behavior      0.003s
                           built-parse-tree      0.001s
 
 Profiling Vars:
@@ -53,16 +53,16 @@ Checking thread CoordMain.run():
 
 Run Time:
                         analysis-atomicity      0.001s
-                            lca-parse-tree      0.000s
+                            lca-parse-tree      0.001s
                        final:total-parsing      0.004s
-    analysis-behavior-grammar-add-subwords      0.004s
-                                   parsing      0.003s
-                          analysis-threads      0.006s
-                               final:total     37.357s
-                 final:build-parsing-table      0.045s
-                           final:soot-init     37.290s
-                   final:analysis-behavior      0.005s
-                          built-parse-tree      0.001s
+    analysis-behavior-grammar-add-subwords      0.005s
+                                   parsing      0.002s
+                          analysis-threads      0.005s
+                               final:total     37.444s
+                 final:build-parsing-table      0.047s
+                           final:soot-init     37.375s
+                   final:analysis-behavior      0.006s
+                          built-parse-tree      0.000s
 
 Profiling Vars:
           final:parsing-table-state-number    193

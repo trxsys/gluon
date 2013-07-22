@@ -11,16 +11,16 @@ Checking thread Main.run():
 Run Time:
                         analysis-atomicity      0.001s
                             lca-parse-tree      0.000s
-       final:analysis-behavior-grammar-opt      0.001s
+       final:analysis-behavior-grammar-opt      0.000s
                        final:total-parsing      0.002s
-    analysis-behavior-grammar-add-subwords      0.000s
-                                   parsing      0.002s
-                          analysis-threads      0.008s
-                               final:total     37.162s
+    analysis-behavior-grammar-add-subwords      0.002s
+                                   parsing      0.001s
+                          analysis-threads      0.006s
+                               final:total     37.266s
                  final:build-parsing-table      0.003s
-                           final:soot-init     37.140s
-                   final:analysis-behavior      0.001s
-                          built-parse-tree      0.000s
+                           final:soot-init     37.247s
+                   final:analysis-behavior      0.003s
+                          built-parse-tree      0.001s
 
 Profiling Vars:
           final:parsing-table-state-number     19
@@ -54,9 +54,9 @@ Run Time:
     analysis-behavior-grammar-add-subwords      0.003s
                                    parsing      0.002s
                           analysis-threads      0.005s
-                               final:total     36.723s
-                 final:build-parsing-table      0.034s
-                           final:soot-init     36.671s
+                               final:total     37.247s
+                 final:build-parsing-table      0.037s
+                           final:soot-init     37.192s
                    final:analysis-behavior      0.004s
                           built-parse-tree      0.000s
 

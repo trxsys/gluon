@@ -13,18 +13,18 @@ Checking thread Client.run():
   Verifying word hasOrders treatOrder:
 
 Run Time:
-                        analysis-atomicity      0.002s
-                            lca-parse-tree      0.012s
+                        analysis-atomicity      0.003s
+                            lca-parse-tree      0.001s
        final:analysis-behavior-grammar-opt      0.008s
-                       final:total-parsing      0.534s
+                       final:total-parsing      0.013s
     analysis-behavior-grammar-add-subwords      0.009s
-                                   parsing      0.434s
+                                   parsing      0.007s
                           analysis-threads      0.006s
-                               final:total     37.163s
-                 final:build-parsing-table      0.106s
-                           final:soot-init     36.483s
+                               final:total     36.325s
+                 final:build-parsing-table      0.087s
+                           final:soot-init     36.184s
                    final:analysis-behavior      0.027s
-                          built-parse-tree      0.051s
+                          built-parse-tree      0.002s
 
 Profiling Vars:
           final:parsing-table-state-number    410
@@ -32,9 +32,9 @@ Profiling Vars:
       parsing-table-state-number.Main.main    265
                 final:parse-trees-uniq-lca      1
                            final:cfg-nodes    559
-  parse-trees.Worker.run-hasOrders_treatOrder   3706
+  parse-trees.Worker.run-hasOrders_treatOrder    114
             grammar-productions.Client.run    128
-                         final:parse-trees   3706
+                         final:parse-trees    114
      parsing-table-state-number.Worker.run     47
                        cfg-nodes.Main.main    257
   parse-trees-uniq-lca.Worker.run-hasOrders_treatOrder      1
@@ -63,16 +63,16 @@ Checking thread Client.run():
 
 Run Time:
                         analysis-atomicity      0.003s
-                            lca-parse-tree      0.077s
-                       final:total-parsing      5.243s
-    analysis-behavior-grammar-add-subwords      0.039s
-                                   parsing      4.023s
+                            lca-parse-tree      0.019s
+                       final:total-parsing      0.506s
+    analysis-behavior-grammar-add-subwords      0.046s
+                                   parsing      0.366s
                           analysis-threads      0.006s
-                               final:total     43.595s
-                 final:build-parsing-table      1.372s
-                           final:soot-init     36.874s
-                   final:analysis-behavior      0.092s
-                          built-parse-tree      0.813s
+                               final:total     39.697s
+                 final:build-parsing-table      1.391s
+                           final:soot-init     37.684s
+                   final:analysis-behavior      0.102s
+                          built-parse-tree      0.064s
 
 Profiling Vars:
           final:parsing-table-state-number   3177
@@ -80,9 +80,9 @@ Profiling Vars:
       parsing-table-state-number.Main.main   1517
                 final:parse-trees-uniq-lca      1
                            final:cfg-nodes    559
-  parse-trees.Worker.run-hasOrders_treatOrder  379545
+  parse-trees.Worker.run-hasOrders_treatOrder  18193
             grammar-productions.Client.run   1406
-                         final:parse-trees  379545
+                         final:parse-trees  18193
      parsing-table-state-number.Worker.run    211
                        cfg-nodes.Main.main    257
   parse-trees-uniq-lca.Worker.run-hasOrders_treatOrder      1

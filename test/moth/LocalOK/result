@@ -13,14 +13,14 @@ Checking thread Local.run():
 Run Time:
                         analysis-atomicity      0.001s
                             lca-parse-tree      0.000s
-       final:analysis-behavior-grammar-opt      0.002s
+       final:analysis-behavior-grammar-opt      0.001s
                        final:total-parsing      0.002s
     analysis-behavior-grammar-add-subwords      0.000s
-                                   parsing      0.002s
+                                   parsing      0.001s
                           analysis-threads      0.006s
-                               final:total     37.236s
-                 final:build-parsing-table      0.002s
-                           final:soot-init     37.218s
+                               final:total     37.105s
+                 final:build-parsing-table      0.003s
+                           final:soot-init     37.087s
                    final:analysis-behavior      0.002s
                           built-parse-tree      0.000s
 
@@ -56,11 +56,11 @@ Run Time:
                             lca-parse-tree      0.000s
                        final:total-parsing      0.003s
     analysis-behavior-grammar-add-subwords      0.002s
-                                   parsing      0.002s
-                          analysis-threads      0.005s
-                               final:total     36.202s
+                                   parsing      0.001s
+                          analysis-threads      0.006s
+                               final:total     36.261s
                  final:build-parsing-table      0.020s
-                           final:soot-init     36.164s
+                           final:soot-init     36.223s
                    final:analysis-behavior      0.003s
                           built-parse-tree      0.000s
 
