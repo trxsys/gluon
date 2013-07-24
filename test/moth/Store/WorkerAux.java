@@ -1,7 +1,6 @@
 package test.moth.Store;
 
 import java.util.List;
-import java.util.Random;
 
 import test.common.Atomic;
 import test.common.Contract;
