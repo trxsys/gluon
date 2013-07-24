@@ -1,4 +1,4 @@
-package x.cfg.parsing.tomitaParser;
+package x.cfg.parsing.parser;
 
 import java.util.List;
 

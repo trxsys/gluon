@@ -30,9 +30,9 @@ import x.cfg.Terminal;
 import x.cfg.NonTerminal;
 import x.cfg.parsing.parsingTable.ParsingTable;
 import x.cfg.parsing.parsingTable.parsingAction.*;
-import x.cfg.parsing.tomitaParser.TomitaParser;
+import x.cfg.parsing.parser.Parser;
 import x.cfg.parsing.parseTree.ParseTree;
-import x.cfg.parsing.tomitaParser.ParserCallback;
+import x.cfg.parsing.parser.ParserCallback;
 
 public class AnalysisMain
     extends SceneTransformer
@@ -174,7 +174,7 @@ public class AnalysisMain
     }
     
     private int checkThreadWord(final SootMethod thread,
-                                TomitaParser parser,
+                                Parser parser,
                                 final ArrayList<Terminal> word)
     {
         int ret;
@@ -208,7 +208,7 @@ public class AnalysisMain
         ProgramBehaviorAnalysis programBehavior
             =new ProgramBehaviorAnalysis(thread,module);
         ParsingTable parsingTable;
-        TomitaParser parser;
+        Parser parser;
         Cfg grammar;
 
         x.profiling.Timer.start("final:analysis-behavior");
@@ -235,7 +235,7 @@ public class AnalysisMain
         x.profiling.Profiling.inc("final:parsing-table-state-number",
                                   parsingTable.numberOfStates());
 
-        parser=new TomitaParser(parsingTable);
+        parser=new Parser(parsingTable);
         
         System.out.println("Checking thread "
                            +thread.getDeclaringClass().getShortName()

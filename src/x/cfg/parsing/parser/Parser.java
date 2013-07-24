@@ -1,4 +1,4 @@
-package x.cfg.parsing.tomitaParser;
+package x.cfg.parsing.parser;
 
 import java.util.Collection;
 import java.util.List;
@@ -150,10 +150,15 @@ class ParserConfiguration
     }
 }
 
-/* This is a partial implementation of the tomita parser. In particular we do not
- * merge configuration states as described in the full tomita implementation.
+/* This is a partially a implementation of the tomita parser. We do not merge 
+ * configuration states as described in the full tomita implementation.
+ *
+ * This parser also detects and prune branches with unproductive loops in the
+ * grammar.
+ * A more aggressive pruning is done so that no two parsing trees with the same
+ * lowest common ancestor are explored (PRUNE_BY_REPEATED_LCA).
  */
-public class TomitaParser
+public class Parser
 {
     private static final boolean DEBUG=false;
 
@@ -164,7 +169,7 @@ public class TomitaParser
 
     private Set<NonTerminal> acceptedLCA;
 
-    public TomitaParser(ParsingTable t)
+    public Parser(ParsingTable t)
     {
         table=t;
         parseLifo=null;
