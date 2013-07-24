@@ -9,33 +9,19 @@ Checking thread Runner.run():
 
 
 Run Time:
-                        analysis-atomicity      0.002s
-       final:analysis-behavior-grammar-opt      0.001s
-                       final:total-parsing      0.003s
-    analysis-behavior-grammar-add-subwords      0.001s
-                                   parsing      0.002s
-                          analysis-threads      0.006s
-                               final:total     35.452s
-                 final:build-parsing-table      0.007s
-                           final:soot-init     35.427s
-                   final:analysis-behavior      0.004s
-                          built-parse-tree      0.000s
+             analysis-behavior-grammar-opt      0.001s
+                             total-parsing      0.002s
+                                     total     32.924s
+                       build-parsing-table      0.006s
+                                 soot-init     32.900s
+                         analysis-behavior      0.004s
 
 Profiling Vars:
-          final:parsing-table-state-number     43
-      parsing-table-state-number.Main.main      9
-                final:parse-trees-uniq-lca      1
-                           final:cfg-nodes     47
-            grammar-productions.Runner.run     74
-                      cfg-nodes.Runner.run     21
-                         final:parse-trees      7
-                       cfg-nodes.Main.main     26
-  parse-trees-uniq-lca.Runner.run-lookupEntry_checkClosed      1
-                                   threads      2
-  parse-trees.Runner.run-lookupEntry_checkClosed      7
-             grammar-productions.Main.main     31
-     parsing-table-state-number.Runner.run     34
-                 final:grammar-productions    105
+                parsing-table-state-number     43
+                                 cfg-nodes     47
+                               parse-trees      1
+                            parse-branches     11
+                       grammar-productions    105
 Warning: java.dyn.InvokeDynamic is a phantom class!
 [Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
@@ -47,29 +33,15 @@ Checking thread Runner.run():
 
 
 Run Time:
-                        analysis-atomicity      0.001s
-                       final:total-parsing      0.004s
-    analysis-behavior-grammar-add-subwords      0.005s
-                                   parsing      0.003s
-                          analysis-threads      0.006s
-                               final:total     36.988s
-                 final:build-parsing-table      0.072s
-                           final:soot-init     36.889s
-                   final:analysis-behavior      0.008s
-                          built-parse-tree      0.001s
+                             total-parsing      0.004s
+                                     total     32.700s
+                       build-parsing-table      0.065s
+                                 soot-init     32.610s
+                         analysis-behavior      0.009s
 
 Profiling Vars:
-          final:parsing-table-state-number    274
-      parsing-table-state-number.Main.main    149
-                final:parse-trees-uniq-lca      1
-                           final:cfg-nodes     47
-            grammar-productions.Runner.run    245
-                      cfg-nodes.Runner.run     21
-                         final:parse-trees     26
-                       cfg-nodes.Main.main     26
-  parse-trees-uniq-lca.Runner.run-lookupEntry_checkClosed      1
-                                   threads      2
-  parse-trees.Runner.run-lookupEntry_checkClosed     26
-             grammar-productions.Main.main    279
-     parsing-table-state-number.Runner.run    125
-                 final:grammar-productions    524
+                parsing-table-state-number    274
+                                 cfg-nodes     47
+                               parse-trees      1
+                            parse-branches     55
+                       grammar-productions    524

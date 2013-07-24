@@ -11,33 +11,19 @@ Checking thread CoordMain.run():
   Verifying word resetY resetX:
 
 Run Time:
-                        analysis-atomicity      0.001s
-       final:analysis-behavior-grammar-opt      0.000s
-                       final:total-parsing      0.002s
-    analysis-behavior-grammar-add-subwords      0.001s
-                                   parsing      0.002s
-                          analysis-threads      0.006s
-                               final:total     34.504s
-                 final:build-parsing-table      0.006s
-                           final:soot-init     34.482s
-                   final:analysis-behavior      0.004s
-                          built-parse-tree      0.000s
+             analysis-behavior-grammar-opt      0.001s
+                             total-parsing      0.001s
+                                     total     33.073s
+                       build-parsing-table      0.006s
+                                 soot-init     33.053s
+                         analysis-behavior      0.002s
 
 Profiling Vars:
-          final:parsing-table-state-number     34
-  parsing-table-state-number.CoordMain.main      8
-                   cfg-nodes.CoordMain.run     11
-                final:parse-trees-uniq-lca      1
-                           final:cfg-nodes     33
-  parse-trees-uniq-lca.CoordMain.run-resetX_resetY      1
-                         final:parse-trees      9
-   parse-trees.CoordMain.run-resetX_resetY      9
-  parsing-table-state-number.CoordMain.run     26
-                                   threads      2
-        grammar-productions.CoordMain.main     25
-                 final:grammar-productions     80
-                  cfg-nodes.CoordMain.main     22
-         grammar-productions.CoordMain.run     55
+                parsing-table-state-number     34
+                                 cfg-nodes     33
+                               parse-trees      1
+                            parse-branches     12
+                       grammar-productions     80
 Warning: java.dyn.InvokeDynamic is a phantom class!
 [Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread CoordMain.main():
@@ -51,29 +37,15 @@ Checking thread CoordMain.run():
   Verifying word resetY resetX:
 
 Run Time:
-                        analysis-atomicity      0.001s
-                       final:total-parsing      0.005s
-    analysis-behavior-grammar-add-subwords      0.003s
-                                   parsing      0.004s
-                          analysis-threads      0.005s
-                               final:total     34.610s
-                 final:build-parsing-table      0.047s
-                           final:soot-init     34.542s
-                   final:analysis-behavior      0.006s
-                          built-parse-tree      0.000s
+                             total-parsing      0.002s
+                                     total     32.792s
+                       build-parsing-table      0.044s
+                                 soot-init     32.729s
+                         analysis-behavior      0.005s
 
 Profiling Vars:
-          final:parsing-table-state-number    193
-  parsing-table-state-number.CoordMain.main    121
-                   cfg-nodes.CoordMain.run     11
-                final:parse-trees-uniq-lca      1
-                           final:cfg-nodes     33
-  parse-trees-uniq-lca.CoordMain.run-resetX_resetY      1
-                         final:parse-trees     22
-   parse-trees.CoordMain.run-resetX_resetY     22
-  parsing-table-state-number.CoordMain.run     72
-                                   threads      2
-        grammar-productions.CoordMain.main    235
-                 final:grammar-productions    372
-                  cfg-nodes.CoordMain.main     22
-         grammar-productions.CoordMain.run    137
+                parsing-table-state-number    193
+                                 cfg-nodes     33
+                               parse-trees      1
+                            parse-branches     28
+                       grammar-productions    372

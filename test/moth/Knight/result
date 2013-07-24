@@ -9,33 +9,19 @@ Checking thread Solver.run():
 
 
 Run Time:
-                        analysis-atomicity      0.001s
-       final:analysis-behavior-grammar-opt      0.004s
-                       final:total-parsing      0.004s
-    analysis-behavior-grammar-add-subwords      0.004s
-                                   parsing      0.002s
-                          analysis-threads      0.005s
-                               final:total     34.882s
-                 final:build-parsing-table      0.032s
-                           final:soot-init     34.826s
-                   final:analysis-behavior      0.010s
-                          built-parse-tree      0.000s
+             analysis-behavior-grammar-opt      0.002s
+                             total-parsing      0.001s
+                                     total     33.780s
+                       build-parsing-table      0.035s
+                                 soot-init     33.721s
+                         analysis-behavior      0.010s
 
 Profiling Vars:
-          final:parsing-table-state-number    133
-                      cfg-nodes.Solver.run    135
-      parsing-table-state-number.Main.main     34
-                final:parse-trees-uniq-lca      1
-                           final:cfg-nodes    209
-  parse-trees.Solver.run-get_solution_set_solution     14
-                         final:parse-trees     14
-                       cfg-nodes.Main.main     74
-            grammar-productions.Solver.run    271
-  parse-trees-uniq-lca.Solver.run-get_solution_set_solution      1
-                                   threads      2
-             grammar-productions.Main.main     72
-                 final:grammar-productions    343
-     parsing-table-state-number.Solver.run     99
+                parsing-table-state-number    133
+                                 cfg-nodes    209
+                               parse-trees      1
+                            parse-branches     16
+                       grammar-productions    343
 Warning: java.dyn.InvokeDynamic is a phantom class!
 [Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
@@ -47,29 +33,15 @@ Checking thread Solver.run():
 
 
 Run Time:
-                        analysis-atomicity      0.001s
-                       final:total-parsing      0.013s
-    analysis-behavior-grammar-add-subwords      0.015s
-                                   parsing      0.008s
-                          analysis-threads      0.005s
-                               final:total     35.230s
-                 final:build-parsing-table      0.290s
-                           final:soot-init     34.885s
-                   final:analysis-behavior      0.031s
-                          built-parse-tree      0.004s
+                             total-parsing      0.010s
+                                     total     34.184s
+                       build-parsing-table      0.275s
+                                 soot-init     33.860s
+                         analysis-behavior      0.027s
 
 Profiling Vars:
-          final:parsing-table-state-number   1020
-                      cfg-nodes.Solver.run    135
-      parsing-table-state-number.Main.main    343
-                final:parse-trees-uniq-lca      1
-                           final:cfg-nodes    209
-  parse-trees.Solver.run-get_solution_set_solution     98
-                         final:parse-trees     98
-                       cfg-nodes.Main.main     74
-            grammar-productions.Solver.run   1352
-  parse-trees-uniq-lca.Solver.run-get_solution_set_solution      1
-                                   threads      2
-             grammar-productions.Main.main    717
-                 final:grammar-productions   2069
-     parsing-table-state-number.Solver.run    677
+                parsing-table-state-number   1020
+                                 cfg-nodes    209
+                               parse-trees      1
+                            parse-branches    109
+                       grammar-productions   2069

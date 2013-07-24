@@ -11,36 +11,19 @@ Checking thread Daemon.run():
   Verifying word setValue setAchieved:
 
 Run Time:
-                        analysis-atomicity      0.001s
-       final:analysis-behavior-grammar-opt      0.001s
-                       final:total-parsing      0.002s
-    analysis-behavior-grammar-add-subwords      0.001s
-                                   parsing      0.001s
-                          analysis-threads      0.005s
-                               final:total     35.232s
-                 final:build-parsing-table      0.005s
-                           final:soot-init     35.211s
-                   final:analysis-behavior      0.003s
-                          built-parse-tree      0.000s
+             analysis-behavior-grammar-opt      0.000s
+                             total-parsing      0.002s
+                                     total     33.261s
+                       build-parsing-table      0.003s
+                                 soot-init     33.240s
+                         analysis-behavior      0.003s
 
 Profiling Vars:
-            grammar-productions.Daemon.run     37
-          final:parsing-table-state-number     40
-                        cfg-nodes.Task.run     10
-  parse-trees.Task.run-setValue_setAchieved      4
-      parsing-table-state-number.Main.main     11
-                final:parse-trees-uniq-lca      1
-                           final:cfg-nodes     67
-                         final:parse-trees      4
-                       cfg-nodes.Main.main     35
-     parsing-table-state-number.Daemon.run     17
-                      cfg-nodes.Daemon.run     22
-       parsing-table-state-number.Task.run     12
-                                   threads      3
-             grammar-productions.Main.main     33
-  parse-trees-uniq-lca.Task.run-setValue_setAchieved      1
-              grammar-productions.Task.run     31
-                 final:grammar-productions    101
+                parsing-table-state-number     40
+                                 cfg-nodes     67
+                               parse-trees      1
+                            parse-branches      6
+                       grammar-productions    101
 Warning: java.dyn.InvokeDynamic is a phantom class!
 [Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
@@ -54,32 +37,15 @@ Checking thread Daemon.run():
   Verifying word setValue setAchieved:
 
 Run Time:
-                        analysis-atomicity      0.001s
-                       final:total-parsing      0.003s
-    analysis-behavior-grammar-add-subwords      0.006s
-                                   parsing      0.002s
-                          analysis-threads      0.006s
-                               final:total     34.129s
-                 final:build-parsing-table      0.096s
-                           final:soot-init     34.008s
-                   final:analysis-behavior      0.009s
-                          built-parse-tree      0.000s
+                             total-parsing      0.002s
+                                     total     33.600s
+                       build-parsing-table      0.092s
+                                 soot-init     33.484s
+                         analysis-behavior      0.009s
 
 Profiling Vars:
-            grammar-productions.Daemon.run    244
-          final:parsing-table-state-number    373
-                        cfg-nodes.Task.run     10
-  parse-trees.Task.run-setValue_setAchieved     15
-      parsing-table-state-number.Main.main    199
-                final:parse-trees-uniq-lca      1
-                           final:cfg-nodes     67
-                         final:parse-trees     15
-                       cfg-nodes.Main.main     35
-     parsing-table-state-number.Daemon.run    129
-                      cfg-nodes.Daemon.run     22
-       parsing-table-state-number.Task.run     45
-                                   threads      3
-             grammar-productions.Main.main    372
-  parse-trees-uniq-lca.Task.run-setValue_setAchieved      1
-              grammar-productions.Task.run    109
-                 final:grammar-productions    725
+                parsing-table-state-number    373
+                                 cfg-nodes     67
+                               parse-trees      1
+                            parse-branches     20
+                       grammar-productions    725

@@ -14,32 +14,16 @@ Checking thread Lift.run():
 
 
 Run Time:
-                        analysis-atomicity      0.007s
-       final:analysis-behavior-grammar-opt      0.004s
-                       final:total-parsing      0.521s
-    analysis-behavior-grammar-add-subwords      0.009s
-                                   parsing      0.446s
-                          analysis-threads      0.009s
-                               final:total     37.520s
-                 final:build-parsing-table      0.136s
-                           final:soot-init     36.737s
-                   final:analysis-behavior      0.024s
-                          built-parse-tree      0.017s
+             analysis-behavior-grammar-opt      0.005s
+                             total-parsing      0.490s
+                                     total     33.596s
+                       build-parsing-table      0.125s
+                                 soot-init     32.947s
+                         analysis-behavior      0.022s
 
 Profiling Vars:
-          final:parsing-table-state-number    506
-  parse-trees-uniq-lca.Lift.run-checkUp_claimUp      1
-  parsing-table-state-number.Elevator.main    103
-  parse-trees.Lift.run-checkDown_claimDown  10455
-                   cfg-nodes.Elevator.main    186
-       parsing-table-state-number.Lift.run    403
-                final:parse-trees-uniq-lca      2
-                           final:cfg-nodes    458
-              grammar-productions.Lift.run    783
-      parse-trees.Lift.run-checkUp_claimUp   4773
-         grammar-productions.Elevator.main    235
-                         final:parse-trees  15228
-                                   threads      2
-                 final:grammar-productions   1018
-                        cfg-nodes.Lift.run    272
-  parse-trees-uniq-lca.Lift.run-checkDown_claimDown      1
+                parsing-table-state-number    506
+                                 cfg-nodes    458
+                               parse-trees      2
+                            parse-branches  185418
+                       grammar-productions   1018

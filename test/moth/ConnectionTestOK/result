@@ -14,35 +14,19 @@ Checking thread GUI.run():
 
 
 Run Time:
-                        analysis-atomicity      0.001s
-       final:analysis-behavior-grammar-opt      0.001s
-                       final:total-parsing      0.009s
-    analysis-behavior-grammar-add-subwords      0.002s
-                                   parsing      0.007s
-                          analysis-threads      0.006s
-                               final:total     39.598s
-                 final:build-parsing-table      0.028s
-                           final:soot-init     39.544s
-                   final:analysis-behavior      0.005s
-                          built-parse-tree      0.001s
+             analysis-behavior-grammar-opt      0.000s
+                             total-parsing      0.008s
+                                     total     37.516s
+                       build-parsing-table      0.027s
+                                 soot-init     37.465s
+                         analysis-behavior      0.005s
 
 Profiling Vars:
-          final:parsing-table-state-number     95
-       parsing-table-state-number.GUI.main     20
-  parse-trees.GUI.run-resetSocket_resetCounter     27
-                final:parse-trees-uniq-lca      2
-  parse-trees-uniq-lca.GUI.run-isConnected_send      1
-                           final:cfg-nodes     69
-                         final:parse-trees     60
-              grammar-productions.GUI.main     60
-      parse-trees.GUI.run-isConnected_send     33
-                         cfg-nodes.GUI.run     39
-                                   threads      2
-  parse-trees-uniq-lca.GUI.run-resetSocket_resetCounter      1
-                        cfg-nodes.GUI.main     30
-                 final:grammar-productions    194
-        parsing-table-state-number.GUI.run     75
-               grammar-productions.GUI.run    134
+                parsing-table-state-number     95
+                                 cfg-nodes     69
+                               parse-trees      2
+                            parse-branches    298
+                       grammar-productions    194
 Warning: java.dyn.InvokeDynamic is a phantom class!
 [Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread GUI.main():
@@ -59,31 +43,15 @@ Checking thread GUI.run():
 
 
 Run Time:
-                        analysis-atomicity      0.001s
-                       final:total-parsing      0.071s
-    analysis-behavior-grammar-add-subwords      0.006s
-                                   parsing      0.064s
-                          analysis-threads      0.005s
-                               final:total     40.762s
-                 final:build-parsing-table      0.126s
-                           final:soot-init     40.545s
-                   final:analysis-behavior      0.009s
-                          built-parse-tree      0.006s
+                             total-parsing      0.062s
+                                     total     37.257s
+                       build-parsing-table      0.086s
+                                 soot-init     37.087s
+                         analysis-behavior      0.008s
 
 Profiling Vars:
-          final:parsing-table-state-number    394
-       parsing-table-state-number.GUI.main    166
-  parse-trees.GUI.run-resetSocket_resetCounter     98
-                final:parse-trees-uniq-lca      2
-  parse-trees-uniq-lca.GUI.run-isConnected_send      1
-                           final:cfg-nodes     69
-                         final:parse-trees    197
-              grammar-productions.GUI.main    324
-      parse-trees.GUI.run-isConnected_send     99
-                         cfg-nodes.GUI.run     39
-                                   threads      2
-  parse-trees-uniq-lca.GUI.run-resetSocket_resetCounter      1
-                        cfg-nodes.GUI.main     30
-                 final:grammar-productions    757
-        parsing-table-state-number.GUI.run    228
-               grammar-productions.GUI.run    433
+                parsing-table-state-number    394
+                                 cfg-nodes     69
+                               parse-trees      2
+                            parse-branches   1083
+                       grammar-productions    757

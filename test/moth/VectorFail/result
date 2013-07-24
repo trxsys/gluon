@@ -11,30 +11,19 @@ Checking thread MyThread.run():
   Verifying word getMin getMax:
 
 Run Time:
-                        analysis-atomicity      0.001s
-       final:analysis-behavior-grammar-opt      0.000s
-                       final:total-parsing      0.004s
-    analysis-behavior-grammar-add-subwords      0.002s
-                                   parsing      0.003s
-                          analysis-threads      0.005s
-                               final:total     38.419s
-                 final:build-parsing-table      0.014s
-                           final:soot-init     38.386s
-                   final:analysis-behavior      0.004s
+             analysis-behavior-grammar-opt      0.001s
+                             total-parsing      0.003s
+                                     total     37.375s
+                       build-parsing-table      0.013s
+                                 soot-init     37.344s
+                         analysis-behavior      0.003s
 
 Profiling Vars:
-                    cfg-nodes.MyThread.run     20
-          final:parsing-table-state-number     54
-          grammar-productions.MyThread.run     82
-   parsing-table-state-number.MyThread.run     42
-      parsing-table-state-number.Main.main     12
-                                   threads      2
-             grammar-productions.Main.main     45
-                           final:cfg-nodes     51
-                 final:grammar-productions    127
-                         final:parse-trees      1
-                       cfg-nodes.Main.main     31
-    parse-trees.MyThread.run-getMax_getMin      1
+                parsing-table-state-number     54
+                            parse-branches     78
+                                 cfg-nodes     51
+                       grammar-productions    127
+                               parse-trees      1
 Warning: java.dyn.InvokeDynamic is a phantom class!
 [Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
@@ -48,26 +37,15 @@ Checking thread MyThread.run():
   Verifying word getMin getMax:
 
 Run Time:
-                        analysis-atomicity      0.001s
-                       final:total-parsing      0.021s
-    analysis-behavior-grammar-add-subwords      0.005s
-                                   parsing      0.019s
-                          analysis-threads      0.006s
-                               final:total     37.814s
-                 final:build-parsing-table      0.063s
-                           final:soot-init     37.711s
-                   final:analysis-behavior      0.007s
+                             total-parsing      0.019s
+                                     total     37.286s
+                       build-parsing-table      0.061s
+                                 soot-init     37.187s
+                         analysis-behavior      0.007s
 
 Profiling Vars:
-                    cfg-nodes.MyThread.run     20
-          final:parsing-table-state-number    270
-          grammar-productions.MyThread.run    218
-   parsing-table-state-number.MyThread.run    115
-      parsing-table-state-number.Main.main    155
-                                   threads      2
-             grammar-productions.Main.main    320
-                           final:cfg-nodes     51
-                 final:grammar-productions    538
-                         final:parse-trees      1
-                       cfg-nodes.Main.main     31
-    parse-trees.MyThread.run-getMax_getMin      1
+                parsing-table-state-number    270
+                            parse-branches    204
+                                 cfg-nodes     51
+                       grammar-productions    538
+                               parse-trees      1

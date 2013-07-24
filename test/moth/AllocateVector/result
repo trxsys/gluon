@@ -9,33 +9,19 @@ Checking thread TestThread1.run():
 
 
 Run Time:
-                        analysis-atomicity      0.002s
-       final:analysis-behavior-grammar-opt      0.002s
-                       final:total-parsing      0.004s
-    analysis-behavior-grammar-add-subwords      0.005s
-                                   parsing      0.004s
-                          analysis-threads      0.005s
-                               final:total     39.059s
-                 final:build-parsing-table      0.046s
-                           final:soot-init     38.987s
-                   final:analysis-behavior      0.009s
-                          built-parse-tree      0.000s
+             analysis-behavior-grammar-opt      0.003s
+                             total-parsing      0.003s
+                                     total     37.999s
+                       build-parsing-table      0.050s
+                                 soot-init     37.926s
+                         analysis-behavior      0.010s
 
 Profiling Vars:
-          final:parsing-table-state-number    157
-                 cfg-nodes.TestThread1.run     38
-  parse-trees.TestThread1.run-getFreeBlockIndex_markAsAllocatedBlock     23
-  parse-trees-uniq-lca.TestThread1.run-getFreeBlockIndex_markAsAllocatedBlock      1
-      parsing-table-state-number.Main.main     96
-                final:parse-trees-uniq-lca      1
-                           final:cfg-nodes    197
-                         final:parse-trees     23
-                       cfg-nodes.Main.main    159
-       grammar-productions.TestThread1.run    114
-                                   threads      2
-             grammar-productions.Main.main    277
-                 final:grammar-productions    391
-  parsing-table-state-number.TestThread1.run     61
+                parsing-table-state-number    157
+                            parse-branches     64
+                                 cfg-nodes    197
+                       grammar-productions    391
+                               parse-trees      1
 Warning: java.dyn.InvokeDynamic is a phantom class!
 [Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
@@ -47,29 +33,15 @@ Checking thread TestThread1.run():
 
 
 Run Time:
-                        analysis-atomicity      0.001s
-                       final:total-parsing      0.036s
-    analysis-behavior-grammar-add-subwords      0.016s
-                                   parsing      0.032s
-                          analysis-threads      0.005s
-                               final:total     39.334s
-                 final:build-parsing-table      0.411s
-                           final:soot-init     38.845s
-                   final:analysis-behavior      0.031s
-                          built-parse-tree      0.002s
+                             total-parsing      0.031s
+                                     total     38.541s
+                       build-parsing-table      0.384s
+                                 soot-init     38.084s
+                         analysis-behavior      0.030s
 
 Profiling Vars:
-          final:parsing-table-state-number   1058
-                 cfg-nodes.TestThread1.run     38
-  parse-trees.TestThread1.run-getFreeBlockIndex_markAsAllocatedBlock     86
-  parse-trees-uniq-lca.TestThread1.run-getFreeBlockIndex_markAsAllocatedBlock      1
-      parsing-table-state-number.Main.main    838
-                final:parse-trees-uniq-lca      1
-                           final:cfg-nodes    197
-                         final:parse-trees     86
-                       cfg-nodes.Main.main    159
-       grammar-productions.TestThread1.run    404
-                                   threads      2
-             grammar-productions.Main.main   1594
-                 final:grammar-productions   1998
-  parsing-table-state-number.TestThread1.run    220
+                parsing-table-state-number   1058
+                            parse-branches    256
+                                 cfg-nodes    197
+                       grammar-productions   1998
+                               parse-trees      1

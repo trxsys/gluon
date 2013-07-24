@@ -13,36 +13,19 @@ Checking thread Client.run():
   Verifying word hasOrders treatOrder:
 
 Run Time:
-                        analysis-atomicity      0.002s
-       final:analysis-behavior-grammar-opt      0.008s
-                       final:total-parsing      0.009s
-    analysis-behavior-grammar-add-subwords      0.009s
-                                   parsing      0.007s
-                          analysis-threads      0.006s
-                               final:total     36.470s
-                 final:build-parsing-table      0.089s
-                           final:soot-init     36.332s
-                   final:analysis-behavior      0.027s
+             analysis-behavior-grammar-opt      0.007s
+                             total-parsing      0.009s
+                                     total     33.715s
+                       build-parsing-table      0.093s
+                                 soot-init     33.579s
+                         analysis-behavior      0.023s
 
 Profiling Vars:
-          final:parsing-table-state-number    410
-     parsing-table-state-number.Client.run     30
-      parsing-table-state-number.Main.main    265
-                           final:cfg-nodes    559
-  parse-trees.Worker.run-hasOrders_treatOrder      1
-            grammar-productions.Client.run    128
-                         final:parse-trees      1
-     parsing-table-state-number.Worker.run     47
-                       cfg-nodes.Main.main    257
-          grammar-productions.Supplier.run    178
-                                   threads      4
-                      cfg-nodes.Client.run    141
-             grammar-productions.Main.main    476
-            grammar-productions.Worker.run    110
-                 final:grammar-productions    892
-   parsing-table-state-number.Supplier.run     68
-                      cfg-nodes.Worker.run     39
-                    cfg-nodes.Supplier.run    122
+                parsing-table-state-number    410
+                                 cfg-nodes    559
+                               parse-trees      1
+                            parse-branches    197
+                       grammar-productions    892
 Warning: java.dyn.InvokeDynamic is a phantom class!
 [Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
@@ -58,32 +41,15 @@ Checking thread Client.run():
   Verifying word hasOrders treatOrder:
 
 Run Time:
-                        analysis-atomicity      0.002s
-                       final:total-parsing      0.305s
-    analysis-behavior-grammar-add-subwords      0.041s
-                                   parsing      0.300s
-                          analysis-threads      0.006s
-                               final:total     38.397s
-                 final:build-parsing-table      1.391s
-                           final:soot-init     36.588s
-                   final:analysis-behavior      0.099s
+                             total-parsing      0.331s
+                                     total     35.173s
+                       build-parsing-table      1.248s
+                                 soot-init     33.491s
+                         analysis-behavior      0.089s
 
 Profiling Vars:
-          final:parsing-table-state-number   3177
-     parsing-table-state-number.Client.run    754
-      parsing-table-state-number.Main.main   1517
-                           final:cfg-nodes    559
-  parse-trees.Worker.run-hasOrders_treatOrder      1
-            grammar-productions.Client.run   1406
-                         final:parse-trees      1
-     parsing-table-state-number.Worker.run    211
-                       cfg-nodes.Main.main    257
-          grammar-productions.Supplier.run   1273
-                                   threads      4
-                      cfg-nodes.Client.run    141
-             grammar-productions.Main.main   2664
-            grammar-productions.Worker.run    419
-                 final:grammar-productions   5762
-   parsing-table-state-number.Supplier.run    695
-                      cfg-nodes.Worker.run     39
-                    cfg-nodes.Supplier.run    122
+                parsing-table-state-number   3177
+                                 cfg-nodes    559
+                               parse-trees      1
+                            parse-branches   3082
+                       grammar-productions   5762
