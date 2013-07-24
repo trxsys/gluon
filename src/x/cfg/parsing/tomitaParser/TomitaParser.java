@@ -247,6 +247,9 @@ public class TomitaParser
         {
             dprintln(parserConf.hashCode()+": error: actions("+s+","+t+")=∅");
             parserConf.status=ParserStatus.ERROR;
+
+            x.profiling.Profiling.inc("final:parse-branches");
+
             return;
         }
 
@@ -266,6 +269,7 @@ public class TomitaParser
             else
                 assert false;
 
+            /* check if we have a lca */
             if (branches[i].getTerminalNum() == input.size()-1
                 && parserConf.lca == null)
             {
@@ -284,6 +288,8 @@ public class TomitaParser
 
             if (!prune && !parserConf.isLoop(branches[i]))
                 parseLifo.add(branches[i]);
+            else
+                x.profiling.Profiling.inc("final:parse-branches");
 
             i++;
         }
@@ -333,6 +339,9 @@ public class TomitaParser
 
                 if (z != 0)
                     ret=z;
+
+                x.profiling.Profiling.inc("final:parse-branches");
+
                 break;
             case ERROR   : assert false : 
                 "Why do we have error configs in the parser lifo?"; break;

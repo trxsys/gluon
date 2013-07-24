@@ -173,9 +173,10 @@ public class Main
         System.out.println("Run Time:");
 
         for (String id: x.profiling.Timer.getIds())
-            System.out.printf("  %40s  %5d.%03ds\n",id,
-                              x.profiling.Timer.getTime(id)/1000,
-                              x.profiling.Timer.getTime(id)%1000);
+            if (id.startsWith("final:"))
+                System.out.printf("  %40s  %5d.%03ds\n",id.replace("final:",""),
+                                  x.profiling.Timer.getTime(id)/1000,
+                                  x.profiling.Timer.getTime(id)%1000);
     }
 
     private static void dumpProfilingVars()
@@ -184,7 +185,9 @@ public class Main
         System.out.println("Profiling Vars:");
 
         for (String id: x.profiling.Profiling.getIds())
-            System.out.printf("  %40s  %5d\n",id,x.profiling.Profiling.get(id));
+            if (id.startsWith("final:"))
+                System.out.printf("  %40s  %5d\n",id.replace("final:",""),
+                                  x.profiling.Profiling.get(id));
     }
 
     public static void main(String[] args)
