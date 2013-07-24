@@ -41,9 +41,9 @@ public class Profiling
         Integer v=values.get(id);
 
         if (v == null)
-            set(id,0);
+            v=0;
 
-        set(id,get(id)+delta);
+        set(id,v+delta);
     }
 
     public static Set<String> getIds()
