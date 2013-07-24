@@ -44,9 +44,11 @@ class ParserConfiguration
 
     private ParserConfiguration parent;
 
-    ParserStackNode stackTop; 
+    private ParserStackNode stackTop; 
 
     private ParsingAction action;
+
+    public NonTerminal lca;
 
     public int pos;
     public ParserStatus status;
@@ -58,6 +60,7 @@ class ParserConfiguration
         stackTop=null;
         pos=parent != null ? p.pos : 0;
         action=null;
+        lca=p != null ? p.lca : null;
 
         status=ParserStatus.RUNNING;
     }
@@ -140,6 +143,11 @@ class ParserConfiguration
 
         return false;
     }
+
+    public int getTerminalNum()
+    {
+        return stackPeek().generateTerminals;
+    }
 }
 
 /* This is a partial implementation of the tomita parser. In particular we do not
@@ -149,13 +157,18 @@ public class TomitaParser
 {
     private static final boolean DEBUG=false;
 
+    private static final boolean PRUNE_BY_REPEATED_LCA=true;
+
     private final ParsingTable table;
     private Stack<ParserConfiguration> parseLifo;
+
+    private Set<NonTerminal> acceptedLCA;
 
     public TomitaParser(ParsingTable t)
     {
         table=t;
         parseLifo=null;
+        acceptedLCA=null;
     }
     
     private void dprintln(String s)
@@ -242,6 +255,8 @@ public class TomitaParser
         int i=0;
         for (ParsingAction action: actions)
         {
+            boolean prune=false;
+
             if (action instanceof ParsingActionShift)
                 shift(branches[i],(ParsingActionShift)action);
             else if (action instanceof ParsingActionReduce)
@@ -251,7 +266,23 @@ public class TomitaParser
             else
                 assert false;
 
-            if (!parserConf.isLoop(branches[i]))
+            if (branches[i].getTerminalNum() == input.size()-1
+                && parserConf.lca == null)
+            {
+                ParsingActionReduce red;
+
+                assert action instanceof ParsingActionReduce;
+
+                red=(ParsingActionReduce)action;
+
+                branches[i].lca=red.getProduction().getHead();
+
+                if (PRUNE_BY_REPEATED_LCA
+                    && acceptedLCA.contains(branches[i].lca))
+                    prune=true;
+            }
+
+            if (!prune && !parserConf.isLoop(branches[i]))
                 parseLifo.add(branches[i]);
 
             i++;
@@ -278,6 +309,7 @@ public class TomitaParser
             : "input should end with $";
 
         parseLifo=new Stack<ParserConfiguration>();
+        acceptedLCA=new HashSet<NonTerminal>();
 
         initialConfig=getInitialConfiguration();
 
@@ -291,7 +323,14 @@ public class TomitaParser
             {
             case RUNNING : parseSingleParser(parserConf,input); break;
             case ACCEPTED: 
-                int z=pcb.callback(parserConf.getActionList());
+                int z;
+                NonTerminal lca=parserConf.lca;
+
+                assert parserConf.lca != null;
+
+                z=pcb.callback(parserConf.getActionList(),lca); // TODO
+                acceptedLCA.add(lca); // TODO
+
                 if (z != 0)
                     ret=z;
                 break;
@@ -299,8 +338,10 @@ public class TomitaParser
                 "Why do we have error configs in the parser lifo?"; break;
             }
         }
-        
+
+        // free memory
         parseLifo=null;
+        acceptedLCA=null;
 
         return ret;
     }

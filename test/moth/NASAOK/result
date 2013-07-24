@@ -12,17 +12,16 @@ Checking thread Daemon.run():
 
 Run Time:
                         analysis-atomicity      0.001s
-                            lca-parse-tree      0.000s
-       final:analysis-behavior-grammar-opt      0.000s
+       final:analysis-behavior-grammar-opt      0.001s
                        final:total-parsing      0.002s
-    analysis-behavior-grammar-add-subwords      0.003s
+    analysis-behavior-grammar-add-subwords      0.002s
                                    parsing      0.001s
-                          analysis-threads      0.006s
-                               final:total     36.281s
-                 final:build-parsing-table      0.005s
-                           final:soot-init     36.258s
+                          analysis-threads      0.005s
+                               final:total     34.515s
+                 final:build-parsing-table      0.006s
+                           final:soot-init     34.493s
                    final:analysis-behavior      0.004s
-                          built-parse-tree      0.000s
+                          built-parse-tree      0.001s
 
 Profiling Vars:
             grammar-productions.Daemon.run     37
@@ -56,26 +55,25 @@ Checking thread Daemon.run():
 
 Run Time:
                         analysis-atomicity      0.001s
-                            lca-parse-tree      0.000s
-                       final:total-parsing      0.005s
-    analysis-behavior-grammar-add-subwords      0.008s
-                                   parsing      0.004s
-                          analysis-threads      0.006s
-                               final:total     36.755s
-                 final:build-parsing-table      0.116s
-                           final:soot-init     36.612s
-                   final:analysis-behavior      0.010s
-                          built-parse-tree      0.001s
+                       final:total-parsing      0.003s
+    analysis-behavior-grammar-add-subwords      0.005s
+                                   parsing      0.003s
+                          analysis-threads      0.005s
+                               final:total     35.441s
+                 final:build-parsing-table      0.095s
+                           final:soot-init     35.322s
+                   final:analysis-behavior      0.009s
+                          built-parse-tree      0.000s
 
 Profiling Vars:
             grammar-productions.Daemon.run    244
           final:parsing-table-state-number    373
                         cfg-nodes.Task.run     10
-  parse-trees.Task.run-setValue_setAchieved     24
+  parse-trees.Task.run-setValue_setAchieved     15
       parsing-table-state-number.Main.main    199
                 final:parse-trees-uniq-lca      1
                            final:cfg-nodes     67
-                         final:parse-trees     24
+                         final:parse-trees     15
                        cfg-nodes.Main.main     35
      parsing-table-state-number.Daemon.run    129
                       cfg-nodes.Daemon.run     22

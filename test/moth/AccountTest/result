@@ -19,15 +19,14 @@ Checking thread Update.run():
 
 Run Time:
                         analysis-atomicity      0.001s
-                            lca-parse-tree      0.001s
-       final:analysis-behavior-grammar-opt      0.002s
+       final:analysis-behavior-grammar-opt      0.001s
                        final:total-parsing      0.003s
     analysis-behavior-grammar-add-subwords      0.000s
-                                   parsing      0.001s
-                          analysis-threads      0.006s
-                               final:total     36.167s
+                                   parsing      0.003s
+                          analysis-threads      0.005s
+                               final:total     34.917s
                  final:build-parsing-table      0.006s
-                           final:soot-init     36.145s
+                           final:soot-init     34.896s
                    final:analysis-behavior      0.002s
                           built-parse-tree      0.000s
 
@@ -37,7 +36,7 @@ Profiling Vars:
       parsing-table-state-number.Main.main      8
                 final:parse-trees-uniq-lca      2
                            final:cfg-nodes     36
-                         final:parse-trees     17
+                         final:parse-trees     14
   parse-trees-uniq-lca.Update.run-getBalance_setBalance      1
                        cfg-nodes.Main.main     21
             grammar-productions.Update.run     37
@@ -47,7 +46,7 @@ Profiling Vars:
                                    threads      2
              grammar-productions.Main.main     25
                  final:grammar-productions     62
-  parse-trees.Update.run-getBalance_setBalance     16
+  parse-trees.Update.run-getBalance_setBalance     13
 Warning: java.dyn.InvokeDynamic is a phantom class!
 [Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
@@ -68,17 +67,16 @@ Checking thread Update.run():
   Verifying word getBalance update:
 
 Run Time:
-                        analysis-atomicity      0.001s
-                            lca-parse-tree      0.000s
-                       final:total-parsing      0.042s
-    analysis-behavior-grammar-add-subwords      0.004s
-                                   parsing      0.038s
+                        analysis-atomicity      0.003s
+                       final:total-parsing      0.011s
+    analysis-behavior-grammar-add-subwords      0.006s
+                                   parsing      0.009s
                           analysis-threads      0.006s
-                               final:total     36.233s
-                 final:build-parsing-table      0.048s
-                           final:soot-init     36.125s
-                   final:analysis-behavior      0.005s
-                          built-parse-tree      0.004s
+                               final:total     35.253s
+                 final:build-parsing-table      0.054s
+                           final:soot-init     35.164s
+                   final:analysis-behavior      0.011s
+                          built-parse-tree      0.001s
 
 Profiling Vars:
           final:parsing-table-state-number    210
@@ -86,14 +84,14 @@ Profiling Vars:
       parsing-table-state-number.Main.main    115
                 final:parse-trees-uniq-lca      2
                            final:cfg-nodes     36
-                         final:parse-trees    300
+                         final:parse-trees     32
   parse-trees-uniq-lca.Update.run-getBalance_setBalance      1
                        cfg-nodes.Main.main     21
             grammar-productions.Update.run    171
      parsing-table-state-number.Update.run     95
-  parse-trees.Update.run-setBalance_getBalance      6
+  parse-trees.Update.run-setBalance_getBalance      1
   parse-trees-uniq-lca.Update.run-setBalance_getBalance      1
                                    threads      2
              grammar-productions.Main.main    226
                  final:grammar-productions    397
-  parse-trees.Update.run-getBalance_setBalance    294
+  parse-trees.Update.run-getBalance_setBalance     31

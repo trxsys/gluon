@@ -30,17 +30,16 @@ Checking thread T1.run():
   Verifying word setY setX:
 
 Run Time:
-                        analysis-atomicity      0.002s
-                            lca-parse-tree      0.000s
+                        analysis-atomicity      0.001s
        final:analysis-behavior-grammar-opt      0.001s
                        final:total-parsing      0.002s
-    analysis-behavior-grammar-add-subwords      0.002s
+    analysis-behavior-grammar-add-subwords      0.004s
                                    parsing      0.001s
-                          analysis-threads      0.006s
-                               final:total     36.679s
-                 final:build-parsing-table      0.011s
-                           final:soot-init     36.650s
-                   final:analysis-behavior      0.005s
+                          analysis-threads      0.005s
+                               final:total     34.838s
+                 final:build-parsing-table      0.008s
+                           final:soot-init     34.809s
+                   final:analysis-behavior      0.008s
                           built-parse-tree      0.000s
 
 Profiling Vars:
@@ -51,8 +50,8 @@ Profiling Vars:
       parsing-table-state-number.Main.main     17
                 final:parse-trees-uniq-lca      1
                            final:cfg-nodes    112
-              parse-trees.T3.run-getX_getY      4
-                         final:parse-trees      4
+              parse-trees.T3.run-getX_getY      3
+                         final:parse-trees      3
                           cfg-nodes.T4.run     29
                        cfg-nodes.Main.main     54
                 grammar-productions.T4.run     55
@@ -99,17 +98,16 @@ Checking thread T1.run():
   Verifying word setY setX:
 
 Run Time:
-                        analysis-atomicity      0.001s
-                            lca-parse-tree      0.000s
-                       final:total-parsing      0.005s
+                        analysis-atomicity      0.085s
+                       final:total-parsing      0.003s
     analysis-behavior-grammar-add-subwords      0.010s
-                                   parsing      0.005s
+                                   parsing      0.002s
                           analysis-threads      0.005s
-                               final:total     37.954s
-                 final:build-parsing-table      0.141s
-                           final:soot-init     37.778s
-                   final:analysis-behavior      0.013s
-                          built-parse-tree      0.000s
+                               final:total     35.312s
+                 final:build-parsing-table      0.124s
+                           final:soot-init     35.072s
+                   final:analysis-behavior      0.016s
+                          built-parse-tree      0.001s
 
 Profiling Vars:
           final:parsing-table-state-number    639
@@ -119,8 +117,8 @@ Profiling Vars:
       parsing-table-state-number.Main.main    308
                 final:parse-trees-uniq-lca      1
                            final:cfg-nodes    112
-              parse-trees.T3.run-getX_getY     54
-                         final:parse-trees     54
+              parse-trees.T3.run-getX_getY     11
+                         final:parse-trees     11
                           cfg-nodes.T4.run     29
                        cfg-nodes.Main.main     54
                 grammar-productions.T4.run    328

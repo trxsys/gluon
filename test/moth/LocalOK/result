@@ -12,26 +12,25 @@ Checking thread Local.run():
 
 Run Time:
                         analysis-atomicity      0.001s
-                            lca-parse-tree      0.000s
        final:analysis-behavior-grammar-opt      0.001s
                        final:total-parsing      0.002s
-    analysis-behavior-grammar-add-subwords      0.000s
-                                   parsing      0.001s
+    analysis-behavior-grammar-add-subwords      0.001s
+                                   parsing      0.002s
                           analysis-threads      0.006s
-                               final:total     37.105s
+                               final:total     35.323s
                  final:build-parsing-table      0.003s
-                           final:soot-init     37.087s
+                           final:soot-init     35.305s
                    final:analysis-behavior      0.002s
                           built-parse-tree      0.000s
 
 Profiling Vars:
           final:parsing-table-state-number     15
-   parse-trees.Local.run-getValue_setValue      4
+   parse-trees.Local.run-getValue_setValue      3
             grammar-productions.Local.main     15
                 final:parse-trees-uniq-lca      1
                            final:cfg-nodes     18
   parse-trees-uniq-lca.Local.run-getValue_setValue      1
-                         final:parse-trees      4
+                         final:parse-trees      3
              grammar-productions.Local.run     31
      parsing-table-state-number.Local.main      3
       parsing-table-state-number.Local.run     12
@@ -53,25 +52,24 @@ Checking thread Local.run():
 
 Run Time:
                         analysis-atomicity      0.001s
-                            lca-parse-tree      0.000s
-                       final:total-parsing      0.003s
+                       final:total-parsing      0.002s
     analysis-behavior-grammar-add-subwords      0.002s
                                    parsing      0.001s
-                          analysis-threads      0.006s
-                               final:total     36.261s
-                 final:build-parsing-table      0.020s
-                           final:soot-init     36.223s
+                          analysis-threads      0.005s
+                               final:total     35.130s
+                 final:build-parsing-table      0.021s
+                           final:soot-init     35.091s
                    final:analysis-behavior      0.003s
                           built-parse-tree      0.000s
 
 Profiling Vars:
           final:parsing-table-state-number    100
-   parse-trees.Local.run-getValue_setValue     12
+   parse-trees.Local.run-getValue_setValue      7
             grammar-productions.Local.main    124
                 final:parse-trees-uniq-lca      1
                            final:cfg-nodes     18
   parse-trees-uniq-lca.Local.run-getValue_setValue      1
-                         final:parse-trees     12
+                         final:parse-trees      7
              grammar-productions.Local.run     82
      parsing-table-state-number.Local.main     62
       parsing-table-state-number.Local.run     38

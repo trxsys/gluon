@@ -125,42 +125,40 @@ public class AnalysisMain
         return relevantThreads;
     }
 
+    private boolean assertSanityCheck(ArrayList<Terminal> word, 
+                                      List<ParsingAction> actions,
+                                      NonTerminal lca)
+    {
+        ParseTree ptree=new ParseTree();
+
+        ptree.buildTree(word,actions);
+
+        return lca.equals(ptree.getLCA());
+    }
+
     private int checkThreadWordParse(SootMethod thread,
                                      ArrayList<Terminal> word, 
                                      List<ParsingAction> actions,
-                                     Set<SootMethod> reported)
+                                     Set<SootMethod> reported,
+                                     NonTerminal lca)
     {
-        ParseTree ptree=new ParseTree();
-        NonTerminal lca;
         SootMethod lcaMethod;
         boolean atomic;
 
-        x.profiling.Timer.start("built-parse-tree");
-        ptree.buildTree(word,actions);
-        x.profiling.Timer.stop("built-parse-tree");
-
-        x.profiling.Timer.start("lca-parse-tree");
-        lca=ptree.getLCA();
-        x.profiling.Timer.stop("lca-parse-tree");
+        assert assertSanityCheck(word,actions,lca);
 
         assert lca instanceof PPNonTerminal;
 
         lcaMethod=((PPNonTerminal)lca).getMethod();
+
+        if (reported.contains(lcaMethod))
+            return 0;
 
         x.profiling.Profiling.inc("parse-trees."
                                   +thread.getDeclaringClass().getShortName()
                                   +"."+thread.getName()
                                   +"-"+wordStr(word).replace(' ','_'));
         x.profiling.Profiling.inc("final:parse-trees");
-
-        if (reported.contains(lcaMethod))
-            return 0;
-
-        x.profiling.Profiling.inc("parse-trees-uniq-lca."
-                                  +thread.getDeclaringClass().getShortName()
-                                  +"."+thread.getName()
-                                  +"-"+wordStr(word).replace(' ','_'));
-        x.profiling.Profiling.inc("final:parse-trees-uniq-lca");
 
         reported.add(lcaMethod);
 
@@ -187,12 +185,13 @@ public class AnalysisMain
         x.profiling.Timer.start("final:total-parsing");
         x.profiling.Timer.start("parsing");
         ret=parser.parse(word, new ParserCallback(){
-                public int callback(List<ParsingAction> actions)
+                public int callback(List<ParsingAction> actions,
+                                    NonTerminal lca)
                 {
                     int ret;
 
                     x.profiling.Timer.stop("parsing");
-                    ret=checkThreadWordParse(thread,word,actions,reported);
+                    ret=checkThreadWordParse(thread,word,actions,reported,lca);
                     x.profiling.Timer.start("parsing");
 
                     return ret;

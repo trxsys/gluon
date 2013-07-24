@@ -10,33 +10,29 @@ Checking thread Main.run():
 
 Run Time:
                         analysis-atomicity      0.001s
-                            lca-parse-tree      0.000s
        final:analysis-behavior-grammar-opt      0.000s
                        final:total-parsing      0.002s
-    analysis-behavior-grammar-add-subwords      0.002s
+    analysis-behavior-grammar-add-subwords      0.001s
                                    parsing      0.001s
                           analysis-threads      0.006s
-                               final:total     37.266s
-                 final:build-parsing-table      0.003s
-                           final:soot-init     37.247s
-                   final:analysis-behavior      0.003s
-                          built-parse-tree      0.001s
+                               final:total     35.277s
+                 final:build-parsing-table      0.004s
+                           final:soot-init     35.258s
+                   final:analysis-behavior      0.002s
 
 Profiling Vars:
           final:parsing-table-state-number     19
-     parse-trees-uniq-lca.Main.run-inc_inc      1
-      parsing-table-state-number.Main.main      8
-                final:parse-trees-uniq-lca      1
-                           final:cfg-nodes     23
-              grammar-productions.Main.run     31
-                         final:parse-trees      4
-                       cfg-nodes.Main.main     17
        parsing-table-state-number.Main.run     11
+      parsing-table-state-number.Main.main      8
                                    threads      2
+              grammar-productions.Main.run     31
              grammar-productions.Main.main     25
-                 final:grammar-productions     56
+                           final:cfg-nodes     23
+              parse-trees.Main.run-inc_inc      1
                         cfg-nodes.Main.run      6
-              parse-trees.Main.run-inc_inc      4
+                 final:grammar-productions     56
+                         final:parse-trees      1
+                       cfg-nodes.Main.main     17
 Warning: java.dyn.InvokeDynamic is a phantom class!
 [Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
@@ -49,29 +45,25 @@ Checking thread Main.run():
 
 Run Time:
                         analysis-atomicity      0.001s
-                            lca-parse-tree      0.000s
-                       final:total-parsing      0.003s
+                       final:total-parsing      0.002s
     analysis-behavior-grammar-add-subwords      0.003s
                                    parsing      0.002s
-                          analysis-threads      0.005s
-                               final:total     37.247s
-                 final:build-parsing-table      0.037s
-                           final:soot-init     37.192s
+                          analysis-threads      0.006s
+                               final:total     35.202s
+                 final:build-parsing-table      0.031s
+                           final:soot-init     35.153s
                    final:analysis-behavior      0.004s
-                          built-parse-tree      0.000s
 
 Profiling Vars:
           final:parsing-table-state-number    131
-     parse-trees-uniq-lca.Main.run-inc_inc      1
-      parsing-table-state-number.Main.main     99
-                final:parse-trees-uniq-lca      1
-                           final:cfg-nodes     23
-              grammar-productions.Main.run     73
-                         final:parse-trees     12
-                       cfg-nodes.Main.main     17
        parsing-table-state-number.Main.run     32
+      parsing-table-state-number.Main.main     99
                                    threads      2
+              grammar-productions.Main.run     73
              grammar-productions.Main.main    190
-                 final:grammar-productions    263
+                           final:cfg-nodes     23
+              parse-trees.Main.run-inc_inc      1
                         cfg-nodes.Main.run      6
-              parse-trees.Main.run-inc_inc     12
+                 final:grammar-productions    263
+                         final:parse-trees      1
+                       cfg-nodes.Main.main     17

@@ -11,27 +11,26 @@ Checking thread Local.run():
   Verifying word setValue getValue:
 
 Run Time:
-                        analysis-atomicity      0.002s
-                            lca-parse-tree      0.000s
-       final:analysis-behavior-grammar-opt      0.000s
-                       final:total-parsing      0.002s
+                        analysis-atomicity      0.001s
+       final:analysis-behavior-grammar-opt      0.001s
+                       final:total-parsing      0.001s
     analysis-behavior-grammar-add-subwords      0.001s
                                    parsing      0.001s
-                          analysis-threads      0.006s
-                               final:total     37.075s
+                          analysis-threads      0.005s
+                               final:total     35.044s
                  final:build-parsing-table      0.003s
-                           final:soot-init     37.057s
+                           final:soot-init     35.027s
                    final:analysis-behavior      0.002s
-                          built-parse-tree      0.001s
+                          built-parse-tree      0.000s
 
 Profiling Vars:
           final:parsing-table-state-number     15
-   parse-trees.Local.run-getValue_setValue      4
+   parse-trees.Local.run-getValue_setValue      3
             grammar-productions.Local.main     15
                 final:parse-trees-uniq-lca      1
                            final:cfg-nodes     18
   parse-trees-uniq-lca.Local.run-getValue_setValue      1
-                         final:parse-trees      4
+                         final:parse-trees      3
              grammar-productions.Local.run     31
      parsing-table-state-number.Local.main      3
       parsing-table-state-number.Local.run     12
@@ -53,25 +52,24 @@ Checking thread Local.run():
 
 Run Time:
                         analysis-atomicity      0.001s
-                            lca-parse-tree      0.000s
                        final:total-parsing      0.002s
     analysis-behavior-grammar-add-subwords      0.002s
                                    parsing      0.001s
-                          analysis-threads      0.005s
-                               final:total     36.142s
-                 final:build-parsing-table      0.019s
-                           final:soot-init     36.105s
+                          analysis-threads      0.006s
+                               final:total     35.385s
+                 final:build-parsing-table      0.020s
+                           final:soot-init     35.347s
                    final:analysis-behavior      0.003s
                           built-parse-tree      0.000s
 
 Profiling Vars:
           final:parsing-table-state-number    100
-   parse-trees.Local.run-getValue_setValue     12
+   parse-trees.Local.run-getValue_setValue      7
             grammar-productions.Local.main    124
                 final:parse-trees-uniq-lca      1
                            final:cfg-nodes     18
   parse-trees-uniq-lca.Local.run-getValue_setValue      1
-                         final:parse-trees     12
+                         final:parse-trees      7
              grammar-productions.Local.run     82
      parsing-table-state-number.Local.main     62
       parsing-table-state-number.Local.run     38

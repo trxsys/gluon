@@ -9,18 +9,17 @@ Checking thread Runner.run():
 
 
 Run Time:
-                        analysis-atomicity      0.002s
-                            lca-parse-tree      0.000s
+                        analysis-atomicity      0.001s
        final:analysis-behavior-grammar-opt      0.001s
                        final:total-parsing      0.002s
     analysis-behavior-grammar-add-subwords      0.001s
                                    parsing      0.001s
                           analysis-threads      0.006s
-                               final:total     36.986s
-                 final:build-parsing-table      0.010s
-                           final:soot-init     36.959s
+                               final:total     34.650s
+                 final:build-parsing-table      0.007s
+                           final:soot-init     34.624s
                    final:analysis-behavior      0.004s
-                          built-parse-tree      0.001s
+                          built-parse-tree      0.000s
 
 Profiling Vars:
           final:parsing-table-state-number     43
@@ -29,11 +28,11 @@ Profiling Vars:
                            final:cfg-nodes     47
             grammar-productions.Runner.run     74
                       cfg-nodes.Runner.run     21
-                         final:parse-trees     11
+                         final:parse-trees      7
                        cfg-nodes.Main.main     26
   parse-trees-uniq-lca.Runner.run-lookupEntry_checkClosed      1
                                    threads      2
-  parse-trees.Runner.run-lookupEntry_checkClosed     11
+  parse-trees.Runner.run-lookupEntry_checkClosed      7
              grammar-productions.Main.main     31
      parsing-table-state-number.Runner.run     34
                  final:grammar-productions    105
@@ -49,15 +48,14 @@ Checking thread Runner.run():
 
 Run Time:
                         analysis-atomicity      0.001s
-                            lca-parse-tree      0.000s
-                       final:total-parsing      0.016s
-    analysis-behavior-grammar-add-subwords      0.005s
-                                   parsing      0.015s
+                       final:total-parsing      0.005s
+    analysis-behavior-grammar-add-subwords      0.007s
+                                   parsing      0.004s
                           analysis-threads      0.006s
-                               final:total     36.772s
-                 final:build-parsing-table      0.069s
-                           final:soot-init     36.668s
-                   final:analysis-behavior      0.007s
+                               final:total     34.771s
+                 final:build-parsing-table      0.067s
+                           final:soot-init     34.677s
+                   final:analysis-behavior      0.009s
                           built-parse-tree      0.000s
 
 Profiling Vars:
@@ -67,11 +65,11 @@ Profiling Vars:
                            final:cfg-nodes     47
             grammar-productions.Runner.run    245
                       cfg-nodes.Runner.run     21
-                         final:parse-trees    164
+                         final:parse-trees     26
                        cfg-nodes.Main.main     26
   parse-trees-uniq-lca.Runner.run-lookupEntry_checkClosed      1
                                    threads      2
-  parse-trees.Runner.run-lookupEntry_checkClosed    164
+  parse-trees.Runner.run-lookupEntry_checkClosed     26
              grammar-productions.Main.main    279
      parsing-table-state-number.Runner.run    125
                  final:grammar-productions    524

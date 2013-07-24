@@ -12,16 +12,15 @@ Checking thread CoordMain.run():
 
 Run Time:
                         analysis-atomicity      0.001s
-                            lca-parse-tree      0.000s
-       final:analysis-behavior-grammar-opt      0.002s
+       final:analysis-behavior-grammar-opt      0.000s
                        final:total-parsing      0.002s
-    analysis-behavior-grammar-add-subwords      0.000s
+    analysis-behavior-grammar-add-subwords      0.001s
                                    parsing      0.001s
                           analysis-threads      0.005s
-                               final:total     36.980s
-                 final:build-parsing-table      0.007s
-                           final:soot-init     36.957s
-                   final:analysis-behavior      0.003s
+                               final:total     34.896s
+                 final:build-parsing-table      0.006s
+                           final:soot-init     34.874s
+                   final:analysis-behavior      0.002s
                           built-parse-tree      0.000s
 
 Profiling Vars:
@@ -53,15 +52,14 @@ Checking thread CoordMain.run():
 
 Run Time:
                         analysis-atomicity      0.001s
-                            lca-parse-tree      0.000s
-                       final:total-parsing      0.005s
+                       final:total-parsing      0.004s
     analysis-behavior-grammar-add-subwords      0.004s
                                    parsing      0.003s
-                          analysis-threads      0.005s
-                               final:total     36.762s
-                 final:build-parsing-table      0.049s
-                           final:soot-init     36.691s
-                   final:analysis-behavior      0.007s
+                          analysis-threads      0.006s
+                               final:total     34.358s
+                 final:build-parsing-table      0.040s
+                           final:soot-init     34.297s
+                   final:analysis-behavior      0.006s
                           built-parse-tree      0.000s
 
 Profiling Vars:
@@ -71,8 +69,8 @@ Profiling Vars:
                 final:parse-trees-uniq-lca      1
                            final:cfg-nodes     33
   parse-trees-uniq-lca.CoordMain.run-resetX_resetY      1
-                         final:parse-trees     29
-   parse-trees.CoordMain.run-resetX_resetY     29
+                         final:parse-trees     22
+   parse-trees.CoordMain.run-resetX_resetY     22
   parsing-table-state-number.CoordMain.run     72
                                    threads      2
         grammar-productions.CoordMain.main    235

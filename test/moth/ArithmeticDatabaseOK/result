@@ -15,17 +15,16 @@ Checking thread Client.run():
 
 Run Time:
                         analysis-atomicity      0.002s
-                            lca-parse-tree      0.003s
        final:analysis-behavior-grammar-opt      0.002s
-                       final:total-parsing      0.137s
+                       final:total-parsing      0.020s
     analysis-behavior-grammar-add-subwords      0.008s
-                                   parsing      0.112s
-                          analysis-threads      0.006s
-                               final:total     38.173s
-                 final:build-parsing-table      0.096s
-                           final:soot-init     37.909s
+                                   parsing      0.017s
+                          analysis-threads      0.005s
+                               final:total     36.243s
+                 final:build-parsing-table      0.106s
+                           final:soot-init     36.087s
                    final:analysis-behavior      0.016s
-                          built-parse-tree      0.006s
+                          built-parse-tree      0.001s
 
 Profiling Vars:
           final:parsing-table-state-number    329
@@ -34,16 +33,16 @@ Profiling Vars:
       parsing-table-state-number.Main.main    164
                 final:parse-trees-uniq-lca      2
                            final:cfg-nodes    343
-  parse-trees.Client.run-get_max_key_insert      8
+  parse-trees.Client.run-get_max_key_insert      2
             grammar-productions.Client.run    324
-                         final:parse-trees   2078
+                         final:parse-trees     74
                        cfg-nodes.Main.main    169
   parse-trees-uniq-lca.Client.run-get_max_key_insert      1
                                    threads      2
              grammar-productions.Main.main    408
                       cfg-nodes.Client.run    174
                  final:grammar-productions    732
-    parse-trees.Client.run-iterator_insert   2070
+    parse-trees.Client.run-iterator_insert     72
 Warning: java.dyn.InvokeDynamic is a phantom class!
 [Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
@@ -60,17 +59,16 @@ Checking thread Client.run():
 
 
 Run Time:
-                        analysis-atomicity      0.002s
-                            lca-parse-tree      0.026s
-                       final:total-parsing     11.408s
+                        analysis-atomicity      0.003s
+                       final:total-parsing      0.402s
     analysis-behavior-grammar-add-subwords      0.023s
-                                   parsing     10.712s
+                                   parsing      0.388s
                           analysis-threads      0.006s
-                               final:total     49.935s
-                 final:build-parsing-table      0.702s
-                           final:soot-init     37.753s
-                   final:analysis-behavior      0.059s
-                          built-parse-tree      0.529s
+                               final:total     36.780s
+                 final:build-parsing-table      0.643s
+                           final:soot-init     35.664s
+                   final:analysis-behavior      0.057s
+                          built-parse-tree      0.010s
 
 Profiling Vars:
           final:parsing-table-state-number   1914
@@ -79,13 +77,13 @@ Profiling Vars:
       parsing-table-state-number.Main.main    910
                 final:parse-trees-uniq-lca      2
                            final:cfg-nodes    343
-  parse-trees.Client.run-get_max_key_insert    224
+  parse-trees.Client.run-get_max_key_insert      2
             grammar-productions.Client.run   1821
-                         final:parse-trees  155292
+                         final:parse-trees    605
                        cfg-nodes.Main.main    169
   parse-trees-uniq-lca.Client.run-get_max_key_insert      1
                                    threads      2
              grammar-productions.Main.main   1753
                       cfg-nodes.Client.run    174
                  final:grammar-productions   3574
-    parse-trees.Client.run-iterator_insert  155068
+    parse-trees.Client.run-iterator_insert    603
