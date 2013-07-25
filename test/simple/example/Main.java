@@ -15,12 +15,12 @@ class Module
 public class Main
 {
     private static Module m;
-
+    
     public static void f()
     {
         m.c();
     }
-
+    
     @Atomic
     public static void g()
     {
@@ -28,18 +28,18 @@ public class Main
         m.b();
         f();
     }
-
+    
     public static void main(String[] args)
     {
         m=new Module();
-
+        
         for (int i=0; i < 0; i++)
             if (i%2 == 0)
                 m.a();
             else
                 m.b();
-
+        
         f();
-	g();
+        g();
     }
 }
