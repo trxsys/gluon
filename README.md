@@ -1,7 +1,7 @@
 Gluon
 =====
 
-This tool verifies the atomicity execution of sequences of method calls performed
+Gluon verifies the atomicity execution of sequences of method calls performed
 to a module (represented by a class).
 
 The following code exemplifies this and can be found in ```test/simple/example```.
@@ -37,7 +37,7 @@ public class Main
     {
         m=new Module();
         
-        for (int i=0; i < 0; i++)
+        for (int i=0; i < 10; i++)
             if (i%2 == 0)
                 m.a();
             else

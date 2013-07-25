@@ -33,7 +33,7 @@ public class Main
     {
         m=new Module();
         
-        for (int i=0; i < 0; i++)
+        for (int i=0; i < 10; i++)
             if (i%2 == 0)
                 m.a();
             else
