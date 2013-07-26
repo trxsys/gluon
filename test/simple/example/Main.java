@@ -16,13 +16,13 @@ public class Main
 {
     private static Module m;
     
-    public static void f()
+    private static void f()
     {
         m.c();
     }
     
     @Atomic
-    public static void g()
+    private static void g()
     {
         m.a();
         m.b();
