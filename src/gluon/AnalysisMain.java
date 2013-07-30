@@ -317,16 +317,23 @@ public class AnalysisMain
         if (contractClauses.size() == 0)
             return;
 
-        /* TODO: this should be parses intro a StarFreeRegegluon.
-         * TODO: this should verify that the method in fact belongs to module
+        /* TODO: this should be parses intro a StarFreeRegex.
          */
         for (String clause: contractClauses)
         {
-            ArrayList<gluon.grammar.Terminal> word=new ArrayList<gluon.grammar.Terminal>();
+            ArrayList<gluon.grammar.Terminal> word
+                =new ArrayList<gluon.grammar.Terminal>();
             
             for (String m: clause.split(" "))
                 if (m.trim().length() > 0)
-                    word.add(new PPTerminal(m.trim()));
+                {
+                    String methodName=m.trim();
+
+                    if (!module.declaresMethodByName(methodName))
+                        Main.fatal(methodName+": no such method!");
+
+                    word.add(new PPTerminal(methodName));
+                }
 
             word.add(new gluon.grammar.EOITerminal());
 
@@ -350,10 +357,7 @@ public class AnalysisMain
         module=getModuleClass();
 
         if (module == null)
-        {
-            System.err.println(moduleName+": module's class not found");
-            System.exit(-1);
-        }
+            Main.fatal(moduleName+": module's class not found");
         
         extractContract();
 

@@ -30,7 +30,7 @@ import gnu.getopt.Getopt;
 
 public class Main
 {
-    private static final String PROGNAME="x";
+    private static final String PROGNAME="gluon";
     
     private static String classPath=null;
     private static String mainClassName=null;
@@ -40,6 +40,12 @@ public class Main
     public static boolean TIME=false;
     public static boolean PROFILING_VARS=false;
     public static boolean NO_GRAMMAR_OPTIMIZE=false;
+
+    public static void fatal(String error)
+    {
+        System.err.println(PROGNAME+": "+error);
+        System.exit(-1);
+    }
     
     private static void help() 
     {
@@ -124,11 +130,7 @@ public class Main
             }
         
         if (g.getOptind() != args.length-1)
-        {
-            System.err.println(PROGNAME+": there must be one "
-                               +"main class specified");
-            System.exit(-1);
-        }
+            fatal("there must be one main class specified");
         
         mainClassName=args[g.getOptind()];
     }
@@ -218,18 +220,10 @@ public class Main
         parseArguments(args);
         
         if (classPath == null) 
-        {
-            System.err.println("No classpath specified!");
-            System.exit(-1);
-            return;
-		}
+            fatal("No classpath specified!");
         
         if (moduleClassName == null)
-        {
-            System.err.println("No module specified!");
-            System.exit(-1);
-            return;
-        }
+            fatal("No module specified!");
 
         gluon.profiling.Timer.start("final:total");
         run();
