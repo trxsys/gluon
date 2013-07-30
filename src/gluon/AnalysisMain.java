@@ -168,7 +168,7 @@ public class AnalysisMain
         lcaMethod=((PPNonTerminal)lca).getMethod();
 
         if (reported.contains(lcaMethod))
-            return 0;
+            return 1;
 
         gluon.profiling.Profiling.inc("final:parse-trees");
 
@@ -181,7 +181,6 @@ public class AnalysisMain
         System.out.println("      Method: "+lcaMethod.getDeclaringClass().getShortName()
                            +"."+lcaMethod.getName()+"()");
         System.out.println("      Atomic: "+(atomic ? "YES" : "NO"));
-        System.out.println();
 
         return atomic ? 0 : -1;
     }
@@ -194,6 +193,7 @@ public class AnalysisMain
         final Set<SootMethod> reported=new HashSet<SootMethod>();
 
         System.out.println("  Verifying word "+wordStr(word)+":");
+        System.out.println();
 
         gluon.profiling.Timer.start("final:total-parsing");
         gluon.profiling.Timer.start("parsing");
@@ -207,12 +207,21 @@ public class AnalysisMain
                     ret=checkThreadWordParse(thread,word,actions,reported,lca);
                     gluon.profiling.Timer.start("parsing");
 
-                    return ret;
+                    if (ret <= 0)
+                        System.out.println();
+
+                    return ret < 0 ? -1 : 0;
                 }
             });
         gluon.profiling.Timer.stop("parsing");
         gluon.profiling.Timer.stop("final:total-parsing");
-        
+
+        if (reported.size() == 0)
+        {
+            System.out.println("    No occurrences");
+            System.out.println();
+        }
+
         return ret;
     }
     
@@ -246,6 +255,7 @@ public class AnalysisMain
         System.out.println("Checking thread "
                            +thread.getDeclaringClass().getShortName()
                            +"."+thread.getName()+"():");
+        System.out.println();
 
         for (ArrayList<Terminal> word: contract)
             checkThreadWord(thread,parser,word);
@@ -350,6 +360,9 @@ public class AnalysisMain
             Main.fatal(moduleName+": module's class not found");
         
         extractContract();
+
+        if (contract.size() == 0)
+            Main.fatal("empty contract");
 
         gluon.profiling.Timer.start("analysis-threads");
         threads=getThreads();
