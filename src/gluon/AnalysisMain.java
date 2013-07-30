@@ -40,15 +40,15 @@ import gluon.analysis.programBehavior.PPTerminal;
 import gluon.analysis.programBehavior.PPNonTerminal;
 import gluon.analysis.atomicMethods.AtomicMethods;
 
-import gluon.cfg.Cfg;
-import gluon.cfg.LexicalElement;
-import gluon.cfg.Terminal;
-import gluon.cfg.NonTerminal;
-import gluon.cfg.parsing.parsingTable.ParsingTable;
-import gluon.cfg.parsing.parsingTable.parsingAction.*;
-import gluon.cfg.parsing.parser.Parser;
-import gluon.cfg.parsing.parseTree.ParseTree;
-import gluon.cfg.parsing.parser.ParserCallback;
+import gluon.grammar.Cfg;
+import gluon.grammar.LexicalElement;
+import gluon.grammar.Terminal;
+import gluon.grammar.NonTerminal;
+import gluon.grammar.parsing.parsingTable.ParsingTable;
+import gluon.grammar.parsing.parsingTable.parsingAction.*;
+import gluon.grammar.parsing.parser.Parser;
+import gluon.grammar.parsing.parseTree.ParseTree;
+import gluon.grammar.parsing.parser.ParserCallback;
 
 public class AnalysisMain
     extends SceneTransformer
@@ -322,13 +322,13 @@ public class AnalysisMain
          */
         for (String clause: contractClauses)
         {
-            ArrayList<gluon.cfg.Terminal> word=new ArrayList<gluon.cfg.Terminal>();
+            ArrayList<gluon.grammar.Terminal> word=new ArrayList<gluon.grammar.Terminal>();
             
             for (String m: clause.split(" "))
                 if (m.trim().length() > 0)
                     word.add(new PPTerminal(m.trim()));
 
-            word.add(new gluon.cfg.EOITerminal());
+            word.add(new gluon.grammar.EOITerminal());
 
             contract.add(word);
         }

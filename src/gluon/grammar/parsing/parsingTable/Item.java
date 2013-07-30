@@ -14,10 +14,10 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.cfg.parsing.parsingTable;
+package gluon.grammar.parsing.parsingTable;
 
-import gluon.cfg.Production;
-import gluon.cfg.LexicalElement;
+import gluon.grammar.Production;
+import gluon.grammar.LexicalElement;
 
 class Item
 {

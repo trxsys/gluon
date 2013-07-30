@@ -14,11 +14,18 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.cfg.parsing.parsingTable.parsingAction;
+package gluon.grammar;
 
-public abstract class ParsingAction
+public abstract class Terminal
+    extends LexicalElement
 {
-    public abstract int hashCode();
-    public abstract boolean equals(Object o);
-    public abstract String toString();
+    public Terminal(String name)
+    {
+        super(name);
+    }
+
+    public abstract boolean isEOI();
+
+    @Override
+    public abstract Terminal clone();
 }

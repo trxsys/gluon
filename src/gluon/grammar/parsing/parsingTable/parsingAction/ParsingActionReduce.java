@@ -14,57 +14,47 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.analysis.programBehavior;
+package gluon.grammar.parsing.parsingTable.parsingAction;
 
-import soot.SootMethod;
+import gluon.grammar.Production;
 
-// Represents a call to the module under analysis
-public class PPTerminal
-    extends gluon.grammar.Terminal
+public class ParsingActionReduce
+    extends ParsingAction
 {
-    private final SootMethod method; // module method
+    private Production production;
 
-    public PPTerminal(SootMethod m)
+    public ParsingActionReduce(Production p)
     {
-        super(m.getName());
-        method=m;
+        production=p;
     }
 
-    public PPTerminal(String s)
+    public Production getProduction()
     {
-        super(s);
-        method=null;
-    }
-
-    @Override
-    public boolean isEOI()
-    {
-        return false;
+        return production;
     }
 
     @Override
     public int hashCode()
     {
-        return toString().hashCode();
+        return production.hashCode();
     }
 
     @Override
     public boolean equals(Object o)
     {
-        PPTerminal other;
+        ParsingActionReduce other;
 
-        if (!(o instanceof PPTerminal))
+        if (!(o instanceof ParsingActionReduce))
             return false;
 
-        other=(PPTerminal)o;
+        other=(ParsingActionReduce)o;
 
-        return other.name.equals(super.name);
+        return other.production.equals(production);
     }
 
     @Override
-    public PPTerminal clone()
+    public String toString()
     {
-        return method != null ? new PPTerminal(method) 
-            : new PPTerminal(super.getName());
+        return "r["+production.toString()+"]";
     }
 }

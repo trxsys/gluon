@@ -14,7 +14,7 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.cfg.parsing.parsingTable;
+package gluon.grammar.parsing.parsingTable;
 
 /* This is a implementation of a LR(0) parsing table generator as described in
  * the dragon book (Compilers - Principles, Techniques, & Tools; second edition).
@@ -31,14 +31,14 @@ import java.util.LinkedList;
 import java.util.HashSet;
 import java.util.HashMap;
 
-import gluon.cfg.Cfg;
-import gluon.cfg.NonTerminal;
-import gluon.cfg.Terminal;
-import gluon.cfg.EOITerminal;
-import gluon.cfg.Production;
-import gluon.cfg.LexicalElement;
+import gluon.grammar.Cfg;
+import gluon.grammar.NonTerminal;
+import gluon.grammar.Terminal;
+import gluon.grammar.EOITerminal;
+import gluon.grammar.Production;
+import gluon.grammar.LexicalElement;
 
-import gluon.cfg.parsing.parsingTable.parsingAction.*;
+import gluon.grammar.parsing.parsingTable.parsingAction.*;
 
 public class ParsingTable
 {

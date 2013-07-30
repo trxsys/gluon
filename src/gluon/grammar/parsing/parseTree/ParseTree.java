@@ -14,19 +14,19 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.cfg.parsing.parseTree;
+package gluon.grammar.parsing.parseTree;
 
 import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.Stack;
 import java.util.List;
 
-import gluon.cfg.Production;
-import gluon.cfg.LexicalElement;
-import gluon.cfg.NonTerminal;
-import gluon.cfg.Terminal;
+import gluon.grammar.Production;
+import gluon.grammar.LexicalElement;
+import gluon.grammar.NonTerminal;
+import gluon.grammar.Terminal;
 
-import gluon.cfg.parsing.parsingTable.parsingAction.*;
+import gluon.grammar.parsing.parsingTable.parsingAction.*;
 
 class ParseTreeNode
 {

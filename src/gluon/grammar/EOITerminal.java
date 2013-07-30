@@ -14,47 +14,36 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.cfg.parsing.parsingTable.parsingAction;
+package gluon.grammar;
 
-import gluon.cfg.Production;
-
-public class ParsingActionReduce
-    extends ParsingAction
+public final class EOITerminal
+    extends Terminal
 {
-    private Production production;
-
-    public ParsingActionReduce(Production p)
+    public EOITerminal()
     {
-        production=p;
+        super("$");
     }
 
-    public Production getProduction()
+    public boolean isEOI()
     {
-        return production;
+        return true;
     }
 
     @Override
     public int hashCode()
     {
-        return production.hashCode();
+        return 0xdecbfe1d;
     }
 
     @Override
     public boolean equals(Object o)
     {
-        ParsingActionReduce other;
-
-        if (!(o instanceof ParsingActionReduce))
-            return false;
-
-        other=(ParsingActionReduce)o;
-
-        return other.production.equals(production);
+        return o instanceof EOITerminal;
     }
 
     @Override
-    public String toString()
+    public EOITerminal clone()
     {
-        return "r["+production.toString()+"]";
+        return new EOITerminal();
     }
 }

@@ -14,12 +14,12 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.cfg.parsing.parser;
+package gluon.grammar.parsing.parser;
 
 import java.util.List;
 
-import gluon.cfg.parsing.parsingTable.parsingAction.ParsingAction;
-import gluon.cfg.NonTerminal;
+import gluon.grammar.parsing.parsingTable.parsingAction.ParsingAction;
+import gluon.grammar.NonTerminal;
 
 public interface ParserCallback
 {

@@ -14,7 +14,7 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.cfg;
+package gluon.grammar;
 
 import java.util.ArrayList;
 

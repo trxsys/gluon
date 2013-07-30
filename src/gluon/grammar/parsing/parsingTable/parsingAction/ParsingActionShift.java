@@ -14,7 +14,7 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.cfg.parsing.parsingTable.parsingAction;
+package gluon.grammar.parsing.parsingTable.parsingAction;
 
 public class ParsingActionShift
     extends ParsingAction

@@ -14,36 +14,11 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.cfg;
+package gluon.grammar.parsing.parsingTable.parsingAction;
 
-public final class EOITerminal
-    extends Terminal
+public abstract class ParsingAction
 {
-    public EOITerminal()
-    {
-        super("$");
-    }
-
-    public boolean isEOI()
-    {
-        return true;
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return 0xdecbfe1d;
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        return o instanceof EOITerminal;
-    }
-
-    @Override
-    public EOITerminal clone()
-    {
-        return new EOITerminal();
-    }
+    public abstract int hashCode();
+    public abstract boolean equals(Object o);
+    public abstract String toString();
 }

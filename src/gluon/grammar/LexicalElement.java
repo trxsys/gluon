@@ -14,18 +14,31 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.cfg;
+package gluon.grammar;
 
-public abstract class Terminal
-    extends LexicalElement
+public abstract class LexicalElement
 {
-    public Terminal(String name)
+    protected String name;
+
+    public LexicalElement(String name)
     {
-        super(name);
+        assert name != null;
+        this.name=name;
     }
 
-    public abstract boolean isEOI();
+    public String getName()
+    {
+        return name;
+    }
 
     @Override
-    public abstract Terminal clone();
+    public String toString()
+    {
+        return getName();
+    }
+
+    public abstract int hashCode();
+    public abstract boolean equals(Object o);
+
+    public abstract LexicalElement clone();
 }

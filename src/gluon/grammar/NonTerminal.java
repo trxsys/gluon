@@ -14,31 +14,21 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.cfg.parsing.parsingTable.parsingAction;
+package gluon.grammar;
 
-public class ParsingActionAccept
-    extends ParsingAction
+public abstract class NonTerminal
+    extends LexicalElement
 {
-    public ParsingActionAccept()
+    public NonTerminal(String name)
     {
+        super(name);
+    }
 
+    public void setName(String newName)
+    {
+        name=newName;
     }
 
     @Override
-    public int hashCode()
-    {
-        return 0x3d057799;
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        return o instanceof ParsingActionAccept;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "a";
-    }
+    public abstract NonTerminal clone();
 }

@@ -19,7 +19,7 @@ package gluon.analysis.programBehavior;
 import soot.SootMethod;
 
 public class PPNonTerminal
-    extends gluon.cfg.NonTerminal
+    extends gluon.grammar.NonTerminal
 {
     private SootMethod method;
 

@@ -23,10 +23,10 @@ package gluon.analysis.programBehavior;
  * the methods of the module we are analyzing. 
  */
 
-import gluon.cfg.Cfg;
-import gluon.cfg.Production;
-import gluon.cfg.LexicalElement;
-import gluon.cfg.NonTerminal;
+import gluon.grammar.Cfg;
+import gluon.grammar.Production;
+import gluon.grammar.LexicalElement;
+import gluon.grammar.NonTerminal;
 
 import java.util.Set;
 import java.util.HashSet;
