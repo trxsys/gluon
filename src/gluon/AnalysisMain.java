@@ -30,6 +30,8 @@ import soot.SootMethod;
 import soot.SootClass;
 
 import soot.tagkit.AnnotationTag;
+import soot.tagkit.LineNumberTag;
+import soot.tagkit.SourceFileTag;
 import soot.tagkit.Tag;
 import soot.tagkit.VisibilityAnnotationTag;
 import soot.tagkit.AnnotationStringElem;
@@ -44,6 +46,7 @@ import gluon.grammar.Cfg;
 import gluon.grammar.LexicalElement;
 import gluon.grammar.Terminal;
 import gluon.grammar.NonTerminal;
+import gluon.grammar.Production;
 import gluon.grammar.parsing.parsingTable.ParsingTable;
 import gluon.grammar.parsing.parsingTable.parsingAction.*;
 import gluon.grammar.parsing.parser.Parser;
@@ -141,9 +144,36 @@ public class AnalysisMain
         return relevantThreads;
     }
 
-    private boolean assertSanityCheck(ArrayList<Terminal> word, 
-                                      List<ParsingAction> actions,
-                                      NonTerminal lca)
+    private List<PPTerminal> getCodeUnits(List<ParsingAction> actions,
+                                          ArrayList<Terminal> word)
+    {
+        ArrayList<PPTerminal> terms=new ArrayList<PPTerminal>(word.size()-1);
+
+        for (int i=0; i < word.size()-1; i++)
+            terms.add(null);
+        
+        for (ParsingAction a: actions)
+            if (a instanceof ParsingActionReduce)
+            {
+                Production red=((ParsingActionReduce)a).getProduction();
+
+                for (LexicalElement e: red.getBody())
+                    if (e instanceof PPTerminal)
+                    {
+                        int idx=word.indexOf(e);
+
+                        assert idx >= 0;
+
+                        terms.set(idx,(PPTerminal)e);
+                    }
+            }
+        
+        return terms;
+    }
+
+    private boolean assertLCASanityCheck(ArrayList<Terminal> word, 
+                                         List<ParsingAction> actions,
+                                         NonTerminal lca)
     {
         ParseTree ptree=new ParseTree();
 
@@ -161,7 +191,7 @@ public class AnalysisMain
         SootMethod lcaMethod;
         boolean atomic;
 
-        assert assertSanityCheck(word,actions,lca);
+        assert assertLCASanityCheck(word,actions,lca);
 
         assert lca instanceof PPNonTerminal;
 
@@ -180,6 +210,29 @@ public class AnalysisMain
 
         System.out.println("      Method: "+lcaMethod.getDeclaringClass().getShortName()
                            +"."+lcaMethod.getName()+"()");
+
+        System.out.print("      Calls Line Number:");
+
+        for (PPTerminal t: getCodeUnits(actions,word))
+        {
+            soot.Unit unit=t.getCodeUnit();
+            LineNumberTag lineTag=(LineNumberTag)unit.getTag("LineNumberTag");
+            SootClass c=t.getCodeMethod().getDeclaringClass();
+            SourceFileTag sourceTag=(SourceFileTag)c.getTag("SourceFileTag");
+            int linenum=-1;
+            String source="?";
+
+            if (lineTag != null)
+                linenum=lineTag.getLineNumber();
+
+            if (sourceTag != null)
+                source=sourceTag.getSourceFile();
+
+            System.out.print(" "+source+":"+(linenum > 0 ? ""+linenum : "?"));
+        }
+
+        System.out.println();
+
         System.out.println("      Atomic: "+(atomic ? "YES" : "NO"));
 
         return atomic ? 0 : -1;
@@ -314,10 +367,7 @@ public class AnalysisMain
         
         contractClauses=extractContractClauses();
 
-        if (contractClauses.size() == 0)
-            return;
-
-        /* TODO: this should be parses intro a StarFreeRegex.
+        /* TODO: this should be parsed intro a StarFreeRegex.
          */
         for (String clause: contractClauses)
         {

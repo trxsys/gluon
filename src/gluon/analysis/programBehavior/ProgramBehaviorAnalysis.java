@@ -160,7 +160,7 @@ public class ProgramBehaviorAnalysis
             if (isTargetModule
                 && !calledMethod.isConstructor()
                 && !calledMethod.isPrivate())
-                prodBodyPrefix=new PPTerminal(calledMethod);
+                prodBodyPrefix=new PPTerminal(calledMethod,unit);
             else if (calledMethod.hasActiveBody()
                      && (gluon.Main.WITH_JAVA_LIB
                          || !calledMethod.isJavaLibraryMethod()))

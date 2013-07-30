@@ -157,7 +157,7 @@ public class Main
         
         Options.v().set_output_format(Options.output_format_shimple);
         
-        // line number information
+        // for line number information
         PhaseOptions.v().setPhaseOption("tag.ln","on");
         
         if (false)
@@ -168,6 +168,7 @@ public class Main
                                        +classPath);
         
         // PhaseOptions.v().setPhaseOption("jb", "use-original-names:true);
+
         PhaseOptions.v().setPhaseOption("jb.ulp", "enabled:false");
         t=new Transform("wstp.x",AnalysisMain.instance());
         

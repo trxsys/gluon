@@ -17,23 +17,37 @@
 package gluon.analysis.programBehavior;
 
 import soot.SootMethod;
+import soot.Unit;
 
 // Represents a call to the module under analysis
 public class PPTerminal
     extends gluon.grammar.Terminal
 {
     private final SootMethod method; // module method
+    private final Unit codeUnit;
 
-    public PPTerminal(SootMethod m)
+    public PPTerminal(SootMethod m, Unit u)
     {
         super(m.getName());
         method=m;
+        codeUnit=u;
     }
 
     public PPTerminal(String s)
     {
         super(s);
         method=null;
+        codeUnit=null;
+    }
+
+    public Unit getCodeUnit()
+    {
+        return codeUnit;
+    }
+
+    public SootMethod getCodeMethod()
+    {
+        return method;
     }
 
     @Override
@@ -64,7 +78,7 @@ public class PPTerminal
     @Override
     public PPTerminal clone()
     {
-        return method != null ? new PPTerminal(method) 
+        return method != null ? new PPTerminal(method,codeUnit)
             : new PPTerminal(super.getName());
     }
 }
