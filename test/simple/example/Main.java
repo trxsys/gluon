@@ -3,7 +3,8 @@ package test.simple.example;
 import test.common.Atomic;
 import test.common.Contract;
 
-@Contract(clauses="a b c;")
+@Contract(clauses="a b c;"
+                 +"c c;")
 class Module
 {
     public Module() { }
