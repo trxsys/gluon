@@ -170,10 +170,6 @@ public class AnalysisMain
         if (reported.contains(lcaMethod))
             return 0;
 
-        gluon.profiling.Profiling.inc("parse-trees."
-                                  +thread.getDeclaringClass().getShortName()
-                                  +"."+thread.getName()
-                                  +"-"+wordStr(word).replace(' ','_'));
         gluon.profiling.Profiling.inc("final:parse-trees");
 
         reported.add(lcaMethod);
@@ -181,6 +177,7 @@ public class AnalysisMain
         atomic=atomicMethods.isAtomic(lcaMethod);
 
         dprintln("      Lowest common ancestor: "+lca);
+
         System.out.println("      Method: "+lcaMethod.getDeclaringClass().getShortName()
                            +"."+lcaMethod.getName()+"()");
         System.out.println("      Atomic: "+(atomic ? "YES" : "NO"));
@@ -233,9 +230,6 @@ public class AnalysisMain
 
         grammar=programBehavior.getGrammar();
 
-        gluon.profiling.Profiling.set("grammar-productions."
-                                  +thread.getDeclaringClass().getShortName()
-                                  +"."+thread.getName(),grammar.size());
         gluon.profiling.Profiling.inc("final:grammar-productions",grammar.size());
 
         parsingTable=new ParsingTable(grammar);
@@ -244,12 +238,8 @@ public class AnalysisMain
         parsingTable.buildParsingTable();
         gluon.profiling.Timer.stop("final:build-parsing-table");
 
-        gluon.profiling.Profiling.set("parsing-table-state-number."
-                                  +thread.getDeclaringClass().getShortName()
-                                  +"."+thread.getName(),
-                                  parsingTable.numberOfStates());
         gluon.profiling.Profiling.inc("final:parsing-table-state-number",
-                                  parsingTable.numberOfStates());
+                                      parsingTable.numberOfStates());
 
         parser=new Parser(parsingTable);
         
