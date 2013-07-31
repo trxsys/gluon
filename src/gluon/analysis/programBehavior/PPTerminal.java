@@ -17,7 +17,12 @@
 package gluon.analysis.programBehavior;
 
 import soot.SootMethod;
+import soot.SootClass;
 import soot.Unit;
+
+import soot.tagkit.LineNumberTag;
+import soot.tagkit.SourceFileTag;
+import soot.tagkit.Tag;
 
 // Represents a call to the module under analysis
 public class PPTerminal
@@ -48,6 +53,38 @@ public class PPTerminal
     public SootMethod getCodeMethod()
     {
         return method;
+    }
+
+    public int getLineNumber()
+    {
+        assert codeUnit != null;
+
+        LineNumberTag lineTag=(LineNumberTag)codeUnit.getTag("LineNumberTag");
+        int linenum=-1;
+
+        if (lineTag != null)
+                linenum=lineTag.getLineNumber();
+
+        return linenum;
+    }
+
+    public SootClass getCodeClass()
+    {
+        return getCodeMethod().getDeclaringClass();
+    }
+
+    public String getSourceFile()
+    {
+        assert method != null;
+
+        String source="?";
+        SootClass c=getCodeClass();
+        SourceFileTag sourceTag=(SourceFileTag)c.getTag("SourceFileTag");
+
+        if (sourceTag != null)
+            source=sourceTag.getSourceFile();
+
+        return source;
     }
 
     @Override

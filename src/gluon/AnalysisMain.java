@@ -30,8 +30,6 @@ import soot.SootMethod;
 import soot.SootClass;
 
 import soot.tagkit.AnnotationTag;
-import soot.tagkit.LineNumberTag;
-import soot.tagkit.SourceFileTag;
 import soot.tagkit.Tag;
 import soot.tagkit.VisibilityAnnotationTag;
 import soot.tagkit.AnnotationStringElem;
@@ -215,18 +213,8 @@ public class AnalysisMain
 
         for (PPTerminal t: getCodeUnits(actions,word))
         {
-            soot.Unit unit=t.getCodeUnit();
-            LineNumberTag lineTag=(LineNumberTag)unit.getTag("LineNumberTag");
-            SootClass c=t.getCodeMethod().getDeclaringClass();
-            SourceFileTag sourceTag=(SourceFileTag)c.getTag("SourceFileTag");
-            int linenum=-1;
-            String source="?";
-
-            if (lineTag != null)
-                linenum=lineTag.getLineNumber();
-
-            if (sourceTag != null)
-                source=sourceTag.getSourceFile();
+            int linenum=t.getLineNumber();
+            String source=t.getSourceFile();
 
             System.out.print(" "+source+":"+(linenum > 0 ? ""+linenum : "?"));
         }
