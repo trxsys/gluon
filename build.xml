@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="X" default="compile" basedir=".">
+<project name="gluon" default="compile" basedir=".">
   <property name="src.dir" location="src" />
   <property name="test.dir" location="test" />
   <property name="build.dir" location="bin" />
