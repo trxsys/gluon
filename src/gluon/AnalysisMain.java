@@ -204,7 +204,7 @@ public class AnalysisMain
         System.out.println("      Method: "+lcaMethod.getDeclaringClass().getShortName()
                            +"."+lcaMethod.getName()+"()");
 
-        System.out.print("      Calls Line Number:");
+        System.out.print("      Calls Location:");
 
         for (PPTerminal t: getCodeUnits(actions,word))
         {

@@ -66,11 +66,11 @@ Checking thread Main.main():
   Verifying word a b c:
 
       Method: Main.g()
-      Calls Line Number: Main.java:28 Main.java:29 Main.java:22
+      Calls Location: Main.java:28 Main.java:29 Main.java:22
       Atomic: YES
 
       Method: Main.main()
-      Calls Line Number: Main.java:39 Main.java:41 Main.java:22
+      Calls Location: Main.java:39 Main.java:41 Main.java:22
       Atomic: NO
 
   Verifying word c c:
