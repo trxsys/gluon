@@ -147,9 +147,6 @@ public class AnalysisMain
     {
         ArrayList<PPTerminal> terms=new ArrayList<PPTerminal>(word.size()-1);
 
-        for (int i=0; i < word.size()-1; i++)
-            terms.add(null);
-        
         for (ParsingAction a: actions)
             if (a instanceof ParsingActionReduce)
             {
@@ -157,15 +154,13 @@ public class AnalysisMain
 
                 for (LexicalElement e: red.getBody())
                     if (e instanceof PPTerminal)
-                    {
-                        int idx=word.indexOf(e);
-
-                        assert idx >= 0;
-
-                        terms.set(idx,(PPTerminal)e);
-                    }
+                        terms.add((PPTerminal)e);
             }
         
+        java.util.Collections.reverse(terms);
+
+        assert terms.size() == word.size()-1;
+
         return terms;
     }
 
