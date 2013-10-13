@@ -4,10 +4,8 @@ import test.common.Atomic;
 import test.common.Contract;
 
 @Contract(clauses =
-         "setBalance getBalance;"
-        +"getBalance setBalance;"
-        +"update getBalance;"
-        +"getBalance update;")
+         "getBalance setBalance;"
+        +"setBalance getBalance;")
 public class Account {
 
 	protected int balance;

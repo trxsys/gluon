@@ -34,7 +34,7 @@ public class Main
             m.c();
         else if (c%6 == 0)
         {
-            m.b();            
+            m.b();
             f(c+1);
         }
     }
