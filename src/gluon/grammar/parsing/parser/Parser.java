@@ -355,8 +355,8 @@ public class Parser
 
                 assert parserConf.lca != null;
 
-                z=pcb.callback(parserConf.getActionList(),lca); // TODO
-                acceptedLCA.add(lca); // TODO
+                z=pcb.callback(parserConf.getActionList(),lca);
+                acceptedLCA.add(lca);
 
                 if (z != 0)
                     ret=z;
