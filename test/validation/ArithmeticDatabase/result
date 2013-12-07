@@ -6,10 +6,6 @@ Checking thread Main.main():
 
     No occurrences
 
-  Verifying word iterator insert:
-
-    No occurrences
-
   Verifying word iterator get_max_key:
 
     No occurrences
@@ -20,12 +16,6 @@ Checking thread Client.run():
 
       Method: Client.insert_new_expression()
       Calls Location: Table.java:62 Table.java:64
-      Atomic: NO
-
-  Verifying word iterator insert:
-
-      Method: Client.insert_new_expression()
-      Calls Location: Table.java:66 Table.java:46
       Atomic: NO
 
   Verifying word iterator get_max_key:
@@ -37,27 +27,23 @@ Checking thread Client.run():
 
 Run Time:
              analysis-behavior-grammar-opt      0.004s
-                             total-parsing      0.051s
-                                     total     39.260s
-                       build-parsing-table      0.110s
-                                 soot-init     38.956s
-                         analysis-behavior      0.019s
+                             total-parsing      0.022s
+                                     total     36.007s
+                       build-parsing-table      0.107s
+                                 soot-init     35.846s
+                         analysis-behavior      0.017s
 
 Profiling Vars:
                 parsing-table-state-number    329
-                            parse-branches   1744
+                            parse-branches   1048
                                  cfg-nodes    343
                        grammar-productions    732
-                               parse-trees      3
+                               parse-trees      2
 Warning: java.dyn.InvokeDynamic is a phantom class!
 [Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
 
   Verifying word get_max_key insert:
-
-    No occurrences
-
-  Verifying word iterator insert:
 
     No occurrences
 
@@ -73,12 +59,6 @@ Checking thread Client.run():
       Calls Location: Table.java:62 Table.java:64
       Atomic: NO
 
-  Verifying word iterator insert:
-
-      Method: Client.insert_new_expression()
-      Calls Location: Table.java:66 Table.java:46
-      Atomic: NO
-
   Verifying word iterator get_max_key:
 
       Method: Client.insert_new_expression()
@@ -87,15 +67,15 @@ Checking thread Client.run():
 
 
 Run Time:
-                             total-parsing      2.136s
-                                     total     39.606s
-                       build-parsing-table      0.643s
-                                 soot-init     36.756s
+                             total-parsing      1.822s
+                                     total     37.380s
+                       build-parsing-table      0.631s
+                                 soot-init     34.855s
                          analysis-behavior      0.055s
 
 Profiling Vars:
                 parsing-table-state-number   1914
-                            parse-branches  304184
+                            parse-branches  288364
                                  cfg-nodes    343
                        grammar-productions   3574
-                               parse-trees      3
+                               parse-trees      2

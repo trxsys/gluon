@@ -9,7 +9,6 @@ AllocateVector
 
 ArithmeticDatabase
         X=get_max_key() insert(X,_)
-        iterator() insert()
         iterator() get_max_key()
 
 ConnectionTest
