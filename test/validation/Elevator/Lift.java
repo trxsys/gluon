@@ -254,9 +254,8 @@ class Lift extends Thread {
 	// False if the call was already claimed (upFlag was already true)
 	public boolean claimUp(Controls c, String lift, int floor) {
 		if (c.checkUp(floor)) {
-			if (c.claimUp(floor)) {
-				return true;
-			}
+            c.claimUp(floor);
+            return true;
 		}
 		return false;
 	}
@@ -268,9 +267,8 @@ class Lift extends Thread {
 	// False if the call was already claimed (downFlag was already true)
 	public boolean claimDown(Controls c, String lift, int floor) {
 		if (c.checkDown(floor)) {
-			if (c.claimDown(floor)) {
-				return true;
-			}
+            c.claimDown(floor);
+            return true;
 		}
 		return false;
 	}

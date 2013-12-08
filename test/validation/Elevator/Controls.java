@@ -54,21 +54,15 @@ class Controls {
 	// Added by Vasco Pessanha
 	@Atomic
 	public boolean claimUp(int floor) {
-		if (!floors[floor].upFlag) {
-			floors[floor].upFlag = true;
-			return true;
-		}
-		return false;
-	}
+        floors[floor].upFlag = true;
+        return true;
+    }
 
 	// Added by Vasco Pessanha
 	@Atomic
 	public boolean claimDown(int floor) {
-		if (!floors[floor].downFlag) {
-			floors[floor].downFlag = true;
-			return true;
-		}
-		return false;
+        floors[floor].downFlag = true;
+        return true;
 	}
 
 	// An elevator calls this to see if an up call has occured on the given
