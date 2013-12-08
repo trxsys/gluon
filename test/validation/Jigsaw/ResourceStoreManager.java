@@ -6,7 +6,7 @@ import java.util.Map;
 import test.common.Atomic;
 import test.common.Contract;
 
-@Contract(clauses = "lookupEntry checkClosed;")
+@Contract(clauses = "checkClosed lookupEntry;")
 public class ResourceStoreManager {
     
 	boolean closed = false;

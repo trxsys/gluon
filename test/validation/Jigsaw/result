@@ -1,47 +1,61 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
 [Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
-  Verifying word lookupEntry checkClosed:
+
+  Verifying word checkClosed lookupEntry:
+
+    No occurrences
+
 Checking thread Runner.run():
-  Verifying word lookupEntry checkClosed:
+
+  Verifying word checkClosed lookupEntry:
+
       Method: Runner.loadResourceStore()
+      Calls Location: ResourceStoreManager.java:12 ResourceStoreManager.java:13
       Atomic: NO
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.001s
+             analysis-behavior-grammar-opt      0.002s
                              total-parsing      0.002s
-                                     total     32.924s
+                                     total     34.312s
                        build-parsing-table      0.006s
-                                 soot-init     32.900s
-                         analysis-behavior      0.004s
+                                 soot-init     34.287s
+                         analysis-behavior      0.003s
 
 Profiling Vars:
-                parsing-table-state-number     43
-                                 cfg-nodes     47
+                parsing-table-state-number     39
+                            parse-branches      9
+                                 cfg-nodes     45
+                       grammar-productions    104
                                parse-trees      1
-                            parse-branches     11
-                       grammar-productions    105
 Warning: java.dyn.InvokeDynamic is a phantom class!
 [Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
-  Verifying word lookupEntry checkClosed:
+
+  Verifying word checkClosed lookupEntry:
+
+    No occurrences
+
 Checking thread Runner.run():
-  Verifying word lookupEntry checkClosed:
+
+  Verifying word checkClosed lookupEntry:
+
       Method: Runner.loadResourceStore()
+      Calls Location: ResourceStoreManager.java:12 ResourceStoreManager.java:13
       Atomic: NO
 
 
 Run Time:
-                             total-parsing      0.004s
-                                     total     32.700s
-                       build-parsing-table      0.065s
-                                 soot-init     32.610s
-                         analysis-behavior      0.009s
+                             total-parsing      0.006s
+                                     total     35.111s
+                       build-parsing-table      0.059s
+                                 soot-init     34.944s
+                         analysis-behavior      0.007s
 
 Profiling Vars:
-                parsing-table-state-number    274
-                                 cfg-nodes     47
+                parsing-table-state-number    264
+                            parse-branches     36
+                                 cfg-nodes     45
+                       grammar-productions    501
                                parse-trees      1
-                            parse-branches     55
-                       grammar-productions    524

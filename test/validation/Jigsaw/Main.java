@@ -9,9 +9,9 @@ class Runner extends Thread {
 
 	// not synched!!! HLDR, but we get a false negative!
 	ResourceStore loadResourceStore(ResourceStoreManager r) {
-        //		checkClosed(); // R(closed)
+		if (r.checkClosed()) return null; // R(closed)
 		Entry e = r.lookupEntry(new Object()); // R(entries), W(entries)
-		return r.checkClosed()? null : e.getStore();
+		return e.getStore();
 	}
 
     public void run() {
