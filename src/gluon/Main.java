@@ -144,18 +144,16 @@ public class Main
         Options.v().set_whole_program(true);
         Options.v().set_whole_shimple(true);
         
-        Options.v().set_allow_phantom_refs(true);
-        Options.v().set_keep_line_number(true);
-        
         Options.v().set_verbose(false);
         Options.v().set_interactive_mode(false);
         Options.v().set_debug(false);
         Options.v().set_debug_resolver(false);
         Options.v().set_show_exception_dests(false);
         
-        Options.v().set_keep_line_number(true);
-        
         Options.v().set_output_format(Options.output_format_shimple);
+
+        Options.v().set_allow_phantom_refs(true);
+        Options.v().set_keep_line_number(true);
         
         // for line number information
         PhaseOptions.v().setPhaseOption("tag.ln","on");
@@ -167,7 +165,7 @@ public class Main
                                        +java.io.File.pathSeparator
                                        +classPath);
         
-        // PhaseOptions.v().setPhaseOption("jb", "use-original-names:true);
+        // PhaseOptions.v().setPhaseOption("jb", "use-original-names:true");
 
         PhaseOptions.v().setPhaseOption("jb.ulp", "enabled:false");
         t=new Transform("wstp.x",AnalysisMain.instance());
@@ -183,7 +181,7 @@ public class Main
         
         Scene.v().setMainClass(c);
 
-        PackManager.v().runPacks();        
+        PackManager.v().runPacks();
     }
     
     private static void dumpRunTimes()
