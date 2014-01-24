@@ -386,12 +386,6 @@ public class AnalysisMain
         scene=Scene.v();
         assert scene.getMainMethod() != null;
 
-        /* TESTING */
-        PointsToAnalysis pta=Scene.v().getPointsToAnalysis();
-
-        System.out.println(pta);
-        /* TESTING */
-
         gluon.profiling.Timer.stop("final:soot-init");
 
         module=getModuleClass();
@@ -404,6 +398,18 @@ public class AnalysisMain
         if (contract.size() == 0)
             Main.fatal("empty contract");
 
+        /* TESTING */
+        /* TESTING */
+        /* TESTING */
+        System.out.println("Module allocation sites:");
+        for (soot.jimple.spark.pag.AllocNode as:
+                 PointsToInformation.getModuleAllocationSites(module))
+            System.out.println("  "+as);
+        System.out.println();
+        /* TESTING */
+        /* TESTING */
+        /* TESTING */
+        
         gluon.profiling.Timer.start("analysis-threads");
         threads=getThreads();
         gluon.profiling.Timer.stop("analysis-threads");
