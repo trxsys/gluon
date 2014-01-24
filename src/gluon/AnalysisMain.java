@@ -16,18 +16,11 @@
 
 package gluon;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-
-import java.util.LinkedList;
-import java.util.ArrayList;
-import java.util.HashSet;
-
 import soot.Scene;
 import soot.SceneTransformer;
 import soot.SootMethod;
 import soot.SootClass;
+import soot.PointsToAnalysis;
 
 import soot.tagkit.AnnotationTag;
 import soot.tagkit.Tag;
@@ -50,6 +43,14 @@ import gluon.grammar.parsing.parsingTable.parsingAction.*;
 import gluon.grammar.parsing.parser.Parser;
 import gluon.grammar.parsing.parseTree.ParseTree;
 import gluon.grammar.parsing.parser.ParserCallback;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+
+import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class AnalysisMain
     extends SceneTransformer
@@ -384,6 +385,12 @@ public class AnalysisMain
         
         scene=Scene.v();
         assert scene.getMainMethod() != null;
+
+        /* TESTING */
+        PointsToAnalysis pta=Scene.v().getPointsToAnalysis();
+
+        System.out.println(pta);
+        /* TESTING */
 
         gluon.profiling.Timer.stop("final:soot-init");
 
