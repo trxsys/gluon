@@ -55,7 +55,7 @@ import java.util.HashSet;
 public class AnalysisMain
     extends SceneTransformer
 {
-    private static final boolean DEBUG=false;
+    private static final boolean DEBUG=true;
 
     private static final String CONTRACT_ANNOTATION="Contract";
     
@@ -264,38 +264,49 @@ public class AnalysisMain
     
     private void checkThread(SootMethod thread)
     {
-        ProgramBehaviorAnalysis programBehavior
-            =new ProgramBehaviorAnalysis(thread,module);
-        ParsingTable parsingTable;
-        Parser parser;
-        Cfg grammar;
-
-        gluon.profiling.Timer.start("final:analysis-behavior");
-        programBehavior.analyze();
-        gluon.profiling.Timer.stop("final:analysis-behavior");
-
-        grammar=programBehavior.getGrammar();
-
-        gluon.profiling.Profiling.inc("final:grammar-productions",grammar.size());
-
-        parsingTable=new ParsingTable(grammar);
-
-        gluon.profiling.Timer.start("final:build-parsing-table");
-        parsingTable.buildParsingTable();
-        gluon.profiling.Timer.stop("final:build-parsing-table");
-
-        gluon.profiling.Profiling.inc("final:parsing-table-state-number",
-                                      parsingTable.numberOfStates());
-
-        parser=new Parser(parsingTable);
-        
         System.out.println("Checking thread "
                            +thread.getDeclaringClass().getShortName()
                            +"."+thread.getName()+"():");
         System.out.println();
+        
+        for (soot.jimple.spark.pag.AllocNode as:
+                 PointsToInformation.getModuleAllocationSites(module))
+        {
+            ProgramBehaviorAnalysis programBehavior
+                =new ProgramBehaviorAnalysis(thread,module,as);
+            ParsingTable parsingTable;
+            Parser parser;
+            Cfg grammar;
 
-        for (ArrayList<Terminal> word: contract)
-            checkThreadWord(thread,parser,word);
+            dprintln(" Checking allocsite "+as);
+
+            gluon.profiling.Profiling.inc("final:alloc-sites-total");
+
+            programBehavior=new ProgramBehaviorAnalysis(thread,module,as);
+
+            gluon.profiling.Timer.start("final:analysis-behavior");
+            programBehavior.analyze();
+            gluon.profiling.Timer.stop("final:analysis-behavior");
+
+            grammar=programBehavior.getGrammar();
+
+            gluon.profiling.Profiling.inc("final:grammar-productions-total",
+                                          grammar.size());
+
+            parsingTable=new ParsingTable(grammar);
+
+            gluon.profiling.Timer.start("final:build-parsing-table");
+            parsingTable.buildParsingTable();
+            gluon.profiling.Timer.stop("final:build-parsing-table");
+
+            gluon.profiling.Profiling.inc("final:parsing-table-state-number-total",
+                                          parsingTable.numberOfStates());
+
+            parser=new Parser(parsingTable);
+        
+            for (ArrayList<Terminal> word: contract)
+                checkThreadWord(thread,parser,word);
+        }
     }
     
     private void runMethodAtomicityAnalysis(Collection<SootMethod> threads)
@@ -401,11 +412,14 @@ public class AnalysisMain
         /* TESTING */
         /* TESTING */
         /* TESTING */
-        System.out.println("Module allocation sites:");
-        for (soot.jimple.spark.pag.AllocNode as:
-                 PointsToInformation.getModuleAllocationSites(module))
-            System.out.println("  "+as);
-        System.out.println();
+        if (DEBUG)
+        {
+            System.out.println("Module allocation sites:");
+            for (soot.jimple.spark.pag.AllocNode as:
+                     PointsToInformation.getModuleAllocationSites(module))
+                System.out.println("  "+as);
+            System.out.println();
+        }
         /* TESTING */
         /* TESTING */
         /* TESTING */

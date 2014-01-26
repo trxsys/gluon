@@ -49,6 +49,8 @@ import soot.jimple.InvokeExpr;
 import soot.jimple.internal.JReturnStmt;
 import soot.jimple.internal.JReturnVoidStmt;
 
+import soot.jimple.spark.pag.AllocNode;
+
 class NonTerminalAliasCreator
 {
     private static final char[] RADIX_CHARS
@@ -96,11 +98,12 @@ class NonTerminalAliasCreator
 public class ProgramBehaviorAnalysis
 {
     private static final boolean DEBUG=false;
-    
-    private SootMethod entryMethod;
-    private Cfg grammar;
-    
+
     private SootClass module; // module under analysis
+    private SootMethod entryMethod;
+    private AllocNode allocSite; // allocation site of the "object" under analysis
+
+    private Cfg grammar;
     
     private Set<Unit> visited;
     
@@ -109,10 +112,12 @@ public class ProgramBehaviorAnalysis
     private Queue<SootMethod> methodQueue; // queue of methods to analyse
     private Set<SootMethod> enqueuedMethods;
     
-    public ProgramBehaviorAnalysis(SootMethod method, SootClass modClass)
+    public ProgramBehaviorAnalysis(SootMethod method, SootClass modClass,
+                                   AllocNode aSite)
     {
         entryMethod=method;
         module=modClass;
+        allocSite=aSite;
 
         grammar=new Cfg();
         
