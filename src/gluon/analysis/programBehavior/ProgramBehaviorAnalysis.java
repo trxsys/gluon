@@ -180,7 +180,7 @@ public class ProgramBehaviorAnalysis
                         hasModule=true;
             }
             else if (obj instanceof SootField)
-                assert false : "TODO";
+                assert false : "Do we need to handle this?";
 
             assert allocSites != null;
 
@@ -237,7 +237,7 @@ public class ProgramBehaviorAnalysis
             }
         }
         
-        assert addProdSkipPrefix ? prodBodyPrefix == null : true;
+        assert addProdSkipPrefix ? prodBodyPrefix != null : true;
 
         PPNonTerminal prodHead=new PPNonTerminal(alias(unit),method);
 
