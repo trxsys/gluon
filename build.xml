@@ -39,5 +39,6 @@
     </delete>
     <delete dir="${src.class.dir}" />
     <delete dir="${build.dir}" />
+    <delete dir="sootOutput" />
   </target>
 </project>
