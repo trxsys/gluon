@@ -22,6 +22,8 @@ import soot.SootMethod;
 import soot.SootClass;
 import soot.PointsToAnalysis;
 
+import soot.jimple.spark.pag.AllocNode;
+
 import soot.tagkit.AnnotationTag;
 import soot.tagkit.Tag;
 import soot.tagkit.VisibilityAnnotationTag;
@@ -222,44 +224,80 @@ public class AnalysisMain
         return atomic ? 0 : -1;
     }
     
-    private int checkThreadWord(final SootMethod thread,
-                                Parser parser,
+    private void checkThreadWord(final SootMethod thread,
                                 final ArrayList<Terminal> word)
     {
-        int ret;
         final Set<SootMethod> reported=new HashSet<SootMethod>();
 
         System.out.println("  Verifying word "+wordStr(word)+":");
         System.out.println();
 
-        gluon.profiling.Timer.start("final:total-parsing");
-        gluon.profiling.Timer.start("parsing");
-        ret=parser.parse(word, new ParserCallback(){
-                public int callback(List<ParsingAction> actions,
-                                    NonTerminal lca)
-                {
-                    int ret;
+        for (soot.jimple.spark.pag.AllocNode as:
+                 PointsToInformation.getModuleAllocationSites(module))
+        {
+            Parser parser=makeParser(thread,as);
 
-                    gluon.profiling.Timer.stop("parsing");
-                    ret=checkThreadWordParse(thread,word,actions,reported,lca);
-                    gluon.profiling.Timer.start("parsing");
-
-                    if (ret <= 0)
-                        System.out.println();
-
-                    return ret < 0 ? -1 : 0;
-                }
-            });
-        gluon.profiling.Timer.stop("parsing");
-        gluon.profiling.Timer.stop("final:total-parsing");
-
+            gluon.profiling.Timer.start("final:total-parsing");
+            gluon.profiling.Timer.start("parsing");
+            parser.parse(word, new ParserCallback(){
+                    public int callback(List<ParsingAction> actions,
+                                        NonTerminal lca)
+                    {
+                        int ret;
+                        
+                        gluon.profiling.Timer.stop("parsing");
+                        ret=checkThreadWordParse(thread,word,actions,reported,lca);
+                        gluon.profiling.Timer.start("parsing");
+                        
+                        if (ret <= 0)
+                            System.out.println();
+                        
+                        return ret < 0 ? -1 : 0;
+                    }
+                });
+            gluon.profiling.Timer.stop("parsing");
+            gluon.profiling.Timer.stop("final:total-parsing");
+        }
+        
         if (reported.size() == 0)
         {
             System.out.println("    No occurrences");
             System.out.println();
         }
+    }
 
-        return ret;
+    private Parser makeParser(SootMethod thread, AllocNode as)
+    {
+        ProgramBehaviorAnalysis programBehavior
+            =new ProgramBehaviorAnalysis(thread,module,as);
+        ParsingTable parsingTable;
+        Cfg grammar;
+        
+        dprintln(" Checking allocsite "+as);
+        
+        gluon.profiling.Profiling.inc("final:alloc-sites-total");
+        
+        programBehavior=new ProgramBehaviorAnalysis(thread,module,as);
+
+        gluon.profiling.Timer.start("final:analysis-behavior");
+        programBehavior.analyze();
+        gluon.profiling.Timer.stop("final:analysis-behavior");
+
+        grammar=programBehavior.getGrammar();
+
+        gluon.profiling.Profiling.inc("final:grammar-productions-total",
+                                      grammar.size());
+
+        parsingTable=new ParsingTable(grammar);
+
+        gluon.profiling.Timer.start("final:build-parsing-table");
+        parsingTable.buildParsingTable();
+        gluon.profiling.Timer.stop("final:build-parsing-table");
+
+        gluon.profiling.Profiling.inc("final:parsing-table-state-number-total",
+                                      parsingTable.numberOfStates());
+
+        return new Parser(parsingTable);
     }
     
     private void checkThread(SootMethod thread)
@@ -269,44 +307,8 @@ public class AnalysisMain
                            +"."+thread.getName()+"():");
         System.out.println();
         
-        for (soot.jimple.spark.pag.AllocNode as:
-                 PointsToInformation.getModuleAllocationSites(module))
-        {
-            ProgramBehaviorAnalysis programBehavior
-                =new ProgramBehaviorAnalysis(thread,module,as);
-            ParsingTable parsingTable;
-            Parser parser;
-            Cfg grammar;
-
-            dprintln(" Checking allocsite "+as);
-
-            gluon.profiling.Profiling.inc("final:alloc-sites-total");
-
-            programBehavior=new ProgramBehaviorAnalysis(thread,module,as);
-
-            gluon.profiling.Timer.start("final:analysis-behavior");
-            programBehavior.analyze();
-            gluon.profiling.Timer.stop("final:analysis-behavior");
-
-            grammar=programBehavior.getGrammar();
-
-            gluon.profiling.Profiling.inc("final:grammar-productions-total",
-                                          grammar.size());
-
-            parsingTable=new ParsingTable(grammar);
-
-            gluon.profiling.Timer.start("final:build-parsing-table");
-            parsingTable.buildParsingTable();
-            gluon.profiling.Timer.stop("final:build-parsing-table");
-
-            gluon.profiling.Profiling.inc("final:parsing-table-state-number-total",
-                                          parsingTable.numberOfStates());
-
-            parser=new Parser(parsingTable);
-        
-            for (ArrayList<Terminal> word: contract)
-                checkThreadWord(thread,parser,word);
-        }
+        for (ArrayList<Terminal> word: contract)
+            checkThreadWord(thread,word);
     }
     
     private void runMethodAtomicityAnalysis(Collection<SootMethod> threads)
