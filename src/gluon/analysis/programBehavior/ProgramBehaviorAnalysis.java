@@ -180,7 +180,12 @@ public class ProgramBehaviorAnalysis
                         hasModule=true;
             }
             else if (obj instanceof SootField)
+            {
+                /* This might not need to be handled since it seems that
+                 * in jimple/shimple the fields are accessed through JimpleLocals.
+                 */
                 assert false : "Do we need to handle this?";
+            }
 
             assert allocSites != null;
 
