@@ -18,10 +18,15 @@ package gluon;
 
 import soot.Scene;
 import soot.SootClass;
+import soot.Local;
 import soot.PointsToAnalysis;
+import soot.PointsToSet;
 
 import soot.jimple.spark.pag.PAG;
+import soot.jimple.spark.pag.Node;
 import soot.jimple.spark.pag.AllocNode;
+import soot.jimple.spark.sets.P2SetVisitor;
+import soot.jimple.spark.sets.DoublePointsToSet;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -56,5 +61,35 @@ public class PointsToInformation
         }
 
         return allocSites;
+    }
+
+    public static Collection<AllocNode> getReachableAllocSites(Local l)
+    {
+        final Collection<AllocNode> asites=new LinkedList<AllocNode>();
+        PointsToAnalysis pta;
+        PointsToSet rObjs;
+
+        DoublePointsToSet reacObjs;
+        
+        pta=Scene.v().getPointsToAnalysis();
+        rObjs=pta.reachingObjects(l);
+
+        if (!(rObjs instanceof DoublePointsToSet))
+            return asites;
+
+        reacObjs=(DoublePointsToSet)rObjs;
+
+        reacObjs.forall(
+                        new P2SetVisitor()
+                        {
+                            public final void visit(Node n)
+                            {
+                                if (n instanceof AllocNode)
+                                    asites.add((AllocNode)n);
+                            }
+                        }
+                        );
+        
+        return asites;
     }
 }

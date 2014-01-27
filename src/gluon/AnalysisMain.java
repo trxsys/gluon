@@ -55,11 +55,11 @@ import java.util.HashSet;
 public class AnalysisMain
     extends SceneTransformer
 {
-    private static final boolean DEBUG=true;
+    private static final boolean DEBUG=false;
 
     private static final String CONTRACT_ANNOTATION="Contract";
     
-    private static final AnalysisMain instance = new AnalysisMain();
+    private static final AnalysisMain instance=new AnalysisMain();
     
     private Scene scene;
     private String moduleName; // name of the module to analyze
@@ -408,21 +408,6 @@ public class AnalysisMain
 
         if (contract.size() == 0)
             Main.fatal("empty contract");
-
-        /* TESTING */
-        /* TESTING */
-        /* TESTING */
-        if (DEBUG)
-        {
-            System.out.println("Module allocation sites:");
-            for (soot.jimple.spark.pag.AllocNode as:
-                     PointsToInformation.getModuleAllocationSites(module))
-                System.out.println("  "+as);
-            System.out.println();
-        }
-        /* TESTING */
-        /* TESTING */
-        /* TESTING */
         
         gluon.profiling.Timer.start("analysis-threads");
         threads=getThreads();
