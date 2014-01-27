@@ -5,9 +5,7 @@ import test.common.Contract;
 
 @Contract(clauses =
          "setBalance getBalance;"
-        +"getBalance setBalance;"
-        +"update getBalance;"
-        +"getBalance update;")
+        +"getBalance setBalance;")
 public class Account {
 
 	protected int balance;
