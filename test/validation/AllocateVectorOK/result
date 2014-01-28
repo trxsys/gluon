@@ -1,47 +1,35 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
+
   Verifying word getFreeBlockIndex markAsAllocatedBlock:
+
+    No occurrences
+
 Checking thread TestThread1.run():
+
   Verifying word getFreeBlockIndex markAsAllocatedBlock:
+
       Method: TestThread1.alloc_block()
+      Calls Location: AllocationVector.java:43 AllocationVector.java:45
       Atomic: YES
+
+      Method: TestThread1.run()
+      Calls Location: AllocationVector.java:45 AllocationVector.java:43
+      Atomic: NO
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.002s
-                             total-parsing      0.003s
-                                     total     37.270s
-                       build-parsing-table      0.042s
-                                 soot-init     37.199s
-                         analysis-behavior      0.012s
+             analysis-behavior-grammar-opt      0.008s
+                             total-parsing      0.083s
+                                     total     38.113s
+                       build-parsing-table      0.090s
+                                 soot-init     37.886s
+                         analysis-behavior      0.038s
 
 Profiling Vars:
-                parsing-table-state-number    157
-                            parse-branches     64
-                                 cfg-nodes    197
-                       grammar-productions    391
-                               parse-trees      1
-Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
-Checking thread Main.main():
-  Verifying word getFreeBlockIndex markAsAllocatedBlock:
-Checking thread TestThread1.run():
-  Verifying word getFreeBlockIndex markAsAllocatedBlock:
-      Method: TestThread1.alloc_block()
-      Atomic: YES
-
-
-Run Time:
-                             total-parsing      0.031s
-                                     total     38.393s
-                       build-parsing-table      0.392s
-                                 soot-init     37.925s
-                         analysis-behavior      0.030s
-
-Profiling Vars:
-                parsing-table-state-number   1058
-                            parse-branches    256
-                                 cfg-nodes    197
-                       grammar-productions   1998
-                               parse-trees      1
+          parsing-table-state-number-total    650
+                            parse-branches   2396
+                                 cfg-nodes    882
+                               parse-trees      2
+                         alloc-sites-total      8
+                 grammar-productions-total   1644

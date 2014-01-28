@@ -1,5 +1,4 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Elevator.main():
 
   Verifying word checkUp claimUp:
@@ -26,16 +25,17 @@ Checking thread Lift.run():
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.004s
-                             total-parsing      0.531s
-                                     total     34.509s
-                       build-parsing-table      0.132s
-                                 soot-init     33.810s
-                         analysis-behavior      0.023s
+             analysis-behavior-grammar-opt      0.015s
+                             total-parsing      0.896s
+                                     total     39.821s
+                       build-parsing-table      0.267s
+                                 soot-init     38.564s
+                         analysis-behavior      0.081s
 
 Profiling Vars:
-                parsing-table-state-number    511
-                            parse-branches  188177
-                                 cfg-nodes    456
-                       grammar-productions   1030
+          parsing-table-state-number-total   1928
+                            parse-branches  188181
+                                 cfg-nodes   2068
                                parse-trees      2
+                         alloc-sites-total      8
+                 grammar-productions-total   4280

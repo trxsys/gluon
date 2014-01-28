@@ -1,43 +1,25 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
+
   Verifying word length getChars:
+
       Method: Main.append()
+      Calls Location: MyStringBuffer.java:15 MyStringBuffer.java:21
       Atomic: NO
 
 
 Run Time:
              analysis-behavior-grammar-opt      0.001s
                              total-parsing      0.002s
-                                     total     33.055s
+                                     total     37.311s
                        build-parsing-table      0.004s
-                                 soot-init     33.036s
-                         analysis-behavior      0.001s
+                                 soot-init     37.289s
+                         analysis-behavior      0.005s
 
 Profiling Vars:
-                parsing-table-state-number     18
-                            parse-branches      8
-                                 cfg-nodes     24
-                       grammar-productions     47
+          parsing-table-state-number-total     22
+                            parse-branches     10
+                                 cfg-nodes     96
                                parse-trees      1
-Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
-Checking thread Main.main():
-  Verifying word length getChars:
-      Method: Main.append()
-      Atomic: NO
-
-
-Run Time:
-                             total-parsing      0.009s
-                                     total     33.181s
-                       build-parsing-table      0.042s
-                                 soot-init     33.116s
-                         analysis-behavior      0.003s
-
-Profiling Vars:
-                parsing-table-state-number    147
-                            parse-branches     87
-                                 cfg-nodes     24
-                       grammar-productions    267
-                               parse-trees      1
+                         alloc-sites-total      3
+                 grammar-productions-total     75

@@ -1,55 +1,43 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
+
   Verifying word hasOrders treatOrder:
-Checking thread Supplier.run():
-  Verifying word hasOrders treatOrder:
-Checking thread Worker.run():
-  Verifying word hasOrders treatOrder:
-      Method: Worker.run()
-      Atomic: NO
+
+    No occurrences
 
 Checking thread Client.run():
+
   Verifying word hasOrders treatOrder:
 
+    No occurrences
+
+Checking thread Worker.run():
+
+  Verifying word hasOrders treatOrder:
+
+      Method: Worker.run()
+      Calls Location: WorkerAux.java:32 WorkerAux.java:33
+      Atomic: NO
+
+Checking thread Supplier.run():
+
+  Verifying word hasOrders treatOrder:
+
+    No occurrences
+
+
 Run Time:
-             analysis-behavior-grammar-opt      0.007s
-                             total-parsing      0.009s
-                                     total     33.715s
-                       build-parsing-table      0.093s
-                                 soot-init     33.579s
-                         analysis-behavior      0.023s
+             analysis-behavior-grammar-opt      0.005s
+                             total-parsing      0.011s
+                                     total     37.762s
+                       build-parsing-table      0.094s
+                                 soot-init     37.615s
+                         analysis-behavior      0.028s
 
 Profiling Vars:
-                parsing-table-state-number    410
-                                 cfg-nodes    559
-                               parse-trees      1
+          parsing-table-state-number-total    410
                             parse-branches    197
-                       grammar-productions    892
-Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
-Checking thread Main.main():
-  Verifying word hasOrders treatOrder:
-Checking thread Supplier.run():
-  Verifying word hasOrders treatOrder:
-Checking thread Worker.run():
-  Verifying word hasOrders treatOrder:
-      Method: Worker.run()
-      Atomic: NO
-
-Checking thread Client.run():
-  Verifying word hasOrders treatOrder:
-
-Run Time:
-                             total-parsing      0.331s
-                                     total     35.173s
-                       build-parsing-table      1.248s
-                                 soot-init     33.491s
-                         analysis-behavior      0.089s
-
-Profiling Vars:
-                parsing-table-state-number   3177
                                  cfg-nodes    559
                                parse-trees      1
-                            parse-branches   3082
-                       grammar-productions   5762
+                         alloc-sites-total      4
+                 grammar-productions-total    892

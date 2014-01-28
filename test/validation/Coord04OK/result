@@ -1,51 +1,39 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread CoordMain.main():
+
   Verifying word resetX resetY:
+
+    No occurrences
+
   Verifying word resetY resetX:
+
+    No occurrences
+
 Checking thread CoordMain.run():
+
   Verifying word resetX resetY:
+
       Method: CoordMain.reset()
+      Calls Location: CoordMain.java:58 CoordMain.java:56
       Atomic: YES
 
   Verifying word resetY resetX:
 
+    No occurrences
+
+
 Run Time:
-             analysis-behavior-grammar-opt      0.000s
+             analysis-behavior-grammar-opt      0.002s
                              total-parsing      0.002s
-                                     total     33.030s
-                       build-parsing-table      0.005s
-                                 soot-init     33.010s
-                         analysis-behavior      0.002s
+                                     total     36.824s
+                       build-parsing-table      0.016s
+                                 soot-init     36.785s
+                         analysis-behavior      0.009s
 
 Profiling Vars:
-                parsing-table-state-number     34
-                                 cfg-nodes     33
+          parsing-table-state-number-total    102
+                            parse-branches     16
+                                 cfg-nodes    156
                                parse-trees      1
-                            parse-branches     12
-                       grammar-productions     80
-Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
-Checking thread CoordMain.main():
-  Verifying word resetX resetY:
-  Verifying word resetY resetX:
-Checking thread CoordMain.run():
-  Verifying word resetX resetY:
-      Method: CoordMain.reset()
-      Atomic: YES
-
-  Verifying word resetY resetX:
-
-Run Time:
-                             total-parsing      0.003s
-                                     total     33.231s
-                       build-parsing-table      0.042s
-                                 soot-init     33.170s
-                         analysis-behavior      0.005s
-
-Profiling Vars:
-                parsing-table-state-number    193
-                                 cfg-nodes     33
-                               parse-trees      1
-                            parse-branches     28
-                       grammar-productions    372
+                         alloc-sites-total      8
+                 grammar-productions-total    272

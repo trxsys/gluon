@@ -1,89 +1,109 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
+
   Verifying word getX getY:
+
+    No occurrences
+
   Verifying word getY getX:
+
+    No occurrences
+
   Verifying word setX setY:
+
+    No occurrences
+
   Verifying word setY setX:
-Checking thread T4.run():
+
+    No occurrences
+
+Checking thread T1.run():
+
   Verifying word getX getY:
+
+    No occurrences
+
   Verifying word getY getX:
+
+    No occurrences
+
   Verifying word setX setY:
+
+    No occurrences
+
   Verifying word setY setX:
+
+    No occurrences
+
+Checking thread T2.run():
+
+  Verifying word getX getY:
+
+    No occurrences
+
+  Verifying word getY getX:
+
+    No occurrences
+
+  Verifying word setX setY:
+
+    No occurrences
+
+  Verifying word setY setX:
+
+    No occurrences
+
 Checking thread T3.run():
+
   Verifying word getX getY:
+
       Method: T3.run()
+      Calls Location: Vars.java:20 Vars.java:21
       Atomic: YES
 
   Verifying word getY getX:
+
+    No occurrences
+
   Verifying word setX setY:
-  Verifying word setY setX:
-Checking thread T2.run():
-  Verifying word getX getY:
-  Verifying word getY getX:
-  Verifying word setX setY:
-  Verifying word setY setX:
-Checking thread T1.run():
-  Verifying word getX getY:
-  Verifying word getY getX:
-  Verifying word setX setY:
+
+    No occurrences
+
   Verifying word setY setX:
 
-Run Time:
-             analysis-behavior-grammar-opt      0.002s
-                             total-parsing      0.001s
-                                     total     33.438s
-                       build-parsing-table      0.008s
-                                 soot-init     33.411s
-                         analysis-behavior      0.006s
+    No occurrences
 
-Profiling Vars:
-                parsing-table-state-number     62
-                                 cfg-nodes    112
-                               parse-trees      1
-                            parse-branches     23
-                       grammar-productions    187
-Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
-Checking thread Main.main():
-  Verifying word getX getY:
-  Verifying word getY getX:
-  Verifying word setX setY:
-  Verifying word setY setX:
 Checking thread T4.run():
+
   Verifying word getX getY:
-  Verifying word getY getX:
-  Verifying word setX setY:
-  Verifying word setY setX:
-Checking thread T3.run():
-  Verifying word getX getY:
-      Method: T3.run()
-      Atomic: YES
+
+    No occurrences
 
   Verifying word getY getX:
+
+    No occurrences
+
   Verifying word setX setY:
+
+    No occurrences
+
   Verifying word setY setX:
-Checking thread T2.run():
-  Verifying word getX getY:
-  Verifying word getY getX:
-  Verifying word setX setY:
-  Verifying word setY setX:
-Checking thread T1.run():
-  Verifying word getX getY:
-  Verifying word getY getX:
-  Verifying word setX setY:
-  Verifying word setY setX:
+
+    No occurrences
+
 
 Run Time:
-                             total-parsing      0.003s
-                                     total     33.348s
-                       build-parsing-table      0.123s
-                                 soot-init     33.195s
-                         analysis-behavior      0.014s
+             analysis-behavior-grammar-opt      0.008s
+                             total-parsing      0.004s
+                                     total     36.289s
+                       build-parsing-table      0.035s
+                                 soot-init     36.194s
+                         analysis-behavior      0.039s
 
 Profiling Vars:
-                parsing-table-state-number    639
-                                 cfg-nodes    112
+          parsing-table-state-number-total    420
+                            parse-branches     43
+                                 cfg-nodes   1028
                                parse-trees      1
-                            parse-branches     45
-                       grammar-productions   1225
+                         alloc-sites-total     40
+                 grammar-productions-total   1340

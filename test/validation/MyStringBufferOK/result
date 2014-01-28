@@ -1,43 +1,25 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
+
   Verifying word length getChars:
+
       Method: Main.append()
+      Calls Location: Main.java:41 Main.java:47
       Atomic: YES
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.000s
-                             total-parsing      0.001s
-                                     total     33.416s
-                       build-parsing-table      0.003s
-                                 soot-init     33.399s
-                         analysis-behavior      0.002s
+             analysis-behavior-grammar-opt      0.001s
+                             total-parsing      0.002s
+                                     total     36.363s
+                       build-parsing-table      0.002s
+                                 soot-init     36.342s
+                         analysis-behavior      0.006s
 
 Profiling Vars:
-                parsing-table-state-number     18
-                            parse-branches      8
-                                 cfg-nodes     24
-                       grammar-productions     47
+          parsing-table-state-number-total     22
+                            parse-branches     10
+                                 cfg-nodes     96
                                parse-trees      1
-Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
-Checking thread Main.main():
-  Verifying word length getChars:
-      Method: Main.append()
-      Atomic: YES
-
-
-Run Time:
-                             total-parsing      0.009s
-                                     total     32.988s
-                       build-parsing-table      0.050s
-                                 soot-init     32.914s
-                         analysis-behavior      0.004s
-
-Profiling Vars:
-                parsing-table-state-number    147
-                            parse-branches     87
-                                 cfg-nodes     24
-                       grammar-productions    267
-                               parse-trees      1
+                         alloc-sites-total      3
+                 grammar-productions-total     75

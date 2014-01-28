@@ -1,57 +1,39 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
+
   Verifying word get_max_key insert:
+
+    No occurrences
+
   Verifying word iterator insert:
+
+    No occurrences
+
 Checking thread Client.run():
+
   Verifying word get_max_key insert:
+
       Method: Client.insert_new_expression()
+      Calls Location: Table.java:63 Table.java:65
       Atomic: YES
 
   Verifying word iterator insert:
-      Method: Client.insert_new_expression()
-      Atomic: YES
+
+    No occurrences
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.003s
-                             total-parsing      0.017s
-                                     total     34.265s
-                       build-parsing-table      0.089s
-                                 soot-init     34.129s
-                         analysis-behavior      0.016s
+             analysis-behavior-grammar-opt      0.015s
+                             total-parsing      0.021s
+                                     total     41.579s
+                       build-parsing-table      0.220s
+                                 soot-init     41.224s
+                         analysis-behavior      0.098s
 
 Profiling Vars:
-                parsing-table-state-number    329
-                            parse-branches    718
-                                 cfg-nodes    343
-                       grammar-productions    732
-                               parse-trees      2
-Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
-Checking thread Main.main():
-  Verifying word get_max_key insert:
-  Verifying word iterator insert:
-Checking thread Client.run():
-  Verifying word get_max_key insert:
-      Method: Client.insert_new_expression()
-      Atomic: YES
-
-  Verifying word iterator insert:
-      Method: Client.insert_new_expression()
-      Atomic: YES
-
-
-Run Time:
-                             total-parsing      0.399s
-                                     total     34.978s
-                       build-parsing-table      0.598s
-                                 soot-init     33.913s
-                         analysis-behavior      0.055s
-
-Profiling Vars:
-                parsing-table-state-number   1914
-                            parse-branches  16179
-                                 cfg-nodes    343
-                       grammar-productions   3574
-                               parse-trees      2
+          parsing-table-state-number-total   1840
+                            parse-branches    663
+                                 cfg-nodes   2256
+                               parse-trees      1
+                         alloc-sites-total     12
+                 grammar-productions-total   4298

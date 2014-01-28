@@ -1,51 +1,37 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
+
   Verifying word setValue setAchieved:
-Checking thread Task.run():
-  Verifying word setValue setAchieved:
-      Method: Task.run()
-      Atomic: NO
+
+    No occurrences
 
 Checking thread Daemon.run():
+
   Verifying word setValue setAchieved:
 
-Run Time:
-             analysis-behavior-grammar-opt      0.000s
-                             total-parsing      0.002s
-                                     total     33.261s
-                       build-parsing-table      0.003s
-                                 soot-init     33.240s
-                         analysis-behavior      0.003s
+    No occurrences
 
-Profiling Vars:
-                parsing-table-state-number     40
-                                 cfg-nodes     67
-                               parse-trees      1
-                            parse-branches      6
-                       grammar-productions    101
-Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
-Checking thread Main.main():
-  Verifying word setValue setAchieved:
 Checking thread Task.run():
+
   Verifying word setValue setAchieved:
+
       Method: Task.run()
+      Calls Location: TaskManager.java:20 TaskManager.java:18
       Atomic: NO
 
-Checking thread Daemon.run():
-  Verifying word setValue setAchieved:
 
 Run Time:
+             analysis-behavior-grammar-opt      0.002s
                              total-parsing      0.002s
-                                     total     33.600s
-                       build-parsing-table      0.092s
-                                 soot-init     33.484s
-                         analysis-behavior      0.009s
+                                     total     36.267s
+                       build-parsing-table      0.008s
+                                 soot-init     36.236s
+                         analysis-behavior      0.007s
 
 Profiling Vars:
-                parsing-table-state-number    373
-                                 cfg-nodes     67
+          parsing-table-state-number-total     70
+                            parse-branches      9
+                                 cfg-nodes    148
                                parse-trees      1
-                            parse-branches     20
-                       grammar-productions    725
+                         alloc-sites-total      6
+                 grammar-productions-total    180

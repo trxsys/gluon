@@ -1,57 +1,41 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread GUI.main():
+
   Verifying word isConnected send:
+
+    No occurrences
+
   Verifying word resetSocket resetCounter:
+
+    No occurrences
+
 Checking thread GUI.run():
+
   Verifying word isConnected send:
+
       Method: GUI.trySendMsg()
+      Calls Location: Connection.java:25 Connection.java:26
       Atomic: YES
 
   Verifying word resetSocket resetCounter:
+
       Method: GUI.disconnect()
+      Calls Location: Connection.java:38 Connection.java:37
       Atomic: YES
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.000s
-                             total-parsing      0.008s
-                                     total     37.516s
-                       build-parsing-table      0.027s
-                                 soot-init     37.465s
-                         analysis-behavior      0.005s
+             analysis-behavior-grammar-opt      0.003s
+                             total-parsing      0.011s
+                                     total     38.263s
+                       build-parsing-table      0.042s
+                                 soot-init     38.176s
+                         analysis-behavior      0.019s
 
 Profiling Vars:
-                parsing-table-state-number     95
-                                 cfg-nodes     69
+          parsing-table-state-number-total    294
+                            parse-branches    302
+                                 cfg-nodes    354
                                parse-trees      2
-                            parse-branches    298
-                       grammar-productions    194
-Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
-Checking thread GUI.main():
-  Verifying word isConnected send:
-  Verifying word resetSocket resetCounter:
-Checking thread GUI.run():
-  Verifying word isConnected send:
-      Method: GUI.trySendMsg()
-      Atomic: YES
-
-  Verifying word resetSocket resetCounter:
-      Method: GUI.disconnect()
-      Atomic: YES
-
-
-Run Time:
-                             total-parsing      0.062s
-                                     total     37.257s
-                       build-parsing-table      0.086s
-                                 soot-init     37.087s
-                         analysis-behavior      0.008s
-
-Profiling Vars:
-                parsing-table-state-number    394
-                                 cfg-nodes     69
-                               parse-trees      2
-                            parse-branches   1083
-                       grammar-productions    757
+                         alloc-sites-total      8
+                 grammar-productions-total    714

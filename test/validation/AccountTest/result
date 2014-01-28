@@ -1,65 +1,41 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
-  Verifying word setBalance getBalance:
+
   Verifying word getBalance setBalance:
-  Verifying word update getBalance:
-  Verifying word getBalance update:
+
+    No occurrences
+
+  Verifying word setBalance getBalance:
+
+    No occurrences
+
 Checking thread Update.run():
-  Verifying word setBalance getBalance:
-      Method: Update.run()
-      Atomic: NO
 
   Verifying word getBalance setBalance:
+
       Method: Update.update()
+      Calls Location: Account.java:9 Account.java:7
       Atomic: NO
 
-  Verifying word update getBalance:
-  Verifying word getBalance update:
+  Verifying word setBalance getBalance:
+
+      Method: Update.run()
+      Calls Location: Account.java:7 Account.java:9
+      Atomic: NO
+
 
 Run Time:
-             analysis-behavior-grammar-opt      0.000s
-                             total-parsing      0.001s
-                                     total     33.326s
-                       build-parsing-table      0.005s
-                                 soot-init     33.306s
-                         analysis-behavior      0.002s
+             analysis-behavior-grammar-opt      0.005s
+                             total-parsing      0.003s
+                                     total     37.621s
+                       build-parsing-table      0.014s
+                                 soot-init     37.579s
+                         analysis-behavior      0.010s
 
 Profiling Vars:
-                parsing-table-state-number     30
-                                 cfg-nodes     36
+          parsing-table-state-number-total     98
+                            parse-branches     33
+                                 cfg-nodes    158
                                parse-trees      2
-                            parse-branches     34
-                       grammar-productions     62
-Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
-Checking thread Main.main():
-  Verifying word setBalance getBalance:
-  Verifying word getBalance setBalance:
-  Verifying word update getBalance:
-  Verifying word getBalance update:
-Checking thread Update.run():
-  Verifying word setBalance getBalance:
-      Method: Update.run()
-      Atomic: NO
-
-  Verifying word getBalance setBalance:
-      Method: Update.update()
-      Atomic: NO
-
-  Verifying word update getBalance:
-  Verifying word getBalance update:
-
-Run Time:
-                             total-parsing      0.009s
-                                     total     33.264s
-                       build-parsing-table      0.047s
-                                 soot-init     33.191s
-                         analysis-behavior      0.005s
-
-Profiling Vars:
-                parsing-table-state-number    210
-                                 cfg-nodes     36
-                               parse-trees      2
-                            parse-branches    114
-                       grammar-productions    397
+                         alloc-sites-total      8
+                 grammar-productions-total    242

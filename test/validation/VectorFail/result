@@ -1,51 +1,39 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
+
   Verifying word getMax getMin:
+
+    No occurrences
+
   Verifying word getMin getMax:
+
+    No occurrences
+
 Checking thread MyThread.run():
+
   Verifying word getMax getMin:
+
       Method: MyThread.run()
+      Calls Location: Vector.java:18 Vector.java:19
       Atomic: NO
 
   Verifying word getMin getMax:
 
-Run Time:
-             analysis-behavior-grammar-opt      0.001s
-                             total-parsing      0.003s
-                                     total     37.375s
-                       build-parsing-table      0.013s
-                                 soot-init     37.344s
-                         analysis-behavior      0.003s
+    No occurrences
 
-Profiling Vars:
-                parsing-table-state-number     54
-                            parse-branches     78
-                                 cfg-nodes     51
-                       grammar-productions    127
-                               parse-trees      1
-Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
-Checking thread Main.main():
-  Verifying word getMax getMin:
-  Verifying word getMin getMax:
-Checking thread MyThread.run():
-  Verifying word getMax getMin:
-      Method: MyThread.run()
-      Atomic: NO
-
-  Verifying word getMin getMax:
 
 Run Time:
-                             total-parsing      0.019s
-                                     total     37.286s
-                       build-parsing-table      0.061s
-                                 soot-init     37.187s
-                         analysis-behavior      0.007s
+             analysis-behavior-grammar-opt      0.004s
+                             total-parsing      0.004s
+                                     total     36.465s
+                       build-parsing-table      0.026s
+                                 soot-init     36.408s
+                         analysis-behavior      0.013s
 
 Profiling Vars:
-                parsing-table-state-number    270
-                            parse-branches    204
-                                 cfg-nodes     51
-                       grammar-productions    538
+          parsing-table-state-number-total    174
+                            parse-branches     82
+                                 cfg-nodes    244
                                parse-trees      1
+                         alloc-sites-total      8
+                 grammar-productions-total    500

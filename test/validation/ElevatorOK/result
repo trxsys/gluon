@@ -1,29 +1,41 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Elevator.main():
+
   Verifying word checkUp claimUp:
+
+    No occurrences
+
   Verifying word checkDown claimDown:
+
+    No occurrences
+
 Checking thread Lift.run():
+
   Verifying word checkUp claimUp:
+
       Method: Lift.claimUp()
+      Calls Location: Controls.java:259 Controls.java:260
       Atomic: YES
 
   Verifying word checkDown claimDown:
+
       Method: Lift.claimDown()
+      Calls Location: Controls.java:274 Controls.java:275
       Atomic: YES
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.004s
-                             total-parsing      0.499s
-                                     total     33.583s
-                       build-parsing-table      0.096s
-                                 soot-init     32.954s
-                         analysis-behavior      0.023s
+             analysis-behavior-grammar-opt      0.016s
+                             total-parsing      0.821s
+                                     total     37.556s
+                       build-parsing-table      0.290s
+                                 soot-init     36.330s
+                         analysis-behavior      0.099s
 
 Profiling Vars:
-                parsing-table-state-number    506
-                                 cfg-nodes    458
+          parsing-table-state-number-total   1914
+                            parse-branches  185422
+                                 cfg-nodes   2096
                                parse-trees      2
-                            parse-branches  185418
-                       grammar-productions   1018
+                         alloc-sites-total      8
+                 grammar-productions-total   4260

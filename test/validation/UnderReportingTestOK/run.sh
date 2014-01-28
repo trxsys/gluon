@@ -5,4 +5,4 @@ mainClass=$package.Main
 module=$package.Counter
 
 cd ../../..; ./gluon.sh -pt --classpath . --module "$module" "$mainClass"
-./gluon.sh --no-grammar-opt -pt --classpath . --module "$module" "$mainClass"
+# ./gluon.sh --no-grammar-opt -pt --classpath . --module "$module" "$mainClass"

@@ -1,47 +1,31 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
+
   Verifying word get_solution set_solution:
+
+    No occurrences
+
 Checking thread Solver.run():
+
   Verifying word get_solution set_solution:
+
       Method: Solver.check_and_set_solution()
+      Calls Location: KnightMoves.java:29 KnightMoves.java:35
       Atomic: YES
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.004s
+             analysis-behavior-grammar-opt      0.006s
                              total-parsing      0.002s
-                                     total     33.513s
-                       build-parsing-table      0.035s
-                                 soot-init     33.456s
-                         analysis-behavior      0.010s
+                                     total     37.916s
+                       build-parsing-table      0.070s
+                                 soot-init     37.804s
+                         analysis-behavior      0.025s
 
 Profiling Vars:
-                parsing-table-state-number    133
-                                 cfg-nodes    209
+          parsing-table-state-number-total    361
+                            parse-branches     18
+                                 cfg-nodes    605
                                parse-trees      1
-                            parse-branches     16
-                       grammar-productions    343
-Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
-Checking thread Main.main():
-  Verifying word get_solution set_solution:
-Checking thread Solver.run():
-  Verifying word get_solution set_solution:
-      Method: Solver.check_and_set_solution()
-      Atomic: YES
-
-
-Run Time:
-                             total-parsing      0.010s
-                                     total     34.261s
-                       build-parsing-table      0.343s
-                                 soot-init     33.870s
-                         analysis-behavior      0.027s
-
-Profiling Vars:
-                parsing-table-state-number   1020
-                                 cfg-nodes    209
-                               parse-trees      1
-                            parse-branches    109
-                       grammar-productions   2069
+                         alloc-sites-total      4
+                 grammar-productions-total    973

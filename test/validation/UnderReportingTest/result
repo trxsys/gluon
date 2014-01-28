@@ -1,47 +1,31 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
+
   Verifying word inc inc:
+
+    No occurrences
+
 Checking thread Main.run():
+
   Verifying word inc inc:
+
       Method: Main.run()
+      Calls Location: Counter.java:15 Counter.java:14
       Atomic: NO
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.000s
+             analysis-behavior-grammar-opt      0.001s
                              total-parsing      0.002s
-                                     total     33.438s
-                       build-parsing-table      0.003s
-                                 soot-init     33.421s
-                         analysis-behavior      0.001s
+                                     total     36.756s
+                       build-parsing-table      0.004s
+                                 soot-init     36.734s
+                         analysis-behavior      0.005s
 
 Profiling Vars:
-                parsing-table-state-number     19
-                            parse-branches      5
-                                 cfg-nodes     23
-                       grammar-productions     56
+          parsing-table-state-number-total     30
+                            parse-branches      7
+                                 cfg-nodes     53
                                parse-trees      1
-Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
-Checking thread Main.main():
-  Verifying word inc inc:
-Checking thread Main.run():
-  Verifying word inc inc:
-      Method: Main.run()
-      Atomic: NO
-
-
-Run Time:
-                             total-parsing      0.002s
-                                     total     33.088s
-                       build-parsing-table      0.034s
-                                 soot-init     33.038s
-                         analysis-behavior      0.004s
-
-Profiling Vars:
-                parsing-table-state-number    131
-                            parse-branches     11
-                                 cfg-nodes     23
-                       grammar-productions    263
-                               parse-trees      1
+                         alloc-sites-total      4
+                 grammar-productions-total     96

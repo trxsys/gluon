@@ -1,5 +1,4 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
 
   Verifying word checkClosed lookupEntry:
@@ -18,44 +17,15 @@ Checking thread Runner.run():
 Run Time:
              analysis-behavior-grammar-opt      0.002s
                              total-parsing      0.002s
-                                     total     34.312s
-                       build-parsing-table      0.006s
-                                 soot-init     34.287s
-                         analysis-behavior      0.003s
-
-Profiling Vars:
-                parsing-table-state-number     39
-                            parse-branches      9
-                                 cfg-nodes     45
-                       grammar-productions    104
-                               parse-trees      1
-Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
-Checking thread Main.main():
-
-  Verifying word checkClosed lookupEntry:
-
-    No occurrences
-
-Checking thread Runner.run():
-
-  Verifying word checkClosed lookupEntry:
-
-      Method: Runner.loadResourceStore()
-      Calls Location: ResourceStoreManager.java:12 ResourceStoreManager.java:13
-      Atomic: NO
-
-
-Run Time:
-                             total-parsing      0.006s
-                                     total     35.111s
-                       build-parsing-table      0.059s
-                                 soot-init     34.944s
+                                     total     37.095s
+                       build-parsing-table      0.010s
+                                 soot-init     37.065s
                          analysis-behavior      0.007s
 
 Profiling Vars:
-                parsing-table-state-number    264
-                            parse-branches     36
-                                 cfg-nodes     45
-                       grammar-productions    501
+          parsing-table-state-number-total     64
+                            parse-branches     11
+                                 cfg-nodes    125
                                parse-trees      1
+                         alloc-sites-total      4
+                 grammar-productions-total    194

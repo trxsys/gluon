@@ -1,5 +1,4 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
 
   Verifying word get_max_key insert:
@@ -26,56 +25,17 @@ Checking thread Client.run():
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.004s
-                             total-parsing      0.022s
-                                     total     36.007s
-                       build-parsing-table      0.107s
-                                 soot-init     35.846s
-                         analysis-behavior      0.017s
+             analysis-behavior-grammar-opt      0.017s
+                             total-parsing      0.037s
+                                     total     41.743s
+                       build-parsing-table      0.216s
+                                 soot-init     41.358s
+                         analysis-behavior      0.115s
 
 Profiling Vars:
-                parsing-table-state-number    329
-                            parse-branches   1048
-                                 cfg-nodes    343
-                       grammar-productions    732
+          parsing-table-state-number-total   1840
+                            parse-branches   1596
+                                 cfg-nodes   2256
                                parse-trees      2
-Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
-Checking thread Main.main():
-
-  Verifying word get_max_key insert:
-
-    No occurrences
-
-  Verifying word iterator get_max_key:
-
-    No occurrences
-
-Checking thread Client.run():
-
-  Verifying word get_max_key insert:
-
-      Method: Client.insert_new_expression()
-      Calls Location: Table.java:62 Table.java:64
-      Atomic: NO
-
-  Verifying word iterator get_max_key:
-
-      Method: Client.insert_new_expression()
-      Calls Location: Table.java:62 Table.java:46
-      Atomic: NO
-
-
-Run Time:
-                             total-parsing      1.822s
-                                     total     37.380s
-                       build-parsing-table      0.631s
-                                 soot-init     34.855s
-                         analysis-behavior      0.055s
-
-Profiling Vars:
-                parsing-table-state-number   1914
-                            parse-branches  288364
-                                 cfg-nodes    343
-                       grammar-productions   3574
-                               parse-trees      2
+                         alloc-sites-total     12
+                 grammar-productions-total   4298

@@ -1,65 +1,41 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 Checking thread Main.main():
+
   Verifying word setBalance getBalance:
+
+    No occurrences
+
   Verifying word getBalance setBalance:
-  Verifying word update getBalance:
-  Verifying word getBalance update:
+
+    No occurrences
+
 Checking thread Update.run():
+
   Verifying word setBalance getBalance:
+
       Method: Update.run()
+      Calls Location: Account.java:8 Account.java:10
       Atomic: YES
 
   Verifying word getBalance setBalance:
+
       Method: Update.update()
+      Calls Location: Account.java:10 Account.java:8
       Atomic: YES
 
-  Verifying word update getBalance:
-  Verifying word getBalance update:
 
 Run Time:
-             analysis-behavior-grammar-opt      0.000s
+             analysis-behavior-grammar-opt      0.002s
                              total-parsing      0.002s
-                                     total     33.382s
-                       build-parsing-table      0.005s
-                                 soot-init     33.362s
-                         analysis-behavior      0.003s
+                                     total     36.112s
+                       build-parsing-table      0.014s
+                                 soot-init     36.074s
+                         analysis-behavior      0.009s
 
 Profiling Vars:
-                parsing-table-state-number     30
-                                 cfg-nodes     36
+          parsing-table-state-number-total     98
+                            parse-branches     33
+                                 cfg-nodes    158
                                parse-trees      2
-                            parse-branches     34
-                       grammar-productions     62
-Warning: java.dyn.InvokeDynamic is a phantom class!
-[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
-Checking thread Main.main():
-  Verifying word setBalance getBalance:
-  Verifying word getBalance setBalance:
-  Verifying word update getBalance:
-  Verifying word getBalance update:
-Checking thread Update.run():
-  Verifying word setBalance getBalance:
-      Method: Update.run()
-      Atomic: YES
-
-  Verifying word getBalance setBalance:
-      Method: Update.update()
-      Atomic: YES
-
-  Verifying word update getBalance:
-  Verifying word getBalance update:
-
-Run Time:
-                             total-parsing      0.009s
-                                     total     32.955s
-                       build-parsing-table      0.048s
-                                 soot-init     32.881s
-                         analysis-behavior      0.005s
-
-Profiling Vars:
-                parsing-table-state-number    210
-                                 cfg-nodes     36
-                               parse-trees      2
-                            parse-branches    114
-                       grammar-productions    397
+                         alloc-sites-total      8
+                 grammar-productions-total    242
