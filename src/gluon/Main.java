@@ -18,15 +18,20 @@ package gluon;
 
 import soot.PackManager;
 import soot.Transform;
+import soot.jimple.spark.SparkTransformer;
 
 import soot.PhaseOptions;
 import soot.options.Options;
+import soot.options.SparkOptions;
 
 import soot.Scene;
 import soot.SootClass;
 
 import gnu.getopt.LongOpt;
 import gnu.getopt.Getopt;
+
+import java.util.Map;
+import java.util.HashMap;
 
 public class Main
 {
@@ -134,6 +139,21 @@ public class Main
         
         mainClassName=args[g.getOptind()];
     }
+
+    private static Map<String,String> getSparkOptions()
+    {
+        Map<String,String> opt = new HashMap<String,String>();
+        
+        opt.put("verbose","false");
+        opt.put("propagator","worklist");
+        opt.put("simple-edges-bidirectional","false");
+        opt.put("on-fly-cg","true");
+        opt.put("set-impl","double");
+        opt.put("double-set-old","hybrid");
+        opt.put("double-set-new","hybrid");
+        
+        return opt;
+    }
     
     private static void run()
     {
@@ -155,9 +175,16 @@ public class Main
         Options.v().set_allow_phantom_refs(true);
         Options.v().set_keep_line_number(true);
         
-        // for line number information
+        /* for line number information */
         PhaseOptions.v().setPhaseOption("tag.ln","on");
-        
+
+        /* soot bug workaround */
+        // PhaseOptions.v().setPhaseOption("jb", "use-original-names:true");
+        PhaseOptions.v().setPhaseOption("jb.ulp", "enabled:false");
+
+        /* for points-to analysis */
+        PhaseOptions.v().setPhaseOption("cg.spark","enabled:true");
+
         if (false)
             Scene.v().setSootClassPath(classPath);
         else
@@ -165,21 +192,21 @@ public class Main
                                        +java.io.File.pathSeparator
                                        +classPath);
         
-        // PhaseOptions.v().setPhaseOption("jb", "use-original-names:true");
-
-        PhaseOptions.v().setPhaseOption("jb.ulp", "enabled:false");
         t=new Transform("wstp.x",AnalysisMain.instance());
         
         AnalysisMain.instance().setModuleToAnalyze(moduleClassName);
         
         PackManager.v().getPack("wstp").add(t);
-        
+
         SootClass c = Scene.v().loadClassAndSupport(mainClassName);
         
         Scene.v().addBasicClass(mainClassName,SootClass.SIGNATURES);
         Scene.v().loadNecessaryClasses();
         
         Scene.v().setMainClass(c);
+
+        /* points-to analises */
+        SparkTransformer.v().transform("",getSparkOptions());
 
         PackManager.v().runPacks();
     }

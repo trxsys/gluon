@@ -28,6 +28,8 @@ import gluon.grammar.Production;
 import gluon.grammar.LexicalElement;
 import gluon.grammar.NonTerminal;
 
+import gluon.PointsToInformation;
+
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
@@ -35,19 +37,27 @@ import java.util.HashMap;
 import java.util.Queue;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Collection;
 
 import soot.Scene;
 import soot.SootClass;
 import soot.SootMethod;
+import soot.SootField;
 import soot.Unit;
+import soot.Value;
+import soot.Local;
 
 import soot.toolkits.graph.UnitGraph;
 import soot.toolkits.graph.BriefUnitGraph;
 
 import soot.jimple.Stmt;
 import soot.jimple.InvokeExpr;
+import soot.jimple.InstanceInvokeExpr;
+import soot.jimple.StaticInvokeExpr;
 import soot.jimple.internal.JReturnStmt;
 import soot.jimple.internal.JReturnVoidStmt;
+
+import soot.jimple.spark.pag.AllocNode;
 
 class NonTerminalAliasCreator
 {
@@ -96,23 +106,29 @@ class NonTerminalAliasCreator
 public class ProgramBehaviorAnalysis
 {
     private static final boolean DEBUG=false;
-    
+
+    private SootClass module; /* module under analysis */
     private SootMethod entryMethod;
+    /* Allocation site of the "object" under analysis.
+     * null if we are performing the analysis for a static module
+     */
+    private AllocNode allocSite;
+
     private Cfg grammar;
-    
-    private SootClass module; // module under analysis
     
     private Set<Unit> visited;
     
     private NonTerminalAliasCreator aliasCreator;
     
-    private Queue<SootMethod> methodQueue; // queue of methods to analyse
+    private Queue<SootMethod> methodQueue; /* queue of methods to analyse */
     private Set<SootMethod> enqueuedMethods;
     
-    public ProgramBehaviorAnalysis(SootMethod method, SootClass modClass)
+    public ProgramBehaviorAnalysis(SootMethod method, SootClass modClass,
+                                   AllocNode aSite)
     {
         entryMethod=method;
         module=modClass;
+        allocSite=aSite;
 
         grammar=new Cfg();
         
@@ -134,10 +150,69 @@ public class ProgramBehaviorAnalysis
     {
         return aliasCreator.makeAlias(o);
     }
+
+    private enum ModCall { NEVER, SOMETIMES, ALWAYS }
+
+    private ModCall invokeCallsModule(InvokeExpr expr)
+    {
+        SootMethod calledMethod=expr.getMethod();
+
+        if (calledMethod.isConstructor()
+            || calledMethod.isPrivate())
+            return ModCall.NEVER;
+
+        /* We only consider "modules" as instances from objects.
+         * So a call to a static method of a class is not considered
+         * a usage of a module.
+         */
+        if (expr instanceof InstanceInvokeExpr)
+        {
+            Value obj=((InstanceInvokeExpr)expr).getBase();
+            boolean hasModule=false;
+            Collection<AllocNode> allocSites=null;
+
+            /* The object being called may be a local variable or a field
+             */
+            if (obj instanceof Local)
+            {
+                Local l=(Local)obj;
+
+                allocSites=PointsToInformation.getReachableAllocSites(l);
+
+                for (AllocNode ac: allocSites)
+                    if (ac.equals(allocSite))
+                        hasModule=true;
+            }
+            else if (obj instanceof SootField)
+            {
+                /* This might not need to be handled since it seems that
+                 * in jimple/shimple the fields are accessed through JimpleLocals.
+                 */
+                assert false : "Do we need to handle this?";
+            }
+
+            assert allocSites != null;
+
+            if (!hasModule)
+                return ModCall.NEVER;
+
+            return allocSites.size() == 1 ? ModCall.ALWAYS : ModCall.SOMETIMES;
+        }
+        else if (expr instanceof StaticInvokeExpr
+                 && allocSite == null)
+        {
+            SootClass base=((StaticInvokeExpr)expr).getMethod().getDeclaringClass();
+            
+            return base.equals(module) ? ModCall.ALWAYS : ModCall.NEVER;
+        }
+
+        return ModCall.NEVER;
+    }
     
     private void analyzeUnit(SootMethod method, Unit unit, UnitGraph cfg)
     {
         LexicalElement prodBodyPrefix=null;
+        boolean addProdSkipPrefix=false;
         
         if (visited.contains(unit))
             return; // Unit already taken care of
@@ -150,40 +225,46 @@ public class ProgramBehaviorAnalysis
         
         visited.add(unit);
         
-        if (((Stmt)unit).containsInvokeExpr()) 
+        if (((Stmt)unit).containsInvokeExpr())
         {
             InvokeExpr expr=((Stmt)unit).getInvokeExpr();
             SootMethod calledMethod=expr.getMethod();
-            boolean isTargetModule
-                =calledMethod.getDeclaringClass().equals(module);
-            
-            if (isTargetModule
-                && !calledMethod.isConstructor()
-                && !calledMethod.isPrivate())
-                prodBodyPrefix=new PPTerminal(calledMethod,unit);
-            else if (calledMethod.hasActiveBody()
-                     && (gluon.Main.WITH_JAVA_LIB
-                         || !calledMethod.isJavaLibraryMethod()))
+
+            switch (invokeCallsModule(expr))
             {
-                prodBodyPrefix=new PPNonTerminal(alias(calledMethod),method); 
-                
-                if (!enqueuedMethods.contains(calledMethod))
+            case NEVER:
+            {
+                if (calledMethod.hasActiveBody()
+                    && (!calledMethod.isJavaLibraryMethod()
+                        || gluon.Main.WITH_JAVA_LIB))
                 {
-                    methodQueue.add(calledMethod);
-                    enqueuedMethods.add(calledMethod);
+                    prodBodyPrefix=new PPNonTerminal(alias(calledMethod),method); 
+                    
+                    if (!enqueuedMethods.contains(calledMethod))
+                    {
+                        methodQueue.add(calledMethod);
+                        enqueuedMethods.add(calledMethod);
+                    }
                 }
+                break;
+            }
+            case SOMETIMES: addProdSkipPrefix=true; /* fall through */
+            case ALWAYS: prodBodyPrefix=new PPTerminal(calledMethod,unit); break;
             }
         }
         
+        assert addProdSkipPrefix ? prodBodyPrefix != null : true;
+
         PPNonTerminal prodHead=new PPNonTerminal(alias(unit),method);
 
         for (Unit succ: cfg.getSuccsOf(unit))
         {
             PPNonTerminal succNonTerm=new PPNonTerminal(alias(succ),method);
 
-            if (prodBodyPrefix == null)
+            if (prodBodyPrefix == null || addProdSkipPrefix)
                 addUnitToLexicalElement(unit,succNonTerm,method);
-            else
+
+            if (prodBodyPrefix != null)
                 addUnitToTwoLexicalElements(unit,prodBodyPrefix,succNonTerm,
                                             method);
         }
@@ -196,11 +277,10 @@ public class ProgramBehaviorAnalysis
 
             addUnitToEmptyProduction(unit,method);
         }
-        
+
         for (Unit succ: cfg.getSuccsOf(unit))
             analyzeUnit(method,succ,cfg);
     }
-    
 
     private void addUnitToTwoLexicalElements(Unit unit,
                                              LexicalElement body1,
