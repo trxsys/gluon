@@ -53,6 +53,7 @@ import soot.toolkits.graph.BriefUnitGraph;
 import soot.jimple.Stmt;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InstanceInvokeExpr;
+import soot.jimple.StaticInvokeExpr;
 import soot.jimple.internal.JReturnStmt;
 import soot.jimple.internal.JReturnVoidStmt;
 
@@ -106,9 +107,12 @@ public class ProgramBehaviorAnalysis
 {
     private static final boolean DEBUG=false;
 
-    private SootClass module; // module under analysis
+    private SootClass module; /* module under analysis */
     private SootMethod entryMethod;
-    private AllocNode allocSite; // allocation site of the "object" under analysis
+    /* Allocation site of the "object" under analysis.
+     * null if we are performing the analysis for a static module
+     */
+    private AllocNode allocSite;
 
     private Cfg grammar;
     
@@ -116,7 +120,7 @@ public class ProgramBehaviorAnalysis
     
     private NonTerminalAliasCreator aliasCreator;
     
-    private Queue<SootMethod> methodQueue; // queue of methods to analyse
+    private Queue<SootMethod> methodQueue; /* queue of methods to analyse */
     private Set<SootMethod> enqueuedMethods;
     
     public ProgramBehaviorAnalysis(SootMethod method, SootClass modClass,
@@ -193,6 +197,13 @@ public class ProgramBehaviorAnalysis
                 return ModCall.NEVER;
 
             return allocSites.size() == 1 ? ModCall.ALWAYS : ModCall.SOMETIMES;
+        }
+        else if (expr instanceof StaticInvokeExpr
+                 && allocSite == null)
+        {
+            SootClass base=((StaticInvokeExpr)expr).getMethod().getDeclaringClass();
+            
+            return base.equals(module) ? ModCall.ALWAYS : ModCall.NEVER;
         }
 
         return ModCall.NEVER;

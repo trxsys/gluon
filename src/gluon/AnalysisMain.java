@@ -228,12 +228,17 @@ public class AnalysisMain
                                 final ArrayList<Terminal> word)
     {
         final Set<SootMethod> reported=new HashSet<SootMethod>();
+        Collection<AllocNode> moduleAllocSites;
 
         System.out.println("  Verifying word "+wordStr(word)+":");
         System.out.println();
 
-        for (soot.jimple.spark.pag.AllocNode as:
-                 PointsToInformation.getModuleAllocationSites(module))
+        moduleAllocSites=PointsToInformation.getModuleAllocationSites(module);
+
+        /* for static modules */
+        moduleAllocSites.add(null);
+
+        for (soot.jimple.spark.pag.AllocNode as: moduleAllocSites)
         {
             Parser parser=makeParser(thread,as);
 
@@ -258,7 +263,7 @@ public class AnalysisMain
             gluon.profiling.Timer.stop("parsing");
             gluon.profiling.Timer.stop("final:total-parsing");
         }
-        
+
         if (reported.size() == 0)
         {
             System.out.println("    No occurrences");
