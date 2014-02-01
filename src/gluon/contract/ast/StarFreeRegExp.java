@@ -14,30 +14,14 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.startFreeRegExp;
+package gluon.contract.ast;
 
 import java.util.Set;
 import java.util.List;
 
-import java.util.HashSet;
-
-public class StarFreeRegExpEmpty
-    extends StarFreeRegExp
+public abstract class StarFreeRegExp
 {
-    public StarFreeRegExpEmpty()
-    {
+    public abstract Set<List<String>> getWords();
 
-    }
-
-    @Override
-    public Set<List<String>> getWords()
-    {
-        return new HashSet<List<String>>();
-    }
-
-    @Override
-    public String toString()
-    {
-        return "∅";
-    }
+    public abstract String toString();
 }

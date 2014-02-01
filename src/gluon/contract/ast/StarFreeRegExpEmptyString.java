@@ -14,7 +14,7 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.startFreeRegExp;
+package gluon.contract.ast;
 
 import java.util.Set;
 import java.util.List;
@@ -22,40 +22,26 @@ import java.util.List;
 import java.util.HashSet;
 import java.util.ArrayList;
 
-public class StarFreeRegExpConcat
+public class StarFreeRegExpEmptyString
     extends StarFreeRegExp
 {
-    private final StarFreeRegExp left;
-    private final StarFreeRegExp right;
-
-    public StarFreeRegExpConcat(StarFreeRegExp l, StarFreeRegExp r)
+    public StarFreeRegExpEmptyString()
     {
-        left=l;
-        right=r;
     }
 
     @Override
     public Set<List<String>> getWords()
     {
-        Set<List<String>> words=new HashSet<List<String>>();
+        Set<List<String>> w=new HashSet<List<String>>();
 
-        for (List<String> wl: left.getWords())
-            for (List<String> wr: right.getWords())
-            {
-                List<String> wlr=new ArrayList<String>(wl.size()+wr.size());
+        w.add(new ArrayList<String>(0));
 
-                wlr.addAll(wl);
-                wlr.addAll(wr);
-
-                words.add(wlr);
-            }
-
-        return words;
+        return w;
     }
 
     @Override
     public String toString()
     {
-        return "("+left.toString()+") ⋅ ("+right.toString()+")";
+        return "ε";
     }
 }

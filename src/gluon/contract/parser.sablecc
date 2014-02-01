@@ -1,0 +1,35 @@
+Package gluon.contract;
+
+
+Helpers
+
+digit = ['0' .. '9'];
+alpha = [['a' .. 'z'] + ['A' .. 'Z']];
+extalpha = ['_' + alpha];
+
+
+Tokens
+
+left_paren = '(';
+right_paren = ')';
+semicolon = ';';
+
+word = (extalpha (extalpha | digit)*);
+
+alt = '|';
+concat = ' ';
+
+
+Productions
+
+contract = {list_of_clauses} contract semicolon clause	
+         | {clause}          clause semicolon;
+
+clause = {alt}    clause alt factor
+       | {factor} factor;
+
+factor = {concat} factor concat value
+       | {value}  value;
+
+value = {word}  word
+      | {paren} left_paren clause right_paren;
