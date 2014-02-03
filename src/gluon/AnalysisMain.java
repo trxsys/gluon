@@ -46,6 +46,9 @@ import gluon.grammar.parsing.parser.Parser;
 import gluon.grammar.parsing.parseTree.ParseTree;
 import gluon.grammar.parsing.parser.ParserCallback;
 
+import gluon.contract.ContractVisitorExtractWords;
+import gluon.contract.node.*;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -53,6 +56,9 @@ import java.util.Set;
 import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.HashSet;
+
+import java.io.PushbackReader;
+import java.io.StringReader;
 
 public class AnalysisMain
     extends SceneTransformer
@@ -67,7 +73,7 @@ public class AnalysisMain
     private String moduleName; // name of the module to analyze
     private SootClass module;  // class of the module to analyze
     private AtomicMethods atomicMethods;
-    private Collection<ArrayList<Terminal>> contract;
+    private Collection<List<Terminal>> contract;
     
     private AnalysisMain()
     {
@@ -116,7 +122,7 @@ public class AnalysisMain
         return r;
     }
     
-    private static String wordStr(ArrayList<Terminal> word)
+    private static String wordStr(List<Terminal> word)
     {
         String r="";
 
@@ -146,7 +152,7 @@ public class AnalysisMain
     }
 
     private List<PPTerminal> getCodeUnits(List<ParsingAction> actions,
-                                          ArrayList<Terminal> word)
+                                          List<Terminal> word)
     {
         ArrayList<PPTerminal> terms=new ArrayList<PPTerminal>(word.size()-1);
 
@@ -167,7 +173,7 @@ public class AnalysisMain
         return terms;
     }
 
-    private boolean assertLCASanityCheck(ArrayList<Terminal> word, 
+    private boolean assertLCASanityCheck(List<Terminal> word, 
                                          List<ParsingAction> actions,
                                          NonTerminal lca)
     {
@@ -179,7 +185,7 @@ public class AnalysisMain
     }
 
     private int checkThreadWordParse(SootMethod thread,
-                                     ArrayList<Terminal> word, 
+                                     List<Terminal> word, 
                                      List<ParsingAction> actions,
                                      Set<SootMethod> reported,
                                      NonTerminal lca)
@@ -225,7 +231,7 @@ public class AnalysisMain
     }
     
     private void checkThreadWord(final SootMethod thread,
-                                final ArrayList<Terminal> word)
+                                 final List<Terminal> word)
     {
         final Set<SootMethod> reported=new HashSet<SootMethod>();
         Collection<AllocNode> moduleAllocSites;
@@ -312,7 +318,7 @@ public class AnalysisMain
                            +"."+thread.getName()+"():");
         System.out.println();
         
-        for (ArrayList<Terminal> word: contract)
+        for (List<Terminal> word: contract)
             checkThreadWord(thread,word);
     }
     
@@ -334,13 +340,12 @@ public class AnalysisMain
         return null;
     }
 
-    private List<String> extractContractClauses()
+    private String extractContractRaw()
     {
          Tag tag=module.getTag("VisibilityAnnotationTag");
-         List<String> clauses=new ArrayList<String>(32);
          
          if (tag == null)
-            return clauses;
+            return null;
 
         VisibilityAnnotationTag visibilityAnnotationTag=(VisibilityAnnotationTag) tag;
         List<AnnotationTag> annotations=visibilityAnnotationTag.getAnnotations();
@@ -353,43 +358,78 @@ public class AnalysisMain
             {
                 AnnotationStringElem e=(AnnotationStringElem)annotationTag.getElemAt(0);
 
-                for (String clause: e.getValue().split(";"))
-                    if (clause.trim().length() > 0)
-                        clauses.add(clause.trim());
+                return e.getValue();
             }
 
-        return clauses;
+        return null;
     }
 
+    private Start parseContract(String clause)
+    {
+        PushbackReader reader=new PushbackReader(new StringReader(clause));
+        gluon.contract.lexer.Lexer lexer
+            =new gluon.contract.lexer.Lexer(reader);
+        gluon.contract.parser.Parser parser
+            =new gluon.contract.parser.Parser(lexer);
+        Start ast=null;
+                
+        try
+        {
+            ast=parser.parse();
+        }
+        catch (gluon.contract.parser.ParserException _)
+        {
+            Main.fatal("syntax error in contract.");
+        }
+        catch (gluon.contract.lexer.LexerException _)
+        {
+            Main.fatal("syntax error in contract.");
+        }
+        catch (java.io.IOException _)
+        {
+            assert false : "this should not happen";
+        }
+        
+        assert ast != null;
+        
+        return ast;
+    }
+    
     private void extractContract()
     {
-        List<String> contractClauses;
-
-        contract=new LinkedList<ArrayList<Terminal>>();
+        String contractRaw;
         
-        contractClauses=extractContractClauses();
+        contractRaw=extractContractRaw();
 
-        /* TODO: this should be parsed intro a StarFreeRegex.
-         */
-        for (String clause: contractClauses)
+        if (contractRaw == null)
+            return;
+
+        contract=new LinkedList<List<Terminal>>();
+
+        for (String clause: contractRaw.split(";"))
         {
-            ArrayList<gluon.grammar.Terminal> word
-                =new ArrayList<gluon.grammar.Terminal>();
-            
-            for (String m: clause.split(" "))
-                if (m.trim().length() > 0)
-                {
-                    String methodName=m.trim();
+            Start ast;
+            ContractVisitorExtractWords visitorWords
+                =new ContractVisitorExtractWords();
 
-                    if (!module.declaresMethodByName(methodName))
-                        Main.fatal(methodName+": no such method!");
+            clause=clause.trim();
 
-                    word.add(new PPTerminal(methodName));
-                }
+            if (clause.length() == 0)
+                continue;
 
-            word.add(new gluon.grammar.EOITerminal());
+            ast=parseContract(clause);
+            ast.apply(visitorWords);
 
-            contract.add(word);
+            for (List<Terminal> word: visitorWords.getWords())
+            {
+                for (Terminal t: word)
+                    if (!module.declaresMethodByName(t.getName()))
+                        Main.fatal(t.getName()+": no such method!");
+
+                word.add(new gluon.grammar.EOITerminal());
+
+                contract.add(word);
+            }
         }
 
         dprintln("contract: "+contract);

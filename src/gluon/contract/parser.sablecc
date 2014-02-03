@@ -10,26 +10,31 @@ extalpha = ['_' + alpha];
 
 Tokens
 
-left_paren = '(';
-right_paren = ')';
-semicolon = ';';
+lpar = '(';
+rpar = ')';
 
-word = (extalpha (extalpha | digit)*);
+method = (extalpha (extalpha | digit)*);
 
-alt = '|';
+alt = '|' | ' | ';
 concat = ' ';
 
 
 Productions
 
-contract = {list_of_clauses} contract semicolon clause	
-         | {clause}          clause semicolon;
+clause {-> clause} = {alt}    [l]:clause alt [r]:factor {-> New clause.alt(l.clause,
+                                                                           r.clause) }
+                   | {factor} factor                    {-> factor.clause };
 
-clause = {alt}    clause alt factor
-       | {factor} factor;
+factor {-> clause } = {concat} [l]:factor concat [r]:value {-> New clause.concat(l.clause,
+                                                                                 r.clause) }
+                    | {value}  value                       {-> value.clause };
 
-factor = {concat} factor concat value
-       | {value}  value;
+value {-> clause } = {method} method           {-> New clause.method(method)}
+                   | {paren}  lpar clause rpar {-> clause.clause };
 
-value = {word}  word
-      | {paren} left_paren clause right_paren;
+
+Abstract Syntax Tree
+
+clause = {alt} [l]:clause [r]:clause
+       | {concat} [l]:clause [r]:clause
+       | {method} method;

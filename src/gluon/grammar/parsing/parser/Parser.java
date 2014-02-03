@@ -250,7 +250,7 @@ public class Parser
     }
 
     private void parseSingleParser(ParserConfiguration parserConf, 
-                                   ArrayList<Terminal> input)
+                                   List<Terminal> input)
     {
         int s;
         Terminal t;
@@ -325,8 +325,8 @@ public class Parser
         return initConfig;
     }
     
-    // Input should be an ArrayList for performance reasons
-    public int parse(ArrayList<Terminal> input, ParserCallback pcb)
+    // Argument input should be an ArrayList for performance reasons
+    public int parse(List<Terminal> input, ParserCallback pcb)
     {
         int ret=0;
         ParserConfiguration initialConfig;

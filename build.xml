@@ -38,6 +38,10 @@
 	<pathelement location="${getopt.lib}" />
       </classpath>
     </javac>
+    <copy file="${grammar.dir}/lexer/lexer.dat"
+	  todir="${build.dir}/gluon/contract/lexer" />
+    <copy file="${grammar.dir}/parser/parser.dat"
+	  todir="${build.dir}/gluon/contract/parser" />
   </target>
 
   <target name="tests" depends="init">
