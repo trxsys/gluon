@@ -74,6 +74,8 @@ public class AnalysisMain
     private SootClass module;  // class of the module to analyze
     private AtomicMethods atomicMethods;
     private Collection<List<Terminal>> contract;
+
+    private String contractRaw;
     
     private AnalysisMain()
     {
@@ -82,6 +84,7 @@ public class AnalysisMain
         module=null;
         atomicMethods=null;
         contract=null;
+        contractRaw=null;
     }
     
     private void dprint(String s)
@@ -340,6 +343,44 @@ public class AnalysisMain
         return null;
     }
 
+    public void setContract(String contract)
+    {
+        contractRaw=contract;
+    }
+
+    public void loadRawContract()
+    {
+        contract=new LinkedList<List<Terminal>>();
+
+        for (String clause: contractRaw.split(";"))
+        {
+            Start ast;
+            ContractVisitorExtractWords visitorWords
+                =new ContractVisitorExtractWords();
+
+            clause=clause.trim();
+
+            if (clause.length() == 0)
+                continue;
+
+            ast=parseContract(clause);
+            ast.apply(visitorWords);
+
+            for (List<Terminal> word: visitorWords.getWords())
+            {
+                for (Terminal t: word)
+                    if (!module.declaresMethodByName(t.getName()))
+                        Main.fatal(t.getName()+": no such method!");
+
+                word.add(new gluon.grammar.EOITerminal());
+
+                contract.add(word);
+            }
+        }
+
+        dprintln("contract: "+contract);
+    }
+
     private String extractContractRaw()
     {
          Tag tag=module.getTag("VisibilityAnnotationTag");
@@ -395,44 +436,9 @@ public class AnalysisMain
         return ast;
     }
     
-    private void extractContract()
+    private void extractAnnotatedContract()
     {
-        String contractRaw;
-        
         contractRaw=extractContractRaw();
-
-        if (contractRaw == null)
-            return;
-
-        contract=new LinkedList<List<Terminal>>();
-
-        for (String clause: contractRaw.split(";"))
-        {
-            Start ast;
-            ContractVisitorExtractWords visitorWords
-                =new ContractVisitorExtractWords();
-
-            clause=clause.trim();
-
-            if (clause.length() == 0)
-                continue;
-
-            ast=parseContract(clause);
-            ast.apply(visitorWords);
-
-            for (List<Terminal> word: visitorWords.getWords())
-            {
-                for (Terminal t: word)
-                    if (!module.declaresMethodByName(t.getName()))
-                        Main.fatal(t.getName()+": no such method!");
-
-                word.add(new gluon.grammar.EOITerminal());
-
-                contract.add(word);
-            }
-        }
-
-        dprintln("contract: "+contract);
     }
 
     @Override
@@ -451,7 +457,13 @@ public class AnalysisMain
         if (module == null)
             Main.fatal(moduleName+": module's class not found");
         
-        extractContract();
+        /* if the contract was not passed by the command line then extract it
+         * from the module's annotation @Contract.
+         */
+        if (contractRaw == null)
+            extractAnnotatedContract();
+
+        loadRawContract();
 
         if (contract.size() == 0)
             Main.fatal("empty contract");

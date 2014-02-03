@@ -40,6 +40,7 @@ public class Main
     private static String classPath=null;
     private static String mainClassName=null;
     private static String moduleClassName=null;
+    private static String contract=null;
 
     public static boolean WITH_JAVA_LIB=false;
     public static boolean TIME=false;
@@ -69,13 +70,15 @@ public class Main
                            +"Output profiling variables");
 		System.out.println("  -n, --no-grammar-opt            "
                            +"Disable grammar optimization");
+		System.out.println("  -o, --contract <contract>       "
+                           +"Module's contract (overrides annotation)");
 		System.out.println("  -h, --help                      "
                            +"Display this help and exit");
     }
     
     private static void parseArguments(String[] args)
     {
-        LongOpt[] options = new LongOpt[7];
+        LongOpt[] options = new LongOpt[8];
         
         options[0] = new LongOpt("help", LongOpt.NO_ARGUMENT, null, 'h');
         options[1] = new LongOpt("classpath", LongOpt.REQUIRED_ARGUMENT,
@@ -87,8 +90,9 @@ public class Main
         options[4] = new LongOpt("time", LongOpt.NO_ARGUMENT, null, 't');
         options[5] = new LongOpt("prof-vars", LongOpt.NO_ARGUMENT, null, 'p');
         options[6] = new LongOpt("no-grammar-opt", LongOpt.NO_ARGUMENT, null, 'n');
+        options[7] = new LongOpt("contract", LongOpt.REQUIRED_ARGUMENT, null, 'o');
 
-        Getopt g = new Getopt(PROGNAME, args, "hc:m:jtpn", options);
+        Getopt g = new Getopt(PROGNAME, args, "hc:m:o:jtpn", options);
         int c;
         
         g.setOpterr(true);
@@ -132,8 +136,13 @@ public class Main
                     NO_GRAMMAR_OPTIMIZE=true;
                     break;
                 }
+            case 'o': 
+                {
+                    contract=g.getOptarg();
+                    break;
+                }
             }
-        
+
         if (g.getOptind() != args.length-1)
             fatal("there must be one main class specified");
         
@@ -195,6 +204,9 @@ public class Main
         t=new Transform("wstp.x",AnalysisMain.instance());
         
         AnalysisMain.instance().setModuleToAnalyze(moduleClassName);
+
+        if (contract != null)
+            AnalysisMain.instance().setContract(contract);
         
         PackManager.v().getPack("wstp").add(t);
 
