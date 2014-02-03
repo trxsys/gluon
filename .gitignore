@@ -1,2 +1,7 @@
 *.class
 TODO
+
+src/gluon/contract/analysis/
+src/gluon/contract/lexer/
+src/gluon/contract/node/
+src/gluon/contract/parser/

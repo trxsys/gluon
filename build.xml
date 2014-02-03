@@ -5,10 +5,17 @@
   <property name="test.dir" location="test" />
   <property name="build.dir" location="bin" />
   <property name="lib.dir" location="lib" />
+  <property name="grammar.dir" location="src/gluon/contract" />
   
   <property name="soot.lib" location="${lib.dir}/soot-2.5.0.jar" />
   <property name="getopt.lib" location="${lib.dir}/java-getopt-1.0.14.jar" />
   
+  <taskdef name="sablecc" classname="org.sablecc.ant.taskdef.Sablecc">
+    <classpath>
+      <fileset file="tools/sablecc.jar" />
+    </classpath>
+  </taskdef>
+
   <target name="init">
     <!-- Create the time stamp -->
     <tstamp />
@@ -16,7 +23,12 @@
     <mkdir dir="${build.dir}" />
   </target>
   
-  <target name="compile" depends="init">
+  <target name="contractparser" depends="init">
+     <sablecc src="${grammar.dir}" includes="*.sablecc" 
+	      outputdirectory="${src.dir}" />
+  </target>
+
+  <target name="compile" depends="init,contractparser">
     <javac srcdir="${src.dir}" destdir="${build.dir}" debug="true"
            includeantruntime="false">
       <compilerarg value="-Xlint:unchecked" />
@@ -26,6 +38,10 @@
 	<pathelement location="${getopt.lib}" />
       </classpath>
     </javac>
+    <copy file="${grammar.dir}/lexer/lexer.dat"
+	  todir="${build.dir}/gluon/contract/lexer" />
+    <copy file="${grammar.dir}/parser/parser.dat"
+	  todir="${build.dir}/gluon/contract/parser" />
   </target>
 
   <target name="tests" depends="init">
@@ -39,6 +55,10 @@
     </delete>
     <delete dir="${src.class.dir}" />
     <delete dir="${build.dir}" />
+    <delete dir="${grammar.dir}/analysis" />
+    <delete dir="${grammar.dir}/lexer" />
+    <delete dir="${grammar.dir}/node" />
+    <delete dir="${grammar.dir}/parser" />
     <delete dir="sootOutput" />
   </target>
 </project>

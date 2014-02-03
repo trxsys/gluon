@@ -1,0 +1,40 @@
+Package gluon.contract;
+
+
+Helpers
+
+digit = ['0' .. '9'];
+alpha = [['a' .. 'z'] + ['A' .. 'Z']];
+extalpha = ['_' + alpha];
+
+
+Tokens
+
+lpar = '(';
+rpar = ')';
+
+method = (extalpha (extalpha | digit)*);
+
+alt = '|' | ' | ';
+concat = ' ';
+
+
+Productions
+
+clause {-> clause} = {alt}    [l]:clause alt [r]:factor {-> New clause.alt(l.clause,
+                                                                           r.clause) }
+                   | {factor} factor                    {-> factor.clause };
+
+factor {-> clause } = {concat} [l]:factor concat [r]:value {-> New clause.concat(l.clause,
+                                                                                 r.clause) }
+                    | {value}  value                       {-> value.clause };
+
+value {-> clause } = {method} method           {-> New clause.method(method)}
+                   | {paren}  lpar clause rpar {-> clause.clause };
+
+
+Abstract Syntax Tree
+
+clause = {alt} [l]:clause [r]:clause
+       | {concat} [l]:clause [r]:clause
+       | {method} method;
