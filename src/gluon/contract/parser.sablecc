@@ -1,3 +1,19 @@
+/* This file is part of Gluon.
+ *
+ * Gluon is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Gluon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 Package gluon.contract;
 
 
@@ -6,14 +22,17 @@ Helpers
 digit = ['0' .. '9'];
 alpha = [['a' .. 'z'] + ['A' .. 'Z']];
 extalpha = ['_' + alpha];
-
+name = (extalpha (extalpha | digit)*);
 
 Tokens
 
 lpar = '(';
 rpar = ')';
 
-method = (extalpha (extalpha | digit)*);
+id = name;
+
+eq = '=';
+comma = ',';
 
 alt = '|' | ' | ';
 concat = ' ';
@@ -21,20 +40,44 @@ concat = ' ';
 
 Productions
 
-clause {-> clause} = {alt}    [l]:clause alt [r]:factor {-> New clause.alt(l.clause,
-                                                                           r.clause) }
-                   | {factor} factor                    {-> factor.clause };
+clause {-> clause}
+  = {alt}    [l]:clause alt [r]:factor {-> New clause.alt(l.clause,r.clause) }
+  | {factor} factor                    {-> factor.clause }
+  ;
 
-factor {-> clause } = {concat} [l]:factor concat [r]:value {-> New clause.concat(l.clause,
-                                                                                 r.clause) }
-                    | {value}  value                       {-> value.clause };
+factor {-> clause }
+  = {concat} [l]:factor concat [r]:value {-> New clause.concat(l.clause,r.clause) }
+  | {value}  value                       {-> value.clause }
+  ;
 
-value {-> clause } = {method} method           {-> New clause.method(method)}
-                   | {paren}  lpar clause rpar {-> clause.clause };
+value {-> clause }
+  = {method} [method]:id args {-> New clause.method(method, [args.id]) }
+  | {paren}  lpar clause rpar {-> clause.clause }
+  ;
+
+/*
+ret { -> id }
+  = {ret}   [var]:id eq {-> var }
+  | {empty}
+  ;
+*/
+
+args {-> id* }
+  = {args} lpar arg_list rpar {-> [arg_list.id] }
+  | {emptypar} lpar rpar      {-> [] }
+  | {empty}                   {-> [] }
+  ;
+
+arg_list {-> id* }
+  = {arg} [var]:id comma [rest]:arg_list {-> [var, rest.id] }
+  | {var} [var]:id                       {-> [var] }
+  ;
 
 
 Abstract Syntax Tree
 
-clause = {alt} [l]:clause [r]:clause
-       | {concat} [l]:clause [r]:clause
-       | {method} method;
+clause
+  = {alt}    [l]:clause [r]:clause
+  | {concat} [l]:clause [r]:clause
+  | {method} [method]:id id*
+  ;

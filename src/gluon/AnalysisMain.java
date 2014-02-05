@@ -418,13 +418,13 @@ public class AnalysisMain
         {
             ast=parser.parse();
         }
-        catch (gluon.contract.parser.ParserException _)
+        catch (gluon.contract.parser.ParserException pe)
         {
-            Main.fatal("syntax error in contract.");
+            Main.fatal("syntax error in contract: "+clause+": "+pe.getMessage());
         }
-        catch (gluon.contract.lexer.LexerException _)
+        catch (gluon.contract.lexer.LexerException pe)
         {
-            Main.fatal("syntax error in contract.");
+            Main.fatal("syntax error in contract: "+clause+": "+pe.getMessage());
         }
         catch (java.io.IOException _)
         {
