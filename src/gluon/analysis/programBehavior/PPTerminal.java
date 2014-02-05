@@ -24,18 +24,26 @@ import soot.tagkit.LineNumberTag;
 import soot.tagkit.SourceFileTag;
 import soot.tagkit.Tag;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // Represents a call to the module under analysis
 public class PPTerminal
     extends gluon.grammar.Terminal
 {
     private final SootMethod method; // module method
     private final Unit codeUnit;
-
+    /* arguments is null if the arguments are to be ignored.
+     * An null argument represents an argument that should be ignored.
+     */
+    private List<String> arguments;
+    
     public PPTerminal(SootMethod m, Unit u)
     {
         super(m.getName());
         method=m;
         codeUnit=u;
+        arguments=null;
     }
 
     public PPTerminal(String s)
@@ -87,6 +95,19 @@ public class PPTerminal
         return source;
     }
 
+    public List<String> getArguments()
+    {
+        return arguments;
+    }
+
+    public void addArgument(String arg)
+    {
+        if (arguments == null)
+            arguments=new ArrayList<String>(16);
+
+        arguments.add(arg);
+    }
+
     @Override
     public boolean isEOI()
     {
@@ -115,7 +136,32 @@ public class PPTerminal
     @Override
     public PPTerminal clone()
     {
-        return method != null ? new PPTerminal(method,codeUnit)
+        PPTerminal clone=method != null ? new PPTerminal(method,codeUnit)
             : new PPTerminal(super.getName());
+
+        clone.arguments=new ArrayList<String>(arguments.size());
+        clone.arguments.addAll(arguments);
+
+        return clone;
+    }
+
+    @Override
+    public String toString()
+    {
+        String str=getName();
+
+        if (arguments != null)
+        {
+            int i=0;
+
+            str+="(";
+
+            for (String v: arguments)
+                str+=(i++ == 0 ? "" : ",")+(v == null ? "_" : v);
+
+            str+=")";
+        }
+
+        return str;
     }
 }

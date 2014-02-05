@@ -3,10 +3,10 @@ package test.simple.exampleargs;
 import test.common.Atomic;
 import test.common.Contract;
 
-@Contract(clauses=""//"a b c;"
-          //     +"c c;"
-          //                 +"c() c;"
-                 +"c(X);"
+@Contract(clauses="a b c;"
+                 +"c c;"
+                 +"c() c;"
+                 +"c(X) c;"
                  +"c(_) c;"
                  +"c(X,Y) c;"
                  +"c(X,_,Y) c() c(K,L);")

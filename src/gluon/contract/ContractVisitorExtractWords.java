@@ -89,8 +89,19 @@ public class ContractVisitorExtractWords
         List<List<Terminal>> w=new ArrayList<List<Terminal>>(1);
         List<Terminal> word=new ArrayList<Terminal>(1);
         String methodName=node.getMethod().getText();
+        PPTerminal term=new PPTerminal(methodName);
 
-        word.add(new PPTerminal(methodName));
+        for (TId varId: node.getId())
+        {
+            String var=varId.getText();
+
+            if (var.equals("_"))
+                term.addArgument(null);
+            else
+                term.addArgument(var);
+        }
+
+        word.add(term);
         w.add(word);
 
         words.put(node,w);
