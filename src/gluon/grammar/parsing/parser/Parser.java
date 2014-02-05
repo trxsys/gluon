@@ -292,13 +292,10 @@ public class Parser
 
             /* check if we have a lca */
             if (branches[i].getTerminalNum() == input.size()-1
-                && parserConf.lca == null)
+                && parserConf.lca == null
+                && action instanceof ParsingActionReduce)
             {
-                ParsingActionReduce red;
-
-                assert action instanceof ParsingActionReduce;
-
-                red=(ParsingActionReduce)action;
+                ParsingActionReduce red=(ParsingActionReduce)action;
 
                 branches[i].lca=red.getProduction().getHead();
 
