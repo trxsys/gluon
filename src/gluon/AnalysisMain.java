@@ -187,6 +187,11 @@ public class AnalysisMain
         return lca.equals(ptree.getLCA());
     }
 
+    private boolean argumentsMatch(List<Terminal> contractWord, List<Terminal> word)
+    {
+        return true; /* TODO */
+    }
+
     private int checkThreadWordParse(SootMethod thread,
                                      List<Terminal> word, 
                                      List<ParsingAction> actions,
@@ -204,6 +209,12 @@ public class AnalysisMain
 
         if (reported.contains(lcaMethod))
             return 1;
+
+        if (!argumentsMatch(null,null))
+        {
+            gluon.profiling.Profiling.inc("final:discarded-trees-args-not-match");
+            return 1;
+        }
 
         gluon.profiling.Profiling.inc("final:parse-trees");
 
@@ -348,34 +359,60 @@ public class AnalysisMain
         contractRaw=contract;
     }
 
-    public void loadRawContract()
+    private void loadRawContractClause(String clause)
+    {
+        Start ast;
+        ContractVisitorExtractWords visitorWords
+            =new ContractVisitorExtractWords();
+
+        ast=parseContract(clause);
+        ast.apply(visitorWords);
+
+        for (List<PPTerminal> word: visitorWords.getWords())
+        {
+            for (PPTerminal t: word)
+                if (module.declaresMethodByName(t.getName()))
+                {
+                    try
+                    {
+                        SootMethod m=module.getMethodByName(t.getName());
+
+                        if (t.getArguments() != null
+                            && t.getArguments().size() != m.getParameterCount())
+                            Main.fatal(t.getName()
+                                       +": wrong number of parameters!");
+                    }
+                    catch (Exception _)
+                    {
+                        Main.fatal(t.getName()+": ambiguous method!");
+                    }
+                }
+                else
+                    Main.fatal(t.getName()+": no such method!");
+            
+
+            List<Terminal> contractWord
+                =new ArrayList<Terminal>(word.size()+1);
+
+            contractWord.addAll(word);
+            contractWord.add(new gluon.grammar.EOITerminal());
+            
+            contract.add(contractWord);
+        }
+    }
+
+    private void loadRawContract()
     {
         contract=new LinkedList<List<Terminal>>();
 
         for (String clause: contractRaw.split(";"))
         {
-            Start ast;
-            ContractVisitorExtractWords visitorWords
-                =new ContractVisitorExtractWords();
-
             clause=clause.trim();
 
             if (clause.length() == 0)
                 continue;
 
-            ast=parseContract(clause);
-            ast.apply(visitorWords);
-
-            for (List<Terminal> word: visitorWords.getWords())
-            {
-                for (Terminal t: word)
-                    if (!module.declaresMethodByName(t.getName()))
-                        Main.fatal(t.getName()+": no such method!");
-
-                word.add(new gluon.grammar.EOITerminal());
-
-                contract.add(word);
-            }
+            loadRawContractClause(clause);
         }
 
         dprintln("contract: "+contract);

@@ -5,17 +5,13 @@ import test.common.Contract;
 
 @Contract(clauses="a b c;"
                  +"c c;"
-                 +"c() c;"
-                 +"c(X) c;"
-                 +"c(_) c;"
-                 +"c(X,Y) c;"
-                 +"c(X,_,Y) c() c(K,L);")
+                 +"c(X,Y) c(K,_);")
 class Module
 {
     public Module() { }
     public void a() { }
     public void b() { }
-    public void c() { }
+    public void c(int x, int y) { }
 }
 
 public class Main
@@ -24,7 +20,7 @@ public class Main
     
     private static void f()
     {
-        m.c();
+        m.c(0,1);
     }
     
     @Atomic

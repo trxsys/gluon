@@ -64,7 +64,6 @@ ret { -> id }
 
 args {-> id* }
   = {args} lpar arg_list rpar {-> [arg_list.id] }
-  | {emptypar} lpar rpar      {-> [] }
   | {empty}                   {-> [] }
   ;
 

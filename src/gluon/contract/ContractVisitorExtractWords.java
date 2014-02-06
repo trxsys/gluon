@@ -31,13 +31,13 @@ import java.util.ArrayList;
 public class ContractVisitorExtractWords
     implements Analysis
 {
-    private Map<Node,Collection<List<Terminal>>> words;
+    private Map<Node,Collection<List<PPTerminal>>> words;
     private Node root;
 
     public ContractVisitorExtractWords()
     {
         root=null;
-        words=new HashMap<Node,Collection<List<Terminal>>>(64);
+        words=new HashMap<Node,Collection<List<PPTerminal>>>(64);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ContractVisitorExtractWords
     @Override
     public void caseAAltClause(AAltClause node)
     {
-        List<List<Terminal>> w=new ArrayList<List<Terminal>>(16);
+        List<List<PPTerminal>> w=new ArrayList<List<PPTerminal>>(16);
 
         node.getL().apply(this);
         node.getR().apply(this);
@@ -64,15 +64,15 @@ public class ContractVisitorExtractWords
     @Override
     public void caseAConcatClause(AConcatClause node)
     {
-        List<List<Terminal>> w=new ArrayList<List<Terminal>>(16);
+        List<List<PPTerminal>> w=new ArrayList<List<PPTerminal>>(16);
 
         node.getL().apply(this);
         node.getR().apply(this);
 
-        for (List<Terminal> wl: words.get(node.getL()))
-            for (List<Terminal> wr: words.get(node.getR()))
+        for (List<PPTerminal> wl: words.get(node.getL()))
+            for (List<PPTerminal> wr: words.get(node.getR()))
             {
-                List<Terminal> wlr=new ArrayList<Terminal>(wl.size()+wr.size());
+                List<PPTerminal> wlr=new ArrayList<PPTerminal>(wl.size()+wr.size());
 
                 wlr.addAll(wl);
                 wlr.addAll(wr);
@@ -86,8 +86,8 @@ public class ContractVisitorExtractWords
     @Override
     public void caseAMethodClause(AMethodClause node)
     {
-        List<List<Terminal>> w=new ArrayList<List<Terminal>>(1);
-        List<Terminal> word=new ArrayList<Terminal>(1);
+        List<List<PPTerminal>> w=new ArrayList<List<PPTerminal>>(1);
+        List<PPTerminal> word=new ArrayList<PPTerminal>(1);
         String methodName=node.getMethod().getText();
         PPTerminal term=new PPTerminal(methodName);
 
@@ -107,7 +107,7 @@ public class ContractVisitorExtractWords
         words.put(node,w);
     }
 
-    public Collection<List<Terminal>> getWords()
+    public Collection<List<PPTerminal>> getWords()
     {
         assert root != null && words.containsKey(root);
 
