@@ -3,7 +3,8 @@ package test.simple.exampleargs;
 import test.common.Atomic;
 import test.common.Contract;
 
-@Contract(clauses="a b c(_,_);"
+@Contract(clauses="a b c(X,X);"
+                 +"a b c(X,Y);"
                  +"c c;"
                  +"c(X,Y) c(K,_);")
 class Module

@@ -108,6 +108,25 @@ public class PPTerminal
         arguments.add(arg);
     }
 
+    public String getFullName()
+    {
+        String str=getName();
+
+        if (arguments != null)
+        {
+            int i=0;
+
+            str+="(";
+
+            for (String v: arguments)
+                str+=(i++ == 0 ? "" : ",")+(v == null ? "_" : v);
+
+            str+=")";
+        }
+
+        return str;
+    }
+
     @Override
     public boolean isEOI()
     {
@@ -143,24 +162,5 @@ public class PPTerminal
         clone.arguments.addAll(arguments);
 
         return clone;
-    }
-
-    public String getFullName()
-    {
-        String str=getName();
-
-        if (arguments != null)
-        {
-            int i=0;
-
-            str+="(";
-
-            for (String v: arguments)
-                str+=(i++ == 0 ? "" : ",")+(v == null ? "_" : v);
-
-            str+=")";
-        }
-
-        return str;
     }
 }

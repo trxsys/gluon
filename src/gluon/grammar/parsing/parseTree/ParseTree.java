@@ -46,10 +46,15 @@ class ParseTreeNode
         parent=p;
     }
 
-
     public ParseTreeNode getParent()
     {
         return parent;
+    }
+
+
+    public void setElem(LexicalElement e)
+    {
+        elem=e;
     }
 
     public LexicalElement getElem()
@@ -97,6 +102,17 @@ public class ParseTree
                 {
                     ParseTreeNode node=stack.pop();
                     node.setParent(parent);
+
+                    /* update leaf with true terminal */
+                    if (node.getElem() instanceof Terminal)
+                    {
+                        LexicalElement nodeTerm=red.getProduction()
+                                                   .getBody().get(len-1-i);
+
+                        assert nodeTerm instanceof Terminal;
+
+                        node.setElem(nodeTerm);
+                    }
 
                     if (DEBUG)
                     {

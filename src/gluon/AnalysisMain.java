@@ -21,7 +21,11 @@ import soot.SceneTransformer;
 import soot.SootMethod;
 import soot.SootClass;
 import soot.PointsToAnalysis;
+import soot.Value;
+import soot.Unit;
 
+import soot.jimple.InvokeExpr;
+import soot.jimple.InvokeStmt;
 import soot.jimple.spark.pag.AllocNode;
 
 import soot.tagkit.AnnotationTag;
@@ -52,10 +56,12 @@ import gluon.contract.node.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
 
 import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.HashMap;
 
 import java.io.PushbackReader;
 import java.io.StringReader;
@@ -129,9 +135,12 @@ public class AnalysisMain
     {
         String r="";
 
-        for (int i=0; i < word.size()-1; i++)
+        for (int i=0; i < word.size(); i++)
         {
             Terminal term=word.get(i);
+
+            if (term instanceof gluon.grammar.EOITerminal)
+                break;
 
             assert term instanceof PPTerminal;
 
@@ -160,26 +169,22 @@ public class AnalysisMain
         return relevantThreads;
     }
 
-    private List<PPTerminal> getCodeUnits(List<ParsingAction> actions,
-                                          List<Terminal> word)
+    private List<PPTerminal> getParsingTerminals(List<Terminal> word,
+                                                 List<ParsingAction> actions)
     {
-        ArrayList<PPTerminal> terms=new ArrayList<PPTerminal>(word.size()-1);
+        ParseTree tree=new ParseTree(word,actions);
+        List<PPTerminal> ppterms;
+        List<Terminal> terms;
 
-        for (ParsingAction a: actions)
-            if (a instanceof ParsingActionReduce)
-            {
-                Production red=((ParsingActionReduce)a).getProduction();
+        tree.buildTree();
 
-                for (LexicalElement e: red.getBody())
-                    if (e instanceof PPTerminal)
-                        terms.add((PPTerminal)e);
-            }
-        
-        java.util.Collections.reverse(terms);
+        terms=tree.getTerminals();
+        ppterms=new ArrayList<PPTerminal>(terms.size());
 
-        assert terms.size() == word.size()-1;
+        for (Terminal t: terms)
+            ppterms.add((PPTerminal)t);
 
-        return terms;
+        return ppterms;
     }
 
     private boolean assertLCASanityCheck(List<Terminal> word, 
@@ -198,16 +203,66 @@ public class AnalysisMain
             return true;
     }
 
+    private int tryUnify(Map<String,Value> unif,
+                         String contractVar,
+                         Value v)
+    {
+        if (contractVar == null)
+            return 0;
+
+        if (unif.containsKey(contractVar))
+            return unif.get(contractVar).equivTo(v) ? 0 : -1;
+
+        unif.put(contractVar,v);
+        
+        return 0;
+    }
+
     private boolean argumentsMatch(List<Terminal> word, List<ParsingAction> actions)
     {
-        ParseTree tree=new ParseTree(word,actions);
-        List<Terminal> parsedWord;
+        List<PPTerminal> parsedWord;
+        /* contract variable -> program value */
+        Map<String,Value> unif=new HashMap<String,Value>();
 
-        tree.buildTree();
+        parsedWord=getParsingTerminals(word,actions);
 
-        parsedWord=tree.getTerminals();
+        assert parsedWord.size() == word.size()-1; /* -1 because of the '$' */
 
-        /* TODO */
+        for (int i=0; i < parsedWord.size(); i++)
+        {
+            PPTerminal termC=(PPTerminal)word.get(i);
+            PPTerminal termP=parsedWord.get(i);
+            List<String> argumentsC;
+            Unit call;
+
+            assert termC.equals(termP); /* equals ignores arguments */
+
+            argumentsC=termC.getArguments();
+
+            if (argumentsC == null)
+                continue;
+
+            call=termP.getCodeUnit();
+
+            for (int j=0; j < argumentsC.size(); j++)
+            {
+                
+                String contractVar=argumentsC.get(j);
+                Value v=null;
+
+                if (call instanceof InvokeStmt)
+                    v=((InvokeStmt)call).getInvokeExpr().getArg(j);
+                else if (call instanceof InvokeExpr)
+                    v=((InvokeExpr)call).getArg(j);
+                else
+                    assert false : "which type of invoke is this?";
+
+                if (tryUnify(unif,contractVar,v) != 0)
+                    return false;
+
+                dprintln(contractVar+" <-> "+v);
+            }
+        }
 
         return true;
     }
@@ -249,7 +304,7 @@ public class AnalysisMain
 
         System.out.print("      Calls Location:");
 
-        for (PPTerminal t: getCodeUnits(actions,word))
+        for (PPTerminal t: getParsingTerminals(word,actions))
         {
             int linenum=t.getLineNumber();
             String source=t.getSourceFile();
