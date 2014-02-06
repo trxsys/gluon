@@ -130,7 +130,13 @@ public class AnalysisMain
         String r="";
 
         for (int i=0; i < word.size()-1; i++)
-            r+=(i > 0 ? " " : "")+word.get(i).toString();
+        {
+            Terminal term=word.get(i);
+
+            assert term instanceof PPTerminal;
+
+            r+=(i > 0 ? " " : "")+((PPTerminal)term).getFullName();
+        }
 
         return r;
     }
@@ -180,16 +186,30 @@ public class AnalysisMain
                                          List<ParsingAction> actions,
                                          NonTerminal lca)
     {
-        ParseTree ptree=new ParseTree();
+        if (DEBUG)
+        {
+            ParseTree ptree=new ParseTree(word,actions);
 
-        ptree.buildTree(word,actions);
-
-        return lca.equals(ptree.getLCA());
+            ptree.buildTree();
+        
+            return lca.equals(ptree.getLCA());
+        }
+        else
+            return true;
     }
 
-    private boolean argumentsMatch(List<Terminal> contractWord, List<Terminal> word)
+    private boolean argumentsMatch(List<Terminal> word, List<ParsingAction> actions)
     {
-        return true; /* TODO */
+        ParseTree tree=new ParseTree(word,actions);
+        List<Terminal> parsedWord;
+
+        tree.buildTree();
+
+        parsedWord=tree.getTerminals();
+
+        /* TODO */
+
+        return true;
     }
 
     private int checkThreadWordParse(SootMethod thread,
@@ -210,7 +230,7 @@ public class AnalysisMain
         if (reported.contains(lcaMethod))
             return 1;
 
-        if (!argumentsMatch(null,null))
+        if (!argumentsMatch(word,actions))
         {
             gluon.profiling.Profiling.inc("final:discarded-trees-args-not-match");
             return 1;

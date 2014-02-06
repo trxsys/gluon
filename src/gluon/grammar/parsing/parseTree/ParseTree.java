@@ -69,13 +69,16 @@ public class ParseTree
     private static final boolean DEBUG=false;
 
     private List<ParseTreeNode> leafs;
-    
-    public ParseTree()
+    private final List<Terminal> word;
+    private final List<ParsingAction> actions;
+
+    public ParseTree(List<Terminal> word, List<ParsingAction> actions)
     {
-        leafs=null;
+        this.word=word;
+        this.actions=actions;
     }
 
-    public void buildTree(List<Terminal> word, List<ParsingAction> actions)
+    public void buildTree()
     {
         Stack<ParseTreeNode> stack=new Stack<ParseTreeNode>();
         int pos=0;
@@ -115,6 +118,23 @@ public class ParseTree
             }
             else if (a instanceof ParsingActionAccept)
                 assert pos == word.size()-1; /* -1 because of $ */
+    }
+
+    public List<Terminal> getTerminals()
+    {
+        List<Terminal> terminals=new ArrayList<Terminal>(leafs.size());
+
+        assert leafs != null;
+
+        for (ParseTreeNode node: leafs)
+        {
+            assert node.getElem() instanceof Terminal;
+
+            terminals.add((Terminal)node.getElem());
+        }
+
+        return terminals;
+
     }
 
     public NonTerminal getLCA()

@@ -145,8 +145,7 @@ public class PPTerminal
         return clone;
     }
 
-    @Override
-    public String toString()
+    public String getFullName()
     {
         String str=getName();
 
