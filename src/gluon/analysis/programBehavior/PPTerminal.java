@@ -33,10 +33,12 @@ public class PPTerminal
 {
     private final SootMethod method; // module method
     private final Unit codeUnit;
+
     /* arguments is null if the arguments are to be ignored.
      * An null argument represents an argument that should be ignored.
      */
     private List<String> arguments;
+    private String ret; /* null if not used */
     
     public PPTerminal(SootMethod m, Unit u)
     {
@@ -44,6 +46,7 @@ public class PPTerminal
         method=m;
         codeUnit=u;
         arguments=null;
+        ret=null;
     }
 
     public PPTerminal(String s)
@@ -51,6 +54,8 @@ public class PPTerminal
         super(s);
         method=null;
         codeUnit=null;
+        arguments=null;
+        ret=null;
     }
 
     public Unit getCodeUnit()
@@ -108,6 +113,16 @@ public class PPTerminal
         arguments.add(arg);
     }
 
+    public String getReturn()
+    {
+        return ret;
+    }
+
+    public void setReturn(String r)
+    {
+        ret=r;
+    }
+
     public String getFullName()
     {
         String str=getName();
@@ -124,7 +139,7 @@ public class PPTerminal
             str+=")";
         }
 
-        return str;
+        return (ret != null ? ret+"=" : "")+str;
     }
 
     @Override
@@ -160,6 +175,8 @@ public class PPTerminal
 
         clone.arguments=new ArrayList<String>(arguments.size());
         clone.arguments.addAll(arguments);
+
+        clone.ret=ret;
 
         return clone;
     }

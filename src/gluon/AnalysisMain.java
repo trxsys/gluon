@@ -24,6 +24,8 @@ import soot.PointsToAnalysis;
 import soot.Value;
 import soot.Unit;
 
+import soot.jimple.Stmt;
+import soot.jimple.AssignStmt;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InvokeStmt;
 import soot.jimple.spark.pag.AllocNode;
@@ -211,7 +213,12 @@ public class AnalysisMain
             return 0;
 
         if (unif.containsKey(contractVar))
+        {
+            if (v == null || unif.get(contractVar) == null)
+                return unif.get(contractVar) == v ? 0 : -1;
+
             return unif.get(contractVar).equivTo(v) ? 0 : -1;
+        }
 
         unif.put(contractVar,v);
         
@@ -233,36 +240,72 @@ public class AnalysisMain
             PPTerminal termC=(PPTerminal)word.get(i);
             PPTerminal termP=parsedWord.get(i);
             List<String> argumentsC;
-            Unit call;
+            Unit unit;
 
             assert termC.equals(termP); /* equals ignores arguments */
 
+            // System.out.println("-> "+termC);
+
             argumentsC=termC.getArguments();
 
-            if (argumentsC == null)
-                continue;
+            unit=termP.getCodeUnit();
 
-            call=termP.getCodeUnit();
-
-            for (int j=0; j < argumentsC.size(); j++)
+            if (termC.getReturn() != null)
             {
-                
+                String contractVar=termC.getReturn();
+
+                if (unit instanceof AssignStmt)
+                {
+                    Value v=((AssignStmt)unit).getLeftOp();
+                    
+                    // System.out.println("* unify "+contractVar+" <-> "+v);
+                    
+                    if (tryUnify(unif,contractVar,v) != 0)
+                        return false;
+                    
+                    //System.out.println("  OK");
+                    
+                    dprintln("      Unifyed "+contractVar+" <-> "+v);
+                }
+                else
+                {
+                    /* If control reaches here then the contract does specify a
+                     * return value but the word in the client program does not
+                     * assign the return value to a variable.  In this case
+                     * we don't fail immediatly because it is possible that the
+                     * variable is not used elsewhere.  So we unify the variable
+                     * with null.  That variable will no be able to be unified
+                     * with anything but null values.
+                     */
+
+                    if (tryUnify(unif,contractVar,null) != 0)
+                        return false;
+
+                }
+            }
+
+            // System.out.println(call);
+
+            for (int j=0; argumentsC != null && j < argumentsC.size(); j++)
+            {
+                InvokeExpr call=((Stmt)unit).getInvokeExpr();
                 String contractVar=argumentsC.get(j);
                 Value v=null;
 
-                if (call instanceof InvokeStmt)
-                    v=((InvokeStmt)call).getInvokeExpr().getArg(j);
-                else if (call instanceof InvokeExpr)
-                    v=((InvokeExpr)call).getArg(j);
-                else
-                    assert false : "which type of invoke is this?";
+                v=call.getArg(j);
+
+                // System.out.println("unify "+contractVar+" <-> "+v);
 
                 if (tryUnify(unif,contractVar,v) != 0)
                     return false;
 
-                dprintln(contractVar+" <-> "+v);
+                // System.out.println("  OK");
+
+                dprintln("      Unifyed "+contractVar+" <-> "+v);
             }
         }
+
+        // System.out.println("unification accepted");
 
         return true;
     }

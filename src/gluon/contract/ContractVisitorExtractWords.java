@@ -101,6 +101,9 @@ public class ContractVisitorExtractWords
                 term.addArgument(var);
         }
 
+        if (node.getRet() != null)
+            term.setReturn(node.getRet().getText());
+
         word.add(term);
         w.add(word);
 

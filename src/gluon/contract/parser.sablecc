@@ -51,16 +51,14 @@ factor {-> clause }
   ;
 
 value {-> clause }
-  = {method} [method]:id args {-> New clause.method(method, [args.id]) }
-  | {paren}  lpar clause rpar {-> clause.clause }
+  = {method} ret [method]:id args {-> New clause.method(ret.id,method,[args.id]) }
+  | {paren}  lpar clause rpar     {-> clause.clause }
   ;
 
-/*
-ret { -> id }
+ret { -> id? }
   = {ret}   [var]:id eq {-> var }
-  | {empty}
+  | {empty}             {-> Null }
   ;
-*/
 
 args {-> id* }
   = {args} lpar arg_list rpar {-> [arg_list.id] }
@@ -78,5 +76,5 @@ Abstract Syntax Tree
 clause
   = {alt}    [l]:clause [r]:clause
   | {concat} [l]:clause [r]:clause
-  | {method} [method]:id id*
+  | {method} [ret]:id? [method]:id id*
   ;
