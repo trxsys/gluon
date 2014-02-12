@@ -23,7 +23,6 @@ import soot.SootClass;
 import soot.PointsToAnalysis;
 import soot.Value;
 import soot.Unit;
-import soot.Local;
 
 import soot.jimple.Stmt;
 import soot.jimple.AssignStmt;
@@ -41,6 +40,8 @@ import gluon.analysis.programBehavior.ProgramBehaviorAnalysis;
 import gluon.analysis.programBehavior.PPTerminal;
 import gluon.analysis.programBehavior.PPNonTerminal;
 import gluon.analysis.atomicMethods.AtomicMethods;
+import gluon.analysis.valueEquivalence.ValueEquivAnalysis;
+import gluon.analysis.valueEquivalence.ValueM;
 
 import gluon.grammar.Cfg;
 import gluon.grammar.LexicalElement;
@@ -206,54 +207,26 @@ public class AnalysisMain
             return true;
     }
 
-    private boolean equivTo(Value u, Value v)
-    {
-        if (u == null || v == null)
-            return u == v;
-
-        if (u.equivTo(v))
-            return true;
-
-        /* If u and v can point to the same object they are considered equivalent */
-        if (u instanceof Local
-            && v instanceof Local)
-        {
-            Local ul=(Local)u;
-            Local vl=(Local)v;
-
-            for (AllocNode a: PointsToInformation.getReachableAllocSites(ul))
-                for (AllocNode b: PointsToInformation.getReachableAllocSites(vl))
-                    if (a.equals(b))
-                        return true;
-        }
-
-        /* BUG: access to field with primitive types are always considered
-         *      non-equivalent.
-         */
-
-        return false;
-    }
-
-    private int tryUnify(Map<String,Value> unif,
-                         String contractVar,
-                         Value v)
+    private int tryUnify(Map<String,ValueM> unif, String contractVar, ValueM v,
+                         ValueEquivAnalysis vEquiv)
     {
         if (contractVar == null)
             return 0;
 
         if (unif.containsKey(contractVar))
-            return equivTo(unif.get(contractVar),v) ? 0 : -1;
+            return vEquiv.equivTo(unif.get(contractVar),v) ? 0 : -1;
 
         unif.put(contractVar,v);
         
         return 0;
     }
 
-    private boolean argumentsMatch(List<Terminal> word, List<ParsingAction> actions)
+    private boolean argumentsMatch(List<Terminal> word, List<ParsingAction> actions,
+                                   ValueEquivAnalysis vEquiv)
     {
         List<PPTerminal> parsedWord;
         /* contract variable -> program value */
-        Map<String,Value> unif=new HashMap<String,Value>();
+        Map<String,ValueM> unif=new HashMap<String,ValueM>();
 
         parsedWord=getParsingTerminals(word,actions);
 
@@ -263,10 +236,12 @@ public class AnalysisMain
         {
             PPTerminal termC=(PPTerminal)word.get(i);
             PPTerminal termP=parsedWord.get(i);
+            SootMethod method=termP.getCodeMethod();
             List<String> argumentsC;
             Unit unit;
 
-            assert termC.equals(termP); /* equals ignores arguments */
+            assert termC.equals(termP); /* equals ignores arguments and return */
+            assert method != null;
 
             argumentsC=termC.getArguments();
 
@@ -278,11 +253,11 @@ public class AnalysisMain
 
                 if (unit instanceof AssignStmt)
                 {
-                    Value v=((AssignStmt)unit).getLeftOp();
+                    ValueM v=new ValueM(method,((AssignStmt)unit).getLeftOp());
                     
                     dprintln("      Trying unification "+contractVar+" <-> "+v);
 
-                    if (tryUnify(unif,contractVar,v) != 0)
+                    if (tryUnify(unif,contractVar,v,vEquiv) != 0)
                         return false;
                 }
                 else
@@ -296,23 +271,22 @@ public class AnalysisMain
                      * with anything but null values.
                      */
 
-                    if (tryUnify(unif,contractVar,null) != 0)
+                    if (tryUnify(unif,contractVar,null,vEquiv) != 0)
                         return false;
                 }
             }
-
 
             for (int j=0; argumentsC != null && j < argumentsC.size(); j++)
             {
                 InvokeExpr call=((Stmt)unit).getInvokeExpr();
                 String contractVar=argumentsC.get(j);
-                Value v=null;
+                ValueM v;
 
-                v=call.getArg(j);
+                v=new ValueM(method,call.getArg(j));
 
                 dprintln("      Trying unification "+contractVar+" <-> "+v);
 
-                if (tryUnify(unif,contractVar,v) != 0)
+                if (tryUnify(unif,contractVar,v,vEquiv) != 0)
                     return false;
             }
         }
@@ -324,7 +298,8 @@ public class AnalysisMain
                                      List<Terminal> word, 
                                      List<ParsingAction> actions,
                                      Set<SootMethod> reported,
-                                     NonTerminal lca)
+                                     NonTerminal lca,
+                                     ValueEquivAnalysis vEquiv)
     {
         SootMethod lcaMethod;
         boolean atomic;
@@ -338,7 +313,7 @@ public class AnalysisMain
         if (reported.contains(lcaMethod))
             return 1;
 
-        if (!argumentsMatch(word,actions))
+        if (!argumentsMatch(word,actions,vEquiv))
         {
             gluon.profiling.Profiling.inc("final:discarded-trees-args-not-match");
             return 1;
@@ -373,7 +348,8 @@ public class AnalysisMain
     }
     
     private void checkThreadWord(final SootMethod thread,
-                                 final List<Terminal> word)
+                                 final List<Terminal> word,
+                                 final ValueEquivAnalysis vEquiv)
     {
         final Set<SootMethod> reported=new HashSet<SootMethod>();
         Collection<AllocNode> moduleAllocSites;
@@ -399,7 +375,8 @@ public class AnalysisMain
                         int ret;
                         
                         gluon.profiling.Timer.stop("parsing");
-                        ret=checkThreadWordParse(thread,word,actions,reported,lca);
+                        ret=checkThreadWordParse(thread,word,actions,reported,
+                                                 lca,vEquiv);
                         gluon.profiling.Timer.start("parsing");
                         
                         if (ret <= 0)
@@ -455,13 +432,15 @@ public class AnalysisMain
     
     private void checkThread(SootMethod thread)
     {
+        ValueEquivAnalysis vEquiv=new ValueEquivAnalysis(thread);
+
         System.out.println("Checking thread "
                            +thread.getDeclaringClass().getShortName()
                            +"."+thread.getName()+"():");
         System.out.println();
         
         for (List<Terminal> word: contract)
-            checkThreadWord(thread,word);
+            checkThreadWord(thread,word,vEquiv);
     }
     
     private void runMethodAtomicityAnalysis(Collection<SootMethod> threads)
