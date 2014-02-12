@@ -23,6 +23,7 @@ import soot.SootClass;
 import soot.PointsToAnalysis;
 import soot.Value;
 import soot.Unit;
+import soot.Local;
 
 import soot.jimple.Stmt;
 import soot.jimple.AssignStmt;
@@ -205,6 +206,34 @@ public class AnalysisMain
             return true;
     }
 
+    private boolean equivTo(Value u, Value v)
+    {
+        if (u == null || v == null)
+            return u == v;
+
+        if (u.equivTo(v))
+            return true;
+
+        /* If u and v can point to the same object they are considered equivalent */
+        if (u instanceof Local
+            && v instanceof Local)
+        {
+            Local ul=(Local)u;
+            Local vl=(Local)v;
+
+            for (AllocNode a: PointsToInformation.getReachableAllocSites(ul))
+                for (AllocNode b: PointsToInformation.getReachableAllocSites(vl))
+                    if (a.equals(b))
+                        return true;
+        }
+
+        /* BUG: access to field with primitive types are always considered
+         *      non-equivalent.
+         */
+
+        return false;
+    }
+
     private int tryUnify(Map<String,Value> unif,
                          String contractVar,
                          Value v)
@@ -213,12 +242,7 @@ public class AnalysisMain
             return 0;
 
         if (unif.containsKey(contractVar))
-        {
-            if (v == null || unif.get(contractVar) == null)
-                return unif.get(contractVar) == v ? 0 : -1;
-
-            return unif.get(contractVar).equivTo(v) ? 0 : -1;
-        }
+            return equivTo(unif.get(contractVar),v) ? 0 : -1;
 
         unif.put(contractVar,v);
         
@@ -244,8 +268,6 @@ public class AnalysisMain
 
             assert termC.equals(termP); /* equals ignores arguments */
 
-            // System.out.println("-> "+termC);
-
             argumentsC=termC.getArguments();
 
             unit=termP.getCodeUnit();
@@ -258,14 +280,10 @@ public class AnalysisMain
                 {
                     Value v=((AssignStmt)unit).getLeftOp();
                     
-                    // System.out.println("* unify "+contractVar+" <-> "+v);
-                    
+                    dprintln("      Trying unification "+contractVar+" <-> "+v);
+
                     if (tryUnify(unif,contractVar,v) != 0)
                         return false;
-                    
-                    //System.out.println("  OK");
-                    
-                    dprintln("      Unifyed "+contractVar+" <-> "+v);
                 }
                 else
                 {
@@ -280,11 +298,9 @@ public class AnalysisMain
 
                     if (tryUnify(unif,contractVar,null) != 0)
                         return false;
-
                 }
             }
 
-            // System.out.println(call);
 
             for (int j=0; argumentsC != null && j < argumentsC.size(); j++)
             {
@@ -294,18 +310,12 @@ public class AnalysisMain
 
                 v=call.getArg(j);
 
-                // System.out.println("unify "+contractVar+" <-> "+v);
+                dprintln("      Trying unification "+contractVar+" <-> "+v);
 
                 if (tryUnify(unif,contractVar,v) != 0)
                     return false;
-
-                // System.out.println("  OK");
-
-                dprintln("      Unifyed "+contractVar+" <-> "+v);
             }
         }
-
-        // System.out.println("unification accepted");
 
         return true;
     }
