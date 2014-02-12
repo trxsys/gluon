@@ -1,14 +1,12 @@
 AccountTest
         setBalance() getBalance()
-        getBalance() setBalance()
-        update() getBalance()
-        getBalance() update()
+        X=getBalance() setBalance(X) // related unification
 
 AllocateVector
-        getFreeBlockIndex() markAsAllocatedBlock()
+        X=getFreeBlockIndex() markAsAllocatedBlock(X)
 
 ArithmeticDatabase
-        X=get_max_key() insert(X,_)
+        X=get_max_key() insert(X,_) // related unification
         iterator() get_max_key()
 
 ConnectionTest
@@ -38,14 +36,13 @@ Knight
         get_solution(X)  set_solution(X,_)
 
 Local
-        getValue() setValue()
+        X=getValue() setValue(X) // related unification
 
 MyStringBuffer
-        X=length() getChars(_,X,_,_,_)
-        X=length() getChars(_,_,_,X,_)
+        X=length() getChars(_,X,_,_)
 
 NASA
-        getAchieved(X) getValue(X)
+        setValue(_,X) setAchieved(_,X)
 
 Store
         hasOrders() treatOrder()

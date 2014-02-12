@@ -5,7 +5,7 @@ import java.awt.Point;
 import test.common.Atomic;
 import test.common.Contract;
 
-@Contract(clauses = "get_solution set_solution;")
+@Contract(clauses = "get_solution(X) set_solution(X,_);")
 public class KnightMoves
 {
 	public static final int WIDTH=8;

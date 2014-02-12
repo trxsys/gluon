@@ -1,7 +1,7 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
 Checking thread Main.main():
 
-  Verifying word length getChars:
+  Verifying word X=length getChars(_,X,_,_):
 
       Method: Main.append()
       Calls Location: MyStringBuffer.java:15 MyStringBuffer.java:21
@@ -9,12 +9,12 @@ Checking thread Main.main():
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.001s
-                             total-parsing      0.002s
-                                     total     37.311s
+             analysis-behavior-grammar-opt      0.002s
+                             total-parsing      0.003s
+                                     total     33.476s
                        build-parsing-table      0.004s
-                                 soot-init     37.289s
-                         analysis-behavior      0.005s
+                                 soot-init     33.446s
+                         analysis-behavior      0.004s
 
 Profiling Vars:
           parsing-table-state-number-total     22

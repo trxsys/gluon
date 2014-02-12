@@ -20,22 +20,22 @@ Checking thread GUI.run():
   Verifying word resetSocket resetCounter:
 
       Method: GUI.disconnect()
-      Calls Location: Connection.java:34 Connection.java:33
+      Calls Location: Connection.java:33 Connection.java:34
       Atomic: NO
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.004s
-                             total-parsing      0.011s
-                                     total     37.480s
-                       build-parsing-table      0.043s
-                                 soot-init     37.394s
-                         analysis-behavior      0.017s
+             analysis-behavior-grammar-opt      0.003s
+                             total-parsing      0.013s
+                                     total     35.595s
+                       build-parsing-table      0.053s
+                                 soot-init     35.484s
+                         analysis-behavior      0.022s
 
 Profiling Vars:
           parsing-table-state-number-total    294
                             parse-branches    302
-                                 cfg-nodes    354
+                                 cfg-nodes    348
                                parse-trees      2
                          alloc-sites-total      8
                  grammar-productions-total    714

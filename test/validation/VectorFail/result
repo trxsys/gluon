@@ -25,15 +25,15 @@ Checking thread MyThread.run():
 Run Time:
              analysis-behavior-grammar-opt      0.004s
                              total-parsing      0.004s
-                                     total     36.465s
-                       build-parsing-table      0.026s
-                                 soot-init     36.408s
-                         analysis-behavior      0.013s
+                                     total     34.322s
+                       build-parsing-table      0.028s
+                                 soot-init     34.256s
+                         analysis-behavior      0.012s
 
 Profiling Vars:
           parsing-table-state-number-total    174
                             parse-branches     82
-                                 cfg-nodes    244
+                                 cfg-nodes    236
                                parse-trees      1
                          alloc-sites-total      8
                  grammar-productions-total    500

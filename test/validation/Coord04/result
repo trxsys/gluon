@@ -14,7 +14,7 @@ Checking thread CoordMain.run():
   Verifying word resetX resetY:
 
       Method: CoordMain.reset()
-      Calls Location: Coord.java:25 Coord.java:23
+      Calls Location: Coord.java:23 Coord.java:25
       Atomic: NO
 
   Verifying word resetY resetX:
@@ -25,10 +25,10 @@ Checking thread CoordMain.run():
 Run Time:
              analysis-behavior-grammar-opt      0.002s
                              total-parsing      0.002s
-                                     total     36.704s
-                       build-parsing-table      0.016s
-                                 soot-init     36.665s
-                         analysis-behavior      0.007s
+                                     total     36.515s
+                       build-parsing-table      0.017s
+                                 soot-init     36.464s
+                         analysis-behavior      0.009s
 
 Profiling Vars:
           parsing-table-state-number-total    102
