@@ -179,7 +179,7 @@ public class Main
         Options.v().set_debug_resolver(false);
         Options.v().set_show_exception_dests(false);
         
-        Options.v().set_output_format(Options.output_format_shimple);
+        Options.v().set_output_format(Options.output_format_none);
 
         Options.v().set_allow_phantom_refs(true);
         Options.v().set_keep_line_number(true);

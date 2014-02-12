@@ -33,6 +33,7 @@ public class PPTerminal
 {
     private final SootMethod method; // module method
     private final Unit codeUnit;
+    private final SootMethod codeUnitMethod;
 
     /* arguments is null if the arguments are to be ignored.
      * An null argument represents an argument that should be ignored.
@@ -40,13 +41,14 @@ public class PPTerminal
     private List<String> arguments;
     private String ret; /* null if not used */
     
-    public PPTerminal(SootMethod m, Unit u)
+    public PPTerminal(SootMethod m, Unit u, SootMethod cUnitMethod)
     {
         super(m.getName());
         method=m;
         codeUnit=u;
         arguments=null;
         ret=null;
+        codeUnitMethod=cUnitMethod;
     }
 
     public PPTerminal(String s)
@@ -56,6 +58,7 @@ public class PPTerminal
         codeUnit=null;
         arguments=null;
         ret=null;
+        codeUnitMethod=null;
     }
 
     public Unit getCodeUnit()
@@ -65,7 +68,12 @@ public class PPTerminal
 
     public SootMethod getCodeMethod()
     {
-        return method;
+        return codeUnitMethod;
+    }
+
+    public SootClass getCodeClass()
+    {
+        return getCodeMethod().getDeclaringClass();
     }
 
     public int getLineNumber()
@@ -79,11 +87,6 @@ public class PPTerminal
                 linenum=lineTag.getLineNumber();
 
         return linenum;
-    }
-
-    public SootClass getCodeClass()
-    {
-        return getCodeMethod().getDeclaringClass();
     }
 
     public String getSourceFile()
@@ -170,7 +173,7 @@ public class PPTerminal
     @Override
     public PPTerminal clone()
     {
-        PPTerminal clone=method != null ? new PPTerminal(method,codeUnit)
+        PPTerminal clone=method != null ? new PPTerminal(method,codeUnit,codeUnitMethod)
             : new PPTerminal(super.getName());
 
         clone.arguments=new ArrayList<String>(arguments.size());

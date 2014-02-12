@@ -247,7 +247,7 @@ public class ProgramBehaviorAnalysis
                 break;
             }
             case SOMETIMES: addProdSkipPrefix=true; /* fall through */
-            case ALWAYS: prodBodyPrefix=new PPTerminal(calledMethod,unit); break;
+            case ALWAYS: prodBodyPrefix=new PPTerminal(calledMethod,unit,method); break;
             }
         }
         
