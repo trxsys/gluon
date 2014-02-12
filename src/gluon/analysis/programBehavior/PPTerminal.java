@@ -24,6 +24,9 @@ import soot.tagkit.LineNumberTag;
 import soot.tagkit.SourceFileTag;
 import soot.tagkit.Tag;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // Represents a call to the module under analysis
 public class PPTerminal
     extends gluon.grammar.Terminal
@@ -31,11 +34,19 @@ public class PPTerminal
     private final SootMethod method; // module method
     private final Unit codeUnit;
 
+    /* arguments is null if the arguments are to be ignored.
+     * An null argument represents an argument that should be ignored.
+     */
+    private List<String> arguments;
+    private String ret; /* null if not used */
+    
     public PPTerminal(SootMethod m, Unit u)
     {
         super(m.getName());
         method=m;
         codeUnit=u;
+        arguments=null;
+        ret=null;
     }
 
     public PPTerminal(String s)
@@ -43,6 +54,8 @@ public class PPTerminal
         super(s);
         method=null;
         codeUnit=null;
+        arguments=null;
+        ret=null;
     }
 
     public Unit getCodeUnit()
@@ -87,6 +100,48 @@ public class PPTerminal
         return source;
     }
 
+    public List<String> getArguments()
+    {
+        return arguments;
+    }
+
+    public void addArgument(String arg)
+    {
+        if (arguments == null)
+            arguments=new ArrayList<String>(16);
+
+        arguments.add(arg);
+    }
+
+    public String getReturn()
+    {
+        return ret;
+    }
+
+    public void setReturn(String r)
+    {
+        ret=r;
+    }
+
+    public String getFullName()
+    {
+        String str=getName();
+
+        if (arguments != null)
+        {
+            int i=0;
+
+            str+="(";
+
+            for (String v: arguments)
+                str+=(i++ == 0 ? "" : ",")+(v == null ? "_" : v);
+
+            str+=")";
+        }
+
+        return (ret != null ? ret+"=" : "")+str;
+    }
+
     @Override
     public boolean isEOI()
     {
@@ -115,7 +170,14 @@ public class PPTerminal
     @Override
     public PPTerminal clone()
     {
-        return method != null ? new PPTerminal(method,codeUnit)
+        PPTerminal clone=method != null ? new PPTerminal(method,codeUnit)
             : new PPTerminal(super.getName());
+
+        clone.arguments=new ArrayList<String>(arguments.size());
+        clone.arguments.addAll(arguments);
+
+        clone.ret=ret;
+
+        return clone;
     }
 }

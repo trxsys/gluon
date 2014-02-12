@@ -1,13 +1,13 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
 Checking thread Main.main():
 
-  Verifying word get_solution set_solution:
+  Verifying word get_solution(X) set_solution(X,_):
 
     No occurrences
 
 Checking thread Solver.run():
 
-  Verifying word get_solution set_solution:
+  Verifying word get_solution(X) set_solution(X,_):
 
       Method: Solver.check_and_set_solution()
       Calls Location: KnightMoves.java:26 KnightMoves.java:32
@@ -15,17 +15,17 @@ Checking thread Solver.run():
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.010s
+             analysis-behavior-grammar-opt      0.005s
                              total-parsing      0.003s
-                                     total     37.345s
-                       build-parsing-table      0.070s
-                                 soot-init     37.229s
-                         analysis-behavior      0.029s
+                                     total     35.435s
+                       build-parsing-table      0.068s
+                                 soot-init     35.319s
+                         analysis-behavior      0.024s
 
 Profiling Vars:
-          parsing-table-state-number-total    361
+          parsing-table-state-number-total    345
                             parse-branches     18
-                                 cfg-nodes    605
+                                 cfg-nodes    567
                                parse-trees      1
                          alloc-sites-total      4
-                 grammar-productions-total    973
+                 grammar-productions-total    906

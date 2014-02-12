@@ -46,10 +46,15 @@ class ParseTreeNode
         parent=p;
     }
 
-
     public ParseTreeNode getParent()
     {
         return parent;
+    }
+
+
+    public void setElem(LexicalElement e)
+    {
+        elem=e;
     }
 
     public LexicalElement getElem()
@@ -69,13 +74,16 @@ public class ParseTree
     private static final boolean DEBUG=false;
 
     private List<ParseTreeNode> leafs;
-    
-    public ParseTree()
+    private final List<Terminal> word;
+    private final List<ParsingAction> actions;
+
+    public ParseTree(List<Terminal> word, List<ParsingAction> actions)
     {
-        leafs=null;
+        this.word=word;
+        this.actions=actions;
     }
 
-    public void buildTree(List<Terminal> word, List<ParsingAction> actions)
+    public void buildTree()
     {
         Stack<ParseTreeNode> stack=new Stack<ParseTreeNode>();
         int pos=0;
@@ -94,6 +102,17 @@ public class ParseTree
                 {
                     ParseTreeNode node=stack.pop();
                     node.setParent(parent);
+
+                    /* update leaf with true terminal */
+                    if (node.getElem() instanceof Terminal)
+                    {
+                        LexicalElement nodeTerm=red.getProduction()
+                                                   .getBody().get(len-1-i);
+
+                        assert nodeTerm instanceof Terminal;
+
+                        node.setElem(nodeTerm);
+                    }
 
                     if (DEBUG)
                     {
@@ -115,6 +134,23 @@ public class ParseTree
             }
             else if (a instanceof ParsingActionAccept)
                 assert pos == word.size()-1; /* -1 because of $ */
+    }
+
+    public List<Terminal> getTerminals()
+    {
+        List<Terminal> terminals=new ArrayList<Terminal>(leafs.size());
+
+        assert leafs != null;
+
+        for (ParseTreeNode node: leafs)
+        {
+            assert node.getElem() instanceof Terminal;
+
+            terminals.add((Terminal)node.getElem());
+        }
+
+        return terminals;
+
     }
 
     public NonTerminal getLCA()

@@ -1,32 +1,32 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
 Checking thread Main.main():
 
-  Verifying word setValue setAchieved:
+  Verifying word setValue(_,X) setAchieved(_,X):
 
     No occurrences
 
 Checking thread Daemon.run():
 
-  Verifying word setValue setAchieved:
+  Verifying word setValue(_,X) setAchieved(_,X):
 
     No occurrences
 
 Checking thread Task.run():
 
-  Verifying word setValue setAchieved:
+  Verifying word setValue(_,X) setAchieved(_,X):
 
       Method: Task.run()
-      Calls Location: TaskManager.java:20 TaskManager.java:18
+      Calls Location: TaskManager.java:18 TaskManager.java:20
       Atomic: NO
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.002s
+             analysis-behavior-grammar-opt      0.000s
                              total-parsing      0.002s
-                                     total     36.267s
+                                     total     33.453s
                        build-parsing-table      0.008s
-                                 soot-init     36.236s
-                         analysis-behavior      0.007s
+                                 soot-init     33.414s
+                         analysis-behavior      0.008s
 
 Profiling Vars:
           parsing-table-state-number-total     70

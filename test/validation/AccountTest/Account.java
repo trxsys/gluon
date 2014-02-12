@@ -31,7 +31,7 @@ public class Account {
 	}
 
 	@Atomic
-    public void setBalance(int newValue){
+    public void setBalance(int newValue) {
 		balance = newValue;
 	}
 }

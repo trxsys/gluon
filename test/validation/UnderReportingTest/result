@@ -10,17 +10,17 @@ Checking thread Main.run():
   Verifying word inc inc:
 
       Method: Main.run()
-      Calls Location: Counter.java:15 Counter.java:14
+      Calls Location: Counter.java:14 Counter.java:15
       Atomic: NO
 
 
 Run Time:
              analysis-behavior-grammar-opt      0.001s
                              total-parsing      0.002s
-                                     total     36.756s
-                       build-parsing-table      0.004s
-                                 soot-init     36.734s
-                         analysis-behavior      0.005s
+                                     total     37.240s
+                       build-parsing-table      0.005s
+                                 soot-init     37.208s
+                         analysis-behavior      0.004s
 
 Profiling Vars:
           parsing-table-state-number-total     30

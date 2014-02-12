@@ -15,17 +15,17 @@ Checking thread Runner.run():
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.002s
+             analysis-behavior-grammar-opt      0.000s
                              total-parsing      0.002s
-                                     total     37.095s
-                       build-parsing-table      0.010s
-                                 soot-init     37.065s
+                                     total     36.405s
+                       build-parsing-table      0.009s
+                                 soot-init     36.366s
                          analysis-behavior      0.007s
 
 Profiling Vars:
           parsing-table-state-number-total     64
                             parse-branches     11
-                                 cfg-nodes    125
+                                 cfg-nodes    124
                                parse-trees      1
                          alloc-sites-total      4
                  grammar-productions-total    194

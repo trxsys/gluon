@@ -14,8 +14,8 @@ import test.common.Atomic;
 import test.common.Contract;
 
 // class of the shared control object
-@Contract(clauses = "checkUp claimUp;"
-                   +"checkDown claimDown;")
+@Contract(clauses = "checkUp(X) claimUp(X);"
+                   +"checkDown(X) claimDown(X);")
 class Controls {
 	private Floor[] floors;
 

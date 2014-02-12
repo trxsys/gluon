@@ -54,8 +54,6 @@ import soot.jimple.Stmt;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InstanceInvokeExpr;
 import soot.jimple.StaticInvokeExpr;
-import soot.jimple.internal.JReturnStmt;
-import soot.jimple.internal.JReturnVoidStmt;
 
 import soot.jimple.spark.pag.AllocNode;
 

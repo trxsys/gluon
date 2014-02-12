@@ -6,7 +6,7 @@ import test.common.Contract;
 /*
  * Simulates java.lang.StringBuffer
  */
-@Contract(clauses = "length getChars;")
+@Contract(clauses = "X=length getChars(_,X,_,_);")
 class MyStringBuffer {
 	private java.lang.StringBuffer buffer;
 	

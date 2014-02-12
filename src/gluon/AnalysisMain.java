@@ -21,7 +21,14 @@ import soot.SceneTransformer;
 import soot.SootMethod;
 import soot.SootClass;
 import soot.PointsToAnalysis;
+import soot.Value;
+import soot.Unit;
+import soot.Local;
 
+import soot.jimple.Stmt;
+import soot.jimple.AssignStmt;
+import soot.jimple.InvokeExpr;
+import soot.jimple.InvokeStmt;
 import soot.jimple.spark.pag.AllocNode;
 
 import soot.tagkit.AnnotationTag;
@@ -52,10 +59,12 @@ import gluon.contract.node.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
 
 import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.HashMap;
 
 import java.io.PushbackReader;
 import java.io.StringReader;
@@ -129,8 +138,17 @@ public class AnalysisMain
     {
         String r="";
 
-        for (int i=0; i < word.size()-1; i++)
-            r+=(i > 0 ? " " : "")+word.get(i).toString();
+        for (int i=0; i < word.size(); i++)
+        {
+            Terminal term=word.get(i);
+
+            if (term instanceof gluon.grammar.EOITerminal)
+                break;
+
+            assert term instanceof PPTerminal;
+
+            r+=(i > 0 ? " " : "")+((PPTerminal)term).getFullName();
+        }
 
         return r;
     }
@@ -154,37 +172,152 @@ public class AnalysisMain
         return relevantThreads;
     }
 
-    private List<PPTerminal> getCodeUnits(List<ParsingAction> actions,
-                                          List<Terminal> word)
+    private List<PPTerminal> getParsingTerminals(List<Terminal> word,
+                                                 List<ParsingAction> actions)
     {
-        ArrayList<PPTerminal> terms=new ArrayList<PPTerminal>(word.size()-1);
+        ParseTree tree=new ParseTree(word,actions);
+        List<PPTerminal> ppterms;
+        List<Terminal> terms;
 
-        for (ParsingAction a: actions)
-            if (a instanceof ParsingActionReduce)
-            {
-                Production red=((ParsingActionReduce)a).getProduction();
+        tree.buildTree();
 
-                for (LexicalElement e: red.getBody())
-                    if (e instanceof PPTerminal)
-                        terms.add((PPTerminal)e);
-            }
-        
-        java.util.Collections.reverse(terms);
+        terms=tree.getTerminals();
+        ppterms=new ArrayList<PPTerminal>(terms.size());
 
-        assert terms.size() == word.size()-1;
+        for (Terminal t: terms)
+            ppterms.add((PPTerminal)t);
 
-        return terms;
+        return ppterms;
     }
 
     private boolean assertLCASanityCheck(List<Terminal> word, 
                                          List<ParsingAction> actions,
                                          NonTerminal lca)
     {
-        ParseTree ptree=new ParseTree();
+        if (DEBUG)
+        {
+            ParseTree ptree=new ParseTree(word,actions);
 
-        ptree.buildTree(word,actions);
+            ptree.buildTree();
+        
+            return lca.equals(ptree.getLCA());
+        }
+        else
+            return true;
+    }
 
-        return lca.equals(ptree.getLCA());
+    private boolean equivTo(Value u, Value v)
+    {
+        if (u == null || v == null)
+            return u == v;
+
+        if (u.equivTo(v))
+            return true;
+
+        /* If u and v can point to the same object they are considered equivalent */
+        if (u instanceof Local
+            && v instanceof Local)
+        {
+            Local ul=(Local)u;
+            Local vl=(Local)v;
+
+            for (AllocNode a: PointsToInformation.getReachableAllocSites(ul))
+                for (AllocNode b: PointsToInformation.getReachableAllocSites(vl))
+                    if (a.equals(b))
+                        return true;
+        }
+
+        /* BUG: access to field with primitive types are always considered
+         *      non-equivalent.
+         */
+
+        return false;
+    }
+
+    private int tryUnify(Map<String,Value> unif,
+                         String contractVar,
+                         Value v)
+    {
+        if (contractVar == null)
+            return 0;
+
+        if (unif.containsKey(contractVar))
+            return equivTo(unif.get(contractVar),v) ? 0 : -1;
+
+        unif.put(contractVar,v);
+        
+        return 0;
+    }
+
+    private boolean argumentsMatch(List<Terminal> word, List<ParsingAction> actions)
+    {
+        List<PPTerminal> parsedWord;
+        /* contract variable -> program value */
+        Map<String,Value> unif=new HashMap<String,Value>();
+
+        parsedWord=getParsingTerminals(word,actions);
+
+        assert parsedWord.size() == word.size()-1; /* -1 because of the '$' */
+
+        for (int i=0; i < parsedWord.size(); i++)
+        {
+            PPTerminal termC=(PPTerminal)word.get(i);
+            PPTerminal termP=parsedWord.get(i);
+            List<String> argumentsC;
+            Unit unit;
+
+            assert termC.equals(termP); /* equals ignores arguments */
+
+            argumentsC=termC.getArguments();
+
+            unit=termP.getCodeUnit();
+
+            if (termC.getReturn() != null)
+            {
+                String contractVar=termC.getReturn();
+
+                if (unit instanceof AssignStmt)
+                {
+                    Value v=((AssignStmt)unit).getLeftOp();
+                    
+                    dprintln("      Trying unification "+contractVar+" <-> "+v);
+
+                    if (tryUnify(unif,contractVar,v) != 0)
+                        return false;
+                }
+                else
+                {
+                    /* If control reaches here then the contract does specify a
+                     * return value but the word in the client program does not
+                     * assign the return value to a variable.  In this case
+                     * we don't fail immediatly because it is possible that the
+                     * variable is not used elsewhere.  So we unify the variable
+                     * with null.  That variable will no be able to be unified
+                     * with anything but null values.
+                     */
+
+                    if (tryUnify(unif,contractVar,null) != 0)
+                        return false;
+                }
+            }
+
+
+            for (int j=0; argumentsC != null && j < argumentsC.size(); j++)
+            {
+                InvokeExpr call=((Stmt)unit).getInvokeExpr();
+                String contractVar=argumentsC.get(j);
+                Value v=null;
+
+                v=call.getArg(j);
+
+                dprintln("      Trying unification "+contractVar+" <-> "+v);
+
+                if (tryUnify(unif,contractVar,v) != 0)
+                    return false;
+            }
+        }
+
+        return true;
     }
 
     private int checkThreadWordParse(SootMethod thread,
@@ -205,6 +338,12 @@ public class AnalysisMain
         if (reported.contains(lcaMethod))
             return 1;
 
+        if (!argumentsMatch(word,actions))
+        {
+            gluon.profiling.Profiling.inc("final:discarded-trees-args-not-match");
+            return 1;
+        }
+
         gluon.profiling.Profiling.inc("final:parse-trees");
 
         reported.add(lcaMethod);
@@ -218,7 +357,7 @@ public class AnalysisMain
 
         System.out.print("      Calls Location:");
 
-        for (PPTerminal t: getCodeUnits(actions,word))
+        for (PPTerminal t: getParsingTerminals(word,actions))
         {
             int linenum=t.getLineNumber();
             String source=t.getSourceFile();
@@ -348,34 +487,60 @@ public class AnalysisMain
         contractRaw=contract;
     }
 
-    public void loadRawContract()
+    private void loadRawContractClause(String clause)
+    {
+        Start ast;
+        ContractVisitorExtractWords visitorWords
+            =new ContractVisitorExtractWords();
+
+        ast=parseContract(clause);
+        ast.apply(visitorWords);
+
+        for (List<PPTerminal> word: visitorWords.getWords())
+        {
+            for (PPTerminal t: word)
+                if (module.declaresMethodByName(t.getName()))
+                {
+                    try
+                    {
+                        SootMethod m=module.getMethodByName(t.getName());
+
+                        if (t.getArguments() != null
+                            && t.getArguments().size() != m.getParameterCount())
+                            Main.fatal(t.getName()
+                                       +": wrong number of parameters!");
+                    }
+                    catch (Exception _)
+                    {
+                        Main.fatal(t.getName()+": ambiguous method!");
+                    }
+                }
+                else
+                    Main.fatal(t.getName()+": no such method!");
+            
+
+            List<Terminal> contractWord
+                =new ArrayList<Terminal>(word.size()+1);
+
+            contractWord.addAll(word);
+            contractWord.add(new gluon.grammar.EOITerminal());
+            
+            contract.add(contractWord);
+        }
+    }
+
+    private void loadRawContract()
     {
         contract=new LinkedList<List<Terminal>>();
 
         for (String clause: contractRaw.split(";"))
         {
-            Start ast;
-            ContractVisitorExtractWords visitorWords
-                =new ContractVisitorExtractWords();
-
             clause=clause.trim();
 
             if (clause.length() == 0)
                 continue;
 
-            ast=parseContract(clause);
-            ast.apply(visitorWords);
-
-            for (List<Terminal> word: visitorWords.getWords())
-            {
-                for (Terminal t: word)
-                    if (!module.declaresMethodByName(t.getName()))
-                        Main.fatal(t.getName()+": no such method!");
-
-                word.add(new gluon.grammar.EOITerminal());
-
-                contract.add(word);
-            }
+            loadRawContractClause(clause);
         }
 
         dprintln("contract: "+contract);
@@ -418,13 +583,13 @@ public class AnalysisMain
         {
             ast=parser.parse();
         }
-        catch (gluon.contract.parser.ParserException _)
+        catch (gluon.contract.parser.ParserException pe)
         {
-            Main.fatal("syntax error in contract.");
+            Main.fatal("syntax error in contract: "+clause+": "+pe.getMessage());
         }
-        catch (gluon.contract.lexer.LexerException _)
+        catch (gluon.contract.lexer.LexerException pe)
         {
-            Main.fatal("syntax error in contract.");
+            Main.fatal("syntax error in contract: "+clause+": "+pe.getMessage());
         }
         catch (java.io.IOException _)
         {
