@@ -171,7 +171,6 @@ public class Main
         gluon.profiling.Timer.start("final:soot-init");
 
         Options.v().set_whole_program(true);
-        Options.v().set_whole_shimple(true);
         
         Options.v().set_verbose(false);
         Options.v().set_interactive_mode(false);
@@ -179,7 +178,7 @@ public class Main
         Options.v().set_debug_resolver(false);
         Options.v().set_show_exception_dests(false);
         
-        Options.v().set_output_format(Options.output_format_shimple);
+        Options.v().set_output_format(Options.output_format_none);
 
         Options.v().set_allow_phantom_refs(true);
         Options.v().set_keep_line_number(true);
@@ -188,7 +187,6 @@ public class Main
         PhaseOptions.v().setPhaseOption("tag.ln","on");
 
         /* soot bug workaround */
-        // PhaseOptions.v().setPhaseOption("jb", "use-original-names:true");
         PhaseOptions.v().setPhaseOption("jb.ulp", "enabled:false");
 
         /* for points-to analysis */
@@ -201,14 +199,14 @@ public class Main
                                        +java.io.File.pathSeparator
                                        +classPath);
         
-        t=new Transform("wstp.x",AnalysisMain.instance());
+        t=new Transform("wjtp.x",AnalysisMain.instance());
         
         AnalysisMain.instance().setModuleToAnalyze(moduleClassName);
 
         if (contract != null)
             AnalysisMain.instance().setContract(contract);
         
-        PackManager.v().getPack("wstp").add(t);
+        PackManager.v().getPack("wjtp").add(t);
 
         SootClass c = Scene.v().loadClassAndSupport(mainClassName);
         
