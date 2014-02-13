@@ -47,19 +47,15 @@ public class ValueEquivAnalysis
 {
     private SootMethod entryMethod;
 
-    private Queue<SootMethod> methodQueue; /* queue of methods to analyse */
-    private Set<SootMethod> enqueuedMethods;
-
     private Map<ValueM,SootField> localFieldMap;
+    private Set<SootMethod> analizedMethods;
 
     public ValueEquivAnalysis(SootMethod method)
     {
         entryMethod=method;
         
-        methodQueue=null;
-        enqueuedMethods=null;
-
-        localFieldMap=null;
+        localFieldMap=new HashMap<ValueM,SootField>();
+        analizedMethods=new HashSet<SootMethod>();
     }
 
     private void analyzeMethod(SootMethod method)
@@ -67,22 +63,12 @@ public class ValueEquivAnalysis
         if (!method.hasActiveBody())
             return;
 
-        for (Unit u: method.getActiveBody().getUnits())
-        {
-            if (((Stmt)u).containsInvokeExpr())
-            {
-                InvokeExpr expr=((Stmt)u).getInvokeExpr();
-                SootMethod calledMethod=expr.getMethod();
-                
-                if (!enqueuedMethods.contains(calledMethod)
-                    && (!calledMethod.isJavaLibraryMethod()
-                        || gluon.Main.WITH_JAVA_LIB))
-                {
-                    methodQueue.add(calledMethod);
-                    enqueuedMethods.add(calledMethod);
-                }
-            }
+        if (analizedMethods.contains(method))
+            return;
 
+        analizedMethods.add(method);
+
+        for (Unit u: method.getActiveBody().getUnits())
             if (u instanceof AssignStmt)
             {
                 AssignStmt assign=(AssignStmt)u;
@@ -98,33 +84,6 @@ public class ValueEquivAnalysis
                     localFieldMap.put(local,field);
                 }
             }
-        }
-    }
-
-    private void analyzeReachableMethods(SootMethod entryMethod)
-    {        
-        methodQueue=new LinkedList<SootMethod>();
-        enqueuedMethods=new HashSet<SootMethod>();
-        
-        methodQueue.add(entryMethod);
-        enqueuedMethods.add(entryMethod);
-        
-        while (methodQueue.size() > 0)
-        {
-            SootMethod method=methodQueue.poll();
-            
-            analyzeMethod(method);
-        }
-        
-        enqueuedMethods=null;
-        methodQueue=null;
-    }
-
-    private void analyze()
-    {
-        localFieldMap=new HashMap<ValueM,SootField>();
-
-        analyzeReachableMethods(entryMethod);
     }
 
     private boolean canPointToSameObject(ValueM u, ValueM v)
@@ -145,12 +104,10 @@ public class ValueEquivAnalysis
         SootField uField;
         SootField vField;
 
-        if (localFieldMap == null)
-        {
-            gluon.profiling.Timer.start("analysis-vequiv");
-            analyze();
-            gluon.profiling.Timer.stop("analysis-vequiv");
-        }
+        gluon.profiling.Timer.start("analysis-vequiv");
+        analyzeMethod(u.getMethod());
+        analyzeMethod(v.getMethod());
+        gluon.profiling.Timer.stop("analysis-vequiv");
 
         uField=localFieldMap.get(u);
         vField=localFieldMap.get(v);
