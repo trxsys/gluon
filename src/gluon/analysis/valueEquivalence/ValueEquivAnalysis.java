@@ -27,7 +27,7 @@ import soot.SootField;
 import soot.jimple.Stmt;
 import soot.jimple.AssignStmt;
 import soot.jimple.InvokeExpr;
-import soot.jimple.InstanceFieldRef;
+import soot.jimple.FieldRef;
 
 import soot.jimple.spark.pag.AllocNode;
 
@@ -76,9 +76,9 @@ public class ValueEquivAnalysis
                 Value r=assign.getRightOp();
 
                 if (l instanceof Local
-                    && r instanceof InstanceFieldRef)
+                    && r instanceof FieldRef)
                 {
-                    SootField field=((InstanceFieldRef)r).getField();
+                    SootField field=((FieldRef)r).getField();
                     ValueM local=new ValueM(method,l);
 
                     localFieldMap.put(local,field);
