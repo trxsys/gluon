@@ -5,7 +5,7 @@
   <property name="test.dir" location="test" />
   <property name="build.dir" location="bin" />
   <property name="lib.dir" location="lib" />
-  <property name="grammar.dir" location="src/gluon/contract" />
+  <property name="grammar.dir" location="src/gluon/contract/parsing" />
   
   <property name="soot.lib" location="${lib.dir}/soot-2.5.0.jar" />
   <property name="getopt.lib" location="${lib.dir}/java-getopt-1.0.14.jar" />
@@ -39,9 +39,9 @@
       </classpath>
     </javac>
     <copy file="${grammar.dir}/lexer/lexer.dat"
-	  todir="${build.dir}/gluon/contract/lexer" />
+	  todir="${build.dir}/gluon/contract/parsing/lexer" />
     <copy file="${grammar.dir}/parser/parser.dat"
-	  todir="${build.dir}/gluon/contract/parser" />
+	  todir="${build.dir}/gluon/contract/parsing/parser" />
   </target>
 
   <target name="tests" depends="init">

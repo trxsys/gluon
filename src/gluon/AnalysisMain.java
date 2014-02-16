@@ -50,8 +50,8 @@ import gluon.parsing.parser.Parser;
 import gluon.parsing.parseTree.ParseTree;
 import gluon.parsing.parser.ParserCallback;
 
-import gluon.contract.ContractVisitorExtractWords;
-import gluon.contract.node.*;
+import gluon.contract.parsing.ContractVisitorExtractWords;
+import gluon.contract.parsing.node.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -391,21 +391,21 @@ public class AnalysisMain
     private Start parseContract(String clause)
     {
         PushbackReader reader=new PushbackReader(new StringReader(clause));
-        gluon.contract.lexer.Lexer lexer
-            =new gluon.contract.lexer.Lexer(reader);
-        gluon.contract.parser.Parser parser
-            =new gluon.contract.parser.Parser(lexer);
+        gluon.contract.parsing.lexer.Lexer lexer
+            =new gluon.contract.parsing.lexer.Lexer(reader);
+        gluon.contract.parsing.parser.Parser parser
+            =new gluon.contract.parsing.parser.Parser(lexer);
         Start ast=null;
                 
         try
         {
             ast=parser.parse();
         }
-        catch (gluon.contract.parser.ParserException pe)
+        catch (gluon.contract.parsing.parser.ParserException pe)
         {
             Main.fatal("syntax error in contract: "+clause+": "+pe.getMessage());
         }
-        catch (gluon.contract.lexer.LexerException pe)
+        catch (gluon.contract.parsing.lexer.LexerException pe)
         {
             Main.fatal("syntax error in contract: "+clause+": "+pe.getMessage());
         }

@@ -14,10 +14,10 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.contract;
+package gluon.contract.parsing;
 
-import gluon.contract.node.*;
-import gluon.contract.analysis.Analysis;
+import gluon.contract.parsing.node.*;
+import gluon.contract.parsing.analysis.Analysis;
 
 import gluon.grammar.Terminal;
 import gluon.analysis.programBehavior.PPTerminal;
