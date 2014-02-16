@@ -173,12 +173,15 @@ class ParserConfiguration
  * grammar.
  * A more aggressive pruning is done so that no two parsing trees with the same
  * lowest common ancestor are explored (PRUNE_BY_REPEATED_LCA).
+ * Unfortunatly this cannot be done with contract with arguments since we may
+ * prune LCA that would fail to match the arguments unification thus preventing
+ * other LCA from being reported.
  */
 public class Parser
 {
     private static final boolean DEBUG=false;
 
-    private static final boolean PRUNE_BY_REPEATED_LCA=true;
+    private static final boolean PRUNE_BY_REPEATED_LCA=false;
 
     private final ParsingTable table;
     private Stack<ParserConfiguration> parseLifo;

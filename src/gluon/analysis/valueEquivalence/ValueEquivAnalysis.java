@@ -47,14 +47,14 @@ public class ValueEquivAnalysis
 {
     private SootMethod entryMethod;
 
-    private Map<ValueM,SootField> localFieldMap;
+    private Map<ValueM,Value> localAssigns;
     private Set<SootMethod> analizedMethods;
 
     public ValueEquivAnalysis(SootMethod method)
     {
         entryMethod=method;
         
-        localFieldMap=new HashMap<ValueM,SootField>();
+        localAssigns=new HashMap<ValueM,Value>();
         analizedMethods=new HashSet<SootMethod>();
     }
 
@@ -68,6 +68,7 @@ public class ValueEquivAnalysis
 
         analizedMethods.add(method);
 
+        gluon.profiling.Timer.start("analysis-vequiv");
         for (Unit u: method.getActiveBody().getUnits())
             if (u instanceof AssignStmt)
             {
@@ -75,15 +76,20 @@ public class ValueEquivAnalysis
                 Value l=assign.getLeftOp();
                 Value r=assign.getRightOp();
 
-                if (l instanceof Local
-                    && r instanceof FieldRef)
+                if (l instanceof Local)
                 {
-                    SootField field=((FieldRef)r).getField();
                     ValueM local=new ValueM(method,l);
 
-                    localFieldMap.put(local,field);
+                    assert !localAssigns.containsKey(local)
+                        : "localAssigns contains "+localAssigns.keySet()
+                         +" and we tried to add "+local+". Are we not using SSA?!";
+
+                    localAssigns.put(local,r);
+
+                    assert localAssigns.containsKey(local);
                 }
             }
+        gluon.profiling.Timer.stop("analysis-vequiv");
     }
 
     private boolean canPointToSameObject(ValueM u, ValueM v)
@@ -101,21 +107,56 @@ public class ValueEquivAnalysis
 
     private boolean containsSameField(ValueM u, ValueM v)
     {
+        Value uValue;
+        Value vValue;
         SootField uField;
         SootField vField;
 
-        gluon.profiling.Timer.start("analysis-vequiv");
         analyzeMethod(u.getMethod());
         analyzeMethod(v.getMethod());
-        gluon.profiling.Timer.stop("analysis-vequiv");
 
-        uField=localFieldMap.get(u);
-        vField=localFieldMap.get(v);
+        uValue=localAssigns.get(u);
+        vValue=localAssigns.get(v);
 
-        if (uField == null || vField == null)
+        /*
+        System.out.println();
+        System.out.println(u+" "+uValue+"\t"+v+" "+vValue);
+        */
+
+        if (uValue == null || vValue == null
+            || !(uValue instanceof FieldRef) || !(vValue instanceof FieldRef))
             return false;
 
+        /*
+        System.out.println("blah");
+        */
+
+        uField=((FieldRef)uValue).getField();
+        vField=((FieldRef)vValue).getField();
+
         return uField.getSignature().equals(vField.getSignature());
+    }
+
+    private boolean containsSameArray(ValueM u, ValueM v)
+    {
+        Value uValue;
+        Value vValue;
+        SootField uField;
+        SootField vField;
+
+        analyzeMethod(u.getMethod());
+        analyzeMethod(v.getMethod());
+
+        uValue=localAssigns.get(u);
+        vValue=localAssigns.get(v);
+
+        if (uValue == null || vValue == null
+            || !(uValue instanceof FieldRef) || !(vValue instanceof FieldRef))
+            return false;
+        
+        /* TODO */
+
+        return false;
     }
 
     public boolean equivTo(ValueM u, ValueM v)
@@ -126,12 +167,15 @@ public class ValueEquivAnalysis
         if (u.basicEquivTo(v))
             return true;
 
+        if (canPointToSameObject(u,v))
+            return true;
+
         if (u.isLocal() && v.isLocal())
         {
-            if (canPointToSameObject(u,v))
+            if (containsSameField(u,v))
                 return true;
 
-            if (containsSameField(u,v))
+            if (containsSameArray(u,v))
                 return true;
         }
 

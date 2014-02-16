@@ -21,13 +21,8 @@ import soot.SceneTransformer;
 import soot.SootMethod;
 import soot.SootClass;
 import soot.PointsToAnalysis;
-import soot.Value;
 import soot.Unit;
 
-import soot.jimple.Stmt;
-import soot.jimple.AssignStmt;
-import soot.jimple.InvokeExpr;
-import soot.jimple.InvokeStmt;
 import soot.jimple.spark.pag.AllocNode;
 
 import soot.tagkit.AnnotationTag;
@@ -118,42 +113,6 @@ public class AnalysisMain
         moduleName=m;
     }
 
-    private static String actionsStr(List<ParsingAction> actions)
-    {
-        String r="";
-
-        for (ParsingAction a: actions)
-        {
-            if (a instanceof ParsingActionShift)
-                r+="s ; ";
-            else if (a instanceof ParsingActionReduce)
-                r+=((ParsingActionReduce)a).getProduction()+" ; ";
-            else if (a instanceof ParsingActionAccept)
-                r+=a.toString();
-        }
-
-        return r;
-    }
-    
-    private static String wordStr(List<Terminal> word)
-    {
-        String r="";
-
-        for (int i=0; i < word.size(); i++)
-        {
-            Terminal term=word.get(i);
-
-            if (term instanceof gluon.grammar.EOITerminal)
-                break;
-
-            assert term instanceof PPTerminal;
-
-            r+=(i > 0 ? " " : "")+((PPTerminal)term).getFullName();
-        }
-
-        return r;
-    }
-
     private Collection<SootMethod> getThreads()
     {
         ThreadAnalysis ta=new ThreadAnalysis(scene.getCallGraph());
@@ -173,147 +132,22 @@ public class AnalysisMain
         return relevantThreads;
     }
 
-    private List<PPTerminal> getParsingTerminals(List<Terminal> word,
-                                                 List<ParsingAction> actions)
-    {
-        ParseTree tree=new ParseTree(word,actions);
-        List<PPTerminal> ppterms;
-        List<Terminal> terms;
-
-        tree.buildTree();
-
-        terms=tree.getTerminals();
-        ppterms=new ArrayList<PPTerminal>(terms.size());
-
-        for (Terminal t: terms)
-            ppterms.add((PPTerminal)t);
-
-        return ppterms;
-    }
-
-    private boolean assertLCASanityCheck(List<Terminal> word, 
-                                         List<ParsingAction> actions,
-                                         NonTerminal lca)
-    {
-        if (DEBUG)
-        {
-            ParseTree ptree=new ParseTree(word,actions);
-
-            ptree.buildTree();
-        
-            return lca.equals(ptree.getLCA());
-        }
-        else
-            return true;
-    }
-
-    private int tryUnify(Map<String,ValueM> unif, String contractVar, ValueM v,
-                         ValueEquivAnalysis vEquiv)
-    {
-        if (contractVar == null)
-            return 0;
-
-        if (unif.containsKey(contractVar))
-            return vEquiv.equivTo(unif.get(contractVar),v) ? 0 : -1;
-
-        unif.put(contractVar,v);
-        
-        return 0;
-    }
-
-    private boolean argumentsMatch(List<Terminal> word, List<ParsingAction> actions,
-                                   ValueEquivAnalysis vEquiv)
-    {
-        List<PPTerminal> parsedWord;
-        /* contract variable -> program value */
-        Map<String,ValueM> unif=new HashMap<String,ValueM>();
-
-        parsedWord=getParsingTerminals(word,actions);
-
-        assert parsedWord.size() == word.size()-1; /* -1 because of the '$' */
-
-        for (int i=0; i < parsedWord.size(); i++)
-        {
-            PPTerminal termC=(PPTerminal)word.get(i);
-            PPTerminal termP=parsedWord.get(i);
-            SootMethod method=termP.getCodeMethod();
-            List<String> argumentsC;
-            Unit unit;
-
-            assert termC.equals(termP); /* equals ignores arguments and return */
-            assert method != null;
-
-            argumentsC=termC.getArguments();
-
-            unit=termP.getCodeUnit();
-
-            if (termC.getReturn() != null)
-            {
-                String contractVar=termC.getReturn();
-
-                if (unit instanceof AssignStmt)
-                {
-                    ValueM v=new ValueM(method,((AssignStmt)unit).getLeftOp());
-                    
-                    dprintln("      Trying unification "+contractVar+" <-> "+v);
-
-                    if (tryUnify(unif,contractVar,v,vEquiv) != 0)
-                        return false;
-                }
-                else
-                {
-                    /* If control reaches here then the contract does specify a
-                     * return value but the word in the client program does not
-                     * assign the return value to a variable.  In this case
-                     * we don't fail immediatly because it is possible that the
-                     * variable is not used elsewhere.  So we unify the variable
-                     * with null.  That variable will no be able to be unified
-                     * with anything but null values.
-                     */
-
-                    if (tryUnify(unif,contractVar,null,vEquiv) != 0)
-                        return false;
-                }
-            }
-
-            for (int j=0; argumentsC != null && j < argumentsC.size(); j++)
-            {
-                InvokeExpr call=((Stmt)unit).getInvokeExpr();
-                String contractVar=argumentsC.get(j);
-                ValueM v;
-
-                v=new ValueM(method,call.getArg(j));
-
-                dprintln("      Trying unification "+contractVar+" <-> "+v);
-
-                if (tryUnify(unif,contractVar,v,vEquiv) != 0)
-                    return false;
-            }
-        }
-
-        return true;
-    }
-
     private int checkThreadWordParse(SootMethod thread,
-                                     List<Terminal> word, 
-                                     List<ParsingAction> actions,
-                                     Set<SootMethod> reported,
-                                     NonTerminal lca,
+                                     WordInstance wordInst,
+                                     Set<WordInstance> reported,
                                      ValueEquivAnalysis vEquiv)
     {
         SootMethod lcaMethod;
         boolean atomic;
 
-        assert assertLCASanityCheck(word,actions,lca);
+        assert wordInst.assertLCASanityCheck();
 
-        assert lca instanceof PPNonTerminal;
+        lcaMethod=wordInst.getLCAMethod();
 
-        lcaMethod=((PPNonTerminal)lca).getMethod();
-
-        if (reported.contains(lcaMethod))
+        if (reported.contains(wordInst))
             return 1;
 
-        if (!argumentsMatch(word,actions,vEquiv))
+        if (!wordInst.argumentsMatch(vEquiv))
         {
             gluon.profiling.Profiling.inc("final:discarded-trees-args-not-match");
             return 1;
@@ -321,18 +155,18 @@ public class AnalysisMain
 
         gluon.profiling.Profiling.inc("final:parse-trees");
 
-        reported.add(lcaMethod);
+        reported.add(wordInst);
 
         atomic=atomicMethods.isAtomic(lcaMethod);
 
-        dprintln("      Lowest common ancestor: "+lca);
+        dprintln("      Lowest common ancestor: "+wordInst.getLCA());
 
         System.out.println("      Method: "+lcaMethod.getDeclaringClass().getShortName()
                            +"."+lcaMethod.getName()+"()");
 
         System.out.print("      Calls Location:");
 
-        for (PPTerminal t: getParsingTerminals(word,actions))
+        for (PPTerminal t: wordInst.getParsingTerminals())
         {
             int linenum=t.getLineNumber();
             String source=t.getSourceFile();
@@ -351,10 +185,10 @@ public class AnalysisMain
                                  final List<Terminal> word,
                                  final ValueEquivAnalysis vEquiv)
     {
-        final Set<SootMethod> reported=new HashSet<SootMethod>();
+        final Set<WordInstance> reported=new HashSet<WordInstance>();
         Collection<AllocNode> moduleAllocSites;
 
-        System.out.println("  Verifying word "+wordStr(word)+":");
+        System.out.println("  Verifying word "+WordInstance.wordStr(word)+":");
         System.out.println();
 
         moduleAllocSites=PointsToInformation.getModuleAllocationSites(module);
@@ -373,11 +207,15 @@ public class AnalysisMain
                                         NonTerminal lca)
                     {
                         int ret;
+                        WordInstance wordInst;
                         
+                        wordInst=new WordInstance((PPNonTerminal)lca,
+                                                  word,actions);
+
                         gluon.profiling.Timer.stop("parsing");
-                        ret=checkThreadWordParse(thread,word,actions,reported,
-                                                 lca,vEquiv);
+                        ret=checkThreadWordParse(thread,wordInst,reported,vEquiv);
                         gluon.profiling.Timer.start("parsing");
+
                         
                         if (ret <= 0)
                             System.out.println();
@@ -601,7 +439,7 @@ public class AnalysisMain
         if (module == null)
             Main.fatal(moduleName+": module's class not found");
         
-        /* if the contract was not passed by the command line then extract it
+        /* If the contract was not passed by the command line then extract it
          * from the module's annotation @Contract.
          */
         if (contractRaw == null)

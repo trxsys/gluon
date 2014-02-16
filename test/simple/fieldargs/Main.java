@@ -7,6 +7,8 @@ import test.common.Contract;
                  +"ai(X) bi(X)")
 class Module
 {
+    public Module m;
+    public int foo=3;
     public Module() { }
     public void a(String bar) { }
     public void b(String foo) { }
@@ -19,6 +21,7 @@ public class Main
     private Module m;
     private String v="42";
     private int vi=42;
+    private int[] vvi={1,7};
 
     public void test()
     {
@@ -40,6 +43,36 @@ public class Main
         m.bi(vi);
 
         System.out.println(vi);
+
+        test3();
+    }
+
+    public void test3()
+    {
+        m.ai(vvi[0]);
+        m.bi(vvi[0]);
+
+        System.out.println(vi);
+
+        test4();
+    }
+
+    public void test4()
+    {
+        m.ai(m.m.foo);
+        m.bi(m.m.foo);
+
+        System.out.println(vi);
+
+        test5();
+    }
+
+    public void test5()
+    {
+        int[] vec={1,7};
+
+        m.ai(vec[0]);
+        m.bi(vec[0]);
     }
 
     public static void main(String[] args)

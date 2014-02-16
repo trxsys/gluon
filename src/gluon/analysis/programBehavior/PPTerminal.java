@@ -33,7 +33,7 @@ public class PPTerminal
 {
     private final SootMethod method; // module method
     private final Unit codeUnit;
-    private final SootMethod codeUnitMethod;
+    private SootMethod codeUnitMethod;
 
     /* arguments is null if the arguments are to be ignored.
      * An null argument represents an argument that should be ignored.
@@ -180,6 +180,8 @@ public class PPTerminal
         clone.arguments.addAll(arguments);
 
         clone.ret=ret;
+
+        assert clone.codeUnitMethod == codeUnitMethod;
 
         return clone;
     }
