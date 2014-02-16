@@ -25,11 +25,6 @@ import soot.Unit;
 
 import soot.jimple.spark.pag.AllocNode;
 
-import soot.tagkit.AnnotationTag;
-import soot.tagkit.Tag;
-import soot.tagkit.VisibilityAnnotationTag;
-import soot.tagkit.AnnotationStringElem;
-
 import gluon.analysis.thread.ThreadAnalysis;
 import gluon.analysis.programBehavior.ProgramBehaviorAnalysis;
 import gluon.analysis.programBehavior.PPTerminal;
@@ -37,20 +32,20 @@ import gluon.analysis.programBehavior.PPNonTerminal;
 import gluon.analysis.atomicMethods.AtomicMethods;
 import gluon.analysis.valueEquivalence.ValueEquivAnalysis;
 import gluon.analysis.valueEquivalence.ValueM;
+import gluon.analysis.pointsTo.PointsToInformation;
 
 import gluon.grammar.Cfg;
 import gluon.grammar.LexicalElement;
 import gluon.grammar.Terminal;
 import gluon.grammar.NonTerminal;
 import gluon.grammar.Production;
-import gluon.grammar.parsing.parsingTable.ParsingTable;
-import gluon.grammar.parsing.parsingTable.parsingAction.*;
-import gluon.grammar.parsing.parser.Parser;
-import gluon.grammar.parsing.parseTree.ParseTree;
-import gluon.grammar.parsing.parser.ParserCallback;
+import gluon.parsing.parsingTable.ParsingTable;
+import gluon.parsing.parsingTable.parsingAction.*;
+import gluon.parsing.parser.Parser;
+import gluon.parsing.parseTree.ParseTree;
+import gluon.parsing.parser.ParserCallback;
 
-import gluon.contract.ContractVisitorExtractWords;
-import gluon.contract.node.*;
+import gluon.contract.Contract;
 
 import java.util.Collection;
 import java.util.List;
@@ -62,23 +57,18 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.HashMap;
 
-import java.io.PushbackReader;
-import java.io.StringReader;
-
 public class AnalysisMain
     extends SceneTransformer
 {
     private static final boolean DEBUG=false;
 
-    private static final String CONTRACT_ANNOTATION="Contract";
-    
     private static final AnalysisMain instance=new AnalysisMain();
     
     private Scene scene;
     private String moduleName; // name of the module to analyze
     private SootClass module;  // class of the module to analyze
     private AtomicMethods atomicMethods;
-    private Collection<List<Terminal>> contract;
+    private Contract contract;
 
     private String contractRaw;
     
@@ -277,7 +267,7 @@ public class AnalysisMain
                            +"."+thread.getName()+"():");
         System.out.println();
         
-        for (List<Terminal> word: contract)
+        for (List<Terminal> word: contract.getWords())
             checkThreadWord(thread,word,vEquiv);
     }
     
@@ -304,125 +294,6 @@ public class AnalysisMain
         contractRaw=contract;
     }
 
-    private void loadRawContractClause(String clause)
-    {
-        Start ast;
-        ContractVisitorExtractWords visitorWords
-            =new ContractVisitorExtractWords();
-
-        ast=parseContract(clause);
-        ast.apply(visitorWords);
-
-        for (List<PPTerminal> word: visitorWords.getWords())
-        {
-            for (PPTerminal t: word)
-                if (module.declaresMethodByName(t.getName()))
-                {
-                    try
-                    {
-                        SootMethod m=module.getMethodByName(t.getName());
-
-                        if (t.getArguments() != null
-                            && t.getArguments().size() != m.getParameterCount())
-                            Main.fatal(t.getName()
-                                       +": wrong number of parameters!");
-                    }
-                    catch (Exception _)
-                    {
-                        Main.fatal(t.getName()+": ambiguous method!");
-                    }
-                }
-                else
-                    Main.fatal(t.getName()+": no such method!");
-            
-
-            List<Terminal> contractWord
-                =new ArrayList<Terminal>(word.size()+1);
-
-            contractWord.addAll(word);
-            contractWord.add(new gluon.grammar.EOITerminal());
-            
-            contract.add(contractWord);
-        }
-    }
-
-    private void loadRawContract()
-    {
-        contract=new LinkedList<List<Terminal>>();
-
-        for (String clause: contractRaw.split(";"))
-        {
-            clause=clause.trim();
-
-            if (clause.length() == 0)
-                continue;
-
-            loadRawContractClause(clause);
-        }
-
-        dprintln("contract: "+contract);
-    }
-
-    private String extractContractRaw()
-    {
-         Tag tag=module.getTag("VisibilityAnnotationTag");
-         
-         if (tag == null)
-            return null;
-
-        VisibilityAnnotationTag visibilityAnnotationTag=(VisibilityAnnotationTag) tag;
-        List<AnnotationTag> annotations=visibilityAnnotationTag.getAnnotations();
-        
-        for (AnnotationTag annotationTag: annotations) 
-            if (annotationTag.getType().endsWith("/"+CONTRACT_ANNOTATION+";")
-                && annotationTag.getNumElems() == 1
-                && annotationTag.getElemAt(0) instanceof AnnotationStringElem
-                && annotationTag.getElemAt(0).getName().equals("clauses"))
-            {
-                AnnotationStringElem e=(AnnotationStringElem)annotationTag.getElemAt(0);
-
-                return e.getValue();
-            }
-
-        return null;
-    }
-
-    private Start parseContract(String clause)
-    {
-        PushbackReader reader=new PushbackReader(new StringReader(clause));
-        gluon.contract.lexer.Lexer lexer
-            =new gluon.contract.lexer.Lexer(reader);
-        gluon.contract.parser.Parser parser
-            =new gluon.contract.parser.Parser(lexer);
-        Start ast=null;
-                
-        try
-        {
-            ast=parser.parse();
-        }
-        catch (gluon.contract.parser.ParserException pe)
-        {
-            Main.fatal("syntax error in contract: "+clause+": "+pe.getMessage());
-        }
-        catch (gluon.contract.lexer.LexerException pe)
-        {
-            Main.fatal("syntax error in contract: "+clause+": "+pe.getMessage());
-        }
-        catch (java.io.IOException _)
-        {
-            assert false : "this should not happen";
-        }
-        
-        assert ast != null;
-        
-        return ast;
-    }
-    
-    private void extractAnnotatedContract()
-    {
-        contractRaw=extractContractRaw();
-    }
-
     @Override
     protected void internalTransform(String paramString, 
                                      @SuppressWarnings("rawtypes") java.util.Map paramMap) 
@@ -442,12 +313,15 @@ public class AnalysisMain
         /* If the contract was not passed by the command line then extract it
          * from the module's annotation @Contract.
          */
-        if (contractRaw == null)
-            extractAnnotatedContract();
+        if (contractRaw != null)
+            contract=new Contract(module,contractRaw);
+        else
+        {
+            contract=new Contract(module);
+            contract.loadAnnotatedContract();
+        }
 
-        loadRawContract();
-
-        if (contract.size() == 0)
+        if (contract.clauseNum() == 0)
             Main.fatal("empty contract");
         
         gluon.profiling.Timer.start("analysis-threads");

@@ -14,7 +14,7 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon;
+package gluon.analysis.pointsTo;
 
 import soot.Scene;
 import soot.SootClass;

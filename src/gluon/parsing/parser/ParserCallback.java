@@ -14,31 +14,14 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.grammar.parsing.parsingTable.parsingAction;
+package gluon.parsing.parser;
 
-public class ParsingActionAccept
-    extends ParsingAction
+import java.util.List;
+
+import gluon.parsing.parsingTable.parsingAction.ParsingAction;
+import gluon.grammar.NonTerminal;
+
+public interface ParserCallback
 {
-    public ParsingActionAccept()
-    {
-
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return 0x3d057799;
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        return o instanceof ParsingActionAccept;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "a";
-    }
+    public int callback(List<ParsingAction> actions, NonTerminal lca);
 }

@@ -14,11 +14,45 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.grammar.parsing.parsingTable.parsingAction;
+package gluon.parsing.parsingTable.parsingAction;
 
-public abstract class ParsingAction
+public class ParsingActionShift
+    extends ParsingAction
 {
-    public abstract int hashCode();
-    public abstract boolean equals(Object o);
-    public abstract String toString();
+    private int state;
+
+    public ParsingActionShift(int s)
+    {
+        state=s;
+    }
+
+    public int getState()
+    {
+        return state;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return state;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        ParsingActionShift other;
+
+        if (!(o instanceof ParsingActionShift))
+            return false;
+
+        other=(ParsingActionShift)o;
+
+        return other.state == state;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "s"+state;
+    }
 }

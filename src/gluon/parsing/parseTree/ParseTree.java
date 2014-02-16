@@ -14,7 +14,7 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.grammar.parsing.parseTree;
+package gluon.parsing.parseTree;
 
 import java.util.LinkedList;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import gluon.grammar.LexicalElement;
 import gluon.grammar.NonTerminal;
 import gluon.grammar.Terminal;
 
-import gluon.grammar.parsing.parsingTable.parsingAction.*;
+import gluon.parsing.parsingTable.parsingAction.*;
 
 class ParseTreeNode
 {
