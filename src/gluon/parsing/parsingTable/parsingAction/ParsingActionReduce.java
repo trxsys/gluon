@@ -14,45 +14,47 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.grammar.parsing.parsingTable.parsingAction;
+package gluon.parsing.parsingTable.parsingAction;
 
-public class ParsingActionShift
+import gluon.grammar.Production;
+
+public class ParsingActionReduce
     extends ParsingAction
 {
-    private int state;
+    private Production production;
 
-    public ParsingActionShift(int s)
+    public ParsingActionReduce(Production p)
     {
-        state=s;
+        production=p;
     }
 
-    public int getState()
+    public Production getProduction()
     {
-        return state;
+        return production;
     }
 
     @Override
     public int hashCode()
     {
-        return state;
+        return production.hashCode();
     }
 
     @Override
     public boolean equals(Object o)
     {
-        ParsingActionShift other;
+        ParsingActionReduce other;
 
-        if (!(o instanceof ParsingActionShift))
+        if (!(o instanceof ParsingActionReduce))
             return false;
 
-        other=(ParsingActionShift)o;
+        other=(ParsingActionReduce)o;
 
-        return other.state == state;
+        return other.production.equals(production);
     }
 
     @Override
     public String toString()
     {
-        return "s"+state;
+        return "r["+production.toString()+"]";
     }
 }

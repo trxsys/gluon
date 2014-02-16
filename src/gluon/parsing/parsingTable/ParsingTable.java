@@ -14,7 +14,7 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.grammar.parsing.parsingTable;
+package gluon.parsing.parsingTable;
 
 /* This is a implementation of a LR(0) parsing table generator as described in
  * the dragon book (Compilers - Principles, Techniques, & Tools; second edition).
@@ -38,7 +38,7 @@ import gluon.grammar.EOITerminal;
 import gluon.grammar.Production;
 import gluon.grammar.LexicalElement;
 
-import gluon.grammar.parsing.parsingTable.parsingAction.*;
+import gluon.parsing.parsingTable.parsingAction.*;
 
 public class ParsingTable
 {

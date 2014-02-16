@@ -32,8 +32,8 @@ import gluon.analysis.valueEquivalence.ValueM;
 
 import gluon.grammar.Terminal;
 import gluon.grammar.NonTerminal;
-import gluon.grammar.parsing.parsingTable.parsingAction.*;
-import gluon.grammar.parsing.parseTree.ParseTree;
+import gluon.parsing.parsingTable.parsingAction.*;
+import gluon.parsing.parseTree.ParseTree;
 
 import java.util.List;
 import java.util.Map;

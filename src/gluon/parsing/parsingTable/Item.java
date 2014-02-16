@@ -14,7 +14,7 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.grammar.parsing.parsingTable;
+package gluon.parsing.parsingTable;
 
 import gluon.grammar.Production;
 import gluon.grammar.LexicalElement;

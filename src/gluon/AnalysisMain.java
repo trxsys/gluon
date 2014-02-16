@@ -37,17 +37,18 @@ import gluon.analysis.programBehavior.PPNonTerminal;
 import gluon.analysis.atomicMethods.AtomicMethods;
 import gluon.analysis.valueEquivalence.ValueEquivAnalysis;
 import gluon.analysis.valueEquivalence.ValueM;
+import gluon.analysis.pointsTo.PointsToInformation;
 
 import gluon.grammar.Cfg;
 import gluon.grammar.LexicalElement;
 import gluon.grammar.Terminal;
 import gluon.grammar.NonTerminal;
 import gluon.grammar.Production;
-import gluon.grammar.parsing.parsingTable.ParsingTable;
-import gluon.grammar.parsing.parsingTable.parsingAction.*;
-import gluon.grammar.parsing.parser.Parser;
-import gluon.grammar.parsing.parseTree.ParseTree;
-import gluon.grammar.parsing.parser.ParserCallback;
+import gluon.parsing.parsingTable.ParsingTable;
+import gluon.parsing.parsingTable.parsingAction.*;
+import gluon.parsing.parser.Parser;
+import gluon.parsing.parseTree.ParseTree;
+import gluon.parsing.parser.ParserCallback;
 
 import gluon.contract.ContractVisitorExtractWords;
 import gluon.contract.node.*;

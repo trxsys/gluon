@@ -14,7 +14,7 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.grammar.parsing.parser;
+package gluon.parsing.parser;
 
 import java.util.Collection;
 import java.util.List;
@@ -31,8 +31,8 @@ import gluon.grammar.Terminal;
 import gluon.grammar.NonTerminal;
 import gluon.grammar.EOITerminal;
 
-import gluon.grammar.parsing.parsingTable.ParsingTable;
-import gluon.grammar.parsing.parsingTable.parsingAction.*;
+import gluon.parsing.parsingTable.ParsingTable;
+import gluon.parsing.parsingTable.parsingAction.*;
 
 enum ParserStatus
 {

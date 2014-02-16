@@ -16,7 +16,7 @@
 
 package gluon.analysis.valueEquivalence;
 
-import gluon.PointsToInformation;
+import gluon.analysis.pointsTo.PointsToInformation;
 
 import soot.SootMethod;
 import soot.Value;

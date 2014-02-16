@@ -28,7 +28,7 @@ import gluon.grammar.Production;
 import gluon.grammar.LexicalElement;
 import gluon.grammar.NonTerminal;
 
-import gluon.PointsToInformation;
+import gluon.analysis.pointsTo.PointsToInformation;
 
 import java.util.Set;
 import java.util.HashSet;
