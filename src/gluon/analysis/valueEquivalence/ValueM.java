@@ -62,7 +62,7 @@ public class ValueM
 
         other=(ValueM)o;
 
-        /* this case is not handled well by soot */
+        /* This case is not handled well by soot */
         if (isLocal())
             return method.getSignature().equals(other.method.getSignature())
                 && getValueAsLocal().getName().equals(other.getValueAsLocal().getName());
@@ -80,7 +80,7 @@ public class ValueM
 
         other=(ValueM)o;
 
-        /* this case is not handled well by soot */
+        /* This case is not handled well by soot */
         if (isLocal())
             return method.getSignature().equals(other.method.getSignature())
                 && getValueAsLocal().getName().equals(other.getValueAsLocal().getName());
@@ -93,7 +93,7 @@ public class ValueM
     {
         int vh;
 
-        /* this case is not handled well by soot */
+        /* This case is not handled well by soot */
         vh=isLocal() ? getValueAsLocal().getName().hashCode()
                      : value.hashCode();
 

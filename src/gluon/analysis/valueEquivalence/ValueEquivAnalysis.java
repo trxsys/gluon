@@ -28,12 +28,14 @@ import soot.jimple.Stmt;
 import soot.jimple.AssignStmt;
 import soot.jimple.InvokeExpr;
 import soot.jimple.FieldRef;
+import soot.jimple.ArrayRef;
 
 import soot.jimple.spark.pag.AllocNode;
 
 import java.util.Queue;
 import java.util.Set;
 import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
@@ -118,18 +120,9 @@ public class ValueEquivAnalysis
         uValue=localAssigns.get(u);
         vValue=localAssigns.get(v);
 
-        /*
-        System.out.println();
-        System.out.println(u+" "+uValue+"\t"+v+" "+vValue);
-        */
-
         if (uValue == null || vValue == null
             || !(uValue instanceof FieldRef) || !(vValue instanceof FieldRef))
             return false;
-
-        /*
-        System.out.println("blah");
-        */
 
         uField=((FieldRef)uValue).getField();
         vField=((FieldRef)vValue).getField();
@@ -141,8 +134,8 @@ public class ValueEquivAnalysis
     {
         Value uValue;
         Value vValue;
-        SootField uField;
-        SootField vField;
+        Value uBase;
+        Value vBase;
 
         analyzeMethod(u.getMethod());
         analyzeMethod(v.getMethod());
@@ -151,16 +144,23 @@ public class ValueEquivAnalysis
         vValue=localAssigns.get(v);
 
         if (uValue == null || vValue == null
-            || !(uValue instanceof FieldRef) || !(vValue instanceof FieldRef))
+            || !(uValue instanceof ArrayRef) || !(vValue instanceof ArrayRef))
             return false;
-        
-        /* TODO */
 
-        return false;
+        uBase=((ArrayRef)uValue).getBase();
+        vBase=((ArrayRef)vValue).getBase();
+
+        assert !(uBase instanceof ArrayRef) && !(vBase instanceof ArrayRef);
+        return equivTo(new ValueM(u.getMethod(),uBase),
+                       new ValueM(v.getMethod(),vBase));
     }
+
 
     public boolean equivTo(ValueM u, ValueM v)
     {
+        Value ua;
+        Value va;
+
         if (u == null || v == null)
             return u == v;
 

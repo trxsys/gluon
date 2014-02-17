@@ -73,6 +73,16 @@ public class Main
 
         m.ai(vec[0]);
         m.bi(vec[0]);
+
+        test6();
+    }
+
+    public void test6()
+    {
+        int[][] vec={{1},{7}};
+
+        m.ai(vec[0][0]);
+        m.bi(vec[0][0]);
     }
 
     public static void main(String[] args)
