@@ -1,35 +1,29 @@
 Warning: java.dyn.InvokeDynamic is a phantom class!
 Checking thread Main.main():
 
-  Verifying word getFreeBlockIndex markAsAllocatedBlock:
+  Verifying word X=getFreeBlockIndex markAsAllocatedBlock(X):
 
     No occurrences
 
 Checking thread TestThread1.run():
 
-  Verifying word getFreeBlockIndex markAsAllocatedBlock:
+  Verifying word X=getFreeBlockIndex markAsAllocatedBlock(X):
 
-      Method: TestThread1.run()
-      Calls Location: AllocationVector.java:43 AllocationVector.java:45
-      Atomic: NO
-
-      Method: TestThread1.alloc_block()
-      Calls Location: AllocationVector.java:43 AllocationVector.java:45
-      Atomic: NO
+    No occurrences
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.006s
-                             total-parsing      0.078s
-                                     total     33.282s
-                       build-parsing-table      0.098s
-                                 soot-init     33.048s
-                         analysis-behavior      0.036s
+             analysis-behavior-grammar-opt      0.008s
+                             total-parsing      0.199s
+                                     total     38.938s
+                       build-parsing-table      0.094s
+                                 soot-init     38.583s
+                         analysis-behavior      0.038s
 
 Profiling Vars:
-          parsing-table-state-number-total    590
-                            parse-branches   2396
-                                 cfg-nodes    839
-                               parse-trees      2
+          parsing-table-state-number-total    650
+            discarded-trees-args-not-match   1194
+                            parse-branches   4550
+                                 cfg-nodes    882
                          alloc-sites-total      8
-                 grammar-productions-total   1545
+                 grammar-productions-total   1644

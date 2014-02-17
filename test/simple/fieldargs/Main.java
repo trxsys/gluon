@@ -4,7 +4,8 @@ import test.common.Atomic;
 import test.common.Contract;
 
 @Contract(clauses="a(X) b(X);"
-                 +"ai(X) bi(X)")
+                 +"ai(X) bi(X);"
+                 +"X=ai bi(X)")
 class Module
 {
     public Module m;
@@ -12,7 +13,7 @@ class Module
     public Module() { }
     public void a(String bar) { }
     public void b(String foo) { }
-    public void ai(int bar) { }
+    public int ai(int bar) { return 4; }
     public void bi(int foo) { }
 }
 
@@ -83,6 +84,15 @@ public class Main
 
         m.ai(vec[0][0]);
         m.bi(vec[0][0]);
+
+        test7(10);
+    }
+
+    public void test7(int a)
+    {
+        vvi[a]=m.ai(8);
+        if (vvi[a] > 0)
+            m.bi(vvi[a]);
     }
 
     public static void main(String[] args)

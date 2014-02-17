@@ -8,7 +8,7 @@ import test.common.Contract;
  * BUG DOCUMENTATION: There is a synchronization GAP between the methods
  * "getFreeBlockIndex" and "markAsAllocatedBlock", in which anything can be done.
  */
-@Contract(clauses ="X=getFreeBlockIndex markAsAllocatedBlock(X);")
+@Contract(clauses ="getFreeBlockIndex markAsAllocatedBlock;")
 public class AllocationVector {
 	/**
 	 * Character vector which holds information about allocated and free blocks,

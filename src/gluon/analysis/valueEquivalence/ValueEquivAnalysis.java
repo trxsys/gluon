@@ -167,11 +167,11 @@ public class ValueEquivAnalysis
         if (u.basicEquivTo(v))
             return true;
 
-        if (canPointToSameObject(u,v))
-            return true;
-
         if (u.isLocal() && v.isLocal())
         {
+            if (canPointToSameObject(u,v))
+                return true;
+
             if (containsSameField(u,v))
                 return true;
 
