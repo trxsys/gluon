@@ -31,4 +31,7 @@ public abstract class NonTerminal
 
     @Override
     public abstract NonTerminal clone();
+
+    /* Prevents any simplification that removes this nonterminal */
+    public abstract boolean noRemove();
 }

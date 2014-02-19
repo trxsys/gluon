@@ -319,6 +319,8 @@ public class ProgramBehaviorAnalysis
         PPNonTerminal head=new PPNonTerminal(alias(method),method);
         Production production=new Production(head);
         LexicalElement body=new PPNonTerminal(alias(entryPoint),method);
+
+        head.setNoRemove();
         
         production.appendToBody(body);
         

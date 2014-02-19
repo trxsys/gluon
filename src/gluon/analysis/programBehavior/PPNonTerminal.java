@@ -22,16 +22,29 @@ public class PPNonTerminal
     extends gluon.grammar.NonTerminal
 {
     private SootMethod method;
+    private boolean noRemove;
 
     public PPNonTerminal(String s, SootMethod m)
     {
         super(s);
         method=m;
+        noRemove=false;
     }
 
     public SootMethod getMethod()
     {
         return method;
+    }
+
+    public void setNoRemove()
+    {
+        noRemove=true;
+    }
+
+    @Override
+    public boolean noRemove()
+    {
+        return noRemove;
     }
     
     @Override

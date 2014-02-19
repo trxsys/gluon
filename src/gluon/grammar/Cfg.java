@@ -217,7 +217,8 @@ public class Cfg
                 Production prod=prods.iterator().next();
                 LexicalElement body; 
                 
-                if (prod.getBody().size() > 1 || prod.getHead().equals(start))
+                if (prod.getBody().size() > 1 || prod.getHead().equals(start)
+                    || prod.getHead().noRemove())
                     continue;
                 
                 assert prod.getBody().size() <= 1;
