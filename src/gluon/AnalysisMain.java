@@ -26,7 +26,10 @@ import soot.Unit;
 import soot.jimple.spark.pag.AllocNode;
 
 import gluon.analysis.thread.ThreadAnalysis;
-import gluon.analysis.programBehavior.ProgramBehaviorAnalysis;
+import gluon.analysis.programBehavior.BehaviorAnalysis;
+import gluon.analysis.programBehavior.WholeProgramBehaviorAnalysis;
+import gluon.analysis.programBehavior.ClassBehaviorAnalysis;
+import gluon.analysis.programBehavior.BehaviorAnalysis;
 import gluon.analysis.programBehavior.PPTerminal;
 import gluon.analysis.programBehavior.PPNonTerminal;
 import gluon.analysis.atomicMethods.AtomicMethods;
@@ -122,10 +125,9 @@ public class AnalysisMain
         return relevantThreads;
     }
 
-    private int checkThreadWordParse(SootMethod thread,
-                                     WordInstance wordInst,
-                                     Set<WordInstance> reported,
-                                     ValueEquivAnalysis vEquiv)
+    private int checkWordInstance(WordInstance wordInst,
+                                  Set<WordInstance> reported,
+                                  ValueEquivAnalysis vEquiv)
     {
         SootMethod lcaMethod;
         boolean atomic;
@@ -183,12 +185,17 @@ public class AnalysisMain
 
         moduleAllocSites=PointsToInformation.getModuleAllocationSites(module);
 
-        /* for static modules */
+        /* Represents a static module */
         moduleAllocSites.add(null);
 
         for (soot.jimple.spark.pag.AllocNode as: moduleAllocSites)
         {
-            Parser parser=makeParser(thread,as);
+            Parser parser;
+
+            parser=makeParser(new WholeProgramBehaviorAnalysis(thread,module,as));
+
+            dprintln("Created parser for thread "+thread.getName()
+                     +"(), allocation site "+as+".");
 
             gluon.profiling.Timer.start("final:total-parsing");
             gluon.profiling.Timer.start("parsing");
@@ -203,7 +210,7 @@ public class AnalysisMain
                                                   word,actions);
 
                         gluon.profiling.Timer.stop("parsing");
-                        ret=checkThreadWordParse(thread,wordInst,reported,vEquiv);
+                        ret=checkWordInstance(wordInst,reported,vEquiv);
                         gluon.profiling.Timer.start("parsing");
 
                         
@@ -224,18 +231,13 @@ public class AnalysisMain
         }
     }
 
-    private Parser makeParser(SootMethod thread, AllocNode as)
+    private Parser makeParser(BehaviorAnalysis programBehavior)
     {
-        ProgramBehaviorAnalysis programBehavior
-            =new ProgramBehaviorAnalysis(thread,module,as);
         ParsingTable parsingTable;
         Cfg grammar;
         
-        dprintln(" Checking allocsite "+as);
-        
         gluon.profiling.Profiling.inc("final:alloc-sites-total");
         
-        programBehavior=new ProgramBehaviorAnalysis(thread,module,as);
 
         gluon.profiling.Timer.start("final:analysis-behavior");
         programBehavior.analyze();
@@ -260,7 +262,7 @@ public class AnalysisMain
     
     private void checkThread(SootMethod thread)
     {
-        ValueEquivAnalysis vEquiv=new ValueEquivAnalysis(thread);
+        ValueEquivAnalysis vEquiv=new ValueEquivAnalysis();
 
         System.out.println("Checking thread "
                            +thread.getDeclaringClass().getShortName()
@@ -294,6 +296,80 @@ public class AnalysisMain
         contractRaw=contract;
     }
 
+    private void checkClassWord(final SootClass c,
+                                final List<Terminal> word,
+                                final ValueEquivAnalysis vEquiv)
+    {
+        final Set<WordInstance> reported=new HashSet<WordInstance>();
+        Collection<AllocNode> moduleAllocSites;
+
+        System.out.println("  Verifying word "+WordInstance.wordStr(word)+":");
+        System.out.println();
+
+        moduleAllocSites=PointsToInformation.getModuleAllocationSites(module);
+
+        /* Represents a static module */
+        moduleAllocSites.add(null);
+
+        for (soot.jimple.spark.pag.AllocNode as: moduleAllocSites)
+        {
+            Parser parser=makeParser(new ClassBehaviorAnalysis(c,module,as));
+
+            dprintln("Created parser for class "+c.getName()
+                     +", allocation site "+as+".");
+
+            gluon.profiling.Timer.start("final:total-parsing");
+            gluon.profiling.Timer.start("parsing");
+            parser.parse(word, new ParserCallback(){
+                    public int callback(List<ParsingAction> actions,
+                                        NonTerminal lca)
+                    {
+                        int ret;
+                        WordInstance wordInst;
+                        
+                        wordInst=new WordInstance((PPNonTerminal)lca,
+                                                  word,actions);
+
+                        gluon.profiling.Timer.stop("parsing");
+                        ret=checkWordInstance(wordInst,reported,vEquiv);
+                        gluon.profiling.Timer.start("parsing");
+
+                        
+                        if (ret <= 0)
+                            System.out.println();
+                        
+                        return ret < 0 ? -1 : 0;
+                    }
+                });
+            gluon.profiling.Timer.stop("parsing");
+            gluon.profiling.Timer.stop("final:total-parsing");
+        }
+
+        if (reported.size() == 0)
+        {
+            System.out.println("    No occurrences");
+            System.out.println();
+        }
+    }
+
+    private void checkClass(SootClass c)
+    {
+        ValueEquivAnalysis vEquiv=new ValueEquivAnalysis();
+
+        if (c.isJavaLibraryClass() && !gluon.Main.WITH_JAVA_LIB)
+            return;
+
+        if (c.getMethodCount() == 0)
+            return;
+        
+        System.out.println("Checking class "
+                           +c.getShortName()+":");
+        System.out.println();
+
+        for (List<Terminal> word: contract.getWords())
+            checkClassWord(c,word,vEquiv);
+    }
+
     @Override
     protected void internalTransform(String paramString, 
                                      @SuppressWarnings("rawtypes") java.util.Map paramMap) 
@@ -304,6 +380,8 @@ public class AnalysisMain
         assert scene.getMainMethod() != null;
 
         gluon.profiling.Timer.stop("final:soot-init");
+
+        dprintln("Started MainAnalysis.");
 
         module=getModuleClass();
 
@@ -323,18 +401,28 @@ public class AnalysisMain
 
         if (contract.clauseNum() == 0)
             Main.fatal("empty contract");
+
+        dprintln("Loaded Contract.");
         
         gluon.profiling.Timer.start("analysis-threads");
         threads=getThreads();
         gluon.profiling.Timer.stop("analysis-threads");
+
+        dprintln("Obtained "+threads.size()+" thread entry points.");
 
         gluon.profiling.Profiling.set("threads",threads.size());
 
         gluon.profiling.Timer.start("analysis-atomicity");
         runMethodAtomicityAnalysis(threads);
         gluon.profiling.Timer.stop("analysis-atomicity");
+
+        dprintln("Ran method atomicity analysis.");
         
-        for (SootMethod m: threads)
-            checkThread(m);
+        if (Main.CLASS_SCOPE)
+            for (SootClass c: scene.getClasses())
+                checkClass(c);
+        else
+            for (SootMethod m: threads)
+                checkThread(m);
     }
 }

@@ -69,6 +69,10 @@ public class PPNonTerminal
     @Override
     public PPNonTerminal clone()
     {
-        return new PPNonTerminal(super.name,method);
+        PPNonTerminal clone=new PPNonTerminal(super.name,method);
+
+        clone.noRemove=noRemove;
+
+        return clone;
     }
 }

@@ -73,7 +73,7 @@ public class Cfg
         
         lexicalElements.add(p.getHead());
         nonterminals.add(p.getHead());
-        
+
         for (LexicalElement e: p.getBody())
         {
             if (e instanceof NonTerminal)

@@ -46,6 +46,7 @@ public class Main
     public static boolean TIME=false;
     public static boolean PROFILING_VARS=false;
     public static boolean NO_GRAMMAR_OPTIMIZE=false;
+    public static boolean CLASS_SCOPE=false;
 
     public static void fatal(String error)
     {
@@ -72,13 +73,15 @@ public class Main
                            +"Disable grammar optimization");
 		System.out.println("  -o, --contract <contract>       "
                            +"Module's contract (overrides annotation)");
+		System.out.println("  -s, --class-scope               "
+                           +"Restrict analysis to each class");
 		System.out.println("  -h, --help                      "
                            +"Display this help and exit");
     }
     
     private static void parseArguments(String[] args)
     {
-        LongOpt[] options = new LongOpt[8];
+        LongOpt[] options = new LongOpt[9];
         
         options[0] = new LongOpt("help", LongOpt.NO_ARGUMENT, null, 'h');
         options[1] = new LongOpt("classpath", LongOpt.REQUIRED_ARGUMENT,
@@ -91,8 +94,9 @@ public class Main
         options[5] = new LongOpt("prof-vars", LongOpt.NO_ARGUMENT, null, 'p');
         options[6] = new LongOpt("no-grammar-opt", LongOpt.NO_ARGUMENT, null, 'n');
         options[7] = new LongOpt("contract", LongOpt.REQUIRED_ARGUMENT, null, 'o');
+        options[8] = new LongOpt("class-scope", LongOpt.NO_ARGUMENT, null, 's');
 
-        Getopt g = new Getopt(PROGNAME, args, "hc:m:o:jtpn", options);
+        Getopt g = new Getopt(PROGNAME, args, "hc:m:o:jtpns", options);
         int c;
         
         g.setOpterr(true);
@@ -139,6 +143,11 @@ public class Main
             case 'o': 
                 {
                     contract=g.getOptarg();
+                    break;
+                }
+            case 's': 
+                {
+                    CLASS_SCOPE=true;
                     break;
                 }
             }
@@ -210,7 +219,7 @@ public class Main
         
         PackManager.v().getPack("wstp").add(t);
 
-        SootClass c = Scene.v().loadClassAndSupport(mainClassName);
+        SootClass c=Scene.v().loadClassAndSupport(mainClassName);
         
         Scene.v().addBasicClass(mainClassName,SootClass.SIGNATURES);
         Scene.v().loadNecessaryClasses();

@@ -115,6 +115,8 @@ public class Contract
 
         for (List<PPTerminal> word: visitorWords.getWords())
         {
+            List<Terminal> contractWord;
+
             for (PPTerminal t: word)
                 if (module.declaresMethodByName(t.getName()))
                 {
@@ -134,10 +136,8 @@ public class Contract
                 }
                 else
                     Main.fatal(t.getName()+": no such method!");
-            
 
-            List<Terminal> contractWord
-                =new ArrayList<Terminal>(word.size()+1);
+            contractWord=new ArrayList<Terminal>(word.size()+1);
 
             contractWord.addAll(word);
             contractWord.add(new gluon.grammar.EOITerminal());
