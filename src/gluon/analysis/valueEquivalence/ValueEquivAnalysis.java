@@ -47,15 +47,11 @@ import java.util.HashMap;
 
 public class ValueEquivAnalysis
 {
-    private SootMethod entryMethod;
-
     private Map<ValueM,Value> localAssigns;
     private Set<SootMethod> analizedMethods;
 
-    public ValueEquivAnalysis(SootMethod method)
+    public ValueEquivAnalysis()
     {
-        entryMethod=method;
-        
         localAssigns=new HashMap<ValueM,Value>();
         analizedMethods=new HashSet<SootMethod>();
     }

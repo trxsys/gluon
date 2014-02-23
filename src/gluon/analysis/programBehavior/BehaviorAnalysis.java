@@ -101,30 +101,22 @@ class NonTerminalAliasCreator
     }
 }
 
-public class ProgramBehaviorAnalysis
+public abstract class BehaviorAnalysis
 {
     private static final boolean DEBUG=false;
 
     private SootClass module; /* module under analysis */
-    private SootMethod entryMethod;
     /* Allocation site of the "object" under analysis.
      * null if we are performing the analysis for a static module
      */
     private AllocNode allocSite;
+    protected Cfg grammar;
 
-    private Cfg grammar;
-    
-    private Set<Unit> visited;
-    
+    protected Set<Unit> visited;
     private NonTerminalAliasCreator aliasCreator;
     
-    private Queue<SootMethod> methodQueue; /* queue of methods to analyse */
-    private Set<SootMethod> enqueuedMethods;
-    
-    public ProgramBehaviorAnalysis(SootMethod method, SootClass modClass,
-                                   AllocNode aSite)
+    public BehaviorAnalysis(SootClass modClass, AllocNode aSite)
     {
-        entryMethod=method;
         module=modClass;
         allocSite=aSite;
 
@@ -133,18 +125,15 @@ public class ProgramBehaviorAnalysis
         visited=null;
         
         aliasCreator=new NonTerminalAliasCreator();
-        
-        methodQueue=null;
-        enqueuedMethods=null;
     }
     
-    private void dprintln(String s)
+    protected void dprintln(String s)
     {
         if (DEBUG)
             System.out.println(this.getClass().getSimpleName()+": "+s);
     }
     
-    private String alias(Object o)
+    protected String alias(Object o)
     {
         return aliasCreator.makeAlias(o);
     }
@@ -207,19 +196,19 @@ public class ProgramBehaviorAnalysis
         return ModCall.NEVER;
     }
     
+    protected abstract void foundMethodCall(SootMethod method);
+
+    protected abstract boolean ignoreMethodCall(SootMethod method);
+    
     private void analyzeUnit(SootMethod method, Unit unit, UnitGraph cfg)
     {
         LexicalElement prodBodyPrefix=null;
         boolean addProdSkipPrefix=false;
-        
+
         if (visited.contains(unit))
             return; // Unit already taken care of
 
-        gluon.profiling.Profiling.inc("cfg-nodes."
-                                  +entryMethod.getDeclaringClass().getShortName()
-                                  +"."+entryMethod.getName());
         gluon.profiling.Profiling.inc("final:cfg-nodes");
-
         
         visited.add(unit);
         
@@ -236,13 +225,10 @@ public class ProgramBehaviorAnalysis
                     && (!calledMethod.isJavaLibraryMethod()
                         || gluon.Main.WITH_JAVA_LIB))
                 {
-                    prodBodyPrefix=new PPNonTerminal(alias(calledMethod),method); 
-                    
-                    if (!enqueuedMethods.contains(calledMethod))
-                    {
-                        methodQueue.add(calledMethod);
-                        enqueuedMethods.add(calledMethod);
-                    }
+                    foundMethodCall(calledMethod);
+
+                    if (!ignoreMethodCall(calledMethod))
+                        prodBodyPrefix=new PPNonTerminal(alias(calledMethod),method); 
                 }
                 break;
             }
@@ -327,16 +313,17 @@ public class ProgramBehaviorAnalysis
         grammar.addProduction(production);
     }
     
-    // Adds the patterns of method to grammar
-    private void analyzeMethod(SootMethod method)
+    /* Adds the patterns of method to grammar
+     */
+    protected PPNonTerminal analyzeMethod(SootMethod method)
     {
         UnitGraph cfg;
         
-        // dprintln("Analyzing method "+method);
+        dprintln("Analyzing method "+method);
         
         assert method.hasActiveBody() : "No active body";
         
-        cfg = new BriefUnitGraph(method.getActiveBody());
+        cfg=new BriefUnitGraph(method.getActiveBody());
         
         assert cfg.getHeads().size() != 0
             : "There are no entry points of the cfg of method "+method;
@@ -346,36 +333,22 @@ public class ProgramBehaviorAnalysis
             addMethodToHeadProduction(method,head);
             analyzeUnit(method,head,cfg);
         }
+
+        return new PPNonTerminal(alias(method),method);
     }
-    
-    private void analyzeReachableMethods(SootMethod entryMethod)
+        
+    public Cfg getGrammar()
     {
-        visited=new HashSet<Unit>();
-        
-        methodQueue=new LinkedList<SootMethod>();
-        enqueuedMethods=new HashSet<SootMethod>();
-        
-        methodQueue.add(entryMethod);
-        enqueuedMethods.add(entryMethod);
-        
-        while (methodQueue.size() > 0)
-        {
-            SootMethod method=methodQueue.poll();
-            
-            analyzeMethod(method);
-        }
-        
-        enqueuedMethods=null;
-        methodQueue=null;
-        
-        visited=null;
+        assert grammar.getStart() != null : "analyze() must first be called";
+
+        return grammar;
     }
-    
-    private void addNewStart()
+
+    protected void addNewStart()
     {
         NonTerminal oldStart=grammar.getStart();
         NonTerminal newStart=new PPNonTerminal(oldStart.toString()+'\'',
-                                               entryMethod);
+                                               null);
         Production prod=new Production(newStart);
 
         prod.appendToBody(oldStart);
@@ -384,41 +357,5 @@ public class ProgramBehaviorAnalysis
         grammar.setStart(newStart);
     }
 
-    public void analyze()
-    {
-        analyzeReachableMethods(entryMethod);
-
-        grammar.setStart(new PPNonTerminal(alias(entryMethod),entryMethod));
-
-        if (!gluon.Main.NO_GRAMMAR_OPTIMIZE)
-        {
-            gluon.profiling.Timer.start("final:analysis-behavior-grammar-opt");
-            grammar.optimize();
-            gluon.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
-        }
-
-        gluon.profiling.Timer.start("analysis-behavior-grammar-add-subwords");
-        grammar.subwordClosure();
-        gluon.profiling.Timer.stop("analysis-behavior-grammar-add-subwords");
-
-        if (!gluon.Main.NO_GRAMMAR_OPTIMIZE)
-        {
-            gluon.profiling.Timer.start("final:analysis-behavior-grammar-opt");
-            grammar.optimize();
-            gluon.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
-        }
-
-        addNewStart();
-
-        dprintln("Grammar: "+grammar);
-
-        assert grammar.hasUniqueStart();
-    }
-    
-    public Cfg getGrammar()
-    {
-        assert grammar.getStart() != null : "analyze() must first be called";
-
-        return grammar;
-    }
+    public abstract void analyze();
 }
