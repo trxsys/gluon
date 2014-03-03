@@ -29,6 +29,7 @@ import gluon.grammar.LexicalElement;
 import gluon.grammar.NonTerminal;
 
 import gluon.analysis.pointsTo.PointsToInformation;
+import gluon.analysis.monitor.MonitorAnalysis;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -54,6 +55,8 @@ import soot.jimple.Stmt;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InstanceInvokeExpr;
 import soot.jimple.StaticInvokeExpr;
+import soot.jimple.EnterMonitorStmt;
+import soot.jimple.ExitMonitorStmt;
 
 import soot.jimple.spark.pag.AllocNode;
 
@@ -114,6 +117,8 @@ public abstract class BehaviorAnalysis
 
     protected Set<Unit> visited;
     private NonTerminalAliasCreator aliasCreator;
+
+    private MonitorAnalysis monitorAnalysis;
     
     public BehaviorAnalysis(SootClass modClass, AllocNode aSite)
     {
@@ -121,6 +126,8 @@ public abstract class BehaviorAnalysis
         allocSite=aSite;
 
         grammar=new Cfg();
+
+        monitorAnalysis=null;
         
         visited=null;
         
@@ -133,6 +140,18 @@ public abstract class BehaviorAnalysis
             System.out.println(this.getClass().getSimpleName()+": "+s);
     }
     
+    /* Set the grammar generation to handle synchronized blocks.
+     */
+    public void setSynchMode(MonitorAnalysis monAnalysis)
+    {
+        monitorAnalysis=monAnalysis;
+    }
+
+    public boolean isSynchMode()
+    {
+        return monitorAnalysis != null;
+    }
+
     protected String alias(Object o)
     {
         return aliasCreator.makeAlias(o);
@@ -199,8 +218,77 @@ public abstract class BehaviorAnalysis
     protected abstract void foundMethodCall(SootMethod method);
 
     protected abstract boolean ignoreMethodCall(SootMethod method);
+
+    private void analyzeSuccessors(SootMethod method, UnitGraph cfg, Unit unit)
+    {
+        for (Unit succ: cfg.getSuccsOf(unit))
+            analyzeUnit(method,cfg,succ);
+    }
+
+    /* If we have the following CFG:
+     *
+     *        A  monstart
+     *              ↓
+     *           B  b
+     *              ↓
+     *              ⋮
+     *              ↓
+     *        C  monend
+     *              ↓
+     *           D  d
+     *
+     * We will generate:
+     * 
+     *   A  → A@ D
+     *   A@ → B
+     */
+    private void analyzeUnitEnterMonitor(SootMethod method, UnitGraph cfg,
+                                         EnterMonitorStmt unit)
+    {
+        /* Add A  → A@ D */
+        for (ExitMonitorStmt exitmon: monitorAnalysis.getExitMonitor(unit))
+        {
+            assert cfg.getSuccsOf(exitmon).size() > 0;
+
+            for (Unit exitmonsucc: cfg.getSuccsOf(exitmon))
+            {
+                PPNonTerminal head=new PPNonTerminal(alias(unit),method);
+                Production production=new Production(head);
+
+                production.appendToBody(new PPNonTerminal(alias(unit)+"@",method));
+
+                production.appendToBody(new PPNonTerminal(alias(exitmonsucc),
+                                                          method));
+
+                grammar.addProduction(production);
+            }
+        }
+
+        /* Add A@ → B */
+        for (Unit succ: cfg.getSuccsOf(unit))
+        {
+            PPNonTerminal head=new PPNonTerminal(alias(unit)+"@",method);
+            Production production=new Production(head);
+
+            production.appendToBody(new PPNonTerminal(alias(succ),method));
+
+            grammar.addProduction(production);
+        }
+
+        analyzeSuccessors(method,cfg,unit);
+    }
     
-    private void analyzeUnit(SootMethod method, Unit unit, UnitGraph cfg)
+    /* An exitmonitor just reduce to ε. See analyzeUnitEnterMonitor() comment.
+     */
+    private void analyzeUnitExitMonitor(SootMethod method, UnitGraph cfg,
+                                        ExitMonitorStmt unit)
+    {
+        addUnitToEmptyProduction(unit,method);
+
+        analyzeSuccessors(method,cfg,unit);
+    }
+
+    private void analyzeUnit(SootMethod method, UnitGraph cfg, Unit unit)
     {
         LexicalElement prodBodyPrefix=null;
         boolean addProdSkipPrefix=false;
@@ -211,6 +299,20 @@ public abstract class BehaviorAnalysis
         gluon.profiling.Profiling.inc("final:cfg-nodes");
         
         visited.add(unit);
+
+        if (isSynchMode())
+        {
+            if (unit instanceof EnterMonitorStmt)
+            {
+                analyzeUnitEnterMonitor(method,cfg,(EnterMonitorStmt)unit);
+                return;
+            }
+            else if (unit instanceof ExitMonitorStmt)
+            {
+                analyzeUnitExitMonitor(method,cfg,(ExitMonitorStmt)unit);
+                return;
+            }
+        }
         
         if (((Stmt)unit).containsInvokeExpr())
         {
@@ -262,8 +364,7 @@ public abstract class BehaviorAnalysis
             addUnitToEmptyProduction(unit,method);
         }
 
-        for (Unit succ: cfg.getSuccsOf(unit))
-            analyzeUnit(method,succ,cfg);
+        analyzeSuccessors(method,cfg,unit);
     }
 
     private void addUnitToTwoLexicalElements(Unit unit,
@@ -331,7 +432,7 @@ public abstract class BehaviorAnalysis
         for (Unit head: cfg.getHeads())
         {
             addMethodToHeadProduction(method,head);
-            analyzeUnit(method,head,cfg);
+            analyzeUnit(method,cfg,head);
         }
 
         return new PPNonTerminal(alias(method),method);
