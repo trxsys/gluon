@@ -56,7 +56,7 @@ public class PointsToInformation
         {
             AllocNode an=(AllocNode)it.next();
 
-            if (an.getType().getNumber() == module.getType().getNumber())
+            if (an.getType().equals(module.getType()))
                 allocSites.add(an);
         }
 

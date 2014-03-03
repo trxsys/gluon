@@ -192,15 +192,26 @@ public class Main
 
         Options.v().set_allow_phantom_refs(true);
         Options.v().set_keep_line_number(true);
-        
-        /* for line number information */
+
+        /*
+        {
+            java.util.ArrayList l=new java.util.ArrayList();
+            l.add("org.apache.catalina.core.ApplicationContext");
+            Options.v().set_dynamic_class(l);
+
+            //if (CLASS_SCOPE)
+            //    PhaseOptions.v().setPhaseOption("cg","all-reachable:true");
+        }
+        */
+
+        /* For line number information */
         PhaseOptions.v().setPhaseOption("tag.ln","on");
 
-        /* soot bug workaround */
-        // PhaseOptions.v().setPhaseOption("jb", "use-original-names:true");
-        PhaseOptions.v().setPhaseOption("jb.ulp", "enabled:false");
+        /* Soot bug workaround */
+        // PhaseOptions.v().setPhaseOption("jb","use-original-names:true");
+        PhaseOptions.v().setPhaseOption("jb.ulp","enabled:false");
 
-        /* for points-to analysis */
+        /* For points-to analysis */
         PhaseOptions.v().setPhaseOption("cg.spark","enabled:true");
 
         if (false)
@@ -210,7 +221,7 @@ public class Main
                                        +java.io.File.pathSeparator
                                        +classPath);
         
-        t=new Transform("wstp.x",AnalysisMain.instance());
+        t=new Transform("wstp.gluon",AnalysisMain.instance());
         
         AnalysisMain.instance().setModuleToAnalyze(moduleClassName);
 
@@ -226,7 +237,7 @@ public class Main
         
         Scene.v().setMainClass(c);
 
-        /* points-to analises */
+        /* Points-to analises */
         SparkTransformer.v().transform("",getSparkOptions());
 
         PackManager.v().runPacks();
