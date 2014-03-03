@@ -206,7 +206,7 @@ public abstract class BehaviorAnalysis
         boolean addProdSkipPrefix=false;
 
         if (visited.contains(unit))
-            return; // Unit already taken care of
+            return; /* Unit already taken care of */
 
         gluon.profiling.Profiling.inc("final:cfg-nodes");
         
