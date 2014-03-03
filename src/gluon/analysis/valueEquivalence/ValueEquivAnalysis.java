@@ -44,7 +44,6 @@ import java.util.HashMap;
  * before they are used, and are using SSA we don't need a full data-flow
  * analysis.
  */
-
 public class ValueEquivAnalysis
 {
     private Map<ValueM,Value> localAssigns;
