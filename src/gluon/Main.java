@@ -47,6 +47,7 @@ public class Main
     public static boolean PROFILING_VARS=false;
     public static boolean NO_GRAMMAR_OPTIMIZE=false;
     public static boolean CLASS_SCOPE=false;
+    public static boolean ATOMICITY_SYNCH=false;
 
     public static void fatal(String error)
     {
@@ -75,13 +76,15 @@ public class Main
                            +"Module's contract (overrides annotation)");
 		System.out.println("  -s, --class-scope               "
                            +"Restrict analysis to each class");
+		System.out.println("  -y, --synch                     "
+                           +"Atomicity is based on java synchronized");
 		System.out.println("  -h, --help                      "
                            +"Display this help and exit");
     }
     
     private static void parseArguments(String[] args)
     {
-        LongOpt[] options = new LongOpt[9];
+        LongOpt[] options = new LongOpt[10];
         
         options[0] = new LongOpt("help", LongOpt.NO_ARGUMENT, null, 'h');
         options[1] = new LongOpt("classpath", LongOpt.REQUIRED_ARGUMENT,
@@ -95,6 +98,7 @@ public class Main
         options[6] = new LongOpt("no-grammar-opt", LongOpt.NO_ARGUMENT, null, 'n');
         options[7] = new LongOpt("contract", LongOpt.REQUIRED_ARGUMENT, null, 'o');
         options[8] = new LongOpt("class-scope", LongOpt.NO_ARGUMENT, null, 's');
+        options[9] = new LongOpt("synch", LongOpt.NO_ARGUMENT, null, 'y');
 
         Getopt g = new Getopt(PROGNAME, args, "hc:m:o:jtpns", options);
         int c;
@@ -148,6 +152,11 @@ public class Main
             case 's': 
                 {
                     CLASS_SCOPE=true;
+                    break;
+                }
+            case 'y': 
+                {
+                    ATOMICITY_SYNCH=true;
                     break;
                 }
             }
