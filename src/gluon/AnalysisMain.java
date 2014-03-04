@@ -32,7 +32,7 @@ import gluon.analysis.programBehavior.ClassBehaviorAnalysis;
 import gluon.analysis.programBehavior.BehaviorAnalysis;
 import gluon.analysis.programBehavior.PPTerminal;
 import gluon.analysis.programBehavior.PPNonTerminal;
-import gluon.analysis.atomicMethods.AtomicMethods;
+import gluon.analysis.atomicity.AtomicityAnalysis;
 import gluon.analysis.valueEquivalence.ValueEquivAnalysis;
 import gluon.analysis.valueEquivalence.ValueM;
 import gluon.analysis.monitor.MonitorAnalysis;
@@ -69,9 +69,9 @@ public class AnalysisMain
     private static final AnalysisMain instance=new AnalysisMain();
     
     private Scene scene;
-    private String moduleName; // name of the module to analyze
-    private SootClass module;  // class of the module to analyze
-    private AtomicMethods atomicMethods;
+    private String moduleName; /* Name of the module to analyze */
+    private SootClass module;  /* Class of the module to analyze */
+    private AtomicityAnalysis atomicityAnalysis;
     private Contract contract;
 
     private String contractRaw;
@@ -81,7 +81,7 @@ public class AnalysisMain
         scene=null;
         moduleName=null;
         module=null;
-        atomicMethods=null;
+        atomicityAnalysis=null;
         contract=null;
         contractRaw=null;
     }
@@ -135,8 +135,6 @@ public class AnalysisMain
 
         assert wordInst.assertLCASanityCheck();
 
-        lcaMethod=wordInst.getLCAMethod();
-
         if (reported.contains(wordInst))
             return 1;
 
@@ -150,9 +148,11 @@ public class AnalysisMain
 
         reported.add(wordInst);
 
-        atomic=atomicMethods.isAtomic(lcaMethod);
+        atomic=atomicityAnalysis.isAtomic(wordInst.getLCA());
 
         dprintln("      Lowest common ancestor: "+wordInst.getLCA());
+
+        lcaMethod=wordInst.getLCAMethod();
 
         System.out.println("      Method: "+lcaMethod.getDeclaringClass().getShortName()
                            +"."+lcaMethod.getName()+"()");
@@ -283,11 +283,11 @@ public class AnalysisMain
             checkThreadWord(thread,word,vEquiv);
     }
     
-    private void runMethodAtomicityAnalysis(Collection<SootMethod> threads)
+    private void runAtomicityAnalysis(Collection<SootMethod> threads)
     {
-        atomicMethods=new AtomicMethods(scene.getCallGraph(),threads);
+        atomicityAnalysis=new AtomicityAnalysis(scene.getCallGraph(),threads);
         
-        atomicMethods.analyze();
+        atomicityAnalysis.analyze();
     }
     
     private SootClass getModuleClass()
@@ -434,7 +434,7 @@ public class AnalysisMain
         gluon.profiling.Profiling.set("threads",threads.size());
 
         gluon.profiling.Timer.start("analysis-atomicity");
-        runMethodAtomicityAnalysis(threads);
+        runAtomicityAnalysis(threads);
         gluon.profiling.Timer.stop("analysis-atomicity");
 
         dprintln("Ran method atomicity analysis.");

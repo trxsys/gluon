@@ -14,7 +14,7 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.analysis.atomicMethods;
+package gluon.analysis.atomicity;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -38,6 +38,8 @@ import soot.tagkit.VisibilityAnnotationTag;
 
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
+
+import gluon.analysis.programBehavior.PPNonTerminal;
 
 class MethodQueue
 {
@@ -71,7 +73,7 @@ class MethodQueue
     }
 }
 
-public class AtomicMethods
+public class AtomicityAnalysis
 {
     private static final String ATOMIC_METHOD_ANNOTATION="Atomic";
 
@@ -82,7 +84,7 @@ public class AtomicMethods
 
     private final Map<SootMethod,Boolean> methodsAtomicity;
 
-    public AtomicMethods(CallGraph cg, Collection<SootMethod> threads)
+    public AtomicityAnalysis(CallGraph cg, Collection<SootMethod> threads)
     {
         this.callGraph=cg;
         this.threads=threads;
@@ -180,9 +182,9 @@ public class AtomicMethods
             debugPrintMethods();
     }
 
-    public boolean isAtomic(SootMethod m)
+    public boolean isAtomic(PPNonTerminal nonterm)
     {
-        Boolean b=methodsAtomicity.get(m);
+        Boolean b=methodsAtomicity.get(nonterm.getMethod());
 
         return b == null ? false : (boolean)b;
     }
