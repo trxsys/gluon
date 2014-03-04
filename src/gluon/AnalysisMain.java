@@ -35,6 +35,7 @@ import gluon.analysis.programBehavior.PPNonTerminal;
 import gluon.analysis.atomicMethods.AtomicMethods;
 import gluon.analysis.valueEquivalence.ValueEquivAnalysis;
 import gluon.analysis.valueEquivalence.ValueM;
+import gluon.analysis.monitor.MonitorAnalysis;
 import gluon.analysis.pointsTo.PointsToInformation;
 
 import gluon.grammar.Cfg;
@@ -191,8 +192,17 @@ public class AnalysisMain
         for (soot.jimple.spark.pag.AllocNode as: moduleAllocSites)
         {
             Parser parser;
+            BehaviorAnalysis ba=new WholeProgramBehaviorAnalysis(thread,module,as);
 
-            parser=makeParser(new WholeProgramBehaviorAnalysis(thread,module,as));
+            if (Main.ATOMICITY_SYNCH)
+            {
+                MonitorAnalysis monAnalysis=new MonitorAnalysis(scene);
+
+                monAnalysis.analyze();
+                ba.setSynchMode(monAnalysis);
+            }
+
+            parser=makeParser(ba);
 
             dprintln("Created parser for thread "+thread.getName()
                      +"(), allocation site "+as+".");
@@ -313,7 +323,18 @@ public class AnalysisMain
 
         for (soot.jimple.spark.pag.AllocNode as: moduleAllocSites)
         {
-            Parser parser=makeParser(new ClassBehaviorAnalysis(c,module,as));
+            Parser parser;
+            BehaviorAnalysis ba=new ClassBehaviorAnalysis(c,module,as);
+
+            if (Main.ATOMICITY_SYNCH)
+            {
+                MonitorAnalysis monAnalysis=new MonitorAnalysis(scene);
+
+                monAnalysis.analyze();
+                ba.setSynchMode(monAnalysis);
+            }
+
+            parser=makeParser(ba);
 
             dprintln("Created parser for class "+c.getName()
                      +", allocation site "+as+".");
