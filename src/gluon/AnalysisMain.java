@@ -286,6 +286,9 @@ public class AnalysisMain
     private void runAtomicityAnalysis(Collection<SootMethod> threads)
     {
         atomicityAnalysis=new AtomicityAnalysis(scene.getCallGraph(),threads);
+
+        if (Main.ATOMICITY_SYNCH)
+            atomicityAnalysis.setSynchMode();
         
         atomicityAnalysis.analyze();
     }

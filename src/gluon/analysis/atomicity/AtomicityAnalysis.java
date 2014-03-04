@@ -84,12 +84,16 @@ public class AtomicityAnalysis
 
     private final Map<SootMethod,Boolean> methodsAtomicity;
 
+    private boolean synchMode;
+
     public AtomicityAnalysis(CallGraph cg, Collection<SootMethod> threads)
     {
         this.callGraph=cg;
         this.threads=threads;
 
         this.methodsAtomicity=new HashMap<SootMethod,Boolean>(2*callGraph.size());
+
+        synchMode=false;
     }
     
     private void dprintln(String s)
@@ -109,7 +113,12 @@ public class AtomicityAnalysis
         System.out.println();
     }
 
-    private static boolean isAtomicMethod(SootMethod method)
+    public void setSynchMode()
+    {
+        synchMode=true;
+    }
+
+    private static boolean isAtomicAnnotated(SootMethod method)
     {
         Tag tag=method.getTag("VisibilityAnnotationTag");
         
@@ -124,6 +133,11 @@ public class AtomicityAnalysis
                 return true;
         
         return false;
+    }
+
+    private boolean isAtomicMethod(SootMethod method)
+    {
+        return synchMode ? method.isSynchronized() : isAtomicAnnotated(method);
     }
 
     private void analyzeReachableMethods(SootMethod entryMethod)
@@ -155,7 +169,7 @@ public class AtomicityAnalysis
                 Edge e=it.next();
                 SootMethod m=e.tgt();
                 MethodQueue succmq=new MethodQueue(m,reachedAtomically
-                                                     || isAtomicMethod(m));
+                                                   || isAtomicMethod(m));
 
                 assert m != null;
                 
