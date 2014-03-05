@@ -31,6 +31,7 @@ import java.util.HashSet;
 import soot.Kind;
 import soot.MethodOrMethodContext;
 import soot.SootMethod;
+import soot.Unit;
 
 import soot.tagkit.AnnotationTag;
 import soot.tagkit.Tag;
@@ -39,79 +40,23 @@ import soot.tagkit.VisibilityAnnotationTag;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 
-import gluon.analysis.programBehavior.PPNonTerminal;
 import gluon.WordInstance;
 
-class MethodQueue
-{
-    public final SootMethod method;
-    public final boolean reachedAtomically;
+import gluon.analysis.programBehavior.PPTerminal;
+import gluon.analysis.programBehavior.PPNonTerminal;
 
-    public MethodQueue(SootMethod m, boolean ra)
-    {
-        method=m;
-        reachedAtomically=ra;
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return method.hashCode()^(reachedAtomically ? 0x04f667a1 : 0xecc363c6);
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        MethodQueue other;
-
-        if (!(o instanceof MethodQueue))
-            return false;
-
-        other=(MethodQueue)o;
-
-        return reachedAtomically == other.reachedAtomically
-            && method.equals(other.method);
-    }
-}
+import gluon.parsing.parseTree.ParseTree;
+import gluon.parsing.parseTree.ParseTreeNode;
 
 public class AtomicityAnalysis
 {
     private static final String ATOMIC_METHOD_ANNOTATION="Atomic";
 
-    private static final boolean DEBUG=false;
-   
-    private final CallGraph callGraph;
-    private final Collection<SootMethod> threads;
-
-    private Map<SootMethod,Boolean> methodsAtomicity;
-
     private boolean synchMode;
 
-    public AtomicityAnalysis(CallGraph cg, Collection<SootMethod> threads)
+    public AtomicityAnalysis()
     {
-        this.callGraph=cg;
-        this.threads=threads;
-
-        this.methodsAtomicity=null;
-
         synchMode=false;
-    }
-    
-    private void dprintln(String s)
-    {
-        if (DEBUG)
-            System.out.println(this.getClass().getSimpleName()+": "+s);
-    }
-
-    private void debugPrintMethods()
-    {
-        System.out.println("Atomicity of executed methods:");
-
-        for (Map.Entry<SootMethod,Boolean> m: methodsAtomicity.entrySet())
-            System.out.println("  "+(m.getValue() ? "A" : "N")
-                               +" "+m.getKey().getSignature());
-
-        System.out.println();
     }
 
     public void setSynchMode()
@@ -136,83 +81,32 @@ public class AtomicityAnalysis
         return false;
     }
 
-    private void analyzeReachableMethods(SootMethod entryMethod)
-    {
-        Queue<MethodQueue> methodQueue=new LinkedList<MethodQueue>();
-        Set<MethodQueue> enqueuedMethods
-            =new HashSet<MethodQueue>(2*callGraph.size());
-        MethodQueue entryMethodQueue
-            =new MethodQueue(entryMethod,isAtomicAnnotated(entryMethod));
-
-        methodQueue.add(entryMethodQueue);
-        enqueuedMethods.add(entryMethodQueue);
-        
-        while (methodQueue.size() > 0)
-        {
-            MethodQueue mq=methodQueue.poll();
-            SootMethod method=mq.method;
-            boolean reachedAtomically=mq.reachedAtomically;
-
-            if (!methodsAtomicity.containsKey(method))
-                methodsAtomicity.put(method,reachedAtomically);
-            else
-                methodsAtomicity.put(method,methodsAtomicity.get(method) 
-                                            && reachedAtomically);
-
-            for (Iterator<Edge> it=callGraph.edgesOutOf(method); 
-                 it.hasNext(); )
-            {
-                Edge e=it.next();
-                SootMethod m=e.tgt();
-                MethodQueue succmq=new MethodQueue(m,reachedAtomically
-                                                   || isAtomicAnnotated(m));
-
-                assert m != null;
-                
-                if (enqueuedMethods.contains(succmq)
-                    || (!gluon.Main.WITH_JAVA_LIB && m.isJavaLibraryMethod()))
-                    continue;
-                
-                if (e.isThreadRunCall())
-                    continue;
-                
-                methodQueue.add(succmq);
-                
-                enqueuedMethods.add(succmq);
-            }            
-        }
-    }
-    
-    public void analyze()
-    {
-        /* If we are using synch mode we don't need to compute nothing. */
-        if (!synchMode)
-        {
-            methodsAtomicity=new HashMap<SootMethod,Boolean>(2*callGraph.size());
-
-            for (SootMethod th: threads)
-                analyzeReachableMethods(th);
-
-            if (DEBUG)
-                debugPrintMethods();
-        }
-    }
-
     public boolean isAtomic(WordInstance word)
     {
-        if (!synchMode)
+        ParseTree tree=word.getParseTree();
+
+        assert word.getLCA().equals(tree.getLCA().getElem());
+
+        /* Climb the tree from the LCA to the root.
+         * If some of these nodes is atomically executed then this is atomic.
+         */
+        for (ParseTreeNode n=tree.getLCA(); n != null; n=n.getParent())
         {
-            Boolean b;
+            if (!synchMode)
+            {
+                PPNonTerminal nonterm;
+                
+                assert n.getElem() instanceof PPNonTerminal;
 
-            assert methodsAtomicity != null;
+                nonterm=(PPNonTerminal)n.getElem();
 
-            b=methodsAtomicity.get(word.getLCAMethod());
-
-            return b == null ? false : (boolean)b;
+                if (isAtomicAnnotated(nonterm.getMethod()))
+                    return true;
+            }
+            else
+                /* TODO */;
         }
-        else
-        {
-            return false; /* TODO */
-        }
+
+        return false;
     }
 }

@@ -283,14 +283,12 @@ public class AnalysisMain
             checkThreadWord(thread,word,vEquiv);
     }
     
-    private void runAtomicityAnalysis(Collection<SootMethod> threads)
+    private void initAtomicityAnalysis(Collection<SootMethod> threads)
     {
-        atomicityAnalysis=new AtomicityAnalysis(scene.getCallGraph(),threads);
+        atomicityAnalysis=new AtomicityAnalysis();
 
         if (Main.ATOMICITY_SYNCH)
             atomicityAnalysis.setSynchMode();
-        
-        atomicityAnalysis.analyze();
     }
     
     private SootClass getModuleClass()
@@ -436,12 +434,8 @@ public class AnalysisMain
 
         gluon.profiling.Profiling.set("threads",threads.size());
 
-        gluon.profiling.Timer.start("analysis-atomicity");
-        runAtomicityAnalysis(threads);
-        gluon.profiling.Timer.stop("analysis-atomicity");
+        initAtomicityAnalysis(threads);
 
-        dprintln("Ran method atomicity analysis.");
-        
         if (Main.CLASS_SCOPE)
             for (SootClass c: scene.getClasses())
                 checkClass(c);

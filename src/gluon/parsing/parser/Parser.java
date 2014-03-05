@@ -200,7 +200,7 @@ public class Parser
         if (DEBUG)
             System.out.println(this.getClass().getSimpleName()+": "+s);
     }
-    
+
     private void shift(ParserConfiguration parserConf,
                        ParsingActionShift shift)
     {
@@ -293,7 +293,7 @@ public class Parser
             else
                 assert false;
 
-            /* check if we have a lca */
+            /* Check if we have a lca */
             if (branches[i].getTerminalNum() == input.size()-1
                 && parserConf.lca == null
                 && action instanceof ParsingActionReduce)
@@ -325,7 +325,7 @@ public class Parser
         return initConfig;
     }
     
-    // Argument input should be an ArrayList for performance reasons
+    /* Argument input should be an ArrayList for performance reasons */
     public int parse(List<Terminal> input, ParserCallback pcb)
     {
         int ret=0;
@@ -369,7 +369,7 @@ public class Parser
             }
         }
 
-        // free memory
+        /* free memory */
         parseLifo=null;
         acceptedLCA=null;
 
