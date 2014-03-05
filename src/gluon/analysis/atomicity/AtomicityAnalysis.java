@@ -40,6 +40,7 @@ import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 
 import gluon.analysis.programBehavior.PPNonTerminal;
+import gluon.WordInstance;
 
 class MethodQueue
 {
@@ -82,7 +83,7 @@ public class AtomicityAnalysis
     private final CallGraph callGraph;
     private final Collection<SootMethod> threads;
 
-    private final Map<SootMethod,Boolean> methodsAtomicity;
+    private Map<SootMethod,Boolean> methodsAtomicity;
 
     private boolean synchMode;
 
@@ -91,7 +92,7 @@ public class AtomicityAnalysis
         this.callGraph=cg;
         this.threads=threads;
 
-        this.methodsAtomicity=new HashMap<SootMethod,Boolean>(2*callGraph.size());
+        this.methodsAtomicity=null;
 
         synchMode=false;
     }
@@ -135,18 +136,13 @@ public class AtomicityAnalysis
         return false;
     }
 
-    private boolean isAtomicMethod(SootMethod method)
-    {
-        return synchMode ? method.isSynchronized() : isAtomicAnnotated(method);
-    }
-
     private void analyzeReachableMethods(SootMethod entryMethod)
     {
         Queue<MethodQueue> methodQueue=new LinkedList<MethodQueue>();
         Set<MethodQueue> enqueuedMethods
             =new HashSet<MethodQueue>(2*callGraph.size());
         MethodQueue entryMethodQueue
-            =new MethodQueue(entryMethod,isAtomicMethod(entryMethod));
+            =new MethodQueue(entryMethod,isAtomicAnnotated(entryMethod));
 
         methodQueue.add(entryMethodQueue);
         enqueuedMethods.add(entryMethodQueue);
@@ -169,7 +165,7 @@ public class AtomicityAnalysis
                 Edge e=it.next();
                 SootMethod m=e.tgt();
                 MethodQueue succmq=new MethodQueue(m,reachedAtomically
-                                                   || isAtomicMethod(m));
+                                                   || isAtomicAnnotated(m));
 
                 assert m != null;
                 
@@ -189,17 +185,34 @@ public class AtomicityAnalysis
     
     public void analyze()
     {
-        for (SootMethod th: threads)
-            analyzeReachableMethods(th);
+        /* If we are using synch mode we don't need to compute nothing. */
+        if (!synchMode)
+        {
+            methodsAtomicity=new HashMap<SootMethod,Boolean>(2*callGraph.size());
 
-        if (DEBUG)
-            debugPrintMethods();
+            for (SootMethod th: threads)
+                analyzeReachableMethods(th);
+
+            if (DEBUG)
+                debugPrintMethods();
+        }
     }
 
-    public boolean isAtomic(PPNonTerminal nonterm)
+    public boolean isAtomic(WordInstance word)
     {
-        Boolean b=methodsAtomicity.get(nonterm.getMethod());
+        if (!synchMode)
+        {
+            Boolean b;
 
-        return b == null ? false : (boolean)b;
+            assert methodsAtomicity != null;
+
+            b=methodsAtomicity.get(word.getLCAMethod());
+
+            return b == null ? false : (boolean)b;
+        }
+        else
+        {
+            return false; /* TODO */
+        }
     }
 }

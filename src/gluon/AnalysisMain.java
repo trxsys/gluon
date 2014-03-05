@@ -148,7 +148,7 @@ public class AnalysisMain
 
         reported.add(wordInst);
 
-        atomic=atomicityAnalysis.isAtomic(wordInst.getLCA());
+        atomic=atomicityAnalysis.isAtomic(wordInst);
 
         dprintln("      Lowest common ancestor: "+wordInst.getLCA());
 
