@@ -245,6 +245,10 @@ public abstract class BehaviorAnalysis
     private void analyzeUnitEnterMonitor(SootMethod method, UnitGraph cfg,
                                          EnterMonitorStmt unit)
     {
+        PPNonTerminal synchNonTerm=new PPNonTerminal(alias(unit)+"@",method);
+
+        synchNonTerm.setNoRemove();
+
         /* Add A  → A@ D */
         for (ExitMonitorStmt exitmon: monitorAnalysis.getExitMonitor(unit))
         {
@@ -255,7 +259,7 @@ public abstract class BehaviorAnalysis
                 PPNonTerminal head=new PPNonTerminal(alias(unit),method);
                 Production production=new Production(head);
 
-                production.appendToBody(new PPNonTerminal(alias(unit)+"@",method));
+                production.appendToBody(synchNonTerm);
 
                 production.appendToBody(new PPNonTerminal(alias(exitmonsucc),
                                                           method));
@@ -267,8 +271,7 @@ public abstract class BehaviorAnalysis
         /* Add A@ → B */
         for (Unit succ: cfg.getSuccsOf(unit))
         {
-            PPNonTerminal head=new PPNonTerminal(alias(unit)+"@",method);
-            Production production=new Production(head);
+            Production production=new Production(synchNonTerm);
 
             production.appendToBody(new PPNonTerminal(alias(succ),method));
 

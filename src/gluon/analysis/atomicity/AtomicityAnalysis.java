@@ -92,19 +92,22 @@ public class AtomicityAnalysis
          */
         for (ParseTreeNode n=tree.getLCA(); n != null; n=n.getParent())
         {
+            PPNonTerminal nonterm;
+                
+            assert n.getElem() instanceof PPNonTerminal;
+            
+            nonterm=(PPNonTerminal)n.getElem();
+
             if (!synchMode)
             {
-                PPNonTerminal nonterm;
-                
-                assert n.getElem() instanceof PPNonTerminal;
-
-                nonterm=(PPNonTerminal)n.getElem();
-
                 if (isAtomicAnnotated(nonterm.getMethod()))
                     return true;
             }
             else
-                /* TODO */;
+            {
+                if (nonterm.isSynchBlock())
+                    return true;
+            }
         }
 
         return false;
