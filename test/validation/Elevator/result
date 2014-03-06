@@ -14,28 +14,28 @@ Checking thread Lift.run():
   Verifying word checkUp(X) claimUp(X):
 
       Method: Lift.claimUp()
-      Calls Location: Controls.java:256 Controls.java:257
+      Calls Location: Lift.java:256 Lift.java:257
       Atomic: NO
 
   Verifying word checkDown(X) claimDown(X):
 
       Method: Lift.claimDown()
-      Calls Location: Controls.java:269 Controls.java:270
+      Calls Location: Lift.java:269 Lift.java:270
       Atomic: NO
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.016s
-                             total-parsing      2.327s
-                                     total     39.068s
-                       build-parsing-table      0.292s
-                                 soot-init     36.341s
-                         analysis-behavior      0.085s
+             analysis-behavior-grammar-opt      0.018s
+                             total-parsing    113.241s
+                                     total    156.787s
+                       build-parsing-table      0.562s
+                                 soot-init     42.846s
+                         analysis-behavior      0.111s
 
 Profiling Vars:
-          parsing-table-state-number-total   1978
-                            parse-branches  676659
-                                 cfg-nodes   1960
+          parsing-table-state-number-total   2736
+                            parse-branches  26992466
+                                 cfg-nodes   2068
                                parse-trees      2
                          alloc-sites-total      8
-                 grammar-productions-total   4434
+                 grammar-productions-total   5198

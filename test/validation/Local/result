@@ -14,7 +14,7 @@ Checking thread Local.run():
   Verifying word getValue setValue:
 
       Method: Local.run()
-      Calls Location: Cell.java:14 Cell.java:16
+      Calls Location: Local.java:14 Local.java:16
       Atomic: NO
 
   Verifying word setValue getValue:
@@ -23,17 +23,17 @@ Checking thread Local.run():
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.003s
+             analysis-behavior-grammar-opt      0.001s
                              total-parsing      0.002s
-                                     total     34.194s
-                       build-parsing-table      0.005s
-                                 soot-init     34.158s
-                         analysis-behavior      0.006s
+                                     total     41.221s
+                       build-parsing-table      0.017s
+                                 soot-init     41.174s
+                         analysis-behavior      0.008s
 
 Profiling Vars:
-          parsing-table-state-number-total     40
+          parsing-table-state-number-total    126
                             parse-branches     11
                                  cfg-nodes     86
                                parse-trees      1
                          alloc-sites-total      8
-                 grammar-productions-total    150
+                 grammar-productions-total    306

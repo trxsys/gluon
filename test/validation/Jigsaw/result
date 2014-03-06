@@ -10,22 +10,22 @@ Checking thread Runner.run():
   Verifying word checkClosed lookupEntry:
 
       Method: Runner.loadResourceStore()
-      Calls Location: ResourceStoreManager.java:12 ResourceStoreManager.java:13
+      Calls Location: Main.java:12 Main.java:13
       Atomic: NO
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.000s
-                             total-parsing      0.002s
-                                     total     36.405s
-                       build-parsing-table      0.009s
-                                 soot-init     36.366s
-                         analysis-behavior      0.007s
+             analysis-behavior-grammar-opt      0.001s
+                             total-parsing      0.003s
+                                     total     39.420s
+                       build-parsing-table      0.030s
+                                 soot-init     39.357s
+                         analysis-behavior      0.009s
 
 Profiling Vars:
-          parsing-table-state-number-total     64
-                            parse-branches     11
-                                 cfg-nodes    124
+          parsing-table-state-number-total    213
+                            parse-branches     21
+                                 cfg-nodes    125
                                parse-trees      1
                          alloc-sites-total      4
-                 grammar-productions-total    194
+                 grammar-productions-total    406

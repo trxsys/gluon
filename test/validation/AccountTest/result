@@ -14,28 +14,28 @@ Checking thread Update.run():
   Verifying word getBalance setBalance:
 
       Method: Update.update()
-      Calls Location: Account.java:7 Account.java:9
+      Calls Location: Update.java:7 Update.java:9
       Atomic: NO
 
   Verifying word setBalance getBalance:
 
       Method: Update.run()
-      Calls Location: Account.java:9 Account.java:7
+      Calls Location: Update.java:9 Update.java:7
       Atomic: NO
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.004s
-                             total-parsing      0.002s
-                                     total     33.489s
-                       build-parsing-table      0.016s
-                                 soot-init     33.440s
-                         analysis-behavior      0.008s
+             analysis-behavior-grammar-opt      0.002s
+                             total-parsing      0.012s
+                                     total     39.227s
+                       build-parsing-table      0.033s
+                                 soot-init     38.982s
+                         analysis-behavior      0.018s
 
 Profiling Vars:
-          parsing-table-state-number-total     98
-                            parse-branches     33
+          parsing-table-state-number-total    258
+                            parse-branches     58
                                  cfg-nodes    158
                                parse-trees      2
                          alloc-sites-total      8
-                 grammar-productions-total    242
+                 grammar-productions-total    472

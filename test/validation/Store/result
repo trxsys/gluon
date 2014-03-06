@@ -16,7 +16,7 @@ Checking thread Worker.run():
   Verifying word hasOrders treatOrder:
 
       Method: Worker.run()
-      Calls Location: WorkerAux.java:32 WorkerAux.java:33
+      Calls Location: Worker.java:32 Worker.java:33
       Atomic: NO
 
 Checking thread Supplier.run():
@@ -27,17 +27,17 @@ Checking thread Supplier.run():
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.008s
-                             total-parsing      0.010s
-                                     total     35.298s
-                       build-parsing-table      0.097s
-                                 soot-init     35.141s
-                         analysis-behavior      0.027s
+             analysis-behavior-grammar-opt      0.005s
+                             total-parsing      0.027s
+                                     total     41.114s
+                       build-parsing-table      0.159s
+                                 soot-init     40.875s
+                         analysis-behavior      0.031s
 
 Profiling Vars:
-          parsing-table-state-number-total    420
-                            parse-branches    197
-                                 cfg-nodes    553
+          parsing-table-state-number-total    712
+                            parse-branches    433
+                                 cfg-nodes    559
                                parse-trees      1
                          alloc-sites-total      4
-                 grammar-productions-total    926
+                 grammar-productions-total   1253

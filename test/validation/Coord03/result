@@ -58,7 +58,7 @@ Checking thread T3.run():
   Verifying word getX getY:
 
       Method: T3.run()
-      Calls Location: Vars.java:17 Vars.java:18
+      Calls Location: T3.java:17 T3.java:18
       Atomic: NO
 
   Verifying word getY getX:
@@ -93,17 +93,17 @@ Checking thread T4.run():
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.011s
-                             total-parsing      0.002s
-                                     total     34.611s
-                       build-parsing-table      0.043s
-                                 soot-init     34.494s
-                         analysis-behavior      0.046s
+             analysis-behavior-grammar-opt      0.015s
+                             total-parsing      0.003s
+                                     total     39.335s
+                       build-parsing-table      0.218s
+                                 soot-init     39.004s
+                         analysis-behavior      0.073s
 
 Profiling Vars:
-          parsing-table-state-number-total    452
-                            parse-branches     43
-                                 cfg-nodes   1020
+          parsing-table-state-number-total   1676
+                            parse-branches     47
+                                 cfg-nodes   1028
                                parse-trees      1
                          alloc-sites-total     40
-                 grammar-productions-total   1476
+                 grammar-productions-total   3000

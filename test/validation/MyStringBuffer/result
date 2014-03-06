@@ -4,22 +4,22 @@ Checking thread Main.main():
   Verifying word X=length getChars(_,X,_,_):
 
       Method: Main.append()
-      Calls Location: MyStringBuffer.java:15 MyStringBuffer.java:21
+      Calls Location: Main.java:15 Main.java:21
       Atomic: NO
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.002s
-                             total-parsing      0.003s
-                                     total     33.476s
-                       build-parsing-table      0.004s
-                                 soot-init     33.446s
-                         analysis-behavior      0.004s
+             analysis-behavior-grammar-opt      0.001s
+                             total-parsing      0.020s
+                                     total     41.201s
+                       build-parsing-table      0.020s
+                                 soot-init     41.135s
+                         analysis-behavior      0.006s
 
 Profiling Vars:
-          parsing-table-state-number-total     22
-                            parse-branches     10
+          parsing-table-state-number-total    135
+                            parse-branches     20
                                  cfg-nodes     96
                                parse-trees      1
                          alloc-sites-total      3
-                 grammar-productions-total     75
+                 grammar-productions-total    243

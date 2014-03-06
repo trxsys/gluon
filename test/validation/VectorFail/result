@@ -14,7 +14,7 @@ Checking thread MyThread.run():
   Verifying word getMax getMin:
 
       Method: MyThread.run()
-      Calls Location: Vector.java:18 Vector.java:19
+      Calls Location: MyThread.java:18 MyThread.java:19
       Atomic: NO
 
   Verifying word getMin getMax:
@@ -23,17 +23,17 @@ Checking thread MyThread.run():
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.004s
-                             total-parsing      0.004s
-                                     total     34.322s
-                       build-parsing-table      0.028s
-                                 soot-init     34.256s
-                         analysis-behavior      0.012s
+             analysis-behavior-grammar-opt      0.003s
+                             total-parsing      0.006s
+                                     total     42.645s
+                       build-parsing-table      0.039s
+                                 soot-init     42.561s
+                         analysis-behavior      0.015s
 
 Profiling Vars:
-          parsing-table-state-number-total    174
-                            parse-branches     82
-                                 cfg-nodes    236
+          parsing-table-state-number-total    326
+                            parse-branches    100
+                                 cfg-nodes    244
                                parse-trees      1
                          alloc-sites-total      8
-                 grammar-productions-total    500
+                 grammar-productions-total    658

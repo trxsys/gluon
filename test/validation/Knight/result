@@ -10,22 +10,22 @@ Checking thread Solver.run():
   Verifying word get_solution(X) set_solution(X,_):
 
       Method: Solver.check_and_set_solution()
-      Calls Location: KnightMoves.java:26 KnightMoves.java:32
+      Calls Location: Solver.java:26 Solver.java:32
       Atomic: NO
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.005s
-                             total-parsing      0.003s
-                                     total     35.435s
-                       build-parsing-table      0.068s
-                                 soot-init     35.319s
-                         analysis-behavior      0.024s
+             analysis-behavior-grammar-opt      0.006s
+                             total-parsing      0.013s
+                                     total     41.455s
+                       build-parsing-table      0.097s
+                                 soot-init     41.294s
+                         analysis-behavior      0.028s
 
 Profiling Vars:
-          parsing-table-state-number-total    345
+          parsing-table-state-number-total    559
                             parse-branches     18
-                                 cfg-nodes    567
+                                 cfg-nodes    605
                                parse-trees      1
                          alloc-sites-total      4
-                 grammar-productions-total    906
+                 grammar-productions-total   1204

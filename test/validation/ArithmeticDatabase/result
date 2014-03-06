@@ -14,28 +14,28 @@ Checking thread Client.run():
   Verifying word get_max_key insert:
 
       Method: Client.insert_new_expression()
-      Calls Location: Table.java:62 Table.java:64
+      Calls Location: Client.java:62 Client.java:64
       Atomic: NO
 
   Verifying word iterator get_max_key:
 
       Method: Client.insert_new_expression()
-      Calls Location: Table.java:46 Table.java:62
-      Atomic: NO
+      Calls Location: Client.java:46 Client.java:62
+      Atomic: YES
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.017s
-                             total-parsing      0.073s
-                                     total     31.865s
-                       build-parsing-table      0.228s
-                                 soot-init     31.284s
-                         analysis-behavior      0.105s
+             analysis-behavior-grammar-opt      0.015s
+                             total-parsing      0.151s
+                                     total     44.097s
+                       build-parsing-table      0.346s
+                                 soot-init     43.468s
+                         analysis-behavior      0.108s
 
 Profiling Vars:
-          parsing-table-state-number-total   1854
-                            parse-branches   1638
-                                 cfg-nodes   2200
+          parsing-table-state-number-total   2944
+                            parse-branches   5465
+                                 cfg-nodes   2256
                                parse-trees      2
                          alloc-sites-total     12
-                 grammar-productions-total   4254
+                 grammar-productions-total   5696

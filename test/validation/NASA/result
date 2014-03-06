@@ -16,22 +16,22 @@ Checking thread Task.run():
   Verifying word setValue(_,X) setAchieved(_,X):
 
       Method: Task.run()
-      Calls Location: TaskManager.java:18 TaskManager.java:20
+      Calls Location: Task.java:18 Task.java:20
       Atomic: NO
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.000s
-                             total-parsing      0.002s
-                                     total     33.453s
-                       build-parsing-table      0.008s
-                                 soot-init     33.414s
-                         analysis-behavior      0.008s
+             analysis-behavior-grammar-opt      0.001s
+                             total-parsing      0.006s
+                                     total     41.163s
+                       build-parsing-table      0.028s
+                                 soot-init     41.098s
+                         analysis-behavior      0.010s
 
 Profiling Vars:
-          parsing-table-state-number-total     70
+          parsing-table-state-number-total    187
                             parse-branches      9
                                  cfg-nodes    148
                                parse-trees      1
                          alloc-sites-total      6
-                 grammar-productions-total    180
+                 grammar-productions-total    359
