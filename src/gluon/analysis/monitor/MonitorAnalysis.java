@@ -120,9 +120,7 @@ public class MonitorAnalysis
                 cfg=new BriefUnitGraph(m.getActiveBody());
                 
                 for (Unit head: cfg.getHeads())
-                {
                     analyzeUnit(m,head,cfg,null);
-                }
             }
 
         visited=null;

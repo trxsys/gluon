@@ -28,47 +28,6 @@ import gluon.grammar.Terminal;
 
 import gluon.parsing.parsingTable.parsingAction.*;
 
-class ParseTreeNode
-{
-    private LexicalElement elem;
-    private ParseTreeNode parent;
-    public int count; /* For getLCA() */
-
-    public ParseTreeNode(LexicalElement e)
-    {
-        elem=e;
-        parent=null;
-        count=0;
-    }
-
-    public void setParent(ParseTreeNode p)
-    {
-        parent=p;
-    }
-
-    public ParseTreeNode getParent()
-    {
-        return parent;
-    }
-
-
-    public void setElem(LexicalElement e)
-    {
-        elem=e;
-    }
-
-    public LexicalElement getElem()
-    {
-        return elem;
-    }
-
-    @Override
-    public String toString()
-    {
-        return elem.toString()+"_"+hashCode();
-    }
-}
-
 public class ParseTree
 {
     private static final boolean DEBUG=false;
@@ -150,10 +109,9 @@ public class ParseTree
         }
 
         return terminals;
-
     }
 
-    public NonTerminal getLCA()
+    public ParseTreeNode getLCA()
     {
         assert leafs != null;
         
@@ -164,7 +122,7 @@ public class ParseTree
 
                 if (node.count == leafs.size()
                     && node.getElem() instanceof NonTerminal)
-                    return (NonTerminal)node.getElem();
+                    return node;
 
                 node=node.getParent();
             }

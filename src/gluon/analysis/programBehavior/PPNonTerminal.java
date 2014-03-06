@@ -23,12 +23,14 @@ public class PPNonTerminal
 {
     private SootMethod method;
     private boolean noRemove;
+    private boolean synchBlock;
 
     public PPNonTerminal(String s, SootMethod m)
     {
         super(s);
         method=m;
         noRemove=false;
+        synchBlock=false;
     }
 
     public SootMethod getMethod()
@@ -39,6 +41,16 @@ public class PPNonTerminal
     public void setNoRemove()
     {
         noRemove=true;
+    }
+
+    public void setSynchBlock()
+    {
+        synchBlock=true;
+    }
+
+    public boolean isSynchBlock()
+    {
+        return synchBlock;
     }
 
     @Override
@@ -72,6 +84,7 @@ public class PPNonTerminal
         PPNonTerminal clone=new PPNonTerminal(super.name,method);
 
         clone.noRemove=noRemove;
+        clone.synchBlock=synchBlock;
 
         return clone;
     }
