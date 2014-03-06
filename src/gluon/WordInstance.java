@@ -77,7 +77,22 @@ public class WordInstance
         return lca;
     }
 
-    /* memoization */
+    private ParseTree parseTree=null;
+    public ParseTree getParseTree()
+    {
+        ParseTree tree;
+
+        if (parseTree != null)
+            return parseTree;
+
+        tree=new ParseTree(word,actions);
+
+        tree.buildTree();
+
+        return tree;
+    }
+
+    /* Memoization */
     private List<PPTerminal> parsingTerminals=null;
     public List<PPTerminal> getParsingTerminals()
     {
@@ -88,9 +103,7 @@ public class WordInstance
         if (parsingTerminals != null)
             return parsingTerminals;
 
-        tree=new ParseTree(word,actions);
-
-        tree.buildTree();
+        tree=getParseTree();
 
         terms=tree.getTerminals();
         ppterms=new ArrayList<PPTerminal>(terms.size());
@@ -109,7 +122,7 @@ public class WordInstance
 
             ptree.buildTree();
         
-            return lca.equals(ptree.getLCA());
+            return lca.equals(ptree.getLCA().getElem());
         }
         else
             return true;

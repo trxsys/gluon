@@ -27,11 +27,11 @@ import soot.tagkit.Tag;
 import java.util.ArrayList;
 import java.util.List;
 
-// Represents a call to the module under analysis
+/* Represents a call to the module under analysis */
 public class PPTerminal
     extends gluon.grammar.Terminal
 {
-    private final SootMethod method; // module method
+    private final SootMethod method; /* module's method */
     private final Unit codeUnit;
     private SootMethod codeUnitMethod;
 
