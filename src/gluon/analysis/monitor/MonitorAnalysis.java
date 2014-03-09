@@ -80,11 +80,10 @@ public class MonitorAnalysis
 
         if (unit instanceof EnterMonitorStmt)
             stack=new StackNode<EnterMonitorStmt>(stack,(EnterMonitorStmt)unit);
-        else if (unit instanceof ExitMonitorStmt)
+        else if (unit instanceof ExitMonitorStmt
+                 && stack != null)
         {
             EnterMonitorStmt enter;
-
-            assert stack != null : "no matching entermonitor";
 
             enter=stack.element();
 
