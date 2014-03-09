@@ -76,6 +76,8 @@ public class MonitorAnalysis
         if (visited.contains(unit))
             return; /* Unit already taken care of */
 
+        visited.add(unit);
+
         if (unit instanceof EnterMonitorStmt)
             stack=new StackNode<EnterMonitorStmt>(stack,(EnterMonitorStmt)unit);
         else if (unit instanceof ExitMonitorStmt)
