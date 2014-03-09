@@ -106,7 +106,8 @@ public class AtomicityAnalysis
             else
             {
                 if (nonterm.isSynchBlock()
-                    || nonterm.getMethod().isSynchronized())
+                    || (nonterm.getMethod() != null
+                        && nonterm.getMethod().isSynchronized()))
                     return true;
             }
         }
