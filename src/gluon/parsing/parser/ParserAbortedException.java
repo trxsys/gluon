@@ -16,13 +16,11 @@
 
 package gluon.parsing.parser;
 
-import java.util.List;
-
-import gluon.parsing.parsingTable.parsingAction.ParsingAction;
-import gluon.grammar.NonTerminal;
-
-public interface ParserCallback
+public class ParserAbortedException
+    extends Exception
 {
-    public boolean shouldAbort();
-    public int accepted(List<ParsingAction> actions, NonTerminal lca);
+    public ParserAbortedException()
+    {
+        super();
+    }    
 }

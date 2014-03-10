@@ -43,11 +43,13 @@ import gluon.grammar.LexicalElement;
 import gluon.grammar.Terminal;
 import gluon.grammar.NonTerminal;
 import gluon.grammar.Production;
+
 import gluon.parsing.parsingTable.ParsingTable;
 import gluon.parsing.parsingTable.parsingAction.*;
 import gluon.parsing.parser.Parser;
-import gluon.parsing.parseTree.ParseTree;
 import gluon.parsing.parser.ParserCallback;
+import gluon.parsing.parser.ParserAbortedException;
+import gluon.parsing.parseTree.ParseTree;
 
 import gluon.contract.Contract;
 
@@ -209,8 +211,14 @@ public class AnalysisMain
 
             gluon.profiling.Timer.start("final:total-parsing");
             gluon.profiling.Timer.start("parsing");
-            parser.parse(word, new ParserCallback(){
-                    public int callback(List<ParsingAction> actions,
+            try{
+            parser.parse(word, new ParserCallback() {
+                    public boolean shouldAbort()
+                    {
+                        return false;
+                    }
+
+                    public int accepted(List<ParsingAction> actions,
                                         NonTerminal lca)
                     {
                         int ret;
@@ -230,6 +238,7 @@ public class AnalysisMain
                         return ret < 0 ? -1 : 0;
                     }
                 });
+            } catch (Exception _) {} /* TODO */
             gluon.profiling.Timer.stop("parsing");
             gluon.profiling.Timer.stop("final:total-parsing");
         }
@@ -310,6 +319,7 @@ public class AnalysisMain
     private void checkClassWordConservativePointsTo(final SootClass c,
                                                     final List<Terminal> word,
                                                     final ValueEquivAnalysis vEquiv)
+        throws ParserAbortedException
     {
         final Set<WordInstance> reported=new HashSet<WordInstance>();
         Parser parser;
@@ -330,8 +340,13 @@ public class AnalysisMain
 
         gluon.profiling.Timer.start("final:total-parsing");
         gluon.profiling.Timer.start("parsing");
-        parser.parse(word, new ParserCallback(){
-                public int callback(List<ParsingAction> actions,
+        parser.parse(word, new ParserCallback() {
+                public boolean shouldAbort()
+                {
+                    return false; /* TODO */
+                }
+
+                public int accepted(List<ParsingAction> actions,
                                     NonTerminal lca)
                 {
                     int ret;
@@ -364,6 +379,7 @@ public class AnalysisMain
     private void checkClassWordRegularPointsTo(final SootClass c,
                                                final List<Terminal> word,
                                                final ValueEquivAnalysis vEquiv)
+        throws ParserAbortedException
     {
         final Set<WordInstance> reported=new HashSet<WordInstance>();
         Collection<AllocNode> moduleAllocSites;
@@ -396,8 +412,13 @@ public class AnalysisMain
 
             gluon.profiling.Timer.start("final:total-parsing");
             gluon.profiling.Timer.start("parsing");
-            parser.parse(word, new ParserCallback(){
-                    public int callback(List<ParsingAction> actions,
+            parser.parse(word, new ParserCallback() {
+                    public boolean shouldAbort()
+                    {
+                        return false; /* TODO */
+                    }
+                    
+                    public int accepted(List<ParsingAction> actions,
                                         NonTerminal lca)
                     {
                         int ret;
@@ -431,10 +452,18 @@ public class AnalysisMain
     private void checkClassWord(SootClass c, List<Terminal> word,
                                 ValueEquivAnalysis vEquiv)
     {
-        if (Main.CONSERVATIVE_POINTS_TO)
-            checkClassWordConservativePointsTo(c,word,vEquiv);
-        else
-            checkClassWordRegularPointsTo(c,word,vEquiv);
+        try
+        {
+            if (Main.CONSERVATIVE_POINTS_TO)
+                checkClassWordConservativePointsTo(c,word,vEquiv);
+            else
+                checkClassWordRegularPointsTo(c,word,vEquiv);
+        }
+        catch (ParserAbortedException _)
+        {
+            System.out.println("    Timeout");
+            System.out.println();
+        }
     }
 
     private void checkClass(SootClass c)

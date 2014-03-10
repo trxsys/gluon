@@ -327,9 +327,11 @@ public class Parser
     
     /* Argument input should be an ArrayList for performance reasons */
     public int parse(List<Terminal> input, ParserCallback pcb)
+        throws ParserAbortedException
     {
         int ret=0;
         ParserConfiguration initialConfig;
+        int counter=0; /* For calling pcb.shouldStop() */
 
         assert input.size() > 0 
             && input.get(input.size()-1) instanceof EOITerminal
@@ -346,6 +348,11 @@ public class Parser
         {
             ParserConfiguration parserConf=parseLifo.pop();
             
+            counter=(counter+1)%500000;
+
+            if (counter == 0 && pcb.shouldAbort())
+                throw new ParserAbortedException();
+
             switch (parserConf.status)
             {
             case RUNNING : parseSingleParser(parserConf,input); break;
@@ -355,7 +362,7 @@ public class Parser
 
                 assert parserConf.lca != null;
 
-                z=pcb.callback(parserConf.getActionList(),lca);
+                z=pcb.accepted(parserConf.getActionList(),lca);
                 acceptedLCA.add(lca);
 
                 if (z != 0)
