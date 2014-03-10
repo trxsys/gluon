@@ -208,9 +208,6 @@ public class Main
         if (TIMEOUT < 0)
             fatal("negative timeout");
 
-        if (TIMEOUT > 0 && !CLASS_SCOPE)
-            fatal("timeout only works with class scope analysis");
-
         if (g.getOptind() != args.length-1)
             fatal("there must be one main class specified");
         

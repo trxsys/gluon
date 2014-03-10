@@ -179,8 +179,10 @@ public class AnalysisMain
     private void checkThreadWord(final SootMethod thread,
                                  final List<Terminal> word,
                                  final ValueEquivAnalysis vEquiv)
+        throws ParserAbortedException
     {
         final Set<WordInstance> reported=new HashSet<WordInstance>();
+        final long startTime=System.currentTimeMillis()/1000;
         Collection<AllocNode> moduleAllocSites;
 
         System.out.println("  Verifying word "+WordInstance.wordStr(word)+":");
@@ -211,12 +213,15 @@ public class AnalysisMain
 
             gluon.profiling.Timer.start("final:total-parsing");
             gluon.profiling.Timer.start("parsing");
+
             try
             {
                 parser.parse(word, new ParserCallback() {
                         public boolean shouldAbort()
                         {
-                            return false;
+                            long now=System.currentTimeMillis()/1000;
+
+                            return now-startTime > Main.TIMEOUT;
                         }
 
                         public int accepted(List<ParsingAction> actions,
@@ -240,7 +245,6 @@ public class AnalysisMain
                         }
                     });
             }
-            catch (Exception _) {} /* TODO */
             finally
             {
                 gluon.profiling.Timer.stop("parsing");
@@ -294,7 +298,15 @@ public class AnalysisMain
         System.out.println();
         
         for (List<Terminal> word: contract.getWords())
-            checkThreadWord(thread,word,vEquiv);
+            try
+            {
+                checkThreadWord(thread,word,vEquiv);
+            }
+            catch (ParserAbortedException _)
+            {
+                System.out.println("    *** Timeout ***");
+                System.out.println();
+            }
     }
     
     private void initAtomicityAnalysis(Collection<SootMethod> threads)
@@ -476,19 +488,12 @@ public class AnalysisMain
 
     private void checkClassWord(SootClass c, List<Terminal> word,
                                 ValueEquivAnalysis vEquiv)
+        throws ParserAbortedException
     {
-        try
-        {
-            if (Main.CONSERVATIVE_POINTS_TO)
-                checkClassWordConservativePointsTo(c,word,vEquiv);
-            else
-                checkClassWordRegularPointsTo(c,word,vEquiv);
-        }
-        catch (ParserAbortedException _)
-        {
-            System.out.println("    *** Timeout ***");
-            System.out.println();
-        }
+        if (Main.CONSERVATIVE_POINTS_TO)
+            checkClassWordConservativePointsTo(c,word,vEquiv);
+        else
+            checkClassWordRegularPointsTo(c,word,vEquiv);
     }
 
     private void checkClass(SootClass c)
@@ -506,7 +511,15 @@ public class AnalysisMain
         System.out.println();
 
         for (List<Terminal> word: contract.getWords())
-            checkClassWord(c,word,vEquiv);
+            try
+            {
+                checkClassWord(c,word,vEquiv);
+            }
+            catch (ParserAbortedException _)
+            {
+                System.out.println("    *** Timeout ***");
+                System.out.println();
+            }
     }
 
     @Override
