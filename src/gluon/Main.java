@@ -50,6 +50,7 @@ public class Main
     public static boolean CLASS_SCOPE=false;
     public static boolean ATOMICITY_SYNCH=false;
     public static boolean CONSERVATIVE_POINTS_TO=false;
+    public static int TIMEOUT=0; /* timeout in seconds */
 
     public static void fatal(String error)
     {
@@ -88,13 +89,15 @@ public class Main
                            +"which makes the regular points-to analysis");
         System.out.println("                                  "
                            +"incomplete");
+        System.out.println("  -i, --timeout                   "
+                           +"Timeout in mins for class scope analysis.");
 		System.out.println("  -h, --help                      "
                            +"Display this help and exit");
     }
     
     private static void parseArguments(String[] args)
     {
-        LongOpt[] options=new LongOpt[11];
+        LongOpt[] options=new LongOpt[12];
         Getopt g;
         int c;
         
@@ -110,8 +113,9 @@ public class Main
         options[9]=new LongOpt("synch",LongOpt.NO_ARGUMENT,null,'y');
         options[10]=new LongOpt("conservative-points-to",LongOpt.NO_ARGUMENT,
                                 null,'r');
+        options[11]=new LongOpt("timeout",LongOpt.REQUIRED_ARGUMENT,null,'i');
 
-        g=new Getopt(PROGNAME,args,"hc:m:o:jtpnsyr",options);
+        g=new Getopt(PROGNAME,args,"hc:m:o:jtpnsyri",options);
         
         g.setOpterr(true);
         
@@ -174,6 +178,22 @@ public class Main
                     CONSERVATIVE_POINTS_TO=true;
                     break;
                 }
+            case 'i': 
+                {
+                    String timeout=null;
+
+                    try
+                    {
+                        timeout=g.getOptarg();
+                        TIMEOUT=Integer.parseInt(timeout)*60;
+                    }
+                    catch (NumberFormatException e)
+                    {
+                        fatal(timeout+": invalid format");
+                    }
+
+                    break;
+                }
             case '?':
                 {
                     /* getopt already printed an error */
@@ -183,7 +203,10 @@ public class Main
             }
 
         if (CONSERVATIVE_POINTS_TO && !CLASS_SCOPE)
-            fatal("conservative points-to only makes sense with class scope enabled");
+            fatal("conservative points-to only makes sense with class scope analysis");
+
+        if (TIMEOUT < 0)
+            fatal("negative timeout");
 
         if (g.getOptind() != args.length-1)
             fatal("there must be one main class specified");
