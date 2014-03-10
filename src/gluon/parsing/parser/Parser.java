@@ -369,7 +369,6 @@ public class Parser
                     ret=z;
 
                 gluon.profiling.Profiling.inc("final:parse-branches");
-
                 break;
             case ERROR   : assert false : 
                 "Why do we have error configs in the parser lifo?"; break;

@@ -211,36 +211,41 @@ public class AnalysisMain
 
             gluon.profiling.Timer.start("final:total-parsing");
             gluon.profiling.Timer.start("parsing");
-            try{
-            parser.parse(word, new ParserCallback() {
-                    public boolean shouldAbort()
-                    {
-                        return false;
-                    }
+            try
+            {
+                parser.parse(word, new ParserCallback() {
+                        public boolean shouldAbort()
+                        {
+                            return false;
+                        }
 
-                    public int accepted(List<ParsingAction> actions,
-                                        NonTerminal lca)
-                    {
-                        int ret;
-                        WordInstance wordInst;
+                        public int accepted(List<ParsingAction> actions,
+                                            NonTerminal lca)
+                        {
+                            int ret;
+                            WordInstance wordInst;
                         
-                        wordInst=new WordInstance((PPNonTerminal)lca,
-                                                  word,actions);
+                            wordInst=new WordInstance((PPNonTerminal)lca,
+                                                      word,actions);
 
-                        gluon.profiling.Timer.stop("parsing");
-                        ret=checkWordInstance(wordInst,reported,vEquiv);
-                        gluon.profiling.Timer.start("parsing");
+                            gluon.profiling.Timer.stop("parsing");
+                            ret=checkWordInstance(wordInst,reported,vEquiv);
+                            gluon.profiling.Timer.start("parsing");
 
                         
-                        if (ret <= 0)
-                            System.out.println();
+                            if (ret <= 0)
+                                System.out.println();
                         
-                        return ret < 0 ? -1 : 0;
-                    }
-                });
-            } catch (Exception _) {} /* TODO */
-            gluon.profiling.Timer.stop("parsing");
-            gluon.profiling.Timer.stop("final:total-parsing");
+                            return ret < 0 ? -1 : 0;
+                        }
+                    });
+            }
+            catch (Exception _) {} /* TODO */
+            finally
+            {
+                gluon.profiling.Timer.stop("parsing");
+                gluon.profiling.Timer.stop("final:total-parsing");
+            }
         }
 
         if (reported.size() == 0)
@@ -322,6 +327,7 @@ public class AnalysisMain
         throws ParserAbortedException
     {
         final Set<WordInstance> reported=new HashSet<WordInstance>();
+        final long startTime=System.currentTimeMillis()/1000;
         Parser parser;
         BehaviorAnalysis ba=new ClassBehaviorAnalysis(c,module);
 
@@ -340,35 +346,44 @@ public class AnalysisMain
 
         gluon.profiling.Timer.start("final:total-parsing");
         gluon.profiling.Timer.start("parsing");
-        parser.parse(word, new ParserCallback() {
-                public boolean shouldAbort()
-                {
-                    return false; /* TODO */
-                }
 
-                public int accepted(List<ParsingAction> actions,
-                                    NonTerminal lca)
-                {
-                    int ret;
-                    WordInstance wordInst;
+        try
+        {
+            parser.parse(word, new ParserCallback() {
+                    public boolean shouldAbort()
+                    {
+                        long now=System.currentTimeMillis()/1000;
                         
-                    wordInst=new WordInstance((PPNonTerminal)lca,
-                                              word,actions);
-
-                    gluon.profiling.Timer.stop("parsing");
-                    ret=checkWordInstance(wordInst,reported,vEquiv);
-                    gluon.profiling.Timer.start("parsing");
-
+                        return now-startTime > Main.TIMEOUT;
+                    }
+                    
+                    public int accepted(List<ParsingAction> actions,
+                                        NonTerminal lca)
+                    {
+                        int ret;
+                        WordInstance wordInst;
                         
-                    if (ret <= 0)
-                        System.out.println();
+                        wordInst=new WordInstance((PPNonTerminal)lca,
+                                                  word,actions);
                         
-                    return ret < 0 ? -1 : 0;
-                }
-            });
-        gluon.profiling.Timer.stop("parsing");
-        gluon.profiling.Timer.stop("final:total-parsing");
-
+                        gluon.profiling.Timer.stop("parsing");
+                        ret=checkWordInstance(wordInst,reported,vEquiv);
+                        gluon.profiling.Timer.start("parsing");
+                        
+                        
+                        if (ret <= 0)
+                            System.out.println();
+                        
+                        return ret < 0 ? -1 : 0;
+                    }
+                });
+        }
+        finally
+        {
+            gluon.profiling.Timer.stop("parsing");
+            gluon.profiling.Timer.stop("final:total-parsing");
+        }
+        
         if (reported.size() == 0)
         {
             System.out.println("    No occurrences");
@@ -382,6 +397,7 @@ public class AnalysisMain
         throws ParserAbortedException
     {
         final Set<WordInstance> reported=new HashSet<WordInstance>();
+        final long startTime=System.currentTimeMillis()/1000;
         Collection<AllocNode> moduleAllocSites;
 
         System.out.println("  Verifying word "+WordInstance.wordStr(word)+":");
@@ -412,34 +428,43 @@ public class AnalysisMain
 
             gluon.profiling.Timer.start("final:total-parsing");
             gluon.profiling.Timer.start("parsing");
-            parser.parse(word, new ParserCallback() {
-                    public boolean shouldAbort()
-                    {
-                        return false; /* TODO */
-                    }
+
+            try
+            {
+                parser.parse(word, new ParserCallback() {
+                        public boolean shouldAbort()
+                        {
+                            long now=System.currentTimeMillis()/1000;
+
+                            return now-startTime > Main.TIMEOUT;
+                        }
                     
-                    public int accepted(List<ParsingAction> actions,
-                                        NonTerminal lca)
-                    {
-                        int ret;
-                        WordInstance wordInst;
+                        public int accepted(List<ParsingAction> actions,
+                                            NonTerminal lca)
+                        {
+                            int ret;
+                            WordInstance wordInst;
                         
-                        wordInst=new WordInstance((PPNonTerminal)lca,
-                                                  word,actions);
+                            wordInst=new WordInstance((PPNonTerminal)lca,
+                                                      word,actions);
 
-                        gluon.profiling.Timer.stop("parsing");
-                        ret=checkWordInstance(wordInst,reported,vEquiv);
-                        gluon.profiling.Timer.start("parsing");
+                            gluon.profiling.Timer.stop("parsing");
+                            ret=checkWordInstance(wordInst,reported,vEquiv);
+                            gluon.profiling.Timer.start("parsing");
 
                         
-                        if (ret <= 0)
-                            System.out.println();
+                            if (ret <= 0)
+                                System.out.println();
                         
-                        return ret < 0 ? -1 : 0;
-                    }
-                });
-            gluon.profiling.Timer.stop("parsing");
-            gluon.profiling.Timer.stop("final:total-parsing");
+                            return ret < 0 ? -1 : 0;
+                        }
+                    });
+            }
+            finally
+            {
+                gluon.profiling.Timer.stop("parsing");
+                gluon.profiling.Timer.stop("final:total-parsing");
+            }
         }
 
         if (reported.size() == 0)
@@ -461,7 +486,7 @@ public class AnalysisMain
         }
         catch (ParserAbortedException _)
         {
-            System.out.println("    Timeout");
+            System.out.println("    *** Timeout ***");
             System.out.println();
         }
     }

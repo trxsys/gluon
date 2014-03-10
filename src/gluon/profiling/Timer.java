@@ -39,7 +39,7 @@ public class Timer
     {
         long now=System.currentTimeMillis();
 
-        assert !running.containsKey(id);
+        assert !running.containsKey(id) : "Timer is already running "+id;
 
         running.put(id,now);
     }
