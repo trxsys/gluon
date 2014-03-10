@@ -38,6 +38,13 @@ public class ClassBehaviorAnalysis
         classA=c;
     }
 
+    /* For conservative points-to analisys */
+    public ClassBehaviorAnalysis(SootClass c, SootClass modClass)
+    {
+        super(modClass);
+        classA=c;
+    }
+
     @Override
     protected void foundMethodCall(SootMethod method)
     {

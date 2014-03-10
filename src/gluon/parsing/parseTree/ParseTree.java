@@ -62,7 +62,7 @@ public class ParseTree
                     ParseTreeNode node=stack.pop();
                     node.setParent(parent);
 
-                    /* update leaf with true terminal */
+                    /* Update leaf with true parsed terminal */
                     if (node.getElem() instanceof Terminal)
                     {
                         LexicalElement nodeTerm=red.getProduction()

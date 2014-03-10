@@ -307,9 +307,63 @@ public class AnalysisMain
         contractRaw=contract;
     }
 
-    private void checkClassWord(final SootClass c,
-                                final List<Terminal> word,
-                                final ValueEquivAnalysis vEquiv)
+    private void checkClassWordConservativePointsTo(final SootClass c,
+                                                    final List<Terminal> word,
+                                                    final ValueEquivAnalysis vEquiv)
+    {
+        final Set<WordInstance> reported=new HashSet<WordInstance>();
+        Parser parser;
+        BehaviorAnalysis ba=new ClassBehaviorAnalysis(c,module);
+
+        System.out.println("  Verifying word "+WordInstance.wordStr(word)+":");
+        System.out.println();
+
+        if (Main.ATOMICITY_SYNCH)
+        {
+            MonitorAnalysis monAnalysis=new MonitorAnalysis(scene);
+
+            monAnalysis.analyze();
+            ba.setSynchMode(monAnalysis);
+        }
+
+        parser=makeParser(ba);
+
+        gluon.profiling.Timer.start("final:total-parsing");
+        gluon.profiling.Timer.start("parsing");
+        parser.parse(word, new ParserCallback(){
+                public int callback(List<ParsingAction> actions,
+                                    NonTerminal lca)
+                {
+                    int ret;
+                    WordInstance wordInst;
+                        
+                    wordInst=new WordInstance((PPNonTerminal)lca,
+                                              word,actions);
+
+                    gluon.profiling.Timer.stop("parsing");
+                    ret=checkWordInstance(wordInst,reported,vEquiv);
+                    gluon.profiling.Timer.start("parsing");
+
+                        
+                    if (ret <= 0)
+                        System.out.println();
+                        
+                    return ret < 0 ? -1 : 0;
+                }
+            });
+        gluon.profiling.Timer.stop("parsing");
+        gluon.profiling.Timer.stop("final:total-parsing");
+
+        if (reported.size() == 0)
+        {
+            System.out.println("    No occurrences");
+            System.out.println();
+        }
+    }
+
+    private void checkClassWordRegularPointsTo(final SootClass c,
+                                               final List<Terminal> word,
+                                               final ValueEquivAnalysis vEquiv)
     {
         final Set<WordInstance> reported=new HashSet<WordInstance>();
         Collection<AllocNode> moduleAllocSites;
@@ -372,6 +426,15 @@ public class AnalysisMain
             System.out.println("    No occurrences");
             System.out.println();
         }
+    }
+
+    private void checkClassWord(SootClass c, List<Terminal> word,
+                                ValueEquivAnalysis vEquiv)
+    {
+        if (Main.CONSERVATIVE_POINTS_TO)
+            checkClassWordConservativePointsTo(c,word,vEquiv);
+        else
+            checkClassWordRegularPointsTo(c,word,vEquiv);
     }
 
     private void checkClass(SootClass c)

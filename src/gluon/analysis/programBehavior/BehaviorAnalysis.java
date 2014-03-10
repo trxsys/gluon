@@ -119,6 +119,8 @@ public abstract class BehaviorAnalysis
     private NonTerminalAliasCreator aliasCreator;
 
     private MonitorAnalysis monitorAnalysis;
+
+    private boolean conservativePointsTo;
     
     public BehaviorAnalysis(SootClass modClass, AllocNode aSite)
     {
@@ -130,8 +132,17 @@ public abstract class BehaviorAnalysis
         monitorAnalysis=null;
         
         visited=null;
+
+        conservativePointsTo=false;
         
         aliasCreator=new NonTerminalAliasCreator();
+    }
+
+    /* For conservative points-to analisys */
+    public BehaviorAnalysis(SootClass modClass)
+    {
+        this(modClass,null);
+        conservativePointsTo=true;
     }
     
     protected void dprintln(String s)
@@ -167,6 +178,15 @@ public abstract class BehaviorAnalysis
             || calledMethod.isPrivate())
             return ModCall.NEVER;
 
+        if (conservativePointsTo
+            && expr instanceof InstanceInvokeExpr)
+        {
+            Value obj=((InstanceInvokeExpr)expr).getBase();
+
+            return obj.getType().equals(module.getType()) ? ModCall.SOMETIMES
+                                                          : ModCall.NEVER;
+        }
+        
         /* We only consider "modules" as instances from objects.
          * So a call to a static method of a class is not considered
          * a usage of a module.

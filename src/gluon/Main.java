@@ -30,6 +30,7 @@ import soot.SootClass;
 import gnu.getopt.LongOpt;
 import gnu.getopt.Getopt;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -48,6 +49,7 @@ public class Main
     public static boolean NO_GRAMMAR_OPTIMIZE=false;
     public static boolean CLASS_SCOPE=false;
     public static boolean ATOMICITY_SYNCH=false;
+    public static boolean CONSERVATIVE_POINTS_TO=false;
 
     public static void fatal(String error)
     {
@@ -78,30 +80,38 @@ public class Main
                            +"Restrict analysis to each class");
 		System.out.println("  -y, --synch                     "
                            +"Atomicity is based on java synchronized");
+        System.out.println("  -r, --conservative-points-to    "
+                           +"Conservative points-to analysis.");
+        System.out.println("                                  "
+                           +"Use when there are classes loaded dynamically,");
+        System.out.println("                                  "
+                           +"which makes the regular points-to analysis");
+        System.out.println("                                  "
+                           +"incomplete");
 		System.out.println("  -h, --help                      "
                            +"Display this help and exit");
     }
     
     private static void parseArguments(String[] args)
     {
-        LongOpt[] options = new LongOpt[10];
-        
-        options[0] = new LongOpt("help", LongOpt.NO_ARGUMENT, null, 'h');
-        options[1] = new LongOpt("classpath", LongOpt.REQUIRED_ARGUMENT,
-                                 null, 'c');
-        options[2] = new LongOpt("module", LongOpt.REQUIRED_ARGUMENT, 
-                                 null, 'm');
-        options[3] = new LongOpt("with-java-lib", LongOpt.NO_ARGUMENT, 
-                                 null, 'j');
-        options[4] = new LongOpt("time", LongOpt.NO_ARGUMENT, null, 't');
-        options[5] = new LongOpt("prof-vars", LongOpt.NO_ARGUMENT, null, 'p');
-        options[6] = new LongOpt("no-grammar-opt", LongOpt.NO_ARGUMENT, null, 'n');
-        options[7] = new LongOpt("contract", LongOpt.REQUIRED_ARGUMENT, null, 'o');
-        options[8] = new LongOpt("class-scope", LongOpt.NO_ARGUMENT, null, 's');
-        options[9] = new LongOpt("synch", LongOpt.NO_ARGUMENT, null, 'y');
-
-        Getopt g = new Getopt(PROGNAME, args, "hc:m:o:jtpns", options);
+        LongOpt[] options=new LongOpt[11];
+        Getopt g;
         int c;
+        
+        options[0]=new LongOpt("help",LongOpt.NO_ARGUMENT,null,'h');
+        options[1]=new LongOpt("classpath",LongOpt.REQUIRED_ARGUMENT,null,'c');
+        options[2]=new LongOpt("module",LongOpt.REQUIRED_ARGUMENT,null,'m');
+        options[3]=new LongOpt("with-java-lib",LongOpt.NO_ARGUMENT, null,'j');
+        options[4]=new LongOpt("time",LongOpt.NO_ARGUMENT,null,'t');
+        options[5]=new LongOpt("prof-vars",LongOpt.NO_ARGUMENT,null,'p');
+        options[6]=new LongOpt("no-grammar-opt",LongOpt.NO_ARGUMENT,null,'n');
+        options[7]=new LongOpt("contract",LongOpt.REQUIRED_ARGUMENT, null,'o');
+        options[8]=new LongOpt("class-scope",LongOpt.NO_ARGUMENT,null,'s');
+        options[9]=new LongOpt("synch",LongOpt.NO_ARGUMENT,null,'y');
+        options[10]=new LongOpt("conservative-points-to",LongOpt.NO_ARGUMENT,
+                                null,'r');
+
+        g=new Getopt(PROGNAME,args,"hc:m:o:jtpnsyr",options);
         
         g.setOpterr(true);
         
@@ -159,7 +169,21 @@ public class Main
                     ATOMICITY_SYNCH=true;
                     break;
                 }
+            case 'r': 
+                {
+                    CONSERVATIVE_POINTS_TO=true;
+                    break;
+                }
+            case '?':
+                {
+                    /* getopt already printed an error */
+                    System.exit(-1);
+                    break;
+                }
             }
+
+        if (CONSERVATIVE_POINTS_TO && !CLASS_SCOPE)
+            fatal("conservative points-to only makes sense with class scope enabled");
 
         if (g.getOptind() != args.length-1)
             fatal("there must be one main class specified");
@@ -202,17 +226,6 @@ public class Main
         Options.v().set_allow_phantom_refs(true);
         Options.v().set_keep_line_number(true);
 
-        /*
-        {
-            java.util.ArrayList l=new java.util.ArrayList();
-            l.add("org.apache.catalina.core.ApplicationContext");
-            Options.v().set_dynamic_class(l);
-
-            //if (CLASS_SCOPE)
-            //    PhaseOptions.v().setPhaseOption("cg","all-reachable:true");
-        }
-        */
-
         /* For line number information */
         PhaseOptions.v().setPhaseOption("tag.ln","on");
 
@@ -239,12 +252,20 @@ public class Main
         
         PackManager.v().getPack("wstp").add(t);
 
-        SootClass c=Scene.v().loadClassAndSupport(mainClassName);
+        SootClass mainClass=Scene.v().loadClassAndSupport(mainClassName);
         
         Scene.v().addBasicClass(mainClassName,SootClass.SIGNATURES);
         Scene.v().loadNecessaryClasses();
+        Scene.v().loadDynamicClasses();
         
-        Scene.v().setMainClass(c);
+        try { Scene.v().setMainClass(mainClass); }
+        catch (Exception _) { fatal("error loading main class"); }
+
+        if (CLASS_SCOPE)
+            for (SootClass c: Scene.v().getClasses())
+                for (soot.SootMethod m: c.getMethods())
+                    try { m.retrieveActiveBody(); }
+                    catch (Exception _) {}
 
         /* Points-to analises */
         SparkTransformer.v().transform("",getSparkOptions());
