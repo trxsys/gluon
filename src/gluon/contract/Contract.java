@@ -131,7 +131,7 @@ public class Contract
                     }
                     catch (Exception _)
                     {
-                        Main.fatal(t.getName()+": ambiguous method!");
+                        Main.warning(t.getName()+": ambiguous method!");
                     }
                 }
                 else

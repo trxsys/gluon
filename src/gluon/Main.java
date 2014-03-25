@@ -57,6 +57,11 @@ public class Main
         System.err.println(PROGNAME+": "+error);
         System.exit(-1);
     }
+
+    public static void warning(String warning)
+    {
+        System.err.println(PROGNAME+": "+warning);
+    }
     
     private static void help() 
     {
