@@ -267,6 +267,7 @@ public abstract class BehaviorAnalysis
     {
         PPNonTerminal synchNonTerm=new PPNonTerminal(alias(unit)+"@",method);
 
+        synchNonTerm.setSynchBlock();
         synchNonTerm.setNoRemove();
 
         /* Add A  → A@ D */
