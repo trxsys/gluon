@@ -522,9 +522,7 @@ public class AnalysisMain
             }
     }
 
-    @Override
-    protected void internalTransform(String paramString, 
-                                     @SuppressWarnings("rawtypes") java.util.Map paramMap) 
+    private void runAnalysis()
     {
         Collection<SootMethod> threads;
         
@@ -572,5 +570,12 @@ public class AnalysisMain
         else
             for (SootMethod m: threads)
                 checkThread(m);
+    }
+
+    @Override
+    protected void internalTransform(String paramString,
+                                     @SuppressWarnings("rawtypes") java.util.Map paramMap)
+    {
+        runAnalysis();
     }
 }
