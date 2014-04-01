@@ -65,7 +65,7 @@ public class Production
         /* Most likely there will only be one replace so this size should be
          * good.
          */
-        body=new ArrayList(string.size()+oldBody.size()-1);
+        body=new ArrayList<LexicalElement>(string.size()+oldBody.size()-1);
 
         for (LexicalElement e: oldBody)
             if (e.equals(nonterm))

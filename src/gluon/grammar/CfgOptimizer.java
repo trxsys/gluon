@@ -34,7 +34,11 @@ public class CfgOptimizer
     private static void replace(Cfg grammar, NonTerminal nonterm,
                                 ArrayList<LexicalElement> string)
     {
-        for (Production p: grammar.getProductionsContaining(nonterm))
+        Collection<Production> prods=new LinkedList<Production>();
+
+        prods.addAll(grammar.getProductionsContaining(nonterm));
+
+        for (Production p: prods)
         {
             grammar.removeProduction(p);
 
@@ -56,7 +60,6 @@ public class CfgOptimizer
     private static boolean removeDirectReductions(Cfg grammar)
     {
         boolean modified=false;
-        // Set<Production> removed=new HashSet<Production>();
 
         for (NonTerminal nonterm: grammar.getNonTerminals())
         {
@@ -117,13 +120,7 @@ public class CfgOptimizer
         Cfg grammarOpt=grammar.clone();
         boolean modified;
 
-        /*
         System.out.println("GREPME start "+grammarOpt.size());
-        System.out.println(grammarOpt);
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        */
 
         do
         {
@@ -135,22 +132,15 @@ public class CfgOptimizer
             System.out.println("GREPME iterating "+grammarOpt.size());
         } while (modified);
 
-        /* TODO: this might get rid of all the loops in the grammar. maybe we
+        /* TODO: this might get rid of all the unproductive 
+         *       loops in the grammar. maybe we
          *       don't need to do loop detection in the parser
          */
 
         /* TODO only put the methods used in the contract in the grammar?
          */
 
-        /*
-        System.out.println();
-        System.out.println();
-        System.out.println();
         System.out.println("GREPME end "+grammarOpt.size());
-        System.out.println(grammarOpt);
-
-        System.exit(0);
-        */
 
         return grammarOpt;
     }

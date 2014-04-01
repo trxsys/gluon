@@ -34,6 +34,8 @@ public class Cfg
     private NonTerminal start;
     
     private int size;
+
+    private Map<LexicalElement,Set<Production>> productionsContaining;
     
     private Set<LexicalElement> lexicalElements;
     private Set<NonTerminal> nonterminals;
@@ -60,6 +62,8 @@ public class Cfg
         productions=new HashMap<NonTerminal,Set<Production>>();
         start=null;
         size=0;
+
+        productionsContaining=new HashMap<LexicalElement,Set<Production>>();
 
         LESetsUptodate=true;
         lexicalElements=new HashSet<LexicalElement>();
@@ -91,7 +95,20 @@ public class Cfg
         productions.get(p.getHead()).add(p);
 
         updateLESetsProduction(p);
-        
+
+        /* Maintain productionsContaining */
+        for (LexicalElement e: p.getBody())
+        {
+            if (!productionsContaining.containsKey(e))
+            {
+                Set<Production> c=new HashSet<Production>();
+
+                productionsContaining.put(e,c);
+            }
+
+            productionsContaining.get(e).add(p);
+        }
+
         size++;
         
         return true;
@@ -121,21 +138,16 @@ public class Cfg
     
     public Collection<Production> getProductionsOf(NonTerminal n)
     {
-        return productions.containsKey(n) ? productions.get(n)
+        return productions.containsKey(n) 
+            ? productions.get(n)
             : new LinkedList<Production>();
     }
 
     public Collection<Production> getProductionsContaining(LexicalElement e)
     {
-        Collection<Production> prods=new LinkedList<Production>();
-
-        /* TODO: optimize */
-        for (Collection<Production> c: productions.values())
-            for (Production p: c)
-                if (p.getBody().contains(e))
-                    prods.add(p);
-
-        return prods;
+        return productionsContaining.containsKey(e) 
+            ? productionsContaining.get(e)
+            : new LinkedList<Production>();
     }
 
     public boolean removeProduction(Production prod)
@@ -156,6 +168,10 @@ public class Cfg
         size--;
 
         LESetsUptodate=false;
+
+        /* Maintain productionsContaining */
+        for (LexicalElement e: prod.getBody())
+            productionsContaining.get(e).remove(prod);
 
         return true;
     }
