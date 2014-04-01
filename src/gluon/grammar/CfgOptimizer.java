@@ -16,6 +16,12 @@
 
 package gluon.grammar;
 
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Queue;
+import java.util.List;
+import java.util.LinkedList;
+
 public class CfgOptimizer
 {
     private CfgOptimizer()
@@ -23,120 +29,84 @@ public class CfgOptimizer
         assert false;
     }
 
-    public Cfg optimize(Cfg grammar)
+    private static Set<NonTerminal> getReachable(Cfg grammar)
     {
-        return grammar; // TODO
-    }
-    /*
-          
-    private Map<NonTerminal,Collection<Production>> nonTermUsages()
-    {
-        Map<NonTerminal,Collection<Production>> nonTermUsages
-            =new HashMap<NonTerminal,Collection<Production>>();
+        Set<NonTerminal> enqueued=new HashSet<NonTerminal>();
+        Queue<NonTerminal> queue=new LinkedList<NonTerminal>();
+
+        queue.add(grammar.getStart());
+        enqueued.add(grammar.getStart());
         
-        for (Production p: getProductions())
-            for (LexicalElement e: p.getBody())
-                if (e instanceof NonTerminal)
-                {
-                    NonTerminal n=(NonTerminal)e;
-
-                    if (!nonTermUsages.containsKey(n))
-                        nonTermUsages.put(n,new LinkedList<Production>());
-                    
-                    nonTermUsages.get(n).add(p);
-                }
-        
-        return nonTermUsages;
-    }
-    
-    private void rewrite(Map<NonTerminal,Collection<Production>> nonTermUsages,
-                         NonTerminal oldTerm, LexicalElement newElement)
-    {
-        Collection<Production> prods=nonTermUsages.get(oldTerm);
-
-        if (prods == null)
-            return;
-
-        for (Production p: prods)
+        while (queue.size() > 0)
         {
-            productions.get(p.getHead()).remove(p);
+            NonTerminal u=queue.poll();
 
-            p.rewrite(oldTerm,newElement);
-            
-            productions.get(p.getHead()).add(p);
+            for (Production p: grammar.getProductionsOf(u))
+                for (LexicalElement ve: p.getBody())
+                    if (ve instanceof NonTerminal)
+                    {
+                        NonTerminal v=(NonTerminal)ve;
 
-            // we must update nonTermUsages
-            if (newElement instanceof NonTerminal)
-            {
-                assert nonTermUsages.containsKey((NonTerminal)newElement);
-                
-                nonTermUsages.get((NonTerminal)newElement).add(p);
-            }
+                        if (!enqueued.contains(v))
+                        {
+                            queue.add(v);
+                            enqueued.add(v);
+                        }
+                    }
         }
+
+        return enqueued;
     }
-    
-    private void erase(Map<NonTerminal,Collection<Production>> nonTermUsages,
-                       NonTerminal nonterm)
+
+    /* Returns true if the grammar was changed */
+    private static boolean removeUnreachable(Cfg grammar)
     {
-        Collection<Production> prods=nonTermUsages.get(nonterm);
+        Set<NonTerminal> reachable=getReachable(grammar);
+        List<Production> toRemove=new LinkedList<Production>();
 
-        if (prods == null)
-            return;
+        for (Production p: grammar.getProductions())
+            if (!reachable.contains(p.getHead()))
+                toRemove.add(p);
 
-        for (Production p: prods)
+        for (Production p: toRemove)
+            grammar.removeProduction(p);
+
+        return toRemove.size() > 0;
+    }
+
+    /* Returns true if the grammar was changed */
+    private static boolean removeLoops(Cfg grammar)
+    {
+        List<Production> toRemove=new LinkedList<Production>();
+
+        for (Production p: grammar.getProductions())
+            if (p.bodyLength() == 1
+                && p.getBody().get(0).equals(p.getHead()))
+                toRemove.add(p);
+
+        for (Production p: toRemove)
+            grammar.removeProduction(p);
+
+        return toRemove.size() > 0;
+    }
+
+    public static Cfg optimize(Cfg grammar)
+    {
+        Cfg grammarOpt=grammar.clone();
+        boolean changed;
+
+        do
         {
-            productions.get(p.getHead()).remove(p);
+            changed=false;
 
-            p.erase(nonterm);
+            /* "changed" should be at the right side of the "or" to force the
+             * evaluation of the function call.
+             */
+            // removeFoo();
+            changed=removeLoops(grammar) || changed;
+            changed=removeUnreachable(grammar) || changed;
+        } while (changed);
 
-            productions.get(p.getHead()).add(p);
-
-            // no need to update nonTermUsages
-        }
+        return grammarOpt;
     }
-
-    private void optimizeSingletonProductions()
-    {
-        Map<NonTerminal,Collection<Production>> nonTermUsages=nonTermUsages();
-        Collection<NonTerminal> toRemove=new LinkedList<NonTerminal>();
-        
-        for (Set<Production> prods: productions.values())
-            if (prods.size() == 1)
-            {
-                Production prod=prods.iterator().next();
-                LexicalElement body; 
-                
-                if (prod.getBody().size() > 1 || prod.getHead().equals(start)
-                    || prod.getHead().noRemove())
-                    continue;
-                
-                assert prod.getBody().size() <= 1;
-                
-                body=prod.getBody().size() == 1 ? prod.getBody().get(0) : null;
-                
-                if (prod.getHead().equals(body))
-                    continue;
-                
-                if (body != null)
-                    rewrite(nonTermUsages,prod.getHead(),body);
-                else
-                    erase(nonTermUsages,prod.getHead());
-
-                toRemove.add(prod.getHead());
-            }
-        
-        for (NonTerminal n: toRemove)
-        {
-            productions.remove(n);
-            nonterminals.remove(n);
-            lexicalElements.remove(n);
-            size--;
-        }
-    }
-
-    public void optimize()
-    {
-        optimizeSingletonProductions();
-    }
-    */
 }

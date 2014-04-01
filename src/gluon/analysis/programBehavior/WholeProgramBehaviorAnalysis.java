@@ -19,6 +19,7 @@ package gluon.analysis.programBehavior;
 import gluon.grammar.Production;
 import gluon.grammar.NonTerminal;
 import gluon.grammar.CfgSubwords;
+import gluon.grammar.CfgOptimizer;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -103,7 +104,7 @@ public class WholeProgramBehaviorAnalysis
         if (!gluon.Main.NO_GRAMMAR_OPTIMIZE)
         {
             gluon.profiling.Timer.start("final:analysis-behavior-grammar-opt");
-            // super.grammar.optimize(); TODO
+            super.grammar=CfgOptimizer.optimize(super.grammar);
             gluon.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
         }
 
@@ -114,7 +115,7 @@ public class WholeProgramBehaviorAnalysis
         if (!gluon.Main.NO_GRAMMAR_OPTIMIZE)
         {
             gluon.profiling.Timer.start("final:analysis-behavior-grammar-opt");
-            // super.grammar.optimize(); TODO
+            super.grammar=CfgOptimizer.optimize(super.grammar);
             gluon.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
         }
 

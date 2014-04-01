@@ -64,23 +64,6 @@ public class Production
         return false;
     }
 
-    public void rewrite(LexicalElement oldElement, LexicalElement newElement)
-    {
-        for (int i=0; i < body.size(); i++)
-            if (body.get(i).equals(oldElement))
-                body.set(i,newElement);
-    }
-
-    public void erase(LexicalElement element)
-    {
-        for (int i=0; i < body.size(); i++)
-            if (body.get(i).equals(element))
-            {
-                body.remove(i);
-                i--;
-            }
-    }
-
     @Override
     public int hashCode()
     {

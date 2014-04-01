@@ -38,10 +38,21 @@ public class Cfg
     private Set<LexicalElement> lexicalElements;
     private Set<NonTerminal> nonterminals;
     private Set<Terminal> terminals;
-    
+    private boolean LESetsUptodate; /* true if the above sets are up to date */
+
     public Cfg()
     {
         clear();
+    }
+
+    public Cfg(NonTerminal start, Collection<Production> prods)
+    {
+        this();
+        
+        for (Production p: prods)
+            addProduction(p);
+
+        setStart(start);
     }
     
     private void clear()
@@ -49,7 +60,8 @@ public class Cfg
         productions=new HashMap<NonTerminal,Set<Production>>();
         start=null;
         size=0;
-        
+
+        LESetsUptodate=true;
         lexicalElements=new HashSet<LexicalElement>();
         nonterminals=new HashSet<NonTerminal>();
         terminals=new HashSet<Terminal>();
@@ -76,26 +88,15 @@ public class Cfg
         }
 
         productions.get(p.getHead()).add(p);
-        
-        lexicalElements.add(p.getHead());
-        nonterminals.add(p.getHead());
 
-        for (LexicalElement e: p.getBody())
-        {
-            if (e instanceof NonTerminal)
-                nonterminals.add((NonTerminal)e);
-            else if (e instanceof Terminal)
-                terminals.add((Terminal)e);
-            
-            lexicalElements.add(e);
-        }
+        updateLESetsProduction(p);
         
         size++;
     }
     
     public void setStart(NonTerminal s)
     {
-        assert nonterminals.contains(s);
+        assert getNonTerminals().contains(s);
         
         start=s;
     }
@@ -120,24 +121,82 @@ public class Cfg
         return productions.containsKey(n) ? productions.get(n)
             : new LinkedList<Production>();
     }
+
+    public boolean removeProduction(Production prod)
+    {
+        Set<Production> prodSet;
+
+        prodSet=productions.get(prod.getHead());
+
+        if (prodSet == null)
+            return false;
+
+        if (!prodSet.remove(prod))
+            return false;
+
+        if (prodSet.size() == 0)
+            productions.remove(prod.getHead());
+
+        size--;
+
+        LESetsUptodate=false;
+
+        return false;
+    }
     
     public int size()
     {
         return size;
     }
+
+    private void updateLESetsProduction(Production prod)
+    {
+        lexicalElements.add(prod.getHead());
+        nonterminals.add(prod.getHead());
+
+        for (LexicalElement e: prod.getBody())
+        {
+            if (e instanceof NonTerminal)
+                nonterminals.add((NonTerminal)e);
+            else if (e instanceof Terminal)
+                terminals.add((Terminal)e);
+            
+            lexicalElements.add(e);
+        }
+    }
     
+    private void updateLESets()
+    {
+        if (LESetsUptodate)
+            return;
+
+        lexicalElements.clear();
+        nonterminals.clear();
+        terminals.clear();
+
+        for (Collection<Production> c: productions.values())
+            for (Production p: c)
+                updateLESetsProduction(p);
+    }
+
     public Collection<LexicalElement> getLexicalElements()
     {
+        updateLESets();
+
         return lexicalElements;
     }
     
     public Collection<Terminal> getTerminals()
     {
+        updateLESets();
+
         return terminals;
     }
     
     public Collection<NonTerminal> getNonTerminals()
     {
+        updateLESets();
+
         return nonterminals;
     }
     
@@ -164,13 +223,6 @@ public class Cfg
 
     public Cfg clone()
     {
-        Cfg clone=new Cfg();
-
-        for (Production p: getProductions())
-            clone.addProduction(p);
-
-        clone.setStart(getStart());
-
-        return clone;
+        return new Cfg(start,getProductions());
     }
 }
