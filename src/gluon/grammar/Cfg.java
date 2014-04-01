@@ -73,7 +73,8 @@ public class Cfg
             System.out.println(this.getClass().getSimpleName()+": "+s);
     }
     
-    public void addProduction(Production p)
+    
+    public boolean addProduction(Production p)
     {
         if (!productions.containsKey(p.getHead()))
         {
@@ -84,7 +85,7 @@ public class Cfg
         else if (productions.get(p.getHead()).contains(p))
         {
             dprintln("    filtering "+p+": already there");
-            return;
+            return false;
         }
 
         productions.get(p.getHead()).add(p);
@@ -92,6 +93,8 @@ public class Cfg
         updateLESetsProduction(p);
         
         size++;
+        
+        return true;
     }
     
     public void setStart(NonTerminal s)
@@ -122,6 +125,19 @@ public class Cfg
             : new LinkedList<Production>();
     }
 
+    public Collection<Production> getProductionsContaining(LexicalElement e)
+    {
+        Collection<Production> prods=new LinkedList<Production>();
+
+        /* TODO: optimize */
+        for (Collection<Production> c: productions.values())
+            for (Production p: c)
+                if (p.getBody().contains(e))
+                    prods.add(p);
+
+        return prods;
+    }
+
     public boolean removeProduction(Production prod)
     {
         Set<Production> prodSet;
@@ -141,7 +157,7 @@ public class Cfg
 
         LESetsUptodate=false;
 
-        return false;
+        return true;
     }
     
     public int size()

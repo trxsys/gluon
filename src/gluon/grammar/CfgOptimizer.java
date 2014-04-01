@@ -21,6 +21,8 @@ import java.util.HashSet;
 import java.util.Queue;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class CfgOptimizer
 {
@@ -29,83 +31,126 @@ public class CfgOptimizer
         assert false;
     }
 
-    private static Set<NonTerminal> getReachable(Cfg grammar)
+    private static void replace(Cfg grammar, NonTerminal nonterm,
+                                ArrayList<LexicalElement> string)
     {
-        Set<NonTerminal> enqueued=new HashSet<NonTerminal>();
-        Queue<NonTerminal> queue=new LinkedList<NonTerminal>();
-
-        queue.add(grammar.getStart());
-        enqueued.add(grammar.getStart());
-        
-        while (queue.size() > 0)
+        for (Production p: grammar.getProductionsContaining(nonterm))
         {
-            NonTerminal u=queue.poll();
+            grammar.removeProduction(p);
 
-            for (Production p: grammar.getProductionsOf(u))
-                for (LexicalElement ve: p.getBody())
-                    if (ve instanceof NonTerminal)
-                    {
-                        NonTerminal v=(NonTerminal)ve;
+            p.replace(nonterm,string);
 
-                        if (!enqueued.contains(v))
-                        {
-                            queue.add(v);
-                            enqueued.add(v);
-                        }
-                    }
+            grammar.addProduction(p);
+        }
+    }
+
+    /* If there exists
+     *
+     *   B → X  (where X may be multiple symbols and X does not contain B)
+     *   B ↛ Y  (where Y ≠ X)
+     *
+     * remove B → X and replace every B with X.
+     *
+     * Returns true if the grammar was modified.
+     */
+    private static boolean removeDirectReductions(Cfg grammar)
+    {
+        boolean modified=false;
+        // Set<Production> removed=new HashSet<Production>();
+
+        for (NonTerminal nonterm: grammar.getNonTerminals())
+        {
+            Collection<Production> prodsOf;
+            Production prod;
+
+            if (grammar.getStart().equals(nonterm)
+                || nonterm.noRemove())
+                continue;
+
+            prodsOf=grammar.getProductionsOf(nonterm);
+
+            if (prodsOf.size() != 1)
+                continue;
+
+            prod=prodsOf.iterator().next();
+
+            if (prod.getBody().contains(nonterm))
+                continue;
+
+            grammar.removeProduction(prod);
+
+            replace(grammar,nonterm,prod.getBody());
+
+            modified=true;
         }
 
-        return enqueued;
+        return modified;
     }
 
-    /* Returns true if the grammar was changed */
-    private static boolean removeUnreachable(Cfg grammar)
+    private static boolean isDirectLoop(Production prod)
     {
-        Set<NonTerminal> reachable=getReachable(grammar);
-        List<Production> toRemove=new LinkedList<Production>();
-
-        for (Production p: grammar.getProductions())
-            if (!reachable.contains(p.getHead()))
-                toRemove.add(p);
-
-        for (Production p: toRemove)
-            grammar.removeProduction(p);
-
-        return toRemove.size() > 0;
+        return prod.bodyLength() == 1
+            && prod.getBody().get(0).equals(prod.getHead());
     }
 
-    /* Returns true if the grammar was changed */
-    private static boolean removeLoops(Cfg grammar)
+
+    /* Remove production of the from
+     *
+     *   A → A
+     *
+     * Returns true if the grammar was modified.
+     */
+    private static boolean removeDirectLoops(Cfg grammar)
     {
-        List<Production> toRemove=new LinkedList<Production>();
+        boolean modified=false;
 
         for (Production p: grammar.getProductions())
-            if (p.bodyLength() == 1
-                && p.getBody().get(0).equals(p.getHead()))
-                toRemove.add(p);
+            if (isDirectLoop(p))
+                if (grammar.removeProduction(p))
+                    modified=true;
 
-        for (Production p: toRemove)
-            grammar.removeProduction(p);
-
-        return toRemove.size() > 0;
+        return modified;
     }
 
     public static Cfg optimize(Cfg grammar)
     {
         Cfg grammarOpt=grammar.clone();
-        boolean changed;
+        boolean modified;
+
+        /*
+        System.out.println("GREPME start "+grammarOpt.size());
+        System.out.println(grammarOpt);
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        */
 
         do
         {
-            changed=false;
+            modified=removeDirectReductions(grammarOpt);
 
-            /* "changed" should be at the right side of the "or" to force the
-             * evaluation of the function call.
-             */
-            // removeFoo();
-            changed=removeLoops(grammar) || changed;
-            changed=removeUnreachable(grammar) || changed;
-        } while (changed);
+            if (removeDirectLoops(grammarOpt))
+                modified=true;
+
+            System.out.println("GREPME iterating "+grammarOpt.size());
+        } while (modified);
+
+        /* TODO: this might get rid of all the loops in the grammar. maybe we
+         *       don't need to do loop detection in the parser
+         */
+
+        /* TODO only put the methods used in the contract in the grammar?
+         */
+
+        /*
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("GREPME end "+grammarOpt.size());
+        System.out.println(grammarOpt);
+
+        System.exit(0);
+        */
 
         return grammarOpt;
     }

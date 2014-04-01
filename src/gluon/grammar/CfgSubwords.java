@@ -256,12 +256,12 @@ public class CfgSubwords
      *
      * The new start symbol will be S<> . 
      *
-     * If the original grammar has a rule X -> Y Z, then the new grammar will
+     * If the original grammar has a rule X → Y Z, then the new grammar will
      * have:
      *
-     *     X< -> Y< | Y Z<
-     *     X> -> Z> | Y> Z
-     *     X<> -> Y> Z< | Y<> | Z<>
+     *     X< → Y< | Y Z<
+     *     X> → Z> | Y> Z
+     *     X<> → Y> Z< | Y<> | Z<>
      *
      * From http://www.reddit.com/r/compsci/comments/1drkvk/    \
      *        are_contextfree_languages_closed_under_subwords/ 
