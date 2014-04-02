@@ -26,9 +26,17 @@ import java.util.Collection;
 
 public class CfgOptimizer
 {
+    private static final boolean DEBUG=true;
+
     private CfgOptimizer()
     {
         assert false;
+    }
+
+    private static void dprintln(String s)
+    {
+        if (DEBUG)
+            System.out.println("CfgOptimizer: "+s);
     }
 
     private static void replace(Cfg grammar, NonTerminal nonterm,
@@ -50,7 +58,7 @@ public class CfgOptimizer
 
     /* If there exists
      *
-     *   B → X  (where X may be multiple symbols and X does not contain B)
+     *   B → X  (where X may be multiple symbols, and X does not contain B)
      *   B ↛ Y  (where Y ≠ X)
      *
      * remove B → X and replace every B with X.
@@ -120,7 +128,7 @@ public class CfgOptimizer
         Cfg grammarOpt=grammar.clone();
         boolean modified;
 
-        System.out.println("GREPME start "+grammarOpt.size());
+        dprintln("Grammar size start: "+grammarOpt.size());
 
         do
         {
@@ -129,7 +137,7 @@ public class CfgOptimizer
             if (removeDirectLoops(grammarOpt))
                 modified=true;
 
-            System.out.println("GREPME iterating "+grammarOpt.size());
+            // dprintln("Grammar size iterating: "+grammarOpt.size());
         } while (modified);
 
         /* TODO: this might get rid of all the unproductive 
@@ -137,10 +145,10 @@ public class CfgOptimizer
          *       don't need to do loop detection in the parser
          */
 
-        /* TODO only put the methods used in the contract in the grammar?
-         */
+        dprintln("Grammar size end: "+grammarOpt.size());
 
-        System.out.println("GREPME end "+grammarOpt.size());
+        dprintln("Grammar: ");
+        dprintln(grammarOpt.toString());
 
         return grammarOpt;
     }

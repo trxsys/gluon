@@ -25,6 +25,7 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.Collection;
 
 import soot.SootClass;
 import soot.SootMethod;
@@ -41,9 +42,10 @@ public class WholeProgramBehaviorAnalysis
     private Set<SootMethod> enqueuedMethods;
 
     public WholeProgramBehaviorAnalysis(SootMethod thread, SootClass modClass,
-                                        AllocNode aSite)
+                                        AllocNode aSite,
+                                        Collection<String> contract)
     {
-        super(modClass,aSite);
+        super(modClass,aSite,contract);
 
         entryMethod=thread;
 
