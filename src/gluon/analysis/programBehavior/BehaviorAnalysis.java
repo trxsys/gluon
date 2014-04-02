@@ -116,6 +116,8 @@ public abstract class BehaviorAnalysis
     private AllocNode allocSite;
     protected Cfg grammar;
 
+    private Collection<String> contract;
+
     protected Set<Unit> visited;
     private NonTerminalAliasCreator aliasCreator;
 
@@ -123,26 +125,29 @@ public abstract class BehaviorAnalysis
 
     private boolean conservativePointsTo;
 
-    public BehaviorAnalysis(SootClass modClass, AllocNode aSite)
+    public BehaviorAnalysis(SootClass modClass, AllocNode aSite,
+                            Collection<String> contract)
     {
-        module=modClass;
-        allocSite=aSite;
+        this.module=modClass;
+        this.allocSite=aSite;
 
-        grammar=new Cfg();
+        this.grammar=new Cfg();
 
-        monitorAnalysis=null;
+        this.contract=contract;
 
-        visited=null;
+        this.monitorAnalysis=null;
 
-        conservativePointsTo=false;
+        this.visited=null;
 
-        aliasCreator=new NonTerminalAliasCreator();
+        this.conservativePointsTo=false;
+
+        this.aliasCreator=new NonTerminalAliasCreator();
     }
 
     /* For conservative points-to analisys */
-    public BehaviorAnalysis(SootClass modClass)
+    public BehaviorAnalysis(SootClass modClass, Collection<String> contract)
     {
-        this(modClass,null);
+        this(modClass,null,contract);
         conservativePointsTo=true;
     }
 
@@ -349,7 +354,6 @@ public abstract class BehaviorAnalysis
             switch (invokeCallsModule(expr))
             {
             case NEVER:
-            {
                 if (calledMethod.hasActiveBody()
                     && (!calledMethod.isJavaLibraryMethod()
                         || gluon.Main.WITH_JAVA_LIB))
@@ -360,9 +364,32 @@ public abstract class BehaviorAnalysis
                         prodBodyPrefix=new PBNonTerminal(alias(calledMethod),method);
                 }
                 break;
-            }
-            case SOMETIMES: addProdSkipPrefix=true; /* fall through */
-            case ALWAYS: prodBodyPrefix=new PBTerminal(calledMethod,unit,method); break;
+            case SOMETIMES:
+                addProdSkipPrefix=true; /* fall through */
+            case ALWAYS:
+                if (contract.contains(calledMethod.getName()))
+                    prodBodyPrefix=new PBTerminal(calledMethod,unit,method);
+                else
+                {
+                    /* This module call does not belong to the contract but we
+                     * need to put a dummy terminal here, otherwise we may
+                     * introduce words in the grammar's language that cannot
+                     * be executed by the program:
+                     *
+                     * E.g. if the contract is "a b" and the program is
+                     *
+                     *   m.a() m.foo() m.b()
+                     *
+                     * then we should not get a match, so we use a dummy
+                     * terminal "_" in place of "foo".
+                     *
+                     * The advantage of doing this is that the grammar can be
+                     * further optimized.
+                     */
+                    prodBodyPrefix=new PBTerminal("_");
+                }
+
+                break;
             }
         }
 

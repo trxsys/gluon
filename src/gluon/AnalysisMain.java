@@ -257,6 +257,16 @@ public class AnalysisMain
         return atomic ? 0 : -1;
     }
 
+    private static List<String> wordToStrings(List<Terminal> word)
+    {
+        List<String> strings=new ArrayList<String>(word.size());
+
+        for (int i=0; i < word.size(); i++)
+            strings.add(word.get(i).getName());
+
+        return strings;
+    }
+
     private void checkThreadWord(SootMethod thread,
                                  List<Terminal> word,
                                  ValueEquivAnalysis vEquiv)
@@ -278,12 +288,15 @@ public class AnalysisMain
         for (soot.jimple.spark.pag.AllocNode as: moduleAllocSites)
         {
             Parser parser;
-            BehaviorAnalysis ba=new WholeProgramBehaviorAnalysis(thread,module,as);
-            AtomicityAnalysis aa;
             Cfg grammar;
+            BehaviorAnalysis ba;
+            AtomicityAnalysis aa;
             ParserCallbackCheckWord pcb;
 
             gluon.profiling.Profiling.inc("alloc-sites");
+
+            ba=new WholeProgramBehaviorAnalysis(thread,module,as,
+                                                wordToStrings(word));
 
             if (Main.ATOMICITY_SYNCH)
             {
@@ -397,12 +410,14 @@ public class AnalysisMain
         long startTime=System.currentTimeMillis()/1000;
         Parser parser;
         Cfg grammar;
-        BehaviorAnalysis ba=new ClassBehaviorAnalysis(c,module);
+        BehaviorAnalysis ba;
         AtomicityAnalysis aa;
         ParserCallbackCheckWord pcb;
 
         System.out.println("  Verifying word "+WordInstance.wordStr(word)+":");
         System.out.println();
+
+        ba=new ClassBehaviorAnalysis(c,module,wordToStrings(word));
 
         if (Main.ATOMICITY_SYNCH)
         {
@@ -458,11 +473,13 @@ public class AnalysisMain
         {
             Parser parser;
             Cfg grammar;
-            BehaviorAnalysis ba=new ClassBehaviorAnalysis(c,module,as);
+            BehaviorAnalysis ba;
             AtomicityAnalysis aa;
             ParserCallbackCheckWord pcb;
 
             gluon.profiling.Profiling.inc("alloc-sites");
+
+            ba=new ClassBehaviorAnalysis(c,module,as,wordToStrings(word));
 
             if (Main.ATOMICITY_SYNCH)
             {
