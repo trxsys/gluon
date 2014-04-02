@@ -219,7 +219,12 @@ public class AnalysisMain
                 parser.parse(word, new ParserCallback() {
                         public boolean shouldAbort()
                         {
-                            long now=System.currentTimeMillis()/1000;
+                            long now;
+
+                            if (Main.TIMEOUT == 0)
+                                return false;
+
+                            now=System.currentTimeMillis()/1000;
 
                             return now-startTime > Main.TIMEOUT;
                         }
@@ -364,7 +369,12 @@ public class AnalysisMain
             parser.parse(word, new ParserCallback() {
                     public boolean shouldAbort()
                     {
-                        long now=System.currentTimeMillis()/1000;
+                        long now;
+
+                        if (Main.TIMEOUT == 0)
+                            return false;
+                        
+                        now=System.currentTimeMillis()/1000;
                         
                         return now-startTime > Main.TIMEOUT;
                     }
@@ -446,7 +456,12 @@ public class AnalysisMain
                 parser.parse(word, new ParserCallback() {
                         public boolean shouldAbort()
                         {
-                            long now=System.currentTimeMillis()/1000;
+                            long now;
+
+                            if (Main.TIMEOUT == 0)
+                                return false;
+
+                            now=System.currentTimeMillis()/1000;
 
                             return now-startTime > Main.TIMEOUT;
                         }
