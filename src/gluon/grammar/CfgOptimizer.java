@@ -26,7 +26,7 @@ import java.util.Collection;
 
 public class CfgOptimizer
 {
-    private static final boolean DEBUG=true;
+    private static final boolean DEBUG=false;
 
     private CfgOptimizer()
     {
@@ -137,18 +137,10 @@ public class CfgOptimizer
             if (removeDirectLoops(grammarOpt))
                 modified=true;
 
-            // dprintln("Grammar size iterating: "+grammarOpt.size());
+            dprintln("Grammar size iterating: "+grammarOpt.size());
         } while (modified);
 
-        /* TODO: this might get rid of all the unproductive 
-         *       loops in the grammar. maybe we
-         *       don't need to do loop detection in the parser
-         */
-
         dprintln("Grammar size end: "+grammarOpt.size());
-
-        dprintln("Grammar: ");
-        dprintln(grammarOpt.toString());
 
         return grammarOpt;
     }

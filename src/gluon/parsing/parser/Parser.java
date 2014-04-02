@@ -325,7 +325,7 @@ public class Parser
         return initConfig;
     }
     
-    /* Argument input should be an ArrayList for performance reasons */
+    /* Argument input should be an ArrayList for performance reasons. */
     public int parse(List<Terminal> input, ParserCallback pcb)
         throws ParserAbortedException
     {
