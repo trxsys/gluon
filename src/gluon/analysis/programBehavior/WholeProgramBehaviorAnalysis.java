@@ -18,11 +18,14 @@ package gluon.analysis.programBehavior;
 
 import gluon.grammar.Production;
 import gluon.grammar.NonTerminal;
+import gluon.grammar.CfgSubwords;
+import gluon.grammar.CfgOptimizer;
 
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.Collection;
 
 import soot.SootClass;
 import soot.SootMethod;
@@ -39,9 +42,10 @@ public class WholeProgramBehaviorAnalysis
     private Set<SootMethod> enqueuedMethods;
 
     public WholeProgramBehaviorAnalysis(SootMethod thread, SootClass modClass,
-                                        AllocNode aSite)
+                                        AllocNode aSite,
+                                        Collection<String> contract)
     {
-        super(modClass,aSite);
+        super(modClass,aSite,contract);
 
         entryMethod=thread;
 
@@ -102,18 +106,18 @@ public class WholeProgramBehaviorAnalysis
         if (!gluon.Main.NO_GRAMMAR_OPTIMIZE)
         {
             gluon.profiling.Timer.start("final:analysis-behavior-grammar-opt");
-            super.grammar.optimize();
+            super.grammar=CfgOptimizer.optimize(super.grammar);
             gluon.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
         }
 
         gluon.profiling.Timer.start("analysis-behavior-grammar-add-subwords");
-        super.grammar.subwordClosure();
+        super.grammar=CfgSubwords.subwordGfg(super.grammar);
         gluon.profiling.Timer.stop("analysis-behavior-grammar-add-subwords");
 
         if (!gluon.Main.NO_GRAMMAR_OPTIMIZE)
         {
             gluon.profiling.Timer.start("final:analysis-behavior-grammar-opt");
-            super.grammar.optimize();
+            super.grammar=CfgOptimizer.optimize(super.grammar);
             gluon.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
         }
 

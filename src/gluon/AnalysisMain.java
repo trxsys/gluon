@@ -176,6 +176,16 @@ public class AnalysisMain
         return atomic ? 0 : -1;
     }
     
+    private static List<String> wordToStrings(List<Terminal> word)
+    {
+        List<String> strings=new ArrayList<String>(word.size());
+
+        for (int i=0; i < word.size()-1; i++)
+            strings.add(word.get(i).getName());
+
+        return strings;
+    }
+
     private void checkThreadWord(final SootMethod thread,
                                  final List<Terminal> word,
                                  final ValueEquivAnalysis vEquiv)
@@ -196,7 +206,8 @@ public class AnalysisMain
         for (soot.jimple.spark.pag.AllocNode as: moduleAllocSites)
         {
             Parser parser;
-            BehaviorAnalysis ba=new WholeProgramBehaviorAnalysis(thread,module,as);
+            BehaviorAnalysis ba=new WholeProgramBehaviorAnalysis(thread,module,as,
+                                                                 wordToStrings(word));
 
             if (Main.ATOMICITY_SYNCH)
             {
@@ -219,7 +230,12 @@ public class AnalysisMain
                 parser.parse(word, new ParserCallback() {
                         public boolean shouldAbort()
                         {
-                            long now=System.currentTimeMillis()/1000;
+                            long now;
+
+                            if (Main.TIMEOUT == 0)
+                                return false;
+
+                            now=System.currentTimeMillis()/1000;
 
                             return now-startTime > Main.TIMEOUT;
                         }
@@ -265,7 +281,6 @@ public class AnalysisMain
         Cfg grammar;
         
         gluon.profiling.Profiling.inc("final:alloc-sites-total");
-        
 
         gluon.profiling.Timer.start("final:analysis-behavior");
         programBehavior.analyze();
@@ -341,7 +356,7 @@ public class AnalysisMain
         final Set<WordInstance> reported=new HashSet<WordInstance>();
         final long startTime=System.currentTimeMillis()/1000;
         Parser parser;
-        BehaviorAnalysis ba=new ClassBehaviorAnalysis(c,module);
+        BehaviorAnalysis ba=new ClassBehaviorAnalysis(c,module,wordToStrings(word));
 
         System.out.println("  Verifying word "+WordInstance.wordStr(word)+":");
         System.out.println();
@@ -364,7 +379,12 @@ public class AnalysisMain
             parser.parse(word, new ParserCallback() {
                     public boolean shouldAbort()
                     {
-                        long now=System.currentTimeMillis()/1000;
+                        long now;
+
+                        if (Main.TIMEOUT == 0)
+                            return false;
+                        
+                        now=System.currentTimeMillis()/1000;
                         
                         return now-startTime > Main.TIMEOUT;
                     }
@@ -423,7 +443,8 @@ public class AnalysisMain
         for (soot.jimple.spark.pag.AllocNode as: moduleAllocSites)
         {
             Parser parser;
-            BehaviorAnalysis ba=new ClassBehaviorAnalysis(c,module,as);
+            BehaviorAnalysis ba=new ClassBehaviorAnalysis(c,module,as,
+                                                          wordToStrings(word));
 
             if (Main.ATOMICITY_SYNCH)
             {
@@ -446,7 +467,12 @@ public class AnalysisMain
                 parser.parse(word, new ParserCallback() {
                         public boolean shouldAbort()
                         {
-                            long now=System.currentTimeMillis()/1000;
+                            long now;
+
+                            if (Main.TIMEOUT == 0)
+                                return false;
+
+                            now=System.currentTimeMillis()/1000;
 
                             return now-startTime > Main.TIMEOUT;
                         }

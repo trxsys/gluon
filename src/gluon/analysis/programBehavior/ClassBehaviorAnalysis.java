@@ -18,6 +18,8 @@ package gluon.analysis.programBehavior;
 
 import gluon.grammar.Cfg;
 import gluon.grammar.Production;
+import gluon.grammar.CfgSubwords;
+import gluon.grammar.CfgOptimizer;
 
 import soot.SootMethod;
 import soot.SootClass;
@@ -25,6 +27,7 @@ import soot.Unit;
 
 import soot.jimple.spark.pag.AllocNode;
 
+import java.util.Collection;
 import java.util.HashSet;
 
 public class ClassBehaviorAnalysis
@@ -32,16 +35,18 @@ public class ClassBehaviorAnalysis
 {
     private SootClass classA;
     
-    public ClassBehaviorAnalysis(SootClass c, SootClass modClass, AllocNode aSite)
+    public ClassBehaviorAnalysis(SootClass c, SootClass modClass, AllocNode aSite,
+                                 Collection<String> contract)
     {
-        super(modClass,aSite);
+        super(modClass,aSite,contract);
         classA=c;
     }
 
     /* For conservative points-to analisys */
-    public ClassBehaviorAnalysis(SootClass c, SootClass modClass)
+    public ClassBehaviorAnalysis(SootClass c, SootClass modClass,
+                                 Collection<String> contract)
     {
-        super(modClass);
+        super(modClass,contract);
         classA=c;
     }
 
@@ -106,18 +111,18 @@ public class ClassBehaviorAnalysis
         if (!gluon.Main.NO_GRAMMAR_OPTIMIZE)
         {
             gluon.profiling.Timer.start("final:analysis-behavior-grammar-opt");
-            super.grammar.optimize();
+            super.grammar=CfgOptimizer.optimize(super.grammar);
             gluon.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
         }
 
         gluon.profiling.Timer.start("analysis-behavior-grammar-add-subwords");
-        super.grammar.subwordClosure();
+        super.grammar=CfgSubwords.subwordGfg(super.grammar);
         gluon.profiling.Timer.stop("analysis-behavior-grammar-add-subwords");
 
         if (!gluon.Main.NO_GRAMMAR_OPTIMIZE)
         {
             gluon.profiling.Timer.start("final:analysis-behavior-grammar-opt");
-            super.grammar.optimize();
+            super.grammar=CfgOptimizer.optimize(super.grammar);
             gluon.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
         }
 

@@ -55,30 +55,23 @@ public class Production
         return body.size();
     }
 
-    public boolean hasTerminals()
+    /* pre: string does not contain nonterm. */
+    public void replace(NonTerminal nonterm, ArrayList<LexicalElement> string)
     {
-        for (int i=0; i < body.size(); i++)
-            if (body.get(i) instanceof Terminal)
-                return true;
+        ArrayList<LexicalElement> oldBody=body;
 
-        return false;
-    }
+        assert !string.contains(nonterm);
 
-    public void rewrite(LexicalElement oldElement, LexicalElement newElement)
-    {
-        for (int i=0; i < body.size(); i++)
-            if (body.get(i).equals(oldElement))
-                body.set(i,newElement);
-    }
+        /* Most likely there will only be one replace so this size should be
+         * good.
+         */
+        body=new ArrayList<LexicalElement>(string.size()+oldBody.size()-1);
 
-    public void erase(LexicalElement element)
-    {
-        for (int i=0; i < body.size(); i++)
-            if (body.get(i).equals(element))
-            {
-                body.remove(i);
-                i--;
-            }
+        for (LexicalElement e: oldBody)
+            if (e.equals(nonterm))
+                body.addAll(string);
+            else
+                body.add(e);
     }
 
     @Override
