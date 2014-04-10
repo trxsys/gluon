@@ -27,7 +27,6 @@ import soot.Unit;
 
 import soot.jimple.spark.pag.AllocNode;
 
-import java.util.Collection;
 import java.util.HashSet;
 
 public class ClassBehaviorAnalysis
@@ -35,18 +34,16 @@ public class ClassBehaviorAnalysis
 {
     private SootClass classA;
     
-    public ClassBehaviorAnalysis(SootClass c, SootClass modClass, AllocNode aSite,
-                                 Collection<String> contract)
+    public ClassBehaviorAnalysis(SootClass c, SootClass modClass, AllocNode aSite)
     {
-        super(modClass,aSite,contract);
+        super(modClass,aSite);
         classA=c;
     }
 
     /* For conservative points-to analisys */
-    public ClassBehaviorAnalysis(SootClass c, SootClass modClass,
-                                 Collection<String> contract)
+    public ClassBehaviorAnalysis(SootClass c, SootClass modClass)
     {
-        super(modClass,contract);
+        super(modClass);
         classA=c;
     }
 
