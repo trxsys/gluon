@@ -115,8 +115,6 @@ public abstract class BehaviorAnalysis
     private AllocNode allocSite;
     protected Cfg grammar;
 
-    private Collection<String> contract;
-
     protected Set<Unit> visited;
     private NonTerminalAliasCreator aliasCreator;
 
@@ -124,29 +122,26 @@ public abstract class BehaviorAnalysis
 
     private boolean conservativePointsTo;
     
-    public BehaviorAnalysis(SootClass modClass, AllocNode aSite,
-                            Collection<String> contract)
+    public BehaviorAnalysis(SootClass modClass, AllocNode aSite)
     {
-        this.module=modClass;
-        this.allocSite=aSite;
+        module=modClass;
+        allocSite=aSite;
 
-        this.grammar=new Cfg();
+        grammar=new Cfg();
 
-        this.contract=contract;
-
-        this.monitorAnalysis=null;
+        monitorAnalysis=null;
         
-        this.visited=null;
+        visited=null;
 
-        this.conservativePointsTo=false;
+        conservativePointsTo=false;
         
-        this.aliasCreator=new NonTerminalAliasCreator();
+        aliasCreator=new NonTerminalAliasCreator();
     }
 
     /* For conservative points-to analisys */
-    public BehaviorAnalysis(SootClass modClass, Collection<String> contract)
+    public BehaviorAnalysis(SootClass modClass)
     {
-        this(modClass,null,contract);
+        this(modClass,null);
         conservativePointsTo=true;
     }
     
@@ -181,9 +176,6 @@ public abstract class BehaviorAnalysis
 
         if (calledMethod.isConstructor()
             || calledMethod.isPrivate())
-            return ModCall.NEVER;
-
-        if (!contract.contains(calledMethod.getName()))
             return ModCall.NEVER;
 
         if (conservativePointsTo
