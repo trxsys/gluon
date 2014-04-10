@@ -25,7 +25,7 @@ package gluon.analysis.programBehavior;
 
 import gluon.grammar.Cfg;
 import gluon.grammar.Production;
-import gluon.grammar.LexicalElement;
+import gluon.grammar.Symbol;
 import gluon.grammar.NonTerminal;
 
 import gluon.analysis.pointsTo.PointsToInformation;
@@ -322,7 +322,7 @@ public abstract class BehaviorAnalysis
 
     private void analyzeUnit(SootMethod method, UnitGraph cfg, Unit unit)
     {
-        LexicalElement prodBodyPrefix=null;
+        Symbol prodBodyPrefix=null;
         boolean addProdSkipPrefix=false;
 
         if (visited.contains(unit))
@@ -380,10 +380,10 @@ public abstract class BehaviorAnalysis
             PPNonTerminal succNonTerm=new PPNonTerminal(alias(succ),method);
 
             if (prodBodyPrefix == null || addProdSkipPrefix)
-                addUnitToLexicalElement(unit,succNonTerm,method);
+                addUnitToSymbol(unit,succNonTerm,method);
 
             if (prodBodyPrefix != null)
-                addUnitToTwoLexicalElements(unit,prodBodyPrefix,succNonTerm,
+                addUnitToTwoSymbols(unit,prodBodyPrefix,succNonTerm,
                                             method);
         }
 
@@ -399,10 +399,10 @@ public abstract class BehaviorAnalysis
         analyzeSuccessors(method,cfg,unit);
     }
 
-    private void addUnitToTwoLexicalElements(Unit unit,
-                                             LexicalElement body1,
-                                             LexicalElement body2,
-                                             SootMethod method)
+    private void addUnitToTwoSymbols(Unit unit,
+                                     Symbol body1,
+                                     Symbol body2,
+                                     SootMethod method)
     {
         PPNonTerminal head=new PPNonTerminal(alias(unit),method);
         Production production=new Production(head);
@@ -413,8 +413,8 @@ public abstract class BehaviorAnalysis
         grammar.addProduction(production);        
     }
 
-    private void addUnitToLexicalElement(Unit unit, LexicalElement body,
-                                         SootMethod method)
+    private void addUnitToSymbol(Unit unit, Symbol body,
+                                 SootMethod method)
     {
         PPNonTerminal head=new PPNonTerminal(alias(unit),method);
         Production production=new Production(head);
@@ -437,7 +437,7 @@ public abstract class BehaviorAnalysis
     {
         PPNonTerminal head=new PPNonTerminal(alias(method),method);
         Production production=new Production(head);
-        LexicalElement body=new PPNonTerminal(alias(entryPoint),method);
+        Symbol body=new PPNonTerminal(alias(entryPoint),method);
 
         head.setNoRemove();
         

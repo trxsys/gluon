@@ -16,15 +16,15 @@
 
 package gluon.parsing.parseTree;
 
-import gluon.grammar.LexicalElement;
+import gluon.grammar.Symbol;
 
 public class ParseTreeNode
 {
-    private LexicalElement elem;
+    private Symbol elem;
     private ParseTreeNode parent;
     protected int count; /* For getLCA() */
 
-    public ParseTreeNode(LexicalElement e)
+    public ParseTreeNode(Symbol e)
     {
         elem=e;
         parent=null;
@@ -41,12 +41,12 @@ public class ParseTreeNode
         return parent;
     }
 
-    public void setElem(LexicalElement e)
+    public void setElem(Symbol e)
     {
         elem=e;
     }
 
-    public LexicalElement getElem()
+    public Symbol getElem()
     {
         return elem;
     }

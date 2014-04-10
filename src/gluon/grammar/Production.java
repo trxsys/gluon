@@ -21,9 +21,9 @@ import java.util.ArrayList;
 public class Production
 {
     private NonTerminal head;
-    private ArrayList<LexicalElement> body; // it is important to garantee O(1) get(n)
+    private ArrayList<Symbol> body; // it is important to garantee O(1) get(n)
 
-    public Production(NonTerminal h, ArrayList<LexicalElement> b)
+    public Production(NonTerminal h, ArrayList<Symbol> b)
     {
         this(h);
         body=b;
@@ -32,10 +32,10 @@ public class Production
     public Production(NonTerminal h)
     {
         head=h;
-        body=new ArrayList<LexicalElement>(2);
+        body=new ArrayList<Symbol>(2);
     }
 
-    public void appendToBody(LexicalElement e)
+    public void appendToBody(Symbol e)
     {
         body.add(e);
     }
@@ -45,7 +45,7 @@ public class Production
         return head;
     }
 
-    public ArrayList<LexicalElement> getBody()
+    public ArrayList<Symbol> getBody()
     {
         return body;
     }
@@ -56,18 +56,18 @@ public class Production
     }
 
     /* pre: string does not contain nonterm. */
-    public void replace(NonTerminal nonterm, ArrayList<LexicalElement> string)
+    public void replace(NonTerminal nonterm, ArrayList<Symbol> string)
     {
-        ArrayList<LexicalElement> oldBody=body;
+        ArrayList<Symbol> oldBody=body;
 
         assert !string.contains(nonterm);
 
         /* Most likely there will only be one replace so this size should be
          * good.
          */
-        body=new ArrayList<LexicalElement>(string.size()+oldBody.size()-1);
+        body=new ArrayList<Symbol>(string.size()+oldBody.size()-1);
 
-        for (LexicalElement e: oldBody)
+        for (Symbol e: oldBody)
             if (e.equals(nonterm))
                 body.addAll(string);
             else
@@ -81,7 +81,7 @@ public class Production
 
         hash=head.hashCode();
 
-        for (LexicalElement e: body)
+        for (Symbol e: body)
             hash^=e.hashCode();
 
         return hash;
@@ -107,7 +107,7 @@ public class Production
         
         s=head.toString()+" →";
 
-        for (LexicalElement e: body)
+        for (Symbol e: body)
             s+=' '+e.toString();
 
         if (body.size() == 0)
@@ -118,8 +118,7 @@ public class Production
 
     public Production clone()
     {
-        ArrayList<LexicalElement> newBody
-            =new ArrayList<LexicalElement>(body.size());
+        ArrayList<Symbol> newBody=new ArrayList<Symbol>(body.size());
 
         newBody.addAll(body);
 

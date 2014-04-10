@@ -27,7 +27,7 @@ import java.util.Collection;
 import gluon.grammar.Cfg;
 import gluon.grammar.Production;
 import gluon.grammar.NonTerminal;
-import gluon.grammar.LexicalElement;
+import gluon.grammar.Symbol;
 
 public class CfgOptimizer
 {
@@ -45,7 +45,7 @@ public class CfgOptimizer
     }
 
     private static void replace(Cfg grammar, NonTerminal nonterm,
-                                ArrayList<LexicalElement> string)
+                                ArrayList<Symbol> string)
     {
         Collection<Production> prods=new LinkedList<Production>();
 
@@ -108,7 +108,6 @@ public class CfgOptimizer
         return prod.bodyLength() == 1
             && prod.getBody().get(0).equals(prod.getHead());
     }
-
 
     /* Remove production of the from
      *

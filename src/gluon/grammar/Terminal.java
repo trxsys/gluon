@@ -17,7 +17,7 @@
 package gluon.grammar;
 
 public abstract class Terminal
-    extends LexicalElement
+    extends Symbol
 {
     public Terminal(String name)
     {

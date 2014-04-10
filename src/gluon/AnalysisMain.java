@@ -39,7 +39,7 @@ import gluon.analysis.monitor.MonitorAnalysis;
 import gluon.analysis.pointsTo.PointsToInformation;
 
 import gluon.grammar.Cfg;
-import gluon.grammar.LexicalElement;
+import gluon.grammar.Symbol;
 import gluon.grammar.Terminal;
 import gluon.grammar.NonTerminal;
 import gluon.grammar.Production;
