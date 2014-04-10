@@ -18,8 +18,8 @@ package gluon.analysis.programBehavior;
 
 import gluon.grammar.Cfg;
 import gluon.grammar.Production;
-import gluon.grammar.CfgSubwords;
-import gluon.grammar.CfgOptimizer;
+import gluon.grammar.transform.CfgSubwords;
+import gluon.grammar.transform.CfgOptimizer;
 
 import soot.SootMethod;
 import soot.SootClass;

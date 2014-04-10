@@ -18,8 +18,8 @@ package gluon.analysis.programBehavior;
 
 import gluon.grammar.Production;
 import gluon.grammar.NonTerminal;
-import gluon.grammar.CfgSubwords;
-import gluon.grammar.CfgOptimizer;
+import gluon.grammar.transform.CfgSubwords;
+import gluon.grammar.transform.CfgOptimizer;
 
 import java.util.Set;
 import java.util.HashSet;

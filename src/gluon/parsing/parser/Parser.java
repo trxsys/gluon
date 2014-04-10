@@ -50,7 +50,7 @@ class ParserStackNode {
         state=s;
         generateTerminals=t;
     }
-};
+}
 
 class ParserConfiguration
 {
@@ -252,8 +252,8 @@ public class Parser
         return branches;
     }
 
-    private void parseSingleParser(ParserConfiguration parserConf, 
-                                   List<Terminal> input)
+    private void parseSingleStep(ParserConfiguration parserConf, 
+                                 List<Terminal> input)
     {
         int s;
         Terminal t;
@@ -355,7 +355,7 @@ public class Parser
 
             switch (parserConf.status)
             {
-            case RUNNING : parseSingleParser(parserConf,input); break;
+            case RUNNING : parseSingleStep(parserConf,input); break;
             case ACCEPTED: 
                 int z;
                 NonTerminal lca=parserConf.lca;

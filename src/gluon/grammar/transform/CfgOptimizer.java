@@ -14,7 +14,7 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.grammar;
+package gluon.grammar.transform;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -23,6 +23,11 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import gluon.grammar.Cfg;
+import gluon.grammar.Production;
+import gluon.grammar.NonTerminal;
+import gluon.grammar.LexicalElement;
 
 public class CfgOptimizer
 {
