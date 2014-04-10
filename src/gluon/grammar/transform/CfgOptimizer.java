@@ -47,11 +47,7 @@ public class CfgOptimizer
     private static void replace(Cfg grammar, NonTerminal nonterm,
                                 ArrayList<Symbol> string)
     {
-        Collection<Production> prods=new LinkedList<Production>();
-
-        prods.addAll(grammar.getProductionsContaining(nonterm));
-
-        for (Production p: prods)
+        for (Production p: grammar.getProductionsContaining(nonterm))
         {
             grammar.removeProduction(p);
 

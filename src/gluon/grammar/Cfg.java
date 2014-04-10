@@ -139,15 +139,15 @@ public class Cfg
     public Collection<Production> getProductionsOf(NonTerminal n)
     {
         return productions.containsKey(n) 
-            ? productions.get(n)
-            : new LinkedList<Production>();
+            ? new ArrayList<Production>(productions.get(n))
+            : new ArrayList<Production>(0);
     }
 
     public Collection<Production> getProductionsContaining(Symbol e)
     {
         return productionsContaining.containsKey(e) 
-            ? productionsContaining.get(e)
-            : new LinkedList<Production>();
+            ? new ArrayList<Production>(productionsContaining.get(e))
+            : new ArrayList<Production>(0);
     }
 
     public boolean removeProduction(Production prod)
