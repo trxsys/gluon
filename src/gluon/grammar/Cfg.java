@@ -77,7 +77,6 @@ public class Cfg
             System.out.println(this.getClass().getSimpleName()+": "+s);
     }
     
-    
     public boolean addProduction(Production p)
     {
         if (!productions.containsKey(p.getHead()))
@@ -116,8 +115,6 @@ public class Cfg
     
     public void setStart(NonTerminal s)
     {
-        assert getNonTerminals().contains(s);
-        
         start=s;
     }
     

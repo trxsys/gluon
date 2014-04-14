@@ -75,7 +75,7 @@ public class CfgOptimizer
             Collection<Production> prodsOf;
             Production prod;
 
-            if (grammar.getStart().equals(nonterm)
+            if (nonterm.equals(grammar.getStart())
                 || nonterm.noRemove())
                 continue;
 
@@ -86,6 +86,7 @@ public class CfgOptimizer
 
             prod=prodsOf.iterator().next();
 
+            /* Contains a loop (A → αAβ) */
             if (prod.getBody().contains(nonterm))
                 continue;
 
@@ -99,12 +100,6 @@ public class CfgOptimizer
         return modified;
     }
 
-    private static boolean isDirectLoop(Production prod)
-    {
-        return prod.bodyLength() == 1
-            && prod.getBody().get(0).equals(prod.getHead());
-    }
-
     /* Remove production of the from
      *
      *   A → A
@@ -116,7 +111,7 @@ public class CfgOptimizer
         boolean modified=false;
 
         for (Production p: grammar.getProductions())
-            if (isDirectLoop(p))
+            if (p.isDirectLoop())
                 if (grammar.removeProduction(p))
                     modified=true;
 

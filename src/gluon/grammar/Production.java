@@ -74,6 +74,11 @@ public class Production
                 body.add(e);
     }
 
+    public boolean isDirectLoop()
+    {
+        return bodyLength() == 1 && getBody().get(0).equals(getHead());
+    }
+
     @Override
     public int hashCode()
     {

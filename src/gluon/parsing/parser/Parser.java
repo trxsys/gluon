@@ -252,7 +252,7 @@ public class Parser
         return branches;
     }
 
-    private void parseSingleStep(ParserConfiguration parserConf, 
+    private void parseSingleStep(ParserConfiguration parserConf,
                                  List<Terminal> input)
     {
         int s;
