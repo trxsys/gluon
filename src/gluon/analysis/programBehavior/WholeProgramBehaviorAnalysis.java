@@ -102,24 +102,18 @@ public class WholeProgramBehaviorAnalysis
 
         super.grammar.setStart(new PPNonTerminal(super.alias(entryMethod),entryMethod));
 
-        if (!gluon.Main.NO_GRAMMAR_OPTIMIZE)
-        {
-            gluon.profiling.Timer.start("final:analysis-behavior-grammar-opt");
-            super.grammar=CfgOptimizer.optimize(super.grammar);
-            gluon.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
-        }
+        gluon.profiling.Timer.start("final:analysis-behavior-grammar-opt");
+        super.grammar=CfgOptimizer.optimize(super.grammar);
+        gluon.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
 
         gluon.profiling.Timer.start("analysis-behavior-grammar-add-subwords");
         super.grammar=CfgSubwords.subwordGfg(super.grammar);
         gluon.profiling.Timer.stop("analysis-behavior-grammar-add-subwords");
 
-        if (!gluon.Main.NO_GRAMMAR_OPTIMIZE)
-        {
-            gluon.profiling.Timer.start("final:analysis-behavior-grammar-opt");
-            super.grammar=CfgOptimizer.optimize(super.grammar);
-            gluon.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
-        }
-
+        gluon.profiling.Timer.start("final:analysis-behavior-grammar-opt");
+        super.grammar=CfgOptimizer.optimize(super.grammar);
+        gluon.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
+        
         gluon.profiling.Timer.start("final:analysis-behavior-grammar-rm-epsilon");
         super.grammar=CfgRemoveEpsilons.removeEpsilons(super.grammar);
         gluon.profiling.Timer.stop("final:analysis-behavior-grammar-rm-epsilon");
