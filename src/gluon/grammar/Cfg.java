@@ -35,9 +35,9 @@ public class Cfg
     
     private int size;
 
-    private Map<LexicalElement,Set<Production>> productionsContaining;
+    private Map<Symbol,Set<Production>> productionsContaining;
     
-    private Set<LexicalElement> lexicalElements;
+    private Set<Symbol> lexicalElements;
     private Set<NonTerminal> nonterminals;
     private Set<Terminal> terminals;
     private boolean LESetsUptodate; /* true if the above sets are up to date */
@@ -63,10 +63,10 @@ public class Cfg
         start=null;
         size=0;
 
-        productionsContaining=new HashMap<LexicalElement,Set<Production>>();
+        productionsContaining=new HashMap<Symbol,Set<Production>>();
 
         LESetsUptodate=true;
-        lexicalElements=new HashSet<LexicalElement>();
+        lexicalElements=new HashSet<Symbol>();
         nonterminals=new HashSet<NonTerminal>();
         terminals=new HashSet<Terminal>();
     }
@@ -76,7 +76,6 @@ public class Cfg
         if (DEBUG)
             System.out.println(this.getClass().getSimpleName()+": "+s);
     }
-    
     
     public boolean addProduction(Production p)
     {
@@ -97,7 +96,7 @@ public class Cfg
         updateLESetsProduction(p);
 
         /* Maintain productionsContaining */
-        for (LexicalElement e: p.getBody())
+        for (Symbol e: p.getBody())
         {
             if (!productionsContaining.containsKey(e))
             {
@@ -116,8 +115,6 @@ public class Cfg
     
     public void setStart(NonTerminal s)
     {
-        assert getNonTerminals().contains(s);
-        
         start=s;
     }
     
@@ -139,15 +136,15 @@ public class Cfg
     public Collection<Production> getProductionsOf(NonTerminal n)
     {
         return productions.containsKey(n) 
-            ? productions.get(n)
-            : new LinkedList<Production>();
+            ? new ArrayList<Production>(productions.get(n))
+            : new ArrayList<Production>(0);
     }
 
-    public Collection<Production> getProductionsContaining(LexicalElement e)
+    public Collection<Production> getProductionsContaining(Symbol e)
     {
         return productionsContaining.containsKey(e) 
-            ? productionsContaining.get(e)
-            : new LinkedList<Production>();
+            ? new ArrayList<Production>(productionsContaining.get(e))
+            : new ArrayList<Production>(0);
     }
 
     public boolean removeProduction(Production prod)
@@ -170,7 +167,7 @@ public class Cfg
         LESetsUptodate=false;
 
         /* Maintain productionsContaining */
-        for (LexicalElement e: prod.getBody())
+        for (Symbol e: prod.getBody())
             productionsContaining.get(e).remove(prod);
 
         return true;
@@ -186,7 +183,7 @@ public class Cfg
         lexicalElements.add(prod.getHead());
         nonterminals.add(prod.getHead());
 
-        for (LexicalElement e: prod.getBody())
+        for (Symbol e: prod.getBody())
         {
             if (e instanceof NonTerminal)
                 nonterminals.add((NonTerminal)e);
@@ -211,7 +208,7 @@ public class Cfg
                 updateLESetsProduction(p);
     }
 
-    public Collection<LexicalElement> getLexicalElements()
+    public Collection<Symbol> getSymbols()
     {
         updateLESets();
 

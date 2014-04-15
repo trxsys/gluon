@@ -36,7 +36,7 @@ import gluon.grammar.NonTerminal;
 import gluon.grammar.Terminal;
 import gluon.grammar.EOITerminal;
 import gluon.grammar.Production;
-import gluon.grammar.LexicalElement;
+import gluon.grammar.Symbol;
 
 import gluon.parsing.parsingTable.parsingAction.*;
 
@@ -57,7 +57,7 @@ public class ParsingTable
     private Map<Set<Item>,Integer> stateMap;
     private int initialState;
 
-    private Map<LexicalElement,Set<List<Terminal>>> first;
+    private Map<Symbol,Set<List<Terminal>>> first;
     private Map<NonTerminal,Collection<Terminal>> follow;
 
     private Cfg grammar;
@@ -150,7 +150,7 @@ public class ParsingTable
                 /* If we have item A -> B . C D and C -> E is a production,
                  * then we add C -> . E to nextNewItems
                  */
-                LexicalElement c=i.getNextToDot();
+                Symbol c=i.getNextToDot();
 
                 if (!(c instanceof NonTerminal))
                     continue;
@@ -180,7 +180,7 @@ public class ParsingTable
         } while (!fixPoint);
     }
 
-    private Set<Item> goTo(Set<Item> items, LexicalElement e)
+    private Set<Item> goTo(Set<Item> items, Symbol e)
     {
         Set<Item> ret=new HashSet<Item>();
 
@@ -188,7 +188,7 @@ public class ParsingTable
         {
             /* If i is A -> B . C D and e == C then add A -> B C . D to ret
              */
-            LexicalElement c=i.getNextToDot();
+            Symbol c=i.getNextToDot();
 
             if (e.equals(c))
                 ret.add(new Item(i.getProduction(),i.getDotPos()+1));
@@ -230,9 +230,9 @@ public class ParsingTable
             stateMap.put(states.get(i),i);
     }
 
-    private Collection<LexicalElement> getStateNextLexicalSymbols(Set<Item> state)
+    private Collection<Symbol> getStateNextLexicalSymbols(Set<Item> state)
     {
-        Collection<LexicalElement> simbols=new HashSet<LexicalElement>(state.size()*2);
+        Collection<Symbol> simbols=new HashSet<Symbol>(state.size()*2);
 
         for (Item i: state)
             if (i.getNextToDot() != null)
@@ -262,7 +262,7 @@ public class ParsingTable
             statesToAdd.clear();
 
             for (Set<Item> state: newStates)
-                for (LexicalElement e: getStateNextLexicalSymbols(state))
+                for (Symbol e: getStateNextLexicalSymbols(state))
                 {
                     Set<Item> nextState;
 
@@ -329,9 +329,9 @@ public class ParsingTable
 
         boolean fixPoint;
 
-        first=new HashMap<LexicalElement,Set<List<Terminal>>>();
+        first=new HashMap<Symbol,Set<List<Terminal>>>();
 
-        for (LexicalElement e: grammar.getLexicalElements())
+        for (Symbol e: grammar.getSymbols())
             first.put(e,new HashSet<List<Terminal>>());
 
         for (Terminal t: grammar.getTerminals())
@@ -353,7 +353,7 @@ public class ParsingTable
                     boolean deriveEmptyWord=true;
                     int beforeSize=first.get(n).size();
 
-                    for (LexicalElement e: p.getBody())
+                    for (Symbol e: p.getBody())
                     {
                         Set<List<Terminal>> firstsE=first.get(e);
                         
@@ -377,14 +377,14 @@ public class ParsingTable
         } while (!fixPoint);
     }
 
-    private Set<List<Terminal>> first(List<LexicalElement> s)
+    private Set<List<Terminal>> first(List<Symbol> s)
     {
         final List<Terminal> EMPTY_WORD=new ArrayList<Terminal>(0);
 
         Set<List<Terminal>> ret=new HashSet<List<Terminal>>();
         boolean deriveEmptyWord=true;
 
-        for (LexicalElement e: s)
+        for (Symbol e: s)
         {
             Set<List<Terminal>> firstsE=first.get(e);
             
@@ -425,13 +425,13 @@ public class ParsingTable
 
             for (Production p: productions)
             {
-                List<LexicalElement> right=new LinkedList<LexicalElement>();
+                List<Symbol> right=new LinkedList<Symbol>();
                 
                 right.addAll(p.getBody());
                 
                 while (right.size() > 0)
                 {
-                    LexicalElement e=right.remove(0);
+                    Symbol e=right.remove(0);
                     NonTerminal n;
                     Set<List<Terminal>> firstRight;
                     Collection<Terminal> followN;
@@ -483,7 +483,7 @@ public class ParsingTable
 
             for (Item i: state)
             {
-                LexicalElement next=i.getNextToDot();
+                Symbol next=i.getNextToDot();
 
                 if (next instanceof Terminal)
                 {

@@ -14,12 +14,17 @@
  * along with Gluon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gluon.grammar;
+package gluon.grammar.transform;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
+
+import gluon.grammar.Cfg;
+import gluon.grammar.Production;
+import gluon.grammar.NonTerminal;
+import gluon.grammar.Symbol;
 
 public class CfgSubwords
 {
@@ -36,16 +41,16 @@ public class CfgSubwords
             System.out.println("CfgSubwords: "+s);
     }
 
-    private static Collection<ArrayList<LexicalElement>>
-        getPrefixes(ArrayList<LexicalElement> body)
+    private static Collection<ArrayList<Symbol>>
+        getPrefixes(ArrayList<Symbol> body)
     {
-        Collection<ArrayList<LexicalElement>> prefixes
-            =new LinkedList<ArrayList<LexicalElement>>();
+        Collection<ArrayList<Symbol>> prefixes
+            =new LinkedList<ArrayList<Symbol>>();
         
         for (int i=1; i <= body.size(); i++)
         {
-            ArrayList<LexicalElement> pre=new ArrayList<LexicalElement>(i);
-            LexicalElement last;
+            ArrayList<Symbol> pre=new ArrayList<Symbol>(i);
+            Symbol last;
             
             for (int j=0; j < i-1; j++)
                 pre.add(body.get(j));
@@ -59,7 +64,7 @@ public class CfgSubwords
             {
                 last=body.get(i-1);
                 
-                prefixes.add(new ArrayList<LexicalElement>(pre));
+                prefixes.add(new ArrayList<Symbol>(pre));
             }
             
             pre.add(last);
@@ -68,7 +73,7 @@ public class CfgSubwords
         }
         
         // Add empty production
-        prefixes.add(new ArrayList<LexicalElement>());
+        prefixes.add(new ArrayList<Symbol>());
         
         return prefixes;
     }
@@ -83,7 +88,7 @@ public class CfgSubwords
             
             dprintln("prefixes of "+p+":");
             
-            for (ArrayList<LexicalElement> pre: getPrefixes(p.getBody()))
+            for (ArrayList<Symbol> pre: getPrefixes(p.getBody()))
             {
                 Production preProd=new Production(newProdHead,pre);
                 
@@ -95,16 +100,16 @@ public class CfgSubwords
         }
     }
 
-    private static Collection<ArrayList<LexicalElement>>
-        getSuffixes(ArrayList<LexicalElement> body)
+    private static Collection<ArrayList<Symbol>>
+        getSuffixes(ArrayList<Symbol> body)
     {
-        Collection<ArrayList<LexicalElement>> suffixes
-            =new LinkedList<ArrayList<LexicalElement>>();
+        Collection<ArrayList<Symbol>> suffixes
+            =new LinkedList<ArrayList<Symbol>>();
         
         for (int i=body.size(); i >= 1; i--)
         {
-            ArrayList<LexicalElement> suff=new ArrayList<LexicalElement>(i);
-            LexicalElement first;
+            ArrayList<Symbol> suff=new ArrayList<Symbol>(i);
+            Symbol first;
             
             if (body.get(i-1) instanceof NonTerminal)
             {
@@ -113,9 +118,9 @@ public class CfgSubwords
             }
             else
             {
-                List<LexicalElement> l=body.subList(i,body.size());
+                List<Symbol> l=body.subList(i,body.size());
 
-                suffixes.add(new ArrayList<LexicalElement>(l));
+                suffixes.add(new ArrayList<Symbol>(l));
 
                 first=body.get(i-1);
             }
@@ -129,7 +134,7 @@ public class CfgSubwords
         }
         
         // Add empty production
-        suffixes.add(new ArrayList<LexicalElement>());
+        suffixes.add(new ArrayList<Symbol>());
         
         return suffixes;
     }
@@ -144,7 +149,7 @@ public class CfgSubwords
             
             dprintln("suffixes of "+p+":");
             
-            for (ArrayList<LexicalElement> suff: getSuffixes(p.getBody()))
+            for (ArrayList<Symbol> suff: getSuffixes(p.getBody()))
             {
                 Production suffProd=new Production(newProdHead,suff);
                 
@@ -156,27 +161,27 @@ public class CfgSubwords
         }
     }
 
-    private static void getSubwords(List<LexicalElement> body,
-                                    Collection<ArrayList<LexicalElement>> subwords)
+    private static void getSubwords(List<Symbol> body,
+                                    Collection<ArrayList<Symbol>> subwords)
     {
         for (int i=0; i <= body.size(); i++)
         {
-            ArrayList<LexicalElement> left;
-            ArrayList<LexicalElement> right;
-            Collection<ArrayList<LexicalElement>> leftSuffs;
-            Collection<ArrayList<LexicalElement>> rightPres;
+            ArrayList<Symbol> left;
+            ArrayList<Symbol> right;
+            Collection<ArrayList<Symbol>> leftSuffs;
+            Collection<ArrayList<Symbol>> rightPres;
 
-            left=new ArrayList<LexicalElement>(body.subList(0,i));
-            right=new ArrayList<LexicalElement>(body.subList(i,body.size()));
+            left=new ArrayList<Symbol>(body.subList(0,i));
+            right=new ArrayList<Symbol>(body.subList(i,body.size()));
 
             leftSuffs=getSuffixes(left);
             rightPres=getPrefixes(right);
 
-            for (ArrayList<LexicalElement> leftSuff: leftSuffs)
-                for (ArrayList<LexicalElement> rightPre: rightPres)
+            for (ArrayList<Symbol> leftSuff: leftSuffs)
+                for (ArrayList<Symbol> rightPre: rightPres)
                 {
-                    ArrayList<LexicalElement> sub
-                        =new ArrayList<LexicalElement>(leftSuff.size()
+                    ArrayList<Symbol> sub
+                        =new ArrayList<Symbol>(leftSuff.size()
                                                        +rightPre.size());
 
                     sub.addAll(leftSuff);
@@ -188,7 +193,7 @@ public class CfgSubwords
 
         for (int i=0; i < body.size(); i++)
         {
-            ArrayList<LexicalElement> sub=new ArrayList<LexicalElement>(1);
+            ArrayList<Symbol> sub=new ArrayList<Symbol>(1);
             NonTerminal e;
 
             if (!(body.get(i) instanceof NonTerminal))
@@ -206,7 +211,7 @@ public class CfgSubwords
         // Add empty production (if the size is non zero there must be already
         // something that derives the empty word)
         if (body.size() == 0)
-            subwords.add(new ArrayList<LexicalElement>(0));
+            subwords.add(new ArrayList<Symbol>(0));
 
         for (int i=0; i < body.size(); i++)
             for (int j=i+1; j <= body.size(); j++)
@@ -214,11 +219,11 @@ public class CfgSubwords
                     getSubwords(body.subList(i,j),subwords);
     }
     
-    private static Collection<ArrayList<LexicalElement>>
-        getSubwords(List<LexicalElement> body)
+    private static Collection<ArrayList<Symbol>>
+        getSubwords(List<Symbol> body)
     {
-        Collection<ArrayList<LexicalElement>> subwords
-            =new LinkedList<ArrayList<LexicalElement>>();
+        Collection<ArrayList<Symbol>> subwords
+            =new LinkedList<ArrayList<Symbol>>();
 
         getSubwords(body,subwords);
 
@@ -235,7 +240,7 @@ public class CfgSubwords
             
             dprintln("subwords of "+p+":");
             
-            for (ArrayList<LexicalElement> sub: getSubwords(p.getBody()))
+            for (ArrayList<Symbol> sub: getSubwords(p.getBody()))
             {
                 Production subProd=new Production(newProdHead,sub);
                 

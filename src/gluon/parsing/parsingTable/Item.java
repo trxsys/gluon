@@ -17,7 +17,7 @@
 package gluon.parsing.parsingTable;
 
 import gluon.grammar.Production;
-import gluon.grammar.LexicalElement;
+import gluon.grammar.Symbol;
 
 class Item
 {
@@ -42,7 +42,7 @@ class Item
         return pos;
     }
 
-    public LexicalElement getNextToDot()
+    public Symbol getNextToDot()
     {
         if (isComplete())
             return null;

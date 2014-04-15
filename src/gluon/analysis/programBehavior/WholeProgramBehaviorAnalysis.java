@@ -18,8 +18,9 @@ package gluon.analysis.programBehavior;
 
 import gluon.grammar.Production;
 import gluon.grammar.NonTerminal;
-import gluon.grammar.CfgSubwords;
-import gluon.grammar.CfgOptimizer;
+import gluon.grammar.transform.CfgSubwords;
+import gluon.grammar.transform.CfgOptimizer;
+import gluon.grammar.transform.CfgRemoveEpsilons;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -118,6 +119,10 @@ public class WholeProgramBehaviorAnalysis
             super.grammar=CfgOptimizer.optimize(super.grammar);
             gluon.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
         }
+
+        gluon.profiling.Timer.start("final:analysis-behavior-grammar-rm-epsilon");
+        super.grammar=CfgRemoveEpsilons.removeEpsilons(super.grammar);
+        gluon.profiling.Timer.stop("final:analysis-behavior-grammar-rm-epsilon");
 
         super.addNewStart();
 

@@ -16,11 +16,11 @@
 
 package gluon.grammar;
 
-public abstract class LexicalElement
+public abstract class Symbol
 {
     protected String name;
 
-    public LexicalElement(String name)
+    public Symbol(String name)
     {
         assert name != null;
         this.name=name;
@@ -40,5 +40,5 @@ public abstract class LexicalElement
     public abstract int hashCode();
     public abstract boolean equals(Object o);
 
-    public abstract LexicalElement clone();
+    public abstract Symbol clone();
 }

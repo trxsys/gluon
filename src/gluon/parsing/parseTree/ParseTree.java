@@ -22,7 +22,7 @@ import java.util.Stack;
 import java.util.List;
 
 import gluon.grammar.Production;
-import gluon.grammar.LexicalElement;
+import gluon.grammar.Symbol;
 import gluon.grammar.NonTerminal;
 import gluon.grammar.Terminal;
 
@@ -65,7 +65,7 @@ public class ParseTree
                     /* Update leaf with true parsed terminal */
                     if (node.getElem() instanceof Terminal)
                     {
-                        LexicalElement nodeTerm=red.getProduction()
+                        Symbol nodeTerm=red.getProduction()
                                                    .getBody().get(len-1-i);
 
                         assert nodeTerm instanceof Terminal;

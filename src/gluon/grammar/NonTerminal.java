@@ -17,7 +17,7 @@
 package gluon.grammar;
 
 public abstract class NonTerminal
-    extends LexicalElement
+    extends Symbol
 {
     public NonTerminal(String name)
     {
