@@ -46,7 +46,6 @@ public class Main
     public static boolean WITH_JAVA_LIB=false;
     public static boolean TIME=false;
     public static boolean PROFILING_VARS=false;
-    public static boolean NO_GRAMMAR_OPTIMIZE=false;
     public static boolean CLASS_SCOPE=false;
     public static boolean ATOMICITY_SYNCH=false;
     public static boolean CONSERVATIVE_POINTS_TO=false;
@@ -78,8 +77,6 @@ public class Main
                            +"Output information about several run times");
 		System.out.println("  -p, --prof-vars                 "
                            +"Output profiling variables");
-		System.out.println("  -n, --no-grammar-opt            "
-                           +"Disable grammar optimization");
 		System.out.println("  -o, --contract <contract>       "
                            +"Module's contract (overrides annotation)");
 		System.out.println("  -s, --class-scope               "
@@ -102,7 +99,7 @@ public class Main
     
     private static void parseArguments(String[] args)
     {
-        LongOpt[] options=new LongOpt[12];
+        LongOpt[] options=new LongOpt[11];
         Getopt g;
         int c;
         
@@ -112,15 +109,14 @@ public class Main
         options[3]=new LongOpt("with-java-lib",LongOpt.NO_ARGUMENT, null,'j');
         options[4]=new LongOpt("time",LongOpt.NO_ARGUMENT,null,'t');
         options[5]=new LongOpt("prof-vars",LongOpt.NO_ARGUMENT,null,'p');
-        options[6]=new LongOpt("no-grammar-opt",LongOpt.NO_ARGUMENT,null,'n');
-        options[7]=new LongOpt("contract",LongOpt.REQUIRED_ARGUMENT, null,'o');
-        options[8]=new LongOpt("class-scope",LongOpt.NO_ARGUMENT,null,'s');
-        options[9]=new LongOpt("synch",LongOpt.NO_ARGUMENT,null,'y');
-        options[10]=new LongOpt("conservative-points-to",LongOpt.NO_ARGUMENT,
+        options[6]=new LongOpt("contract",LongOpt.REQUIRED_ARGUMENT, null,'o');
+        options[7]=new LongOpt("class-scope",LongOpt.NO_ARGUMENT,null,'s');
+        options[8]=new LongOpt("synch",LongOpt.NO_ARGUMENT,null,'y');
+        options[9]=new LongOpt("conservative-points-to",LongOpt.NO_ARGUMENT,
                                 null,'r');
-        options[11]=new LongOpt("timeout",LongOpt.REQUIRED_ARGUMENT,null,'i');
+        options[10]=new LongOpt("timeout",LongOpt.REQUIRED_ARGUMENT,null,'i');
 
-        g=new Getopt(PROGNAME,args,"hc:m:o:jtpnsyri",options);
+        g=new Getopt(PROGNAME,args,"hc:m:o:jtpsyri",options);
         
         g.setOpterr(true);
         
@@ -156,11 +152,6 @@ public class Main
             case 'p': 
                 {
                     PROFILING_VARS=true;
-                    break;
-                }
-            case 'n': 
-                {
-                    NO_GRAMMAR_OPTIMIZE=true;
                     break;
                 }
             case 'o': 
