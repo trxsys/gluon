@@ -75,8 +75,7 @@ public class CfgOptimizer
             Collection<Production> prodsOf;
             Production prod;
 
-            if (nonterm.equals(grammar.getStart())
-                || nonterm.noRemove())
+            if (nonterm.equals(grammar.getStart()))
                 continue;
 
             prodsOf=grammar.getProductionsOf(nonterm);
@@ -85,6 +84,9 @@ public class CfgOptimizer
                 continue;
 
             prod=prodsOf.iterator().next();
+
+            if (prod.getHead().noRemove())
+                continue;
 
             /* Contains a loop (A → αAβ) */
             if (prod.getBody().contains(nonterm))
