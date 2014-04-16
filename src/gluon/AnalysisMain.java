@@ -270,7 +270,6 @@ public class AnalysisMain
         Cfg grammar;
         
         gluon.profiling.Profiling.inc("final:alloc-sites-total");
-        
 
         gluon.profiling.Timer.start("final:analysis-behavior");
         programBehavior.analyze();
@@ -280,6 +279,8 @@ public class AnalysisMain
 
         gluon.profiling.Profiling.inc("final:grammar-productions-total",
                                       grammar.size());
+
+        assert gluon.parsing.parser.ParserSubwords.isParsable(grammar);
 
         parsingTable=new ParsingTable(grammar);
 

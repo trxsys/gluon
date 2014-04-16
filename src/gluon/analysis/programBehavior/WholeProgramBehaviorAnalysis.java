@@ -118,6 +118,10 @@ public class WholeProgramBehaviorAnalysis
         super.grammar=CfgRemoveEpsilons.removeEpsilons(super.grammar);
         gluon.profiling.Timer.stop("final:analysis-behavior-grammar-rm-epsilon");
 
+        gluon.profiling.Timer.start("final:analysis-behavior-grammar-opt");
+        super.grammar=CfgOptimizer.optimize(super.grammar);
+        gluon.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
+
         super.addNewStart();
 
         super.dprintln("Grammar: "+super.grammar);
