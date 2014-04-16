@@ -27,6 +27,7 @@ import java.util.Collection;
 import gluon.grammar.Cfg;
 import gluon.grammar.Production;
 import gluon.grammar.NonTerminal;
+import gluon.grammar.Terminal;
 import gluon.grammar.Symbol;
 
 public class CfgOptimizer
@@ -120,6 +121,80 @@ public class CfgOptimizer
         return modified;
     }
 
+
+    private static boolean addNonTerminalsToQueue(Production prod,
+                                                  Queue<NonTerminal> queue,
+                                                  Set<NonTerminal> enqueued,
+                                                  Set<NonTerminal> terminalGenerators)
+    {
+        if (prod.getBody().size() == 0)
+        {
+            terminalGenerators.add(prod.getHead());
+            return true;
+        }
+
+        for (Symbol s: prod.getBody())
+        {
+            NonTerminal nonterm;
+
+            if (s instanceof Terminal)
+            {
+                terminalGenerators.add(prod.getHead());
+                return true;
+            }
+
+            assert s instanceof NonTerminal;
+
+            nonterm=(NonTerminal)s;
+
+            if (terminalGenerators.contains(s))
+                return true;
+
+            if (!enqueued.contains(nonterm))
+            {
+                queue.add(nonterm);
+                enqueued.add(nonterm);
+            }
+        }
+
+        return false;
+    }
+
+    private static boolean productionGenerateWord(Cfg grammar,
+                                                  Production prod,
+                                                  Set<NonTerminal> terminalGenerators)
+    {
+        Queue<NonTerminal> queue=new LinkedList<NonTerminal>();
+        Set<NonTerminal> enqueued=new HashSet<NonTerminal>();
+
+        if (addNonTerminalsToQueue(prod,queue,enqueued,terminalGenerators))
+            return true;
+
+        while (queue.size() > 0)
+        {
+            NonTerminal nonterm=queue.poll();
+
+            for (Production p: grammar.getProductionsOf(nonterm))
+                if (addNonTerminalsToQueue(p,queue,enqueued,terminalGenerators))
+                    return true;
+        }
+
+        return false;
+    }
+
+    private static void removeImproductiveProductions(Cfg grammar)
+    {
+        List<Production> toRemove=new LinkedList<Production>();
+        Set<NonTerminal> terminalGenerators=new HashSet<NonTerminal>();
+
+        for (Production p: grammar.getProductions())
+            if (!productionGenerateWord(grammar,p,terminalGenerators))
+                toRemove.add(p);
+
+        for (Production p: toRemove)
+            grammar.removeProduction(p);
+    }
+
     public static Cfg optimize(Cfg grammar)
     {
         Cfg grammarOpt=grammar.clone();
@@ -136,6 +211,8 @@ public class CfgOptimizer
 
             dprintln("Grammar size iterating: "+grammarOpt.size());
         } while (modified);
+
+        removeImproductiveProductions(grammarOpt);
 
         dprintln("Grammar size end: "+grammarOpt.size());
 
