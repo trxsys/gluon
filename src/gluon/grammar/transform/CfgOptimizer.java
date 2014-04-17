@@ -127,6 +127,7 @@ public class CfgOptimizer
                                                   Set<NonTerminal> enqueued,
                                                   Set<NonTerminal> terminalGenerators)
     {
+        /* Generates the empty word */
         if (prod.getBody().size() == 0)
         {
             terminalGenerators.add(prod.getHead());
@@ -182,7 +183,7 @@ public class CfgOptimizer
         return false;
     }
 
-    private static void removeImproductiveProductions(Cfg grammar)
+    private static boolean removeImproductiveProductions(Cfg grammar)
     {
         List<Production> toRemove=new LinkedList<Production>();
         Set<NonTerminal> terminalGenerators=new HashSet<NonTerminal>();
@@ -193,6 +194,8 @@ public class CfgOptimizer
 
         for (Production p: toRemove)
             grammar.removeProduction(p);
+
+        return toRemove.size() > 0;
     }
 
     public static Cfg optimize(Cfg grammar)
@@ -204,15 +207,16 @@ public class CfgOptimizer
 
         do
         {
-            modified=removeDirectReductions(grammarOpt);
+            modified=removeImproductiveProductions(grammarOpt);
+
+            if (removeDirectReductions(grammarOpt))
+                modified=true;
 
             if (removeDirectLoops(grammarOpt))
                 modified=true;
 
             dprintln("Grammar size iterating: "+grammarOpt.size());
         } while (modified);
-
-        removeImproductiveProductions(grammarOpt);
 
         dprintln("Grammar size end: "+grammarOpt.size());
 
