@@ -60,7 +60,11 @@ class GoToTable
 
     public Integer get(int state, NonTerminal nonterm)
     {
-        return goToTable.get(state).get(nonterm);
+        Integer destState;
+
+        destState=goToTable.get(state).get(nonterm);
+
+        return destState == null ? -1 : destState;
     }
 
     public int size()
@@ -75,10 +79,80 @@ class GoToTable
 
         for (int i=0; i < size(); i++)
         {
-            r+=i+"    \n";
+            r+=i+"    ";
 
             for (Map.Entry<NonTerminal,Integer> entry: goToTable.get(i).entrySet())
-                r+=entry.getKey()+"↦"+entry.getValue()+"  \n";
+                r+=entry.getKey()+"↦"+entry.getValue()+"  ";
+
+            r+="\n";
+        }
+
+        r+="\n";
+
+        return r;
+    }
+}
+
+class ActionTable
+{
+    /* state -> term -> set of actions */
+    private List<Map<Terminal,Collection<ParsingAction>>> actionTable;
+
+    public ActionTable(int states)
+    {
+        actionTable=new ArrayList<Map<Terminal,Collection<ParsingAction>>>(states);
+
+        for (int i=0; i < states; i++)
+            actionTable.add(new HashMap<Terminal,Collection<ParsingAction>>());
+    }
+
+    public void add(int state, Terminal term, ParsingAction action)
+    {
+        Map<Terminal,Collection<ParsingAction>> row;
+
+        row=actionTable.get(state);
+
+        if (!row.containsKey(term))
+            row.put(term,new HashSet<ParsingAction>(8));
+
+        row.get(term).add(action);
+    }
+
+    public Collection<ParsingAction> get(int state, Terminal nonterm)
+    {
+        Collection<ParsingAction> actions;
+
+        actions=actionTable.get(state).get(nonterm);
+
+        return actions != null ? actions : new ArrayList<ParsingAction>(0);
+    }
+
+    public int size()
+    {
+        return actionTable.size();
+    }
+
+    @Override
+    public String toString()
+    {
+        String r="== Action Table ==\n";
+
+        for (int i=0; i < actionTable.size(); i++)
+        {
+            r+=i+"    ";
+
+            for (Map.Entry<Terminal,Collection<ParsingAction>> entry: 
+                     actionTable.get(i).entrySet())
+            {
+                int count=0;
+
+                r+=entry.getKey()+"->";
+
+                for (ParsingAction a: entry.getValue())
+                    r+=(count++ == 0 ? "" : ",")+a.toString();
+
+                r+="  ";
+            }
 
             r+="\n";
         }
@@ -96,12 +170,11 @@ public class ParsingTable
     private static final Terminal EOI_TERMINAL=new EOITerminal();
 
     private GoToTable goToTable;
-    // state -> term -> set of actions
-    private List<Map<Terminal,Collection<ParsingAction>>> actionTable;
+    private ActionTable actionTable;
 
-    // state -> items of the state
+    /* state -> items of the state */
     private List<Set<Item>> states;
-    // items of the state -> state
+    /* items of the state -> state */
     private Map<Set<Item>,Integer> stateMap;
     private int initialState;
 
@@ -141,29 +214,7 @@ public class ParsingTable
 
     private void debugPrintActionTable()
     {
-        System.out.println("== Action Table ==");
-
-        for (int i=0; i < actionTable.size(); i++)
-        {
-            System.out.print(i+"    ");
-
-            for (Map.Entry<Terminal,Collection<ParsingAction>> entry: 
-                     actionTable.get(i).entrySet())
-            {
-                int count=0;
-
-                System.out.print(entry.getKey()+"->");
-
-                for (ParsingAction a: entry.getValue())
-                    System.out.print((count++ == 0 ? "" : ",")+a.toString());
-
-                System.out.print("  ");
-            }
-
-            System.out.println();
-        }
-
-        System.out.println();
+        System.out.println(actionTable.toString());
     }
 
     private void closure(Set<Item> items)
@@ -504,12 +555,11 @@ public class ParsingTable
 
     private void buildActionTable()
     {
-        actionTable=new ArrayList<Map<Terminal,Collection<ParsingAction>>>(states.size());
+        actionTable=new ActionTable(states.size());
 
-        for (Set<Item> state: states)
+        for (int s=0; s < states.size(); s++)
         {
-            Map<Terminal,Collection<ParsingAction>> actionRow
-                =new HashMap<Terminal,Collection<ParsingAction>>();
+            Set<Item> state=states.get(s);
 
             for (Item i: state)
             {
@@ -525,10 +575,7 @@ public class ParsingTable
 
                     a=new ParsingActionShift(stateMap.get(destState));
 
-                    if (!actionRow.containsKey(t))
-                        actionRow.put(t,new HashSet<ParsingAction>(8));
-
-                    actionRow.get(t).add(a);
+                    actionTable.add(s,t,a);
                 }
 
                 if (!i.getProduction().getHead().equals(grammar.getStart())
@@ -540,10 +587,7 @@ public class ParsingTable
                         
                         a=new ParsingActionReduce(i.getProduction());
 
-                        if (!actionRow.containsKey(t))
-                            actionRow.put(t,new HashSet<ParsingAction>(8));
-
-                        actionRow.get(t).add(a);
+                        actionTable.add(s,t,a);
                     }
 
                 // Item S' -> S .
@@ -552,14 +596,9 @@ public class ParsingTable
                 {
                     assert i.getProduction().bodyLength() == 1;
 
-                    if (!actionRow.containsKey(EOI_TERMINAL))
-                        actionRow.put(EOI_TERMINAL,new HashSet<ParsingAction>(8));
-
-                    actionRow.get(EOI_TERMINAL).add(new ParsingActionAccept());
+                    actionTable.add(s,EOI_TERMINAL,new ParsingActionAccept());
                 }
             }
-
-            actionTable.add(actionRow);
         }
     }
 
@@ -649,11 +688,8 @@ public class ParsingTable
         Integer destState;
 
         assert goToTable != null;
-        assert 0 <= state && state < goToTable.size();
 
-        destState=goToTable.get(state,n);
-
-        return destState == null ? -1 : destState;
+        return goToTable.get(state,n);
     }
 
     public Collection<ParsingAction> actions(int state, Terminal t)
@@ -662,13 +698,8 @@ public class ParsingTable
         Collection<ParsingAction> actions;
 
         assert actionTable != null;
-        assert 0 <= state && state < goToTable.size();
 
-        row=actionTable.get(state);
-
-        actions=row.get(t);
-
-        return actions;
+        return actionTable.get(state,t);
     }
 
     public int getInitialState()
