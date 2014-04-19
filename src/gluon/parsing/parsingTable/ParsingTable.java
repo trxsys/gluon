@@ -40,14 +40,62 @@ import gluon.grammar.Symbol;
 
 import gluon.parsing.parsingTable.parsingAction.*;
 
+class GoToTable
+{
+    /* state -> nonterm -> state */
+    private List<Map<NonTerminal,Integer>> goToTable;
+
+    public GoToTable(int states)
+    {
+        goToTable=new ArrayList<Map<NonTerminal,Integer>>(states);
+
+        for (int i=0; i < states; i++)
+            goToTable.add(new HashMap<NonTerminal,Integer>());
+    }
+
+    public void add(int state, NonTerminal nonterm, int newstate)
+    {
+        goToTable.get(state).put(nonterm,newstate);
+    }
+
+    public Integer get(int state, NonTerminal nonterm)
+    {
+        return goToTable.get(state).get(nonterm);
+    }
+
+    public int size()
+    {
+        return goToTable.size();
+    }
+
+    @Override
+    public String toString()
+    {
+        String r="== Goto Table ==\n";
+
+        for (int i=0; i < size(); i++)
+        {
+            r+=i+"    \n";
+
+            for (Map.Entry<NonTerminal,Integer> entry: goToTable.get(i).entrySet())
+                r+=entry.getKey()+"↦"+entry.getValue()+"  \n";
+
+            r+="\n";
+        }
+
+        r+="\n";
+
+        return r;
+    }
+}
+
 public class ParsingTable
 {
     private static final boolean DEBUG=false;
 
     private static final Terminal EOI_TERMINAL=new EOITerminal();
 
-    // state -> nonterm -> state
-    private List<Map<NonTerminal,Integer>> gotoTable;
+    private GoToTable goToTable;
     // state -> term -> set of actions
     private List<Map<Terminal,Collection<ParsingAction>>> actionTable;
 
@@ -65,7 +113,7 @@ public class ParsingTable
     public ParsingTable(Cfg g)
     {
         grammar=g;
-        gotoTable=null;
+        goToTable=null;
         actionTable=null;
         states=null;
         follow=null;
@@ -88,19 +136,7 @@ public class ParsingTable
 
     private void debugPrintGotoTable()
     {
-        System.out.println("== Goto Table ==");
-
-        for (int i=0; i < gotoTable.size(); i++)
-        {
-            System.out.print(i+"    ");
-
-            for (Map.Entry<NonTerminal,Integer> entry: gotoTable.get(i).entrySet())
-                System.out.print(entry.getKey()+"↦"+entry.getValue()+"  ");
-
-            System.out.println();
-        }
-
-        System.out.println();
+        System.out.println(goToTable.toString());
     }
 
     private void debugPrintActionTable()
@@ -301,25 +337,19 @@ public class ParsingTable
 
     private void buildGotoTable()
     {
-        gotoTable=new ArrayList<Map<NonTerminal,Integer>>(states.size());
+        goToTable=new GoToTable(states.size());
 
-        for (Set<Item> state: states)
+        for (int s=0; s < states.size(); s++)
         {
-            Map<NonTerminal,Integer> gotoRow=new HashMap<NonTerminal,Integer>();
+            Set<Item> state=states.get(s);
 
             for (NonTerminal n: getStateNextNonTerminals(state))
             {
                 Set<Item> destState=goTo(state,n);
                 
                 if (destState.size() > 0)
-                {
-                    assert stateMap.containsKey(destState);
-
-                    gotoRow.put(n,stateMap.get(destState));
-                }
+                    goToTable.add(s,n,stateMap.get(destState));
             }
-
-            gotoTable.add(gotoRow);
         }
     }
 
@@ -535,7 +565,7 @@ public class ParsingTable
 
     public void buildParsingTable()
     {
-        assert gotoTable == null : "Parsing table should only be built only once";
+        assert goToTable == null : "Parsing table should only be built only once";
 
         assert grammar.hasUniqueStart() : "Grammar must only have a start production "
             +"to generate the parsing table";
@@ -592,17 +622,36 @@ public class ParsingTable
         grammar=null;
     }
 
+    /* Return the states directly reached by transitions of label s.
+     */
+    public Collection<Integer> statesReachedBy(Symbol symb)
+    {
+        Collection<Integer> reached=new ArrayList<Integer>(32);
+
+        /* TODO: optimize this */
+
+        if (symb instanceof Terminal)
+        {
+           
+        }
+        else if (symb instanceof NonTerminal)
+        {
+           
+        }
+        else
+            assert false;
+
+        return reached; // TODO
+    }
+
     public int goTo(int state, NonTerminal n)
     {
-        Map<NonTerminal,Integer> row;
         Integer destState;
 
-        assert gotoTable != null;
-        assert 0 <= state && state < gotoTable.size();
+        assert goToTable != null;
+        assert 0 <= state && state < goToTable.size();
 
-        row=gotoTable.get(state);
-
-        destState=row.get(n);
+        destState=goToTable.get(state,n);
 
         return destState == null ? -1 : destState;
     }
@@ -613,7 +662,7 @@ public class ParsingTable
         Collection<ParsingAction> actions;
 
         assert actionTable != null;
-        assert 0 <= state && state < gotoTable.size();
+        assert 0 <= state && state < goToTable.size();
 
         row=actionTable.get(state);
 
