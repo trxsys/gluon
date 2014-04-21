@@ -112,9 +112,11 @@ class ActionTable
 {
     /* state -> term -> set of actions */
     private List<Map<Terminal,Collection<ParsingAction>>> actionTable;
+    private Map<Terminal,Set<Integer>> statesReachedBy;
 
     public ActionTable(int states)
     {
+        statesReachedBy=new HashMap<Terminal,Set<Integer>>();
         actionTable=new ArrayList<Map<Terminal,Collection<ParsingAction>>>(states);
 
         for (int i=0; i < states; i++)
@@ -131,6 +133,16 @@ class ActionTable
             row.put(term,new HashSet<ParsingAction>(8));
 
         row.get(term).add(action);
+
+        if (action instanceof ParsingActionShift)
+        {
+            ParsingActionShift shift=(ParsingActionShift)action;
+
+            if (!statesReachedBy.containsKey(term))
+                statesReachedBy.put(term,new HashSet<Integer>());
+
+            statesReachedBy.get(term).add(shift.getState());
+        }
     }
 
     public Collection<ParsingAction> get(int state, Terminal nonterm)
@@ -140,6 +152,14 @@ class ActionTable
         actions=actionTable.get(state).get(nonterm);
 
         return actions != null ? actions : new ArrayList<ParsingAction>(0);
+    }
+
+    public Set<Integer> statesReachedBy(Terminal term)
+    {
+        if (!statesReachedBy.containsKey(term))
+            return new HashSet<Integer>();
+
+        return statesReachedBy.get(term);
     }
 
     public int size()
@@ -680,12 +700,8 @@ public class ParsingTable
      */
     public Set<Integer> statesReachedBy(Symbol symb)
     {
-        /* TODO: optimize this */
-
         if (symb instanceof Terminal)
-        {
-           
-        }
+            return actionTable.statesReachedBy((Terminal)symb);
         else if (symb instanceof NonTerminal)
             return goToTable.statesReachedBy((NonTerminal)symb);
 
