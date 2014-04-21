@@ -44,9 +44,11 @@ class GoToTable
 {
     /* state -> nonterm -> state */
     private List<Map<NonTerminal,Integer>> goToTable;
+    private Map<NonTerminal,Set<Integer>> statesReachedBy;
 
     public GoToTable(int states)
     {
+        statesReachedBy=new HashMap<NonTerminal,Set<Integer>>();
         goToTable=new ArrayList<Map<NonTerminal,Integer>>(states);
 
         for (int i=0; i < states; i++)
@@ -56,6 +58,11 @@ class GoToTable
     public void add(int state, NonTerminal nonterm, int newstate)
     {
         goToTable.get(state).put(nonterm,newstate);
+
+        if (!statesReachedBy.containsKey(nonterm))
+            statesReachedBy.put(nonterm,new HashSet<Integer>());
+
+        statesReachedBy.get(nonterm).add(newstate);
     }
 
     public Integer get(int state, NonTerminal nonterm)
@@ -65,6 +72,14 @@ class GoToTable
         destState=goToTable.get(state).get(nonterm);
 
         return destState == null ? -1 : destState;
+    }
+
+    public Set<Integer> statesReachedBy(NonTerminal nonterm)
+    {
+        if (!statesReachedBy.containsKey(nonterm))
+            return new HashSet<Integer>();
+
+        return statesReachedBy.get(nonterm);
     }
 
     public int size()
@@ -663,10 +678,8 @@ public class ParsingTable
 
     /* Return the states directly reached by transitions of label s.
      */
-    public Collection<Integer> statesReachedBy(Symbol symb)
+    public Set<Integer> statesReachedBy(Symbol symb)
     {
-        Collection<Integer> reached=new ArrayList<Integer>(32);
-
         /* TODO: optimize this */
 
         if (symb instanceof Terminal)
@@ -674,13 +687,11 @@ public class ParsingTable
            
         }
         else if (symb instanceof NonTerminal)
-        {
-           
-        }
-        else
-            assert false;
+            return goToTable.statesReachedBy((NonTerminal)symb);
 
-        return reached; // TODO
+        assert false;
+
+        return null;
     }
 
     public int goTo(int state, NonTerminal n)
