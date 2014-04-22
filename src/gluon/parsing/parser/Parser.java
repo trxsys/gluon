@@ -60,7 +60,7 @@ class ParserConfiguration
 
     private ParserConfiguration parent;
 
-    private ParserStackNode stackTop; 
+    private ParserStackNode stackTop;
 
     private ParsingAction action;
 
@@ -69,14 +69,14 @@ class ParserConfiguration
     public int pos;
     public ParserStatus status;
 
-    public ParserConfiguration(ParserConfiguration p)
+    public ParserConfiguration(ParserConfiguration parentConfig)
     {
-        parentComplete=p;
-        parent=p;
+        parentComplete=parentConfig;
+        parent=parentConfig;
         stackTop=null;
-        pos=parent != null ? p.pos : 0;
+        pos=parent != null ? parentConfig.pos : 0;
         action=null;
-        lca=p != null ? p.lca : null;
+        lca=parentConfig != null ? parentConfig.lca : null;
 
         status=ParserStatus.RUNNING;
     }
@@ -100,6 +100,17 @@ class ParserConfiguration
             alist.addFirst(pc.action);
 
         return alist;
+    }
+
+    /* TODO: optimize this so that we don't need to traverse the stack */
+    public int stackSize()
+    {
+        int size=0;
+
+        for (ParserConfiguration pc=this; pc != null; pc=pc.parent)
+            size++;
+
+        return size;
     }
 
     public ParserStackNode stackPeek()
@@ -177,13 +188,13 @@ class ParserConfiguration
  * prune LCA that would fail to match the arguments unification thus preventing
  * other LCA from being reported.
  */
-public class Parser
+public abstract class Parser
 {
     private static final boolean DEBUG=false;
 
     private static final boolean PRUNE_BY_REPEATED_LCA=false;
 
-    private final ParsingTable table;
+    protected final ParsingTable table;
     private Stack<ParserConfiguration> parseLifo;
 
     private Set<NonTerminal> acceptedLCA;
@@ -195,61 +206,23 @@ public class Parser
         acceptedLCA=null;
     }
     
-    private void dprintln(String s)
+    protected void dprintln(String s)
     {
         if (DEBUG)
             System.out.println(this.getClass().getSimpleName()+": "+s);
     }
 
-    private void shift(ParserConfiguration parserConf,
-                       ParsingActionShift shift)
-    {
-        parserConf.stackPush(new ParserStackNode(shift.getState(),1));
-        parserConf.pos++;
-
-        parserConf.setAction(shift);
-
-        dprintln(parserConf.hashCode()+": shift "+shift.getState());
-    }
+    protected abstract void shift(ParserConfiguration parserConf,
+                                  ParsingActionShift shift);
     
-    private void reduce(ParserConfiguration parserConf,
-                        ParsingActionReduce reduction)
-    {
-        Production p=reduction.getProduction();
-        int s;
-        int genTerminals=0;
-
-        for (int i=0; i < p.bodyLength(); i++)
-        {
-            genTerminals+=parserConf.stackPeek().generateTerminals;
-            parserConf.stackPop();
-        }
-        
-        s=parserConf.stackPeek().state;
-        
-        parserConf.stackPush(new ParserStackNode(table.goTo(s,p.getHead()),
-                                                 genTerminals));
-        
-        parserConf.setAction(reduction);
-        
-        dprintln(parserConf.hashCode()+": reduce "+p);
-    }
+    protected abstract void reduce(ParserConfiguration parserConf,
+                                   ParsingActionReduce reduction);
     
-    private void accept(ParserConfiguration parserConf)
-    {
-        parserConf.status=ParserStatus.ACCEPTED;
-        dprintln(parserConf.hashCode()+": accept");
-    }
+    protected abstract void accept(ParserConfiguration parserConf);
     
-    private ParserConfiguration[] initBranches(ParserConfiguration parserConf,
-                                               int n)
+    protected ParserConfiguration newParserConfiguration(ParserConfiguration parent)
     {
-        ParserConfiguration[] branches=new ParserConfiguration[n];
-
-        for (int i=0; i < n; i++)
-            branches[i]=new ParserConfiguration(parserConf);
-
-        return branches;
+        return new ParserConfiguration(parent);
     }
 
     private void parseSingleStep(ParserConfiguration parserConf,
@@ -258,7 +231,6 @@ public class Parser
         int s;
         Terminal t;
         Collection<ParsingAction> actions;
-        ParserConfiguration[] branches;
 
         assert parserConf.status == ParserStatus.RUNNING;
         assert parserConf.pos < input.size();
@@ -267,7 +239,7 @@ public class Parser
         t=input.get(parserConf.pos);
         actions=table.actions(s,t);
 
-        if (actions == null || actions.size() == 0)
+        if (actions.size() == 0)
         {
             dprintln(parserConf.hashCode()+": error: actions("+s+","+t+")=∅");
             parserConf.status=ParserStatus.ERROR;
@@ -277,72 +249,57 @@ public class Parser
             return;
         }
 
-        branches=initBranches(parserConf,actions.size());
-
-        int i=0;
         for (ParsingAction action: actions)
         {
+            ParserConfiguration branch;
             boolean prune=false;
 
+            branch=newParserConfiguration(parserConf);
+
             if (action instanceof ParsingActionShift)
-                shift(branches[i],(ParsingActionShift)action);
+                shift(branch,(ParsingActionShift)action);
             else if (action instanceof ParsingActionReduce)
-                reduce(branches[i],(ParsingActionReduce)action);
+                reduce(branch,(ParsingActionReduce)action);
             else if (action instanceof ParsingActionAccept)
-                accept(branches[i]);
+                accept(branch);
             else
                 assert false;
 
             /* Check if we have a lca */
-            if (branches[i].getTerminalNum() == input.size()-1
+            if (branch.getTerminalNum() == input.size()-1
                 && parserConf.lca == null
                 && action instanceof ParsingActionReduce)
             {
                 ParsingActionReduce red=(ParsingActionReduce)action;
 
-                branches[i].lca=red.getProduction().getHead();
+                branch.lca=red.getProduction().getHead();
 
                 if (PRUNE_BY_REPEATED_LCA
-                    && acceptedLCA.contains(branches[i].lca))
+                    && acceptedLCA.contains(branch.lca))
                     prune=true;
             }
 
-            if (!prune && !parserConf.isLoop(branches[i]))
-                parseLifo.add(branches[i]);
+            if (!prune && !parserConf.isLoop(branch))
+                parseLifo.add(branch);
             else
                 gluon.profiling.Profiling.inc("final:parse-branches");
-
-            i++;
         }
     }
     
-    private ParserConfiguration getInitialConfiguration()
-    {
-        ParserConfiguration initConfig=new ParserConfiguration();
-
-        initConfig.stackPush(new ParserStackNode(table.getInitialState(),0));
-
-        return initConfig;
-    }
+    protected abstract Collection<ParserConfiguration> getInitialConfigurations();
     
     /* Argument input should be an ArrayList for performance reasons. */
     public int parse(List<Terminal> input, ParserCallback pcb)
         throws ParserAbortedException
     {
         int ret=0;
-        ParserConfiguration initialConfig;
         int counter=0; /* For calling pcb.shouldStop() */
-
-        assert input.size() > 0 
-            && input.get(input.size()-1) instanceof EOITerminal
-            : "input should end with $";
 
         parseLifo=new Stack<ParserConfiguration>();
         acceptedLCA=new HashSet<NonTerminal>();
 
-        initialConfig=getInitialConfiguration();
-
-        parseLifo.add(initialConfig);
+        for (ParserConfiguration initialConfig: getInitialConfigurations())
+            parseLifo.add(initialConfig);
 
         while (parseLifo.size() > 0)
         {
