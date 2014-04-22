@@ -54,57 +54,15 @@ public class ParserNormal
     }
 
     @Override
-    protected void shift(ParserConfiguration parserConf,
-                         ParsingActionShift shift)
-    {
-        parserConf.stackPush(new ParserStackNode(shift.getState(),1));
-        parserConf.pos++;
-
-        parserConf.setAction(shift);
-
-        dprintln(parserConf.hashCode()+": shift "+shift.getState());
-    }
-
-    @Override    
-    protected void reduce(ParserConfiguration parserConf,
-                          ParsingActionReduce reduction)
-    {
-        Production p=reduction.getProduction();
-        int s;
-        int genTerminals=0;
-
-        for (int i=0; i < p.bodyLength(); i++)
-        {
-            genTerminals+=parserConf.stackPeek().generateTerminals;
-            parserConf.stackPop();
-        }
-        
-        s=parserConf.stackPeek().state;
-        
-        parserConf.stackPush(new ParserStackNode(table.goTo(s,p.getHead()),
-                                                 genTerminals));
-        
-        parserConf.setAction(reduction);
-        
-        dprintln(parserConf.hashCode()+": reduce "+p);
-    }
-
-    @Override    
-    protected void accept(ParserConfiguration parserConf)
-    {
-        parserConf.status=ParserStatus.ACCEPTED;
-        dprintln(parserConf.hashCode()+": accept");
-    }
-
-    @Override
-    protected Collection<ParserConfiguration> getInitialConfigurations()
+    protected Collection<ParserConfiguration>
+        getInitialConfigurations(List<Terminal> input)
     {
         ParserConfiguration initConfig=new ParserConfiguration();
         Collection<ParserConfiguration> configurations;
 
         initConfig.stackPush(new ParserStackNode(table.getInitialState(),0));
 
-        configurations=new ArrayList<ParserConfiguration>(0);
+        configurations=new ArrayList<ParserConfiguration>(1);
         configurations.add(initConfig);
 
         return configurations;
@@ -114,7 +72,7 @@ public class ParserNormal
     public int parse(List<Terminal> input, ParserCallback pcb)
         throws ParserAbortedException
     {
-       assert input.size() > 0 
+       assert input.size() > 0
             && input.get(input.size()-1) instanceof EOITerminal
             : "input should end with $";
 

@@ -16,9 +16,11 @@
 
 package gluon.parsing.parser;
 
+import java.util.Collection;
 import java.util.Queue;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -28,19 +30,20 @@ import gluon.grammar.Production;
 import gluon.grammar.Symbol;
 import gluon.grammar.NonTerminal;
 import gluon.grammar.Terminal;
+import gluon.grammar.EOITerminal;
+
+import gluon.parsing.parsingTable.ParsingTable;
+import gluon.parsing.parsingTable.parsingAction.*;
 
 /* Subword parser as described in "Substring parsing for arbitrary context-free
  * grammars", J Rekers, W Koorn, 1991.
  */
 public class ParserSubwords
+    extends Parser
 {
     public ParserSubwords(ParsingTable t)
     {
-        /*
-        table=t;
-        parseLifo=null;
-        acceptedLCA=null;
-        */
+        super(t);
     }
 
     private static boolean addNonTerminalsToQueue(Production prod,
@@ -97,7 +100,7 @@ public class ParserSubwords
 
         return false;
     }
-    
+
     /* For the subword parser to be able to parse the grammar every production
      * must generate at least one non-empty word.
      */
@@ -124,4 +127,65 @@ public class ParserSubwords
 
         return !fail;
     }
+
+    /* The algorithm implemented here is from "Substring parsing for arbitrary
+     * context-free grammars" by Jan Rekers and Wilco Koorn.
+     *
+     */
+    @Override
+    protected void reduce(ParserConfiguration parserConf,
+                          ParsingActionReduce reduction)
+    {
+        Production p=reduction.getProduction();
+        int stackSize=parserConf.stackSize();
+
+        System.err.println("stack size: "+stackSize);
+
+        if (stackSize > p.bodyLength())
+            super.reduce(parserConf,reduction);
+        else if (stackSize == p.bodyLength())
+        {
+            // TODO
+        }
+        else
+        {
+            // TODO
+        }
+    }
+
+    @Override
+    protected Collection<ParserConfiguration>
+        getInitialConfigurations(List<Terminal> input)
+    {
+        Collection<ParserConfiguration> configurations;
+
+        configurations=new ArrayList<ParserConfiguration>(128);
+
+        for (int s: super.table.statesReachedBy(input.get(0)))
+        {
+            ParserConfiguration initConfig=new ParserConfiguration();
+
+            /* We have alread read the terminal at input[0], hence the "1" passed
+             * to the ParserStackNode contructor.
+             */
+            initConfig.stackPush(new ParserStackNode(table.getInitialState(),1));
+            initConfig.pos=1; /* we already "read" the first terminal */
+            configurations.add(initConfig);
+        }
+
+        return configurations;
+    }
+
+    @Override
+    public int parse(List<Terminal> input, ParserCallback pcb)
+        throws ParserAbortedException
+    {
+        assert input.size() != 0;
+        assert !(input.get(input.size()-1) instanceof EOITerminal)
+            : "input should not end with $ in the subword parser";
+
+        return super.parse(input,pcb);
+    }
 }
+
+/* TODO: when to accept */
