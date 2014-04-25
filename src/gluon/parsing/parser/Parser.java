@@ -20,11 +20,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
-
 import java.util.Stack;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.ArrayList;
+
+import java.util.Collections;
 
 import gluon.grammar.Production;
 import gluon.grammar.Terminal;
@@ -74,7 +75,7 @@ class ParserConfiguration
         parentComplete=parentConfig;
         parent=parentConfig;
         stackTop=null;
-        pos=parent != null ? parentConfig.pos : 0;
+        pos=parentConfig != null ? parentConfig.pos : 0;
         action=null;
         lca=parentConfig != null ? parentConfig.lca : null;
 
@@ -212,20 +213,25 @@ public abstract class Parser
             System.out.println(this.getClass().getSimpleName()+": "+s);
     }
 
-    protected void shift(ParserConfiguration parserConf,
-                         ParsingActionShift shift)
+    protected Collection<ParserConfiguration> shift(ParserConfiguration parent,
+                                                    ParsingActionShift shift)
     {
+        ParserConfiguration parserConf=newParserConfiguration(parent);
+
         parserConf.stackPush(new ParserStackNode(shift.getState(),1));
         parserConf.pos++;
 
         parserConf.setAction(shift);
 
         dprintln(parserConf.hashCode()+": shift "+shift.getState());
+
+        return Collections.singleton(parserConf);
     }
     
-    protected void reduce(ParserConfiguration parserConf,
-                          ParsingActionReduce reduction)
+    protected Collection<ParserConfiguration> reduce(ParserConfiguration parent,
+                                                     ParsingActionReduce reduction)
     {
+        ParserConfiguration parserConf=newParserConfiguration(parent);
         Production p=reduction.getProduction();
         int s;
         int genTerminals=0;
@@ -244,12 +250,18 @@ public abstract class Parser
         parserConf.setAction(reduction);
         
         dprintln(parserConf.hashCode()+": reduce "+p);
+
+        return Collections.singleton(parserConf);
     }
     
-    protected void accept(ParserConfiguration parserConf)
+    protected Collection<ParserConfiguration> accept(ParserConfiguration parent)
     {
+        ParserConfiguration parserConf=newParserConfiguration(parent);
+
         parserConf.status=ParserStatus.ACCEPTED;
         dprintln(parserConf.hashCode()+": accept");
+
+        return Collections.singleton(parserConf);
     }
     
     protected ParserConfiguration newParserConfiguration(ParserConfiguration parent)
@@ -283,38 +295,40 @@ public abstract class Parser
 
         for (ParsingAction action: actions)
         {
-            ParserConfiguration branch;
-            boolean prune=false;
-
-            branch=newParserConfiguration(parserConf);
+            Collection<ParserConfiguration> branches=null;
 
             if (action instanceof ParsingActionShift)
-                shift(branch,(ParsingActionShift)action);
+                branches=shift(parserConf,(ParsingActionShift)action);
             else if (action instanceof ParsingActionReduce)
-                reduce(branch,(ParsingActionReduce)action);
+                branches=reduce(parserConf,(ParsingActionReduce)action);
             else if (action instanceof ParsingActionAccept)
-                accept(branch);
+                branches=accept(parserConf);
             else
                 assert false;
 
-            /* Check if we have a lca */
-            if (branch.getTerminalNum() == input.size()-1
-                && parserConf.lca == null
-                && action instanceof ParsingActionReduce)
+            for (ParserConfiguration branch: branches)
             {
-                ParsingActionReduce red=(ParsingActionReduce)action;
+                boolean prune=false;
 
-                branch.lca=red.getProduction().getHead();
-
-                if (PRUNE_BY_REPEATED_LCA
-                    && acceptedLCA.contains(branch.lca))
-                    prune=true;
+                /* Check if we have a lca */
+                if (branch.getTerminalNum() == input.size()-1
+                    && parserConf.lca == null
+                    && action instanceof ParsingActionReduce)
+                {
+                    ParsingActionReduce red=(ParsingActionReduce)action;
+                    
+                    branch.lca=red.getProduction().getHead();
+                    
+                    if (PRUNE_BY_REPEATED_LCA
+                        && acceptedLCA.contains(branch.lca))
+                        prune=true;
+                }
+                
+                if (!prune && !parserConf.isLoop(branch))
+                    parseLifo.add(branch);
+                else
+                    gluon.profiling.Profiling.inc("final:parse-branches");
             }
-
-            if (!prune && !parserConf.isLoop(branch))
-                parseLifo.add(branch);
-            else
-                gluon.profiling.Profiling.inc("final:parse-branches");
         }
     }
     

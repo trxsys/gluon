@@ -130,19 +130,18 @@ public class ParserSubwords
 
     /* The algorithm implemented here is from "Substring parsing for arbitrary
      * context-free grammars" by Jan Rekers and Wilco Koorn.
-     *
      */
     @Override
-    protected void reduce(ParserConfiguration parserConf,
-                          ParsingActionReduce reduction)
+    protected Collection<ParserConfiguration> reduce(ParserConfiguration parent,
+                                                     ParsingActionReduce reduction)
     {
         Production p=reduction.getProduction();
-        int stackSize=parserConf.stackSize();
+        int stackSize=parent.stackSize();
 
         System.err.println("stack size: "+stackSize);
 
         if (stackSize > p.bodyLength())
-            super.reduce(parserConf,reduction);
+            return super.reduce(parent,reduction);
         else if (stackSize == p.bodyLength())
         {
             // TODO
@@ -151,6 +150,8 @@ public class ParserSubwords
         {
             // TODO
         }
+
+        return null;
     }
 
     @Override
