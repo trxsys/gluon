@@ -16,6 +16,7 @@
 
 package gluon.grammar;
 
+import java.util.List;
 import java.util.ArrayList;
 
 public class Production
@@ -27,6 +28,16 @@ public class Production
     {
         this(h);
         body=b;
+    }
+
+    public Production(NonTerminal h, List<Symbol> b)
+    {
+        ArrayList<Symbol> alb=new ArrayList<Symbol>(b.size());
+
+        alb.addAll(b);
+
+        head=h;
+        body=alb;
     }
 
     public Production(NonTerminal h)

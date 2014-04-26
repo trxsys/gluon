@@ -43,8 +43,8 @@ enum ParserStatus
 }
 
 class ParserStackNode {
-    public final int state;
-    public final int generateTerminals;
+    public int state;
+    public int generateTerminals;
 
     public ParserStackNode(int s, int t)
     {
@@ -57,7 +57,7 @@ class ParserConfiguration
 {
     /* We need this so we don't lose reduction history due to stack pops
      */
-    private final ParserConfiguration parentComplete;
+    private ParserConfiguration parentComplete;
 
     private ParserConfiguration parent;
 
@@ -175,6 +175,21 @@ class ParserConfiguration
     public int getTerminalNum()
     {
         return stackPeek().generateTerminals;
+    }
+
+    public ParserConfiguration clone()
+    {
+        ParserConfiguration clone=new ParserConfiguration();
+
+        clone.parentComplete=parentComplete;
+        clone.parent=parent;
+        clone.stackTop=stackTop;
+        clone.action=action;
+        clone.lca=lca;
+        clone.pos=pos;
+        clone.status=status;
+
+        return clone;
     }
 }
 

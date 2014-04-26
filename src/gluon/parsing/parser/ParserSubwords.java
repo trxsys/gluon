@@ -135,23 +135,51 @@ public class ParserSubwords
     protected Collection<ParserConfiguration> reduce(ParserConfiguration parent,
                                                      ParsingActionReduce reduction)
     {
+        Collection<ParserConfiguration> configs;
         Production p=reduction.getProduction();
         int stackSize=parent.stackSize();
+
+        configs=new LinkedList<ParserConfiguration>();
 
         System.err.println("stack size: "+stackSize);
 
         if (stackSize > p.bodyLength())
             return super.reduce(parent,reduction);
-        else if (stackSize == p.bodyLength())
+        else if (stackSize < p.bodyLength())
         {
-            // TODO
+            ParserConfiguration parserConfig;
+            ParsingActionReduce sufixReduction;
+            Production sufixProd;
+
+            sufixProd=new Production(p.getHead(),
+                                     p.getBody().subList(p.bodyLength()-stackSize,
+                                                         p.bodyLength()));
+
+            assert sufixProd.bodyLength() == stackSize;
+
+            sufixReduction=new ParsingActionReduce(sufixProd);
+
+            parserConfig=super.reduce(parent,sufixReduction).iterator().next();
+
+            /* TODO factor this in a method */
+            for (int s: super.table.statesReachedBy(p.getHead()))
+            {
+                ParserConfiguration succParserConfig=parserConfig.clone();
+
+                succParserConfig.stackPeek().state=s;
+
+                configs.add(succParserConfig);
+            }
         }
         else
         {
+            assert stackSize == p.bodyLength();
+
+            
             // TODO
         }
 
-        return null;
+        return configs;
     }
 
     @Override
