@@ -197,8 +197,11 @@ public class ParserSubwords
             /* We have alread read the terminal at input[0], hence the "1" passed
              * to the ParserStackNode contructor.
              */
-            initConfig.stackPush(new ParserStackNode(table.getInitialState(),1));
+            initConfig.stackPush(new ParserStackNode(s,1));
             initConfig.pos=1; /* we already "read" the first terminal */
+
+            initConfig.setAction(new ParsingActionShift(s));
+
             configurations.add(initConfig);
         }
 
