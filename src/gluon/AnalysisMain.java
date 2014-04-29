@@ -47,6 +47,7 @@ import gluon.grammar.Production;
 import gluon.parsing.parsingTable.ParsingTable;
 import gluon.parsing.parsingTable.parsingAction.*;
 import gluon.parsing.parser.Parser;
+import gluon.parsing.parser.ParserSubwords;
 import gluon.parsing.parser.ParserCallback;
 import gluon.parsing.parser.ParserAbortedException;
 import gluon.parsing.parseTree.ParseTree;
@@ -239,7 +240,16 @@ public class AnalysisMain
                                                       word,actions);
 
                             gluon.profiling.Timer.stop("parsing");
-                            ret=checkWordInstance(wordInst,reported,vEquiv);
+                            ret=0; //ret=checkWordInstance(wordInst,reported,vEquiv);
+                            
+                            System.out.println("      Actions:");
+                            for (ParsingAction a: actions)
+                            {
+                                System.out.println("       "+a);
+                            }
+
+                            System.out.println();
+                            System.out.println();
                             gluon.profiling.Timer.start("parsing");
 
                         
@@ -291,7 +301,7 @@ public class AnalysisMain
         gluon.profiling.Profiling.inc("final:parsing-table-state-number-total",
                                       parsingTable.numberOfStates());
 
-        return new Parser(parsingTable);
+        return new ParserSubwords(parsingTable);
     }
     
     private void checkThread(SootMethod thread)
