@@ -34,7 +34,7 @@ public class ClassBehaviorAnalysis
     extends BehaviorAnalysis
 {
     private SootClass classA;
-    
+
     public ClassBehaviorAnalysis(SootClass c, SootClass modClass, AllocNode aSite)
     {
         super(modClass,aSite);
@@ -92,7 +92,7 @@ public class ClassBehaviorAnalysis
                 production=new Production(new PPNonTerminal("S'",null));
 
                 production.appendToBody(nonterm);
-                
+
                 super.grammar.addProduction(production);
             }
 
@@ -117,7 +117,7 @@ public class ClassBehaviorAnalysis
         gluon.profiling.Timer.start("final:analysis-behavior-grammar-opt");
         super.grammar=CfgOptimizer.optimize(super.grammar);
         gluon.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
-        
+
         gluon.profiling.Timer.start("final:analysis-behavior-grammar-rm-epsilon");
         super.grammar=CfgRemoveEpsilons.removeEpsilons(super.grammar);
         gluon.profiling.Timer.stop("final:analysis-behavior-grammar-rm-epsilon");

@@ -10,11 +10,11 @@ public class Client extends Thread implements Person {
 	protected String name;
 	protected String address;
 	protected int age;
-	
+
 	// Client attributes
 	protected int num_client;
 	protected int money;
-	
+
 	public Client(String name, String address, int age, int num_client,int money){
 		this.name = name;
 		this.age = age;
@@ -22,22 +22,22 @@ public class Client extends Thread implements Person {
 		this.num_client = num_client;
 		this.money = money;
 	}
-	
+
 	public String toString(){
 		return "Client "+name+ ", "+age+"years old, from "+address+"(nº = "+num_client+")";
 	}
-	
+
 	public void run(){
 		int tres = 3;
 		boolean b = tres == 3;
 		while(b){	//while true
 //			System.out.println("Client "+name+" lets buy?");
-			
+
 			Random r = new Random();
 
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			Order order = new Order(this, dateFormat.format(new Date()), 5);
-			
+
 			int num_products = r.nextInt(3)+1;
 			for(int i = 0; i < num_products; i++){
 				boolean found = false;
@@ -52,9 +52,9 @@ public class Client extends Thread implements Person {
 //					}
 				}
 			}
-			// Buy product 	
+			// Buy product
 			Store.buyProducts(order);
-			
+
 			waitAbit();
 		}
 	}

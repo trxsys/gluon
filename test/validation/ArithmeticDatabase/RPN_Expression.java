@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Stack;
 import java.util.LinkedList;
 
-public class RPN_Expression 
+public class RPN_Expression
 	implements Comparable<RPN_Expression>
 {
 	private class RPN_Node
@@ -27,7 +27,7 @@ public class RPN_Expression
 	};
 
 	private List<RPN_Node> exp;
-	
+
 	public RPN_Expression()
 	{
 		exp=new LinkedList<RPN_Node>();

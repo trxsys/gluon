@@ -62,14 +62,14 @@ public class MonitorAnalysis
     private Map<EnterMonitorStmt,Collection<ExitMonitorStmt>> exitMon;
 
     private Set<Unit> visited;
-   
+
     public MonitorAnalysis(Scene s)
     {
         scene=s;
         visited=null;
         exitMon=new HashMap<EnterMonitorStmt,Collection<ExitMonitorStmt>>();
     }
-        
+
     private void analyzeUnit(SootMethod method, Unit unit, UnitGraph cfg,
                              StackNode<EnterMonitorStmt> stack)
     {
@@ -117,9 +117,9 @@ public class MonitorAnalysis
 
                 if (!m.hasActiveBody())
                     continue;
-                
+
                 cfg=new BriefUnitGraph(m.getActiveBody());
-                
+
                 for (Unit head: cfg.getHeads())
                     analyzeUnit(m,head,cfg,null);
             }

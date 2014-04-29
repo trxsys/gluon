@@ -8,10 +8,10 @@ import test.common.Contract;
 
 @Contract(clauses = "checkClosed lookupEntry;")
 public class ResourceStoreManager {
-    
+
 	boolean closed = false;
 	Map entries = new HashMap();
-    
+
     //	@Atomic
     //	void checkClosed() {
     //		if (closed)
@@ -22,7 +22,7 @@ public class ResourceStoreManager {
 	boolean checkClosed() {
 		return closed;
 	}
-        
+
 	@Atomic
 	Entry lookupEntry(Object key) {
 		Entry e = (Entry) entries.get(key);
@@ -33,10 +33,10 @@ public class ResourceStoreManager {
 		}
 		return e;
 	}
-    
+
 	@Atomic
 	void shutdown() {
 		entries.clear();
 		closed = true;
-	}    
+	}
 }

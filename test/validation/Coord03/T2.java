@@ -6,7 +6,7 @@ public class T2 extends Thread{
 	public T2(Vars v){
 		this.v = v;
 	}
-	
+
 	private void use(int a){
 		// Do something...
 	}

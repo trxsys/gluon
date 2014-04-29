@@ -10,7 +10,7 @@ package test.simple.auction;
 import java.util.Comparator;
 
 /* Generic type array implementation.
- * 
+ *
  * Note: You may safely ignore the type safety warning at compile time.
  */
 public class Array<T>
@@ -43,8 +43,8 @@ public class Array<T>
 		this(array,0,count-1);
 	}
 
-	/* Here begin and end are *indexes* 
-	 *	
+	/* Here begin and end are *indexes*
+	 *
 	 * pre: begin >= 0 && end < array.length
 	 */
 	public Array(T[] array, int begin, int end)
@@ -91,7 +91,7 @@ public class Array<T>
 		return count;
 	}
 
-	/* Returns the element in position index. 
+	/* Returns the element in position index.
 	 *
 	 * pre: isLegalIndex(index)
 	 */
@@ -100,7 +100,7 @@ public class Array<T>
 		return elem[index];
 	}
 
-	/* Sets v in position index. 
+	/* Sets v in position index.
 	 *
 	 * pre: isLegalIndex(index)
 	 */
@@ -109,7 +109,7 @@ public class Array<T>
 		elem[index]=v;
 	}
 
-	/* Swap two elements of the array 
+	/* Swap two elements of the array
 	 *
 	 * pre: isLegalIndex(p) && isLegalIndex(q)
 	 */
@@ -132,7 +132,7 @@ public class Array<T>
 	/* Insert e at the given index
 	 *
 	 * pre: isLegalIndex(index)
-	 */	
+	 */
 	public void insertAt(int index, T e)
 	{
 		if (spaceLeft() == 0)
@@ -151,12 +151,12 @@ public class Array<T>
 	/* Remove the element at the given index
 	 *
 	 * pre: isLegalIndex(index)
-	 */	
+	 */
 	public void remove(int index)
 	{
 		for (int i=index; i < count-1; i++)
 			elem[i]=elem[i+1];
-		
+
 		count--;
 	}
 

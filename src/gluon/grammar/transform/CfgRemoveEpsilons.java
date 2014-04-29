@@ -96,7 +96,7 @@ public class CfgRemoveEpsilons
      *   A → aEbEc
      *   E → ε
      *   E → d
-     * 
+     *
      * will be changed to
      *
      *   A → aEbEc

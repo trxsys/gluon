@@ -52,7 +52,7 @@ public class KnightMoves
 	{
 		return solution[p.x][p.y];
 	}
-	
+
 	@Atomic
 	public void set_solution(Point p, int m)
 	{
@@ -63,7 +63,7 @@ public class KnightMoves
 	{
 		return get_solution(prey);
 	}
-	
+
 	public void solve_correct()
 	{
 		reset_solution();

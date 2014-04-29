@@ -17,16 +17,16 @@ class Connection {
 		this.socket = null;
 		this.counter = new Counter();
 	}
-	
+
 	// BCT
 	public void connect() {
 		this.socket = new Socket();
 	}
-	
+
 	public void resetCounter() {
 		this.counter.reset();
 	}
-	
+
 	//Method created to englobe the transaction
 	@Atomic
 	public void resetSocket() throws IOException{

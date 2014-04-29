@@ -24,7 +24,7 @@ public class ArrayIterator<T> implements Iterator<T>
 		index=0;
 	}
 
-	/* Set the current item index pointing to the tail of the array */	
+	/* Set the current item index pointing to the tail of the array */
 	public void toTail()
 	{
 		index=array.size()-1;
@@ -36,13 +36,13 @@ public class ArrayIterator<T> implements Iterator<T>
 		return index >= array.size();
 	}
 
-	/* End of array? (in reverse order) */	
+	/* End of array? (in reverse order) */
 	public boolean rend()
 	{
 		return index < 0;
 	}
 
-	/* Set the current item index pointing to the next element */	
+	/* Set the current item index pointing to the next element */
 	public void next()
 	{
 		index++;
@@ -83,7 +83,7 @@ public class ArrayIterator<T> implements Iterator<T>
 		return array.size()-(index+1);
 	}
 
-	/* Number of entries left (in reverse order) */	
+	/* Number of entries left (in reverse order) */
 	public int rleft()
 	{
 		return index;

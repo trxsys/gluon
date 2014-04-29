@@ -7,8 +7,8 @@ package test.validation.Store;
 public interface Person {
 
 	public String getPersonName();
-	
+
 	public int getAge();
-	
+
 	public String getAddress();
 }

@@ -7,7 +7,7 @@ import test.common.Contract;
           +"setValue getValue;")
 class Cell {
     private int n = 0;
-    
+
     @Atomic
     int getValue() {
         return n;

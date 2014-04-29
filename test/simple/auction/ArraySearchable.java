@@ -27,14 +27,14 @@ public class ArraySearchable<T extends Comparable<T>> extends Array<T>
 	{
 		T r=null;
 
-		for (Iterator<T> it=getIterator(); 
-		     !it.end() && r == null; 
+		for (Iterator<T> it=getIterator();
+		     !it.end() && r == null;
 		     it.next())
 		{
 			T c=it.get();
 
             Main.m.l();
-			
+
 			if (it.get().compareTo(needle) == 0)
             {
 				r=c;

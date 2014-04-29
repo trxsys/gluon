@@ -17,21 +17,21 @@ public class AllocationVector {
 	 * if vector[i] == 'A' -> i-th block is allocated.
 	 */
 	private char[] vector = null;
-	
+
 	/**
 	 * Constructor: Constructs AllocationVector for 'size' blocks, when all blocks
 	 * are free.
 	 * @param size Size of AllocationVector.
 	 */
 	public AllocationVector(int size) {
-		// Allocating vector of size 'size', 
+		// Allocating vector of size 'size',
 		// when all blocks are assigned to free.
 		vector = new char[size];
 		for (int i=0; i < size; i++) {
 			vector[i] = 'F';
 		}
 	}
-	
+
 	/**
 	 * Returns index of free block, if such exists.
 	 * If no free block, then -1 is returned.
@@ -47,13 +47,13 @@ public class AllocationVector {
 		double randomValue;
 		int[] primeValues = { 1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53 };
 		randomValue = Math.random();
-		
+
 		// Choosing randomly start entry for search.
 		startIndex = (int)Math.floor((vector.length - 1) * randomValue);
-		
+
 		// Choosing randomly increment/decrement prime value.
 		interval = primeValues[(int)Math.floor((primeValues.length - 1) * randomValue)];
-		
+
 		// Choosing randomly search direction and starting the search from randomly
 		// choosen start entry in that direction with the randomly choosen interval.
 		if (randomValue > 0.5) {
@@ -72,7 +72,7 @@ public class AllocationVector {
 				}
 			}
 		}
-		
+
 		if (count == vector.length) {
 			return -1; // Indicates "no free block".
 		}
@@ -80,7 +80,7 @@ public class AllocationVector {
 			return i; // Returns the index of the found free block.
 		}
 	}
-	
+
 	/**
 	 * Marks i-th block as allocated.
 	 * @param i Index of block to allocate.
@@ -94,7 +94,7 @@ public class AllocationVector {
 //			throw new Exception("Allocation");
 		}
 	}
-	
+
 	/**
 	 * Marks i-th block as free.
 	 * @param i Index of block to free.

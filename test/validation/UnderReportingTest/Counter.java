@@ -7,7 +7,7 @@ import test.common.Contract;
 public class Counter {
 
 	int i;
-	
+
 	@Atomic
 	int inc(int a) {
 		i += a;

@@ -12,14 +12,14 @@ class Coord {
     {
         x=y=0;
     }
-    
+
     @Atomic
     public void swap() {
         int oldX = x;
         x = y; // swap X
         y = oldX; // swap Y
     }
-    
+
     @Atomic
     public void resetX(){
         x = 0;

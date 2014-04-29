@@ -29,14 +29,14 @@ import java.util.HashSet;
 public class Cfg
 {
     private static final boolean DEBUG=false;
-    
+
     private Map<NonTerminal,Set<Production>> productions;
     private NonTerminal start;
-    
+
     private int size;
 
     private Map<Symbol,Set<Production>> productionsContaining;
-    
+
     private Set<Symbol> lexicalElements;
     private Set<NonTerminal> nonterminals;
     private Set<Terminal> terminals;
@@ -50,13 +50,13 @@ public class Cfg
     public Cfg(NonTerminal start, Collection<Production> prods)
     {
         this();
-        
+
         for (Production p: prods)
             addProduction(p);
 
         setStart(start);
     }
-    
+
     private void clear()
     {
         productions=new HashMap<NonTerminal,Set<Production>>();
@@ -76,13 +76,13 @@ public class Cfg
         if (DEBUG)
             System.out.println(this.getClass().getSimpleName()+": "+s);
     }
-    
+
     public boolean addProduction(Production p)
     {
         if (!productions.containsKey(p.getHead()))
         {
             Set<Production> c=new HashSet<Production>();
-            
+
             productions.put(p.getHead(),c);
         }
         else if (productions.get(p.getHead()).contains(p))
@@ -109,40 +109,40 @@ public class Cfg
         }
 
         size++;
-        
+
         return true;
     }
-    
+
     public void setStart(NonTerminal s)
     {
         start=s;
     }
-    
+
     public NonTerminal getStart()
     {
         return start;
     }
-    
+
     public Collection<Production> getProductions()
     {
         Collection<Production> prods=new LinkedList<Production>();
-        
+
         for (Collection<Production> c: productions.values())
             prods.addAll(c);
-        
+
         return prods;
     }
-    
+
     public Collection<Production> getProductionsOf(NonTerminal n)
     {
-        return productions.containsKey(n) 
+        return productions.containsKey(n)
             ? new ArrayList<Production>(productions.get(n))
             : new ArrayList<Production>(0);
     }
 
     public Collection<Production> getProductionsContaining(Symbol e)
     {
-        return productionsContaining.containsKey(e) 
+        return productionsContaining.containsKey(e)
             ? new ArrayList<Production>(productionsContaining.get(e))
             : new ArrayList<Production>(0);
     }
@@ -172,7 +172,7 @@ public class Cfg
 
         return true;
     }
-    
+
     public int size()
     {
         return size;
@@ -189,11 +189,11 @@ public class Cfg
                 nonterminals.add((NonTerminal)e);
             else if (e instanceof Terminal)
                 terminals.add((Terminal)e);
-            
+
             lexicalElements.add(e);
         }
     }
-    
+
     private void updateLESets()
     {
         if (LESetsUptodate)
@@ -214,39 +214,39 @@ public class Cfg
 
         return lexicalElements;
     }
-    
+
     public Collection<Terminal> getTerminals()
     {
         updateLESets();
 
         return terminals;
     }
-    
+
     public Collection<NonTerminal> getNonTerminals()
     {
         updateLESets();
 
         return nonterminals;
     }
-    
+
     public boolean hasUniqueStart()
     {
         return getProductionsOf(start).size() == 1;
     }
-        
+
     @Override
     public String toString()
     {
         String s;
-        
+
         if (start == null)
             s="Grammar has no start non-terminal defined!\n";
         else
             s="Start: "+start.toString()+"\n";
-        
+
         for (Production p: getProductions())
             s+=p.toString()+"\n";
-        
+
         return s;
     }
 

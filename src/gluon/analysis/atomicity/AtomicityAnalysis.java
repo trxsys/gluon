@@ -67,17 +67,17 @@ public class AtomicityAnalysis
     private static boolean isAtomicAnnotated(SootMethod method)
     {
         Tag tag=method.getTag("VisibilityAnnotationTag");
-        
+
         if (tag == null)
             return false;
-        
+
         VisibilityAnnotationTag visibilityAnnotationTag=(VisibilityAnnotationTag)tag;
         List<AnnotationTag> annotations=visibilityAnnotationTag.getAnnotations();
-        
-        for (AnnotationTag annotationTag: annotations) 
+
+        for (AnnotationTag annotationTag: annotations)
             if (annotationTag.getType().endsWith("/"+ATOMIC_METHOD_ANNOTATION+";"))
                 return true;
-        
+
         return false;
     }
 
@@ -93,9 +93,9 @@ public class AtomicityAnalysis
         for (ParseTreeNode n=tree.getLCA(); n != null; n=n.getParent())
         {
             PPNonTerminal nonterm;
-                
+
             assert n.getElem() instanceof PPNonTerminal;
-            
+
             nonterm=(PPNonTerminal)n.getElem();
 
             if (!synchMode)

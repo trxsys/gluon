@@ -11,18 +11,18 @@ public class Bid implements Comparable<Bid>
 {
 	public static final char PLACEHOLDER=':'; /* Placeholder for toString()
 						     and fromString() */
-	public static final char CLASS_TYPE='b'; /* For toString() 
+	public static final char CLASS_TYPE='b'; /* For toString()
 						    and fromString() */
 
 	private int value;
 	private Customer customer;
-	
+
 	public Bid(int value, Customer customer)
 	{
 		this.value=value;
 		this.customer=customer;
 	}
-	
+
 	/* Just for comparing purposes */
 	public Bid(int value)
 	{
@@ -34,12 +34,12 @@ public class Bid implements Comparable<Bid>
 	{
 		this(0);
 	}
-	
+
 	public int getValue()
 	{
 		return value;
 	}
-	
+
 	public Customer getCustomer()
 	{
 		return customer;
@@ -49,13 +49,13 @@ public class Bid implements Comparable<Bid>
 	{
 		this.customer=customer;
 	}
-	
+
 	public boolean isHigher(Bid other)
 	{
         Main.m.h();
 		return compareTo(other) < 0;
 	}
-	
+
 	public int compareTo(Bid other)
 	{
 		return value-other.value;
@@ -69,7 +69,7 @@ public class Bid implements Comparable<Bid>
 			+itemName+PLACEHOLDER+customer.getName()+PLACEHOLDER
 			+value;
 	}
-	
+
 	/* pre: a valid objStr which must be in the same format as toString()
 	 *      returns
 	 */

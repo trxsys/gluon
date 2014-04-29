@@ -10,12 +10,12 @@ package test.simple.auction;
 public class Item
 {
 	private String name;  /* Article's name */
-	
+
 	public Item(String name)
 	{
 		this.name=name;
-	}	
-	
+	}
+
 	public String getName()
 	{
         Main.m.j();

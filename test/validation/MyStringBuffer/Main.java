@@ -13,13 +13,13 @@ public class Main
 	public static MyStringBuffer append(MyStringBuffer t, MyStringBuffer other) {
 
 		int len = other.length();	//read other.length
-		
+
 		// ...other threads may change sb.length(),
 		// ...so len does not reflect the length of 'other'
-		
+
 		char[] value = new char[len];
 		other.getChars(0, len, value, 0);
-		
+
 		return t;
 	}
 }

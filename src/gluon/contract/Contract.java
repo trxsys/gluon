@@ -67,7 +67,7 @@ public class Contract
         if (DEBUG)
             System.out.print(s);
     }
-    
+
     private void dprintln(String s)
     {
         dprint(s+"\n");
@@ -81,7 +81,7 @@ public class Contract
         gluon.contract.parsing.parser.Parser parser
             =new gluon.contract.parsing.parser.Parser(lexer);
         Start ast=null;
-                
+
         try
         {
             ast=parser.parse();
@@ -98,9 +98,9 @@ public class Contract
         {
             assert false : "this should not happen";
         }
-        
+
         assert ast != null;
-        
+
         return ast;
     }
 
@@ -141,7 +141,7 @@ public class Contract
 
             contractWord.addAll(word);
             contractWord.add(new gluon.grammar.EOITerminal());
-            
+
             contract.add(contractWord);
         }
     }
@@ -166,14 +166,14 @@ public class Contract
     private String extractContractRaw()
     {
          Tag tag=module.getTag("VisibilityAnnotationTag");
-         
+
          if (tag == null)
             return null;
 
         VisibilityAnnotationTag visibilityAnnotationTag=(VisibilityAnnotationTag) tag;
         List<AnnotationTag> annotations=visibilityAnnotationTag.getAnnotations();
-        
-        for (AnnotationTag annotationTag: annotations) 
+
+        for (AnnotationTag annotationTag: annotations)
             if (annotationTag.getType().endsWith("/"+CONTRACT_ANNOTATION+";")
                 && annotationTag.getNumElems() == 1
                 && annotationTag.getElemAt(0) instanceof AnnotationStringElem

@@ -2,7 +2,7 @@ package test.validation.Jigsaw;
 
 public class ResourceStore {
 	protected String name;
-	
+
 	public ResourceStore(String name){
 		this.name = name;
 	}
@@ -10,7 +10,7 @@ public class ResourceStore {
 	public String getName(){
 		return name;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -34,5 +34,5 @@ public class ResourceStore {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
-	}	
+	}
 }

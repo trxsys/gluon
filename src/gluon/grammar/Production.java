@@ -109,7 +109,7 @@ public class Production
     public String toString()
     {
         String s;
-        
+
         s=head.toString()+" →";
 
         for (Symbol e: body)

@@ -12,12 +12,12 @@ public class Order {
 	// Date of the order
 	protected String date;
 	// Maximum number of products
-	protected int max_number;	
+	protected int max_number;
 	// Products
 	protected List<Product> products;
 	// Number of products of each type
 	protected List<Integer> quantities;
-	
+
 	public Order(Client c, String d,int max){
 		this(c,d,max,new ArrayList<Product>(),new ArrayList<Integer>());
 	}
@@ -38,7 +38,7 @@ public class Order {
 			quantities.add(n);
 		}
 	}
-	
+
 	public List<Pair<Product, Integer>> getList(){
 		List<Pair<Product,Integer>> result = new ArrayList<Pair<Product,Integer>>();
 		Iterator<Integer> i = quantities.iterator();
@@ -47,11 +47,11 @@ public class Order {
 		}
 		return result;
 	}
-	
+
 	public String getDate(){
 		return date;
 	}
-	
+
 	public int size(){
 		return products.size();
 	}

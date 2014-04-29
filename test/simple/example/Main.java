@@ -16,12 +16,12 @@ class Module
 public class Main
 {
     private static Module m;
-    
+
     private static void f()
     {
         m.c();
     }
-    
+
     @Atomic
     private static void g()
     {
@@ -29,17 +29,17 @@ public class Main
         m.b();
         f();
     }
-    
+
     public static void main(String[] args)
     {
         m=new Module();
-        
+
         for (int i=0; i < 10; i++)
             if (i%2 == 0)
                 m.a();
             else
                 m.b();
-        
+
         f();
         g();
     }

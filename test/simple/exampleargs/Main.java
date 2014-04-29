@@ -21,12 +21,12 @@ class Module
 public class Main
 {
     private static Module m;
-    
+
     private static void f()
     {
         m.c(0,1);
     }
-    
+
     @Atomic
     private static void g()
     {
@@ -45,19 +45,19 @@ public class Main
         /* otherwise v is removed by the compiler for not being used */
         System.out.println(v);
     }
-    
+
     public static void main(String[] args)
     {
         int v;
 
         m=new Module();
-        
+
         for (int i=0; i < 10; i++)
             if (i%2 == 0)
                 m.a();
             else
                 m.b();
-        
+
         f();
         g();
 

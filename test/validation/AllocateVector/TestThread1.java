@@ -6,19 +6,19 @@ package test.validation.AllocateVector;
  * class TestThread1: Used to run thread which allocates and frees blocks by
  * given AllocationVector object.
  */
-public class TestThread1 extends Thread 
+public class TestThread1 extends Thread
 {
 	/**
 	 * Reference to class AllocationVector object with which the thread will work.
 	 */
 	private AllocationVector vector = null;
-	
+
 	/**
 	 * An array to which the resulting allocated blocks indexes will be stored.
 	 * It's lenght indicates the number of accesses, which to perform to 'vector'.
 	 */
 	private int[] resultBuf = null;
-	
+
 	/**
 	 * Constructor: Constructs thread which will work on class AllocationVector
 	 * object 'vec', to which the thread will perform 'resBuf.length' accesses of
@@ -56,7 +56,7 @@ public class TestThread1 extends Thread
 //		try {
 			// Allocating 'resultBuf.length' blocks.
 
-			for (int i = 0; i < resultBuf.length; i++) 
+			for (int i = 0; i < resultBuf.length; i++)
 				alloc_block(i);
 
 			// Freeing 'resultBuf.length' blocks.

@@ -46,15 +46,15 @@ public class CfgSubwords
     {
         Collection<ArrayList<Symbol>> prefixes
             =new LinkedList<ArrayList<Symbol>>();
-        
+
         for (int i=1; i <= body.size(); i++)
         {
             ArrayList<Symbol> pre=new ArrayList<Symbol>(i);
             Symbol last;
-            
+
             for (int j=0; j < i-1; j++)
                 pre.add(body.get(j));
-            
+
             if (body.get(i-1) instanceof NonTerminal)
             {
                 last=body.get(i-1).clone();
@@ -63,39 +63,39 @@ public class CfgSubwords
             else
             {
                 last=body.get(i-1);
-                
+
                 prefixes.add(new ArrayList<Symbol>(pre));
             }
-            
+
             pre.add(last);
-            
-            prefixes.add(pre);            
+
+            prefixes.add(pre);
         }
-        
+
         // Add empty production
         prefixes.add(new ArrayList<Symbol>());
-        
+
         return prefixes;
     }
-    
+
     private static void addPrefixes(Cfg grammar, Collection<Production> prods)
     {
         for (Production p: prods)
         {
             NonTerminal newProdHead=p.getHead().clone();
-            
+
             newProdHead.setName(newProdHead.getName()+"<");
-            
+
             dprintln("prefixes of "+p+":");
-            
+
             for (ArrayList<Symbol> pre: getPrefixes(p.getBody()))
             {
                 Production preProd=new Production(newProdHead,pre);
-                
+
                 dprintln("  "+preProd);
                 grammar.addProduction(preProd);
             }
-            
+
             dprintln("");
         }
     }
@@ -105,12 +105,12 @@ public class CfgSubwords
     {
         Collection<ArrayList<Symbol>> suffixes
             =new LinkedList<ArrayList<Symbol>>();
-        
+
         for (int i=body.size(); i >= 1; i--)
         {
             ArrayList<Symbol> suff=new ArrayList<Symbol>(i);
             Symbol first;
-            
+
             if (body.get(i-1) instanceof NonTerminal)
             {
                 first=body.get(i-1).clone();
@@ -124,18 +124,18 @@ public class CfgSubwords
 
                 first=body.get(i-1);
             }
-            
+
             suff.add(first);
-            
+
             for (int j=i; j < body.size(); j++)
                 suff.add(body.get(j));
-            
+
             suffixes.add(suff);
         }
-        
+
         // Add empty production
         suffixes.add(new ArrayList<Symbol>());
-        
+
         return suffixes;
     }
 
@@ -144,19 +144,19 @@ public class CfgSubwords
         for (Production p: prods)
         {
             NonTerminal newProdHead=p.getHead().clone();
-            
+
             newProdHead.setName(newProdHead.getName()+">");
-            
+
             dprintln("suffixes of "+p+":");
-            
+
             for (ArrayList<Symbol> suff: getSuffixes(p.getBody()))
             {
                 Production suffProd=new Production(newProdHead,suff);
-                
+
                 dprintln("  "+suffProd);
                 grammar.addProduction(suffProd);
-            }            
-            
+            }
+
             dprintln("");
         }
     }
@@ -218,7 +218,7 @@ public class CfgSubwords
                 if (!(i == 0 && j == body.size()))
                     getSubwords(body.subList(i,j),subwords);
     }
-    
+
     private static Collection<ArrayList<Symbol>>
         getSubwords(List<Symbol> body)
     {
@@ -235,31 +235,31 @@ public class CfgSubwords
         for (Production p: prods)
         {
             NonTerminal newProdHead=p.getHead().clone();
-            
+
             newProdHead.setName(newProdHead.getName()+"<>");
-            
+
             dprintln("subwords of "+p+":");
-            
+
             for (ArrayList<Symbol> sub: getSubwords(p.getBody()))
             {
                 Production subProd=new Production(newProdHead,sub);
-                
+
                 dprintln("  "+subProd);
                 grammar.addProduction(subProd);
-            }            
-            
-            dprintln("");            
+            }
+
+            dprintln("");
         }
     }
-    
+
     /*
      * For each nonterminal X, add 3 new ones X< , X> , X<>.
      *
-     * The idea is that X< will generate all prefixes of strings generated 
-     * by X; X> will generate all suffixes, and X<> will generate all 
+     * The idea is that X< will generate all prefixes of strings generated
+     * by X; X> will generate all suffixes, and X<> will generate all
      * substrings.
      *
-     * The new start symbol will be S<> . 
+     * The new start symbol will be S<> .
      *
      * If the original grammar has a rule X → Y Z, then the new grammar will
      * have:
@@ -269,17 +269,17 @@ public class CfgSubwords
      *     X<> → Y> Z< | Y<> | Z<>
      *
      * From http://www.reddit.com/r/compsci/comments/1drkvk/    \
-     *        are_contextfree_languages_closed_under_subwords/ 
+     *        are_contextfree_languages_closed_under_subwords/
      */
     public static void subwordClosure(Cfg grammar)
     {
         Collection<Production> prods=grammar.getProductions();
         NonTerminal newStart;
-        
+
         addPrefixes(grammar,prods);
         addSuffixes(grammar,prods);
         addSubwords(grammar,prods);
-        
+
         newStart=grammar.getStart().clone();
 
         newStart.setName(newStart.getName()+"<>");

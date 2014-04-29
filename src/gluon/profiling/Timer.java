@@ -56,7 +56,7 @@ public class Timer
         delta=now-running.get(id);
 
         assert delta >= 0;
-        
+
         running.remove(id);
 
         if (timer.containsKey(id))

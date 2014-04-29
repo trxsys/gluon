@@ -6,7 +6,7 @@ public class Supplier extends Thread{
 
 	protected String name;
 	public final Random r = new Random();
-	
+
 	public Supplier(String name){
 		this.name = name;
 	}

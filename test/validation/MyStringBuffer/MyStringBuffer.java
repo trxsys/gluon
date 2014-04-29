@@ -9,7 +9,7 @@ import test.common.Contract;
 @Contract(clauses = "X=length getChars(_,X,_,_);")
 class MyStringBuffer {
 	private java.lang.StringBuffer buffer;
-	
+
 	public MyStringBuffer(String string) {
 		this.buffer = new StringBuffer(string);
 	}

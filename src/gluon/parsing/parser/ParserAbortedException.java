@@ -22,5 +22,5 @@ public class ParserAbortedException
     public ParserAbortedException()
     {
         super();
-    }    
+    }
 }

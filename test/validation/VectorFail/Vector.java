@@ -10,34 +10,34 @@ public class Vector{
 	public int first;
 	public int second;
 	public boolean firstIsGreater;
-	
+
 	public Vector(int x1, int x2) {
 		this.first = x1;
 		this.second = x2;
 		this.firstIsGreater = x1 > x2;
 	}
-	
+
 	public int getFirst() {
-		return first;		
+		return first;
 	}
 	public int getSecond() {
-		return second;		
+		return second;
 	}
-	
+
 	@Atomic
 	public int getMax() {
 		if(firstIsGreater)
 			return first;
-		return second;		
+		return second;
 	}
-	
+
 	@Atomic
 	public int getMin() {
 		if(!firstIsGreater)
 			return first;
-		return second;		
+		return second;
 	}
-	
+
 	@Atomic
 	public void setElements(int x1, int x2){
 		this.first = x1;

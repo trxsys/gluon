@@ -8,13 +8,13 @@ public class Worker extends Thread implements Person{
 	protected String name;
 	protected String address;
 	protected int age;
-	
+
 	//Worker attributes
 	protected int num_employer;
 	protected int salary;
 	protected int yearsOfWork;
-	
-	
+
+
 	public Worker(String name, String address, int age, int num_employer, int salary, int yearsOfWork){
 		this.name = name;
 		this.address = address;
@@ -46,7 +46,7 @@ public class Worker extends Thread implements Person{
 		} catch (InterruptedException e) {
 			// Wake up... more clients?
 		}
-	
+
 	}
 
 	public String getPersonName() {
