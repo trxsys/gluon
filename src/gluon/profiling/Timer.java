@@ -26,7 +26,8 @@ public class Timer
     private static Map<String,Long> timer;
     private static Map<String,Long> running;
 
-    static {
+    static
+    {
         timer=new HashMap<String,Long>();
         running=new HashMap<String,Long>();
     }
@@ -50,7 +51,7 @@ public class Timer
         long delta;
         long acc=0;
 
-        assert running.containsKey(id);
+        assert running.containsKey(id) : "Timer is not running";
 
         delta=now-running.get(id);
 
