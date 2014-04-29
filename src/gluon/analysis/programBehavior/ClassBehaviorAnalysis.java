@@ -34,7 +34,7 @@ public class ClassBehaviorAnalysis
     extends BehaviorAnalysis
 {
     private SootClass classA;
-    
+
     public ClassBehaviorAnalysis(SootClass c, SootClass modClass, AllocNode aSite)
     {
         super(modClass,aSite);
@@ -92,7 +92,7 @@ public class ClassBehaviorAnalysis
                 production=new Production(new PPNonTerminal("S'",null));
 
                 production.appendToBody(nonterm);
-                
+
                 super.grammar.addProduction(production);
             }
 

@@ -176,7 +176,7 @@ class ActionTable
         {
             r+=i+"    ";
 
-            for (Map.Entry<Terminal,Collection<ParsingAction>> entry: 
+            for (Map.Entry<Terminal,Collection<ParsingAction>> entry:
                      actionTable.get(i).entrySet())
             {
                 int count=0;
@@ -389,7 +389,7 @@ public class ParsingTable
                     Set<Item> nextState;
 
                     nextState=goTo(state,e);
-                    
+
                     if (nextState.size() > 0
                         && !states.contains(nextState))
                         statesToAdd.add(nextState);
@@ -432,7 +432,7 @@ public class ParsingTable
             for (NonTerminal n: getStateNextNonTerminals(state))
             {
                 Set<Item> destState=goTo(state,n);
-                
+
                 if (destState.size() > 0)
                     goToTable.add(s,n,stateMap.get(destState));
             }
@@ -472,18 +472,18 @@ public class ParsingTable
                     for (Symbol e: p.getBody())
                     {
                         Set<List<Terminal>> firstsE=first.get(e);
-                        
+
                         for (List<Terminal> f: firstsE)
                             if (!f.equals(EMPTY_WORD))
                                 first.get(n).add(f);
-                        
+
                         if (!firstsE.contains(EMPTY_WORD))
                         {
                             deriveEmptyWord=false;
                             break;
                         }
                     }
-                    
+
                     if (deriveEmptyWord)
                         first.get(n).add(EMPTY_WORD);
 
@@ -503,7 +503,7 @@ public class ParsingTable
         for (Symbol e: s)
         {
             Set<List<Terminal>> firstsE=first.get(e);
-            
+
             for (List<Terminal> f: firstsE)
                 if (!f.equals(EMPTY_WORD))
                     ret.add(f);
@@ -516,10 +516,10 @@ public class ParsingTable
         }
 
         if (deriveEmptyWord)
-            ret.add(EMPTY_WORD); 
+            ret.add(EMPTY_WORD);
 
         return ret;
-    }    
+    }
 
     private void computeFollow()
     {
@@ -542,9 +542,9 @@ public class ParsingTable
             for (Production p: productions)
             {
                 List<Symbol> right=new LinkedList<Symbol>();
-                
+
                 right.addAll(p.getBody());
-                
+
                 while (right.size() > 0)
                 {
                     Symbol e=right.remove(0);
@@ -555,7 +555,7 @@ public class ParsingTable
 
                     if (!(e instanceof NonTerminal))
                         continue;
-                    
+
                     n=(NonTerminal)e;
 
                     followN=follow.get(n);
@@ -563,8 +563,8 @@ public class ParsingTable
                     beforeSize=followN.size();
 
                     firstRight=first(right);
-                    
-                    for (List<Terminal> t: firstRight) 
+
+                    for (List<Terminal> t: firstRight)
                     {
                         Terminal term;
 
@@ -574,10 +574,10 @@ public class ParsingTable
                             continue;
 
                         term=t.get(0);
-                                            
+
                         followN.add(term);
                     }
-                    
+
                     if (firstRight.contains(EMPTY_WORD))
                         followN.addAll(follow.get(p.getHead()));
 
@@ -619,7 +619,7 @@ public class ParsingTable
                     {
                         // reduce H -> B
                         ParsingAction a;
-                        
+
                         a=new ParsingActionReduce(i.getProduction());
 
                         actionTable.add(s,t,a);

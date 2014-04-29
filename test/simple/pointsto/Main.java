@@ -17,12 +17,12 @@ public class Main
 {
     private Module m;
     private Module m2=new Module();
-    
+
     private void f()
     {
         m.c();
     }
-    
+
     @Atomic
     private void g()
     {
@@ -30,22 +30,22 @@ public class Main
         m.b();
         f();
     }
-    
+
     private void go()
     {
         m=new Module();
-        
+
         for (int i=0; i < 10; i++)
             if (i%2 == 0)
                 m.a();
             else
             {
                 m.b();
-                
+
                 if (i%5 == 0)
                     m=m2;
             }
-        
+
         f();
         g();
     }

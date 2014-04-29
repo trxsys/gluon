@@ -96,7 +96,7 @@ class ParserConfiguration
     {
         LinkedList<ParsingAction> alist
             =new LinkedList<ParsingAction>();
-        
+
         for (ParserConfiguration pc=this; pc != null; pc=pc.parentComplete)
             alist.addFirst(pc.action);
 
@@ -193,7 +193,7 @@ class ParserConfiguration
     }
 }
 
-/* This is a partially a implementation of the tomita parser. We do not merge 
+/* This is a partially a implementation of the tomita parser. We do not merge
  * configuration states as described in the full tomita implementation.
  *
  * This parser also detects and prune branches with unproductive loops in the
@@ -221,7 +221,7 @@ public abstract class Parser
         parseLifo=null;
         acceptedLCA=null;
     }
-    
+
     protected void dprintln(String s)
     {
         if (DEBUG)
@@ -243,7 +243,7 @@ public abstract class Parser
 
         return Collections.singleton(parserConf);
     }
-    
+
     protected Collection<ParserConfiguration> reduce(ParserConfiguration parent,
                                                      ParsingActionReduce reduction,
                                                      List<Terminal> input)
@@ -270,7 +270,7 @@ public abstract class Parser
 
         return Collections.singleton(parserConf);
     }
-    
+
     protected Collection<ParserConfiguration> accept(ParserConfiguration parent,
                                                      ParsingActionAccept accept,
                                                      List<Terminal> input)
@@ -282,7 +282,7 @@ public abstract class Parser
 
         return Collections.singleton(parserConf);
     }
-    
+
     protected ParserConfiguration newParserConfiguration(ParserConfiguration parent)
     {
         return new ParserConfiguration(parent);
@@ -341,14 +341,14 @@ public abstract class Parser
                     && action instanceof ParsingActionReduce)
                 {
                     ParsingActionReduce red=(ParsingActionReduce)action;
-                    
+
                     branch.lca=red.getProduction().getHead();
-                    
+
                     if (PRUNE_BY_REPEATED_LCA
                         && acceptedLCA.contains(branch.lca))
                         prune=true;
                 }
-                
+
                 if (!prune && !parserConf.isLoop(branch))
                     parseLifo.add(branch);
                 else
@@ -356,10 +356,10 @@ public abstract class Parser
             }
         }
     }
-    
+
     protected abstract Collection<ParserConfiguration>
         getInitialConfigurations(List<Terminal> input);
-    
+
     /* Argument input should be an ArrayList for performance reasons. */
     public int parse(List<Terminal> input, ParserCallback pcb)
         throws ParserAbortedException
@@ -376,7 +376,7 @@ public abstract class Parser
         while (parseLifo.size() > 0)
         {
             ParserConfiguration parserConf=parseLifo.pop();
-            
+
             counter=(counter+1)%500000;
 
             if (counter == 0 && pcb.shouldAbort())
@@ -401,7 +401,7 @@ public abstract class Parser
 
                 gluon.profiling.Profiling.inc("final:parse-branches");
                 break;
-            case ERROR   : assert false : 
+            case ERROR   : assert false :
                 "Why do we have error configs in the parser lifo?"; break;
             }
         }

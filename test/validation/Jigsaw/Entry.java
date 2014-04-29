@@ -3,15 +3,15 @@ package test.validation.Jigsaw;
 
 public class Entry {
 	protected ResourceStore store;
-	
+
 	public Entry(String name){
 		store = new ResourceStore(name);
 	}
-	
+
 	public ResourceStore getStore() {
 		return store;
 	}
-	
+
 	public String getName(){
 		return store.getName();
 	}

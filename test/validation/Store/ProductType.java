@@ -1,46 +1,46 @@
 package test.validation.Store;
 /**
  * This Class represents the possible types of products
- * 
+ *
  * @author Vasco Pessanha
  *
  */
 public class ProductType {
-	
+
 	public static final int fruitType = 1;
 	public static final int drinksType = 2;
 	public static final int cerealsType = 3;
 	public static final int candyType = 4;
 	public static final int pastaType = 5;
-	
+
 	private final String fruitString = "Fruits";
 	private final String drinksString = "Drinks";
 	private final String cerealsString = "Cereals";
 	private final String candyString = "Candies";
 	private final String pastaString = "Pastas";
-	
+
 	public static final ProductType fruits = new ProductType(fruitType);
 	public static final ProductType drinks = new ProductType(drinksType);
 	public static final ProductType cereals = new ProductType(cerealsType);
 	public static final ProductType candies = new ProductType(candyType);
 	public static final ProductType pastas = new ProductType(pastaType);
 
-	
+
 	protected int type;
 	public ProductType(int type){
 		isValid(type);
 		this.type = type;
 	}
 	private void isValid(int inType) {
-		if(inType != fruitType && inType != drinksType && 
+		if(inType != fruitType && inType != drinksType &&
 			inType != cerealsType && inType != candyType && inType != pastaType){
-			
+
 			System.err.println("ERROR (ProductType) - tried to introduced an invalid type ("+inType+")");
 			System.exit(-1);
 		}
 	}
-	
-	
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

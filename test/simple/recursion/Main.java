@@ -5,7 +5,7 @@ public class Main
     public static Module m;
 
     public static void main(String[] args)
-    { 
+    {
         m=new Module();
 
         m.a();

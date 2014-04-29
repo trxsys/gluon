@@ -20,7 +20,7 @@ package gluon.analysis.programBehavior;
  * to the module under analysis.
  *
  * The grammar is extracted from the flow control graph. It's terminals are
- * the methods of the module we are analyzing. 
+ * the methods of the module we are analyzing.
  */
 
 import gluon.grammar.Cfg;
@@ -65,36 +65,36 @@ class NonTerminalAliasCreator
     private static final char[] RADIX_CHARS
         ="ABCDEFGHIJKLMNOPQSRTUVWXYZ".toCharArray();
     private static final int RADIX=RADIX_CHARS.length;
-    
+
     private int counter;
     private Map<Object,Integer> map;
-    
+
     public NonTerminalAliasCreator()
     {
         counter=0;
         map=new HashMap<Object,Integer>();
     }
-    
+
     private static String intToString(int n)
     {
         String r="";
-        
+
         do
         {
             r=RADIX_CHARS[n%RADIX]+r;
             n/=RADIX;
         } while (n > 0);
-        
+
         return r;
     }
-    
+
     public String makeAlias(Object o)
     {
         if (map.containsKey(o))
             return intToString(map.get(o));
-        
+
         map.put(o,counter);
-        
+
         return intToString(counter++);
     }
 
@@ -121,7 +121,7 @@ public abstract class BehaviorAnalysis
     private MonitorAnalysis monitorAnalysis;
 
     private boolean conservativePointsTo;
-    
+
     public BehaviorAnalysis(SootClass modClass, AllocNode aSite)
     {
         module=modClass;
@@ -130,11 +130,11 @@ public abstract class BehaviorAnalysis
         grammar=new Cfg();
 
         monitorAnalysis=null;
-        
+
         visited=null;
 
         conservativePointsTo=false;
-        
+
         aliasCreator=new NonTerminalAliasCreator();
     }
 
@@ -144,13 +144,13 @@ public abstract class BehaviorAnalysis
         this(modClass,null);
         conservativePointsTo=true;
     }
-    
+
     protected void dprintln(String s)
     {
         if (DEBUG)
             System.out.println(this.getClass().getSimpleName()+": "+s);
     }
-    
+
     /* Set the grammar generation to handle synchronized blocks.
      */
     public void setSynchMode(MonitorAnalysis monAnalysis)
@@ -186,7 +186,7 @@ public abstract class BehaviorAnalysis
             return obj.getType().equals(module.getType()) ? ModCall.SOMETIMES
                                                           : ModCall.NEVER;
         }
-        
+
         /* We only consider "modules" as instances from objects.
          * So a call to a static method of a class is not considered
          * a usage of a module.
@@ -228,13 +228,13 @@ public abstract class BehaviorAnalysis
                  && allocSite == null)
         {
             SootClass base=((StaticInvokeExpr)expr).getMethod().getDeclaringClass();
-            
+
             return base.equals(module) ? ModCall.ALWAYS : ModCall.NEVER;
         }
 
         return ModCall.NEVER;
     }
-    
+
     protected abstract void foundMethodCall(SootMethod method);
 
     protected abstract boolean ignoreMethodCall(SootMethod method);
@@ -258,7 +258,7 @@ public abstract class BehaviorAnalysis
      *           D  d
      *
      * We will generate:
-     * 
+     *
      *   A  → A@ D
      *   A@ → B
      */
@@ -301,7 +301,7 @@ public abstract class BehaviorAnalysis
 
         analyzeSuccessors(method,cfg,unit);
     }
-    
+
     /* An exitmonitor just reduce to ε. See analyzeUnitEnterMonitor() comment.
      */
     private void analyzeUnitExitMonitor(SootMethod method, UnitGraph cfg,
@@ -321,7 +321,7 @@ public abstract class BehaviorAnalysis
             return; /* Unit already taken care of */
 
         gluon.profiling.Profiling.inc("final:cfg-nodes");
-        
+
         visited.add(unit);
 
         if (isSynchMode())
@@ -337,7 +337,7 @@ public abstract class BehaviorAnalysis
                 return;
             }
         }
-        
+
         if (((Stmt)unit).containsInvokeExpr())
         {
             InvokeExpr expr=((Stmt)unit).getInvokeExpr();
@@ -354,7 +354,7 @@ public abstract class BehaviorAnalysis
                     foundMethodCall(calledMethod);
 
                     if (!ignoreMethodCall(calledMethod))
-                        prodBodyPrefix=new PPNonTerminal(alias(calledMethod),method); 
+                        prodBodyPrefix=new PPNonTerminal(alias(calledMethod),method);
                 }
                 break;
             }
@@ -362,7 +362,7 @@ public abstract class BehaviorAnalysis
             case ALWAYS: prodBodyPrefix=new PPTerminal(calledMethod,unit,method); break;
             }
         }
-        
+
         assert addProdSkipPrefix ? prodBodyPrefix != null : true;
 
         PPNonTerminal prodHead=new PPNonTerminal(alias(unit),method);
@@ -398,11 +398,11 @@ public abstract class BehaviorAnalysis
     {
         PPNonTerminal head=new PPNonTerminal(alias(unit),method);
         Production production=new Production(head);
-        
+
         production.appendToBody(body1);
         production.appendToBody(body2);
-        
-        grammar.addProduction(production);        
+
+        grammar.addProduction(production);
     }
 
     private void addUnitToSymbol(Unit unit, Symbol body,
@@ -410,21 +410,21 @@ public abstract class BehaviorAnalysis
     {
         PPNonTerminal head=new PPNonTerminal(alias(unit),method);
         Production production=new Production(head);
-        
+
         production.appendToBody(body);
-        
-        grammar.addProduction(production);        
+
+        grammar.addProduction(production);
     }
 
     private void addUnitToEmptyProduction(Unit unit, SootMethod method)
     {
         PPNonTerminal head=new PPNonTerminal(alias(unit),method);
         Production production=new Production(head);
-        
+
         grammar.addProduction(production);
     }
 
-    private void addMethodToHeadProduction(SootMethod method, 
+    private void addMethodToHeadProduction(SootMethod method,
                                            Unit entryPoint)
     {
         PPNonTerminal head=new PPNonTerminal(alias(method),method);
@@ -432,27 +432,27 @@ public abstract class BehaviorAnalysis
         Symbol body=new PPNonTerminal(alias(entryPoint),method);
 
         head.setNoRemove();
-        
+
         production.appendToBody(body);
-        
+
         grammar.addProduction(production);
     }
-    
+
     /* Adds the patterns of method to grammar
      */
     protected PPNonTerminal analyzeMethod(SootMethod method)
     {
         UnitGraph cfg;
-        
+
         dprintln("Analyzing method "+method);
-        
+
         assert method.hasActiveBody() : "No active body";
-        
+
         cfg=new BriefUnitGraph(method.getActiveBody());
-        
+
         assert cfg.getHeads().size() != 0
             : "There are no entry points of the cfg of method "+method;
-        
+
         for (Unit head: cfg.getHeads())
         {
             addMethodToHeadProduction(method,head);
@@ -461,7 +461,7 @@ public abstract class BehaviorAnalysis
 
         return new PPNonTerminal(alias(method),method);
     }
-        
+
     public Cfg getGrammar()
     {
         assert grammar.getStart() != null : "analyze() must first be called";

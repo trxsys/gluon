@@ -9,7 +9,7 @@ public class Main{
 	}
 	public static void main(String[] args) {
 		Vector pair = new Vector(1,2);
-		
+
 		for(int i = 0; i < 10; i++){
 			new MyThread(pair).start();
 		}

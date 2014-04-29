@@ -3,7 +3,7 @@ package test.validation.Elevator;
 /*
  * Copyright (C) 2000 by ETHZ/INF/CS
  * All rights reserved
- * 
+ *
  * @version $Id$
  * @author Roger Karrer
  */
@@ -150,7 +150,7 @@ class Lift extends Thread {
 		// 2) we are travelling up and there is an unclaimed up call on this
 		// floor
 		if (((pickupOn[currentFloor] & UP) != 0)
-				|| (travelDir == UP && 
+				|| (travelDir == UP &&
                     claimUp(controls, getName(), currentFloor))) {
 			addPeople(controls.getUpPeople(currentFloor));
 			pickupOn[currentFloor] &= ~UP;

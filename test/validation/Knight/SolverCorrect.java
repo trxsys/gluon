@@ -39,7 +39,7 @@ public class SolverCorrect
 
 		for (Point n: next)
 			if (n.x >= 0 && n.y >= 0
-			    && n.x < KnightMoves.WIDTH 
+			    && n.x < KnightMoves.WIDTH
 			    && n.y < KnightMoves.WIDTH)
 			{
 				//System.out.println(n.toString());

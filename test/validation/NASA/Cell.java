@@ -4,7 +4,7 @@ public class Cell {
 
 	public Object value;
 	public boolean achieved;
-	
+
 	public Cell(){
 		value = null;
 		achieved = false;

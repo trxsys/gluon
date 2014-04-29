@@ -20,7 +20,7 @@ public class Main
     public static void main(String[] args)
     {
         m=new Module();
-        
+
         for (int i=0; i < 10; i++)
             if (i%2 == 0)
             {

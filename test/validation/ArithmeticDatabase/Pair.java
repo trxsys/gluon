@@ -4,13 +4,13 @@ public class Pair<K extends Comparable<K>, V> {
 
 	public K k;
 	public V v;
-	
+
 	public Pair(K k, V v) {
 		super();
 		this.k = k;
 		this.v = v;
 	}
-	
+
 	public Pair(Pair<K, V> p) {
 		if(p != null){
 			this.k = p.k;
@@ -30,7 +30,7 @@ public class Pair<K extends Comparable<K>, V> {
 	public void setv(V v) {
 		this.v = v;
 	}
-	
+
 	public String toString(){
 		if(k == null || v == null)
 			return "";

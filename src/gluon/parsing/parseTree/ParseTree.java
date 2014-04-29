@@ -48,7 +48,7 @@ public class ParseTree
         int pos=0;
 
         leafs=new ArrayList<ParseTreeNode>(word.size());
-        
+
         for (ParsingAction a: actions)
             if (a instanceof ParsingActionReduce)
             {
@@ -114,7 +114,7 @@ public class ParseTree
     public ParseTreeNode getLCA()
     {
         assert leafs != null;
-        
+
         for (ParseTreeNode node: leafs)
             while (node != null)
             {

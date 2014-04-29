@@ -36,7 +36,7 @@ public class Table<K extends Comparable<K>,V> implements Iterable<Pair<K,V>>
 		K max=null;
 
 		for (Pair<K,V> row: table)
-			if (max == null 
+			if (max == null
 			    || max.compareTo(row.k) < 0)
 				max=row.k;
 

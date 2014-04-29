@@ -3,7 +3,7 @@ package test.validation.Coord03;
 
 
 public class T4 extends Thread{
-	
+
 	/*
 	 * x4 = c.getX();
 	 * use(x4);

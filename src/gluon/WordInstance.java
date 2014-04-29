@@ -61,7 +61,7 @@ public class WordInstance
         if (DEBUG)
             System.out.print(s);
     }
-    
+
     private void dprintln(String s)
     {
         dprint(s+"\n");
@@ -121,7 +121,7 @@ public class WordInstance
             ParseTree ptree=new ParseTree(word,actions);
 
             ptree.buildTree();
-        
+
             return lca.equals(ptree.getLCA().getElem());
         }
         else
@@ -168,7 +168,7 @@ public class WordInstance
     {
         return wordStr(word);
     }
-    
+
     private int tryUnify(Map<String,ValueM> unif, String contractVar, ValueM v,
                          ValueEquivAnalysis vEquiv)
     {
@@ -179,7 +179,7 @@ public class WordInstance
             return vEquiv.equivTo(unif.get(contractVar),v) ? 0 : -1;
 
         unif.put(contractVar,v);
-        
+
         return 0;
     }
 
@@ -216,7 +216,7 @@ public class WordInstance
                 if (unit instanceof AssignStmt)
                 {
                     ValueM v=new ValueM(method,((AssignStmt)unit).getLeftOp());
-                    
+
                     dprintln("      Trying unification "+contractVar+" <-> "+v);
 
                     if (tryUnify(unif,contractVar,v,vEquiv) != 0)
@@ -286,7 +286,7 @@ public class WordInstance
                 || !tterm.getSourceFile().equals(oterm.getSourceFile()))
                 return false;
         }
-        
+
         return true;
     }
 
@@ -299,5 +299,5 @@ public class WordInstance
             h=h^(t.getLineNumber()*92821)^t.getSourceFile().hashCode();
 
         return h;
-    }    
+    }
 }

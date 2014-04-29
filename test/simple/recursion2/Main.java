@@ -16,7 +16,7 @@ class Module
 public class Main
 {
     private static Module m;
-    
+
     private static void f(int c)
     {
         if (c%2 == 0)
@@ -38,7 +38,7 @@ public class Main
             f(c+1);
         }
     }
-    
+
     public static void main(String[] args)
     {
         m=new Module();

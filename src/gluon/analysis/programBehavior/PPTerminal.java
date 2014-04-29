@@ -40,7 +40,7 @@ public class PPTerminal
      */
     private List<String> arguments;
     private String ret; /* null if not used */
-    
+
     public PPTerminal(SootMethod m, Unit u, SootMethod cUnitMethod)
     {
         super(m.getName());

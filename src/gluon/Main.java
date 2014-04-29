@@ -37,7 +37,7 @@ import java.util.HashMap;
 public class Main
 {
     private static final String PROGNAME="gluon";
-    
+
     private static String classPath=null;
     private static String mainClassName=null;
     private static String moduleClassName=null;
@@ -61,8 +61,8 @@ public class Main
     {
         System.err.println(PROGNAME+": "+warning);
     }
-    
-    private static void help() 
+
+    private static void help()
     {
 		System.out.println("Usage: "+PROGNAME+" OPTIONS <main_class>");
 		System.out.println();
@@ -96,13 +96,13 @@ public class Main
 		System.out.println("  -h, --help                      "
                            +"Display this help and exit");
     }
-    
+
     private static void parseArguments(String[] args)
     {
         LongOpt[] options=new LongOpt[11];
         Getopt g;
         int c;
-        
+
         options[0]=new LongOpt("help",LongOpt.NO_ARGUMENT,null,'h');
         options[1]=new LongOpt("classpath",LongOpt.REQUIRED_ARGUMENT,null,'c');
         options[2]=new LongOpt("module",LongOpt.REQUIRED_ARGUMENT,null,'m');
@@ -117,64 +117,64 @@ public class Main
         options[10]=new LongOpt("timeout",LongOpt.REQUIRED_ARGUMENT,null,'i');
 
         g=new Getopt(PROGNAME,args,"hc:m:o:jtpsyri",options);
-        
+
         g.setOpterr(true);
-        
+
         while ((c = g.getopt()) != -1)
             switch (c)
             {
-            case 'h': 
+            case 'h':
                 {
                     help();
                     System.exit(0);
                     break;
                 }
-            case 'c': 
+            case 'c':
                 {
                     classPath=g.getOptarg();
                     break;
                 }
-            case 'm': 
+            case 'm':
                 {
                     moduleClassName=g.getOptarg();
                     break;
                 }
-            case 'j': 
+            case 'j':
                 {
                     WITH_JAVA_LIB=true;
                     break;
                 }
-            case 't': 
+            case 't':
                 {
                     TIME=true;
                     break;
                 }
-            case 'p': 
+            case 'p':
                 {
                     PROFILING_VARS=true;
                     break;
                 }
-            case 'o': 
+            case 'o':
                 {
                     contract=g.getOptarg();
                     break;
                 }
-            case 's': 
+            case 's':
                 {
                     CLASS_SCOPE=true;
                     break;
                 }
-            case 'y': 
+            case 'y':
                 {
                     ATOMICITY_SYNCH=true;
                     break;
                 }
-            case 'r': 
+            case 'r':
                 {
                     CONSERVATIVE_POINTS_TO=true;
                     break;
                 }
-            case 'i': 
+            case 'i':
                 {
                     String timeout=null;
 
@@ -206,14 +206,14 @@ public class Main
 
         if (g.getOptind() != args.length-1)
             fatal("there must be one main class specified");
-        
+
         mainClassName=args[g.getOptind()];
     }
 
     private static Map<String,String> getSparkOptions()
     {
         Map<String,String> opt = new HashMap<String,String>();
-        
+
         opt.put("verbose","false");
         opt.put("propagator","worklist");
         opt.put("simple-edges-bidirectional","false");
@@ -221,10 +221,10 @@ public class Main
         opt.put("set-impl","double");
         opt.put("double-set-old","hybrid");
         opt.put("double-set-new","hybrid");
-        
+
         return opt;
     }
-    
+
     private static void run()
     {
         Transform t;
@@ -233,13 +233,13 @@ public class Main
 
         Options.v().set_whole_program(true);
         Options.v().set_whole_shimple(true);
-        
+
         Options.v().set_verbose(false);
         Options.v().set_interactive_mode(false);
         Options.v().set_debug(false);
         Options.v().set_debug_resolver(false);
         Options.v().set_show_exception_dests(false);
-        
+
         Options.v().set_output_format(Options.output_format_none);
 
         Options.v().set_allow_phantom_refs(true);
@@ -261,22 +261,22 @@ public class Main
             Scene.v().setSootClassPath(System.getProperty("sun.boot.class.path")
                                        +java.io.File.pathSeparator
                                        +classPath);
-        
+
         t=new Transform("wstp.gluon",AnalysisMain.instance());
-        
+
         AnalysisMain.instance().setModuleToAnalyze(moduleClassName);
 
         if (contract != null)
             AnalysisMain.instance().setContract(contract);
-        
+
         PackManager.v().getPack("wstp").add(t);
 
         SootClass mainClass=Scene.v().loadClassAndSupport(mainClassName);
-        
+
         Scene.v().addBasicClass(mainClassName,SootClass.SIGNATURES);
         Scene.v().loadNecessaryClasses();
         Scene.v().loadDynamicClasses();
-        
+
         try { Scene.v().setMainClass(mainClass); }
         catch (Exception _) { fatal("error loading main class"); }
 
@@ -291,7 +291,7 @@ public class Main
 
         PackManager.v().runPacks();
     }
-    
+
     private static void dumpRunTimes()
     {
         System.out.println();
@@ -323,12 +323,12 @@ public class Main
             System.exit(-1);
             return;
         }
-        
+
         parseArguments(args);
-        
-        if (classPath == null) 
+
+        if (classPath == null)
             fatal("No classpath specified!");
-        
+
         if (moduleClassName == null)
             fatal("No module specified!");
 

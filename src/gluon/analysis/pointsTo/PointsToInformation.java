@@ -70,7 +70,7 @@ public class PointsToInformation
         PointsToSet rObjs;
 
         DoublePointsToSet reacObjs;
-        
+
         pta=Scene.v().getPointsToAnalysis();
         rObjs=pta.reachingObjects(l);
 
@@ -89,7 +89,7 @@ public class PointsToInformation
                             }
                         }
                         );
-        
+
         return asites;
     }
 }

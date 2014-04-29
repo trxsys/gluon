@@ -7,7 +7,7 @@ import java.util.Random;
 import test.common.Atomic;
 
 public class Store {
-	
+
 	// init is done?
 	protected static boolean inited = false;
 	// All store's products
@@ -16,13 +16,13 @@ public class Store {
 	protected static String log;
 	// List with all orders
 	protected static List<Order> orders;
-	
+
 	public static void init(){
 		inited = true;
 		products = new ArrayList<StoreProduct>();
 		orders = new ArrayList<Order>();
 		log = "";
-		
+
 		Random r = new Random();
 		for(Product p : ProductWorld.getProducts()){
 			int quantity = r.nextInt(5);
@@ -37,13 +37,13 @@ public class Store {
 		if(!inited){
 			return;
 		}
-		log += "Sell{"+num_employer+" Client = "+client+" | Products = "+iterator+"\n\n";		
+		log += "Sell{"+num_employer+" Client = "+client+" | Products = "+iterator+"\n\n";
 	}
 	public static void addLog(String string) {
 		if(!inited){
 			return;
 		}
-		log += string;		
+		log += string;
 	}
 //	public static void checkInited(String where){
 //		if(!inited){
@@ -97,7 +97,7 @@ public class Store {
 			// Sort "orders" so we can remove the oldest
 			orders = sortOrders();
 		}
-		
+
 		// Return the oldest order
 		return orders.size() == 0? null :orders.remove(0);
 	}
@@ -108,10 +108,10 @@ public class Store {
 		List<Order> result = new ArrayList<Order>();
 		if(size == 0){
 			return result;
-		}		
+		}
 		boolean[] visited = new boolean[size];
 		Order[] aOrders = toArray();
-		
+
 		// We get always the oldest order and put it first
 		for(int i = 0; i < size; i++){
 			Order newest = aOrders[0];
@@ -123,7 +123,7 @@ public class Store {
 			}
 			aOrders[i] = newest;
 		}
-		
+
 		return result;
 	}
 

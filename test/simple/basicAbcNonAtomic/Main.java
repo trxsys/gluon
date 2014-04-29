@@ -9,7 +9,7 @@ import test.common.Contract;
 class Module
 {
     public Module() {}
-    
+
     public void a() {}
     public void b() {}
     public void c() {}
@@ -23,20 +23,20 @@ class Module
 public class Main
 {
     private static Module m;
-    
+
     @Atomic
     private static void f()
     {
         m.a();
         m.b();
     }
-    
+
     @Atomic
     private static void g()
     {
         m.c();
     }
-    
+
     private static void q()
     {
         m.a();
@@ -56,7 +56,7 @@ public class Main
             m.i1();
             m.i2();
     }
-    
+
     public static void main(String[] args)
     {
         m=new Module();

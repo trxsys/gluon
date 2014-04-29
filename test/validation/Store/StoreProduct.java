@@ -4,7 +4,7 @@ import test.common.Atomic;
 
 /**
  * This class represents a Store's product.
- * 
+ *
  * @author Vasco Pessanha
  */
 public class StoreProduct {
@@ -16,18 +16,18 @@ public class StoreProduct {
 	protected boolean soldOut;
 	// Product's price
 	protected int price;
-	
+
 	public StoreProduct(Product p, int price){
-		this(p,price,1,true);		
+		this(p,price,1,true);
 	}
-	
+
 	public StoreProduct(Product p, int price, int numberUnits, boolean soldOut){
 		this.product = p;
 		this.n = numberUnits;
 		this.soldOut = soldOut;
 		this.price = price;
 	}
-	
+
 	public int hashCodeIgnoreCase() {
 		final int prime = 31;
 		int result = 1;
@@ -50,7 +50,7 @@ public class StoreProduct {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -81,19 +81,19 @@ public class StoreProduct {
 			return false;
 		return true;
 	}
-	
+
 	@Atomic
 	public synchronized boolean isConsistent(){
 		return (soldOut && n == 0) || (n > 0 && !soldOut);
 	}
-	
+
 	public void incProduct(int aux){
 		incNumber(aux);
 		// Someone can read this inconsistent state
 		// ( We have product but it is sold out)
 		setSoldOutA(false);
 	}
-	
+
 	public void decProduct(int aux){
 		decNumber(aux);
 		// Someone can read this inconsistent state
@@ -104,22 +104,22 @@ public class StoreProduct {
 	@Atomic
 	public synchronized void incNumber(int aux) {
 		n += aux;
-	}	
-	
-	public synchronized void decNumber(int n2) {
-		n = n > n2? n - n2 : 0;		
 	}
-	
+
+	public synchronized void decNumber(int n2) {
+		n = n > n2? n - n2 : 0;
+	}
+
 	private synchronized void setSoldOut(boolean soldOut) {
 		this.soldOut = soldOut;
 	}
-	
+
 	@Atomic
 	private synchronized void setSoldOutA(boolean soldOut) {
 		this.soldOut = soldOut;
 	}
 
-	
+
 	@Override
 	public String toString(){
 		String result = "StoreProduct "+product.getName()+" - " + n;
@@ -127,7 +127,7 @@ public class StoreProduct {
 			return result + "(Sold out)";
 		return result;
 	}
-	
+
 	public int getPrice(){
 		return price;
 	}
@@ -135,7 +135,7 @@ public class StoreProduct {
 	public Product getProduct() {
 		return product;
 	}
-	
+
 	public boolean isSoldOut(){
 		return soldOut;
 	}

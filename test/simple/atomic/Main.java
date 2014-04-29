@@ -7,7 +7,7 @@ package test.simple.atomic;
 class Module
 {
     public Module() {}
-    
+
     public void a() {}
     public void b() {}
 }
@@ -22,14 +22,14 @@ public class Main
 
     private static void a1()
     {
-        na();        
+        na();
     }
 
     private static void a0()
     {
         a1();
     }
-    
+
     @Atomic
     private static void f()
     {
@@ -40,7 +40,7 @@ public class Main
         a0();
         m.b();
     }
-    
+
     public static void main(String[] args)
     {
         m=new Module();

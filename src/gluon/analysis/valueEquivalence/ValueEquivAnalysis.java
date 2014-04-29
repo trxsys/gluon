@@ -40,7 +40,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
 
-/* Since the fields assingments to local variables are only done (statically) 
+/* Since the fields assingments to local variables are only done (statically)
  * before they are used, and are using SSA we don't need a full data-flow
  * analysis.
  */
@@ -98,7 +98,7 @@ public class ValueEquivAnalysis
             for (AllocNode b: PointsToInformation.getReachableAllocSites(vl))
                 if (a.equals(b))
                     return true;
-        
+
         return false;
     }
 

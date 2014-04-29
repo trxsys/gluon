@@ -70,7 +70,7 @@ public class AnalysisMain
     private static final boolean DEBUG=false;
 
     private static final AnalysisMain instance=new AnalysisMain();
-    
+
     private Scene scene;
     private String moduleName; /* Name of the module to analyze */
     private SootClass module;  /* Class of the module to analyze */
@@ -78,7 +78,7 @@ public class AnalysisMain
     private Contract contract;
 
     private String contractRaw;
-    
+
     private AnalysisMain()
     {
         scene=null;
@@ -88,23 +88,23 @@ public class AnalysisMain
         contract=null;
         contractRaw=null;
     }
-    
+
     private void dprint(String s)
     {
         if (DEBUG)
             System.out.print(s);
     }
-    
+
     private void dprintln(String s)
     {
         dprint(s+"\n");
     }
-    
-    public static AnalysisMain instance() 
+
+    public static AnalysisMain instance()
     {
         return instance;
     }
-    
+
     public void setModuleToAnalyze(String m)
     {
         moduleName=m;
@@ -115,17 +115,17 @@ public class AnalysisMain
         ThreadAnalysis ta=new ThreadAnalysis(scene.getCallGraph());
         Collection<SootMethod> allThreads;
         Collection<SootMethod> relevantThreads;
-        
+
         ta.analyze();
-        
+
         allThreads=ta.getThreadsEntryMethod();
-        
+
         relevantThreads=new ArrayList<SootMethod>(allThreads.size());
-        
+
         for (SootMethod m: allThreads)
             if (!m.isJavaLibraryMethod())
                 relevantThreads.add(m);
-        
+
         return relevantThreads;
     }
 
@@ -176,7 +176,7 @@ public class AnalysisMain
 
         return atomic ? 0 : -1;
     }
-    
+
     private void checkThreadWord(final SootMethod thread,
                                  final List<Terminal> word,
                                  final ValueEquivAnalysis vEquiv)
@@ -235,13 +235,13 @@ public class AnalysisMain
                         {
                             int ret;
                             WordInstance wordInst;
-                        
+
                             wordInst=new WordInstance((PPNonTerminal)lca,
                                                       word,actions);
 
                             gluon.profiling.Timer.stop("parsing");
-                            ret=0; //ret=checkWordInstance(wordInst,reported,vEquiv);
-                            
+                            ret=0; //ret=checkWordInstance(wordInst,reported,vEquiv); TODO
+
                             System.out.println("      Actions:");
                             for (ParsingAction a: actions)
                             {
@@ -252,10 +252,10 @@ public class AnalysisMain
                             System.out.println();
                             gluon.profiling.Timer.start("parsing");
 
-                        
+
                             if (ret <= 0)
                                 System.out.println();
-                        
+
                             return ret < 0 ? -1 : 0;
                         }
                     });
@@ -278,7 +278,7 @@ public class AnalysisMain
     {
         ParsingTable parsingTable;
         Cfg grammar;
-        
+
         gluon.profiling.Profiling.inc("final:alloc-sites-total");
 
         gluon.profiling.Timer.start("final:analysis-behavior");
@@ -303,7 +303,7 @@ public class AnalysisMain
 
         return new ParserSubwords(parsingTable);
     }
-    
+
     private void checkThread(SootMethod thread)
     {
         ValueEquivAnalysis vEquiv=new ValueEquivAnalysis();
@@ -312,7 +312,7 @@ public class AnalysisMain
                            +thread.getDeclaringClass().getShortName()
                            +"."+thread.getName()+"():");
         System.out.println();
-        
+
         for (List<Terminal> word: contract.getWords())
             try
             {
@@ -324,7 +324,7 @@ public class AnalysisMain
                 System.out.println();
             }
     }
-    
+
     private void initAtomicityAnalysis(Collection<SootMethod> threads)
     {
         atomicityAnalysis=new AtomicityAnalysis();
@@ -332,7 +332,7 @@ public class AnalysisMain
         if (Main.ATOMICITY_SYNCH)
             atomicityAnalysis.setSynchMode();
     }
-    
+
     private SootClass getModuleClass()
     {
         assert moduleName != null;
@@ -340,7 +340,7 @@ public class AnalysisMain
         for (SootClass c: scene.getClasses())
             if (c.getName().equals(moduleName))
                 return c;
-    
+
         return null;
     }
 
@@ -384,29 +384,29 @@ public class AnalysisMain
 
                         if (Main.TIMEOUT == 0)
                             return false;
-                        
+
                         now=System.currentTimeMillis()/1000;
-                        
+
                         return now-startTime > Main.TIMEOUT;
                     }
-                    
+
                     public int accepted(List<ParsingAction> actions,
                                         NonTerminal lca)
                     {
                         int ret;
                         WordInstance wordInst;
-                        
+
                         wordInst=new WordInstance((PPNonTerminal)lca,
                                                   word,actions);
-                        
+
                         gluon.profiling.Timer.stop("parsing");
                         ret=checkWordInstance(wordInst,reported,vEquiv);
                         gluon.profiling.Timer.start("parsing");
-                        
-                        
+
+
                         if (ret <= 0)
                             System.out.println();
-                        
+
                         return ret < 0 ? -1 : 0;
                     }
                 });
@@ -416,7 +416,7 @@ public class AnalysisMain
             gluon.profiling.Timer.stop("parsing");
             gluon.profiling.Timer.stop("final:total-parsing");
         }
-        
+
         if (reported.size() == 0)
         {
             System.out.println("    No occurrences");
@@ -476,13 +476,13 @@ public class AnalysisMain
 
                             return now-startTime > Main.TIMEOUT;
                         }
-                    
+
                         public int accepted(List<ParsingAction> actions,
                                             NonTerminal lca)
                         {
                             int ret;
                             WordInstance wordInst;
-                        
+
                             wordInst=new WordInstance((PPNonTerminal)lca,
                                                       word,actions);
 
@@ -490,10 +490,10 @@ public class AnalysisMain
                             ret=checkWordInstance(wordInst,reported,vEquiv);
                             gluon.profiling.Timer.start("parsing");
 
-                        
+
                             if (ret <= 0)
                                 System.out.println();
-                        
+
                             return ret < 0 ? -1 : 0;
                         }
                     });
@@ -531,7 +531,7 @@ public class AnalysisMain
 
         if (c.getMethodCount() == 0)
             return;
-        
+
         System.out.println("Checking class "
                            +c.getShortName()+":");
         System.out.println();
@@ -551,7 +551,7 @@ public class AnalysisMain
     private void runAnalysis()
     {
         Collection<SootMethod> threads;
-        
+
         scene=Scene.v();
         assert scene.getMainMethod() != null;
 
@@ -563,7 +563,7 @@ public class AnalysisMain
 
         if (module == null)
             Main.fatal(moduleName+": module's class not found");
-        
+
         /* If the contract was not passed by the command line then extract it
          * from the module's annotation @Contract.
          */
@@ -579,7 +579,7 @@ public class AnalysisMain
             Main.fatal("empty contract");
 
         dprintln("Loaded Contract.");
-        
+
         gluon.profiling.Timer.start("analysis-threads");
         threads=getThreads();
         gluon.profiling.Timer.stop("analysis-threads");

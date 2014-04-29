@@ -10,20 +10,20 @@ public class Main {
 	 * Indicates number of threads runs to perform.
 	 */
 	private static final int runsNum = 1;
-	
+
 	/**
 	 * MAIN METHOD.
 	 * Gets from command-line: 1. Name of output file.
 	 *                         2. Concurrency Parameter (little,average,lot).
 	 * @param args command-line arguments as written above.
 	 */
-	
+
 	public static void main(String[] args) {
 		for (int i=0; i < runsNum; i++) {
 			runTest(args);
 		}
 	}
-	
+
 	/**
 	 * Gets from 'args': 1. Name of output file.
 	 *                   2. Concurrency Parameter (little,average,lot).
@@ -36,7 +36,7 @@ public class Main {
 		int[] Thread1Result = null;
 		int[] Thread2Result = null;
 		FileOutputStream out = null;
-		
+
 		/**
 		 * Reading command-line arguments.
 		 */
@@ -44,10 +44,10 @@ public class Main {
 			if (args.length != 2) {
 				throw new Exception();
 			}
-			
+
 			// Opening output file with name 'args[0]' for append write.
 			out = new FileOutputStream(args[0], false);
-			
+
 			// Checking concurrency parameter correctness.
 			if ( (args[1].compareTo("little") != 0) &&
 			     (args[1].compareTo("average") != 0) &&
@@ -58,7 +58,7 @@ public class Main {
 			System.err.println("Invalid command-line arguments...");
 			System.exit(1);
 		}
-		
+
 		/**
 		 * If here, then command-line arguments are correct.
 		 * Therefore, proceeding according to the concurrency parameter value.
@@ -77,7 +77,7 @@ public class Main {
 			Thread1Result = new int[5000];
 			Thread2Result = new int[5000];
 		}
-		
+
 		// Creating threads, starting their run and waiting till they finish.
 		Thread1 = new TestThread1(vector,Thread1Result);
 		Thread2 = new TestThread1(vector,Thread2Result);
@@ -92,7 +92,7 @@ public class Main {
 			System.err.println("Error joining threads...");
 			System.exit(1);
 		}
-		
+
 		// Checking correctness of threads run results and printing the according
 		// tuple to output file.
 		try {

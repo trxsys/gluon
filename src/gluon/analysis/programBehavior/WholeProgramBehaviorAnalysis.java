@@ -55,23 +55,23 @@ public class WholeProgramBehaviorAnalysis
     private void analyzeReachableMethods(SootMethod entryMethod)
     {
         super.visited=new HashSet<Unit>();
-        
+
         methodQueue=new LinkedList<SootMethod>();
         enqueuedMethods=new HashSet<SootMethod>();
-        
+
         methodQueue.add(entryMethod);
         enqueuedMethods.add(entryMethod);
-        
+
         while (methodQueue.size() > 0)
         {
             SootMethod method=methodQueue.poll();
-            
+
             super.analyzeMethod(method);
         }
-        
+
         enqueuedMethods=null;
         methodQueue=null;
-        
+
         super.visited=null;
     }
 
@@ -101,7 +101,7 @@ public class WholeProgramBehaviorAnalysis
         analyzeReachableMethods(entryMethod);
 
         super.grammar.setStart(new PPNonTerminal(super.alias(entryMethod),entryMethod));
-        
+
         gluon.profiling.Timer.start("final:analysis-behavior-grammar-rm-epsilon");
         super.grammar=CfgRemoveEpsilons.removeEpsilons(super.grammar);
         gluon.profiling.Timer.stop("final:analysis-behavior-grammar-rm-epsilon");

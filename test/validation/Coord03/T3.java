@@ -1,7 +1,7 @@
 package test.validation.Coord03;
 
 public class T3 extends Thread{
-	
+
 	/*
 	 * x3 = c.getX();
 	 * y3 = c.getY();

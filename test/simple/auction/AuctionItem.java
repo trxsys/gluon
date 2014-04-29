@@ -9,22 +9,22 @@ package test.simple.auction;
 
 /* Represents an item in the context of an auction */
 public class AuctionItem extends Item implements Comparable<AuctionItem>
-{	
+{
 	public static final char PLACEHOLDER=':'; /* Placeholder for toString()
 						     and fromString() */
-	public static final char CLASS_TYPE='i'; /* For toString() 
+	public static final char CLASS_TYPE='i'; /* For toString()
 						    and fromString() */
-	
+
 	private String seller;   /* Seller's name (not used elsewhere) */
 	private int base;        /* Base price */
 	private int sold;        /* Sold price */
-	private Bid highestBid;  /* Highest bid for this item (or null 
+	private Bid highestBid;  /* Highest bid for this item (or null
 				    if none) */
-	
+
 	/* Used to calculate the bids mean */
 	private int bidCount;
 	private int bidSum;
-	
+
 	public AuctionItem(String name, String seller, int base)
 	{
 		super(name);
@@ -35,53 +35,53 @@ public class AuctionItem extends Item implements Comparable<AuctionItem>
 		bidCount=0;
 		bidSum=0;
 	}
-	
+
 	/* Just for comparing purposes */
 	public AuctionItem(String name)
 	{
 		this(name,null,-1);
 	}
-	
+
 	/* Useful to load a object fromString() */
 	public AuctionItem()
 	{
 		this(null);
-	}	
-	
+	}
+
 	public int compareTo(AuctionItem other)
 	{
 		return getName().compareTo(other.getName());
 	}
-	
+
 	public int getBase()
 	{
 		return base;
 	}
-	
+
 	public int getSold()
 	{
 		return sold;
 	}
-	
+
 	public String getSeller()
 	{
 		return seller;
 	}
-	
+
 	public void setSold(int value)
 	{
 		sold=value;
 	}
-	
+
 	/* Returns the highest bid or null if no bid has been placed */
 	public Bid getHighestBid()
 	{
 		return highestBid;
 	}
-	
+
 	/* Set highestBid *AND* update mean.
 	 *
-	 * pre: bid.isHigher(highestBid) 
+	 * pre: bid.isHigher(highestBid)
 	 */
 	public void setHighestBid(Bid bid)
 	{
@@ -92,26 +92,26 @@ public class AuctionItem extends Item implements Comparable<AuctionItem>
 
 	/* Set the highestBid but don't affect the mean.
 	 *
-	 * pre: bid.isHigher(highestBid) 
+	 * pre: bid.isHigher(highestBid)
 	 */
 	public void setHighestBidNoMean(Bid bid)
 	{
 		highestBid=bid;
 	}
-	
+
 	public double getBidsMean()
 	{
 		return (double)bidSum/(double)bidCount;
 	}
-	
+
 	public boolean sold()
 	{
 		return highestBid != null;
 	}
-	
+
 	/* This should always keep symmetry with fromString().
 	 *
-	 * Note: The auctionName is passed here so it can be associated 
+	 * Note: The auctionName is passed here so it can be associated
 	 * later with that auction.
 	 *
 	 * Warning: This does *not* return nothing about the highestBid.
@@ -125,7 +125,7 @@ public class AuctionItem extends Item implements Comparable<AuctionItem>
 			+PLACEHOLDER+base+PLACEHOLDER+sold+PLACEHOLDER
 			+bidCount+PLACEHOLDER+bidSum;
 	}
-	
+
 	/* pre: a valid objStr which must be in the same format as toString()
 	 *      returns
 	 */
@@ -134,7 +134,7 @@ public class AuctionItem extends Item implements Comparable<AuctionItem>
 		String[] tokens=objStr.split(PLACEHOLDER+"");
 
         Main.m.i();
-		
+
 		setName(tokens[2]);
 		seller=tokens[3];
 		base=Integer.parseInt(tokens[4]);

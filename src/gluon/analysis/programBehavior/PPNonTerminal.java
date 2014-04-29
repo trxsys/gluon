@@ -58,7 +58,7 @@ public class PPNonTerminal
     {
         return noRemove;
     }
-    
+
     @Override
     public int hashCode()
     {
