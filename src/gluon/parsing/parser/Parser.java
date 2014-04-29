@@ -229,7 +229,8 @@ public abstract class Parser
     }
 
     protected Collection<ParserConfiguration> shift(ParserConfiguration parent,
-                                                    ParsingActionShift shift)
+                                                    ParsingActionShift shift,
+                                                    List<Terminal> input)
     {
         ParserConfiguration parserConf=newParserConfiguration(parent);
 
@@ -244,7 +245,8 @@ public abstract class Parser
     }
     
     protected Collection<ParserConfiguration> reduce(ParserConfiguration parent,
-                                                     ParsingActionReduce reduction)
+                                                     ParsingActionReduce reduction,
+                                                     List<Terminal> input)
     {
         ParserConfiguration parserConf=newParserConfiguration(parent);
         Production p=reduction.getProduction();
@@ -256,20 +258,22 @@ public abstract class Parser
             genTerminals+=parserConf.stackPeek().generateTerminals;
             parserConf.stackPop();
         }
-        
+
         s=parserConf.stackPeek().state;
-        
+
         parserConf.stackPush(new ParserStackNode(table.goTo(s,p.getHead()),
                                                  genTerminals));
-        
+
         parserConf.setAction(reduction);
-        
+
         dprintln(parserConf.hashCode()+": reduce "+p);
 
         return Collections.singleton(parserConf);
     }
     
-    protected Collection<ParserConfiguration> accept(ParserConfiguration parent)
+    protected Collection<ParserConfiguration> accept(ParserConfiguration parent,
+                                                     ParsingActionAccept accept,
+                                                     List<Terminal> input)
     {
         ParserConfiguration parserConf=newParserConfiguration(parent);
 
@@ -313,20 +317,26 @@ public abstract class Parser
             Collection<ParserConfiguration> branches=null;
 
             if (action instanceof ParsingActionShift)
-                branches=shift(parserConf,(ParsingActionShift)action);
+                branches=shift(parserConf,(ParsingActionShift)action,input);
             else if (action instanceof ParsingActionReduce)
-                branches=reduce(parserConf,(ParsingActionReduce)action);
+                branches=reduce(parserConf,(ParsingActionReduce)action,input);
             else if (action instanceof ParsingActionAccept)
-                branches=accept(parserConf);
+                branches=accept(parserConf,(ParsingActionAccept)action,input);
             else
                 assert false;
 
             for (ParserConfiguration branch: branches)
             {
                 boolean prune=false;
+                int inputTerminals;
+
+                inputTerminals=input.size()
+                    -(input.get(input.size()-1) instanceof EOITerminal ? 1 : 0);
+
+                System.out.println(branch.getTerminalNum());
 
                 /* Check if we have a lca */
-                if (branch.getTerminalNum() == input.size()-1
+                if (branch.getTerminalNum() == inputTerminals
                     && parserConf.lca == null
                     && action instanceof ParsingActionReduce)
                 {
@@ -379,10 +389,12 @@ public abstract class Parser
                 int z;
                 NonTerminal lca=parserConf.lca;
 
-                assert parserConf.lca != null;
+                // TODO assert parserConf.lca != null;
 
                 z=pcb.accepted(parserConf.getActionList(),lca);
-                acceptedLCA.add(lca);
+
+                if (PRUNE_BY_REPEATED_LCA)
+                    acceptedLCA.add(lca);
 
                 if (z != 0)
                     ret=z;

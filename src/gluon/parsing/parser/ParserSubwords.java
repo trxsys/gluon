@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 
+import java.util.Collections;
+
 import gluon.parsing.parsingTable.ParsingTable;
 import gluon.grammar.Cfg;
 import gluon.grammar.Production;
@@ -76,7 +78,6 @@ public class ParserSubwords
         }
 
         return false;
-        
     }
 
     private static boolean productionGenerateTerminal(Cfg grammar,
@@ -128,23 +129,41 @@ public class ParserSubwords
         return !fail;
     }
 
+    @Override
+    protected Collection<ParserConfiguration> shift(ParserConfiguration parent,
+                                                    ParsingActionShift shift,
+                                                    List<Terminal> input)
+    {
+        ParserConfiguration parserConf;
+
+        parserConf=super.shift(parent,shift,input).iterator().next();
+
+        if (parserConf.pos >= input.size())
+            parserConf.status=ParserStatus.ACCEPTED;
+
+        return Collections.singleton(parserConf);
+    }
+
     /* The algorithm implemented here is from "Substring parsing for arbitrary
      * context-free grammars" by Jan Rekers and Wilco Koorn.
      */
     @Override
     protected Collection<ParserConfiguration> reduce(ParserConfiguration parent,
-                                                     ParsingActionReduce reduction)
+                                                     ParsingActionReduce reduction,
+                                                     List<Terminal> input)
     {
         Collection<ParserConfiguration> configs;
         Production p=reduction.getProduction();
         int stackSize=parent.stackSize();
+
+        System.out.println("  -> reduction "+reduction);
 
         configs=new LinkedList<ParserConfiguration>();
 
         System.err.println("stack size: "+stackSize);
 
         if (stackSize > p.bodyLength())
-            return super.reduce(parent,reduction);
+            configs=super.reduce(parent,reduction,input);
         else if (stackSize < p.bodyLength())
         {
             ParserConfiguration parserConfig;
@@ -159,7 +178,7 @@ public class ParserSubwords
 
             sufixReduction=new ParsingActionReduce(sufixProd);
 
-            parserConfig=super.reduce(parent,sufixReduction).iterator().next();
+            parserConfig=super.reduce(parent,sufixReduction,input).iterator().next();
 
             /* TODO factor this in a method */
             for (int s: super.table.statesReachedBy(p.getHead()))
@@ -173,10 +192,22 @@ public class ParserSubwords
         }
         else
         {
+            ParserConfiguration parserConfig;
+
             assert stackSize == p.bodyLength();
 
-            
-            // TODO
+            // TODO is this right?!
+            parserConfig=super.reduce(parent,reduction,input).iterator().next();
+
+            /* TODO factor this in a method */
+            for (int s: super.table.statesReachedBy(p.getHead()))
+            {
+                ParserConfiguration succParserConfig=parserConfig.clone();
+
+                succParserConfig.stackPeek().state=s;
+
+                configs.add(succParserConfig);
+            }
         }
 
         return configs;
@@ -219,5 +250,3 @@ public class ParserSubwords
         return super.parse(input,pcb);
     }
 }
-
-/* TODO: when to accept */
