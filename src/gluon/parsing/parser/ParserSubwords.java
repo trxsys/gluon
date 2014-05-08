@@ -139,7 +139,7 @@ public class ParserSubwords
         parserConf=super.shift(parent,shift,input).iterator().next();
 
         if (parserConf.pos >= input.size())
-            parserConf.status=ParserStatus.ACCEPTED;
+            return super.accept(parserConf,new ParsingActionAccept(),input);
 
         return Collections.singleton(parserConf);
     }
@@ -156,19 +156,23 @@ public class ParserSubwords
         Production p=reduction.getProduction();
         int stackSize=parent.stackSize();
 
-        System.out.println("  -> reduction "+reduction);
-
         configs=new LinkedList<ParserConfiguration>();
 
+        /* TODO
+        System.err.println("  -> reduction "+reduction);
         System.err.println("stack size: "+stackSize);
+        */
 
         if (stackSize > p.bodyLength())
             configs=super.reduce(parent,reduction,input);
         else if (stackSize < p.bodyLength())
         {
-            ParserConfiguration parserConfig;
+            ParserConfiguration parserConf;
             ParsingActionReduce sufixReduction;
             Production sufixProd;
+            int genTerminals;
+
+            /* TODO method to create this new reduction */
 
             sufixProd=new Production(p.getHead(),
                                      p.getBody().subList(p.bodyLength()-stackSize,
@@ -178,33 +182,45 @@ public class ParserSubwords
 
             sufixReduction=new ParsingActionReduce(sufixProd);
 
-            parserConfig=super.reduce(parent,sufixReduction,input).iterator().next();
+            /* TODO
+            System.out.println(" -> stackSize < p.bodyLength(), old red: "+p);
+            System.out.println(" -> stackSize < p.bodyLength(), new red: "+sufixProd);
+            System.out.println();
+            */
 
-            /* TODO factor this in a method */
+            /* TODO refactor this */
+            parserConf=super.newParserConfiguration(parent);
+            genTerminals=super.stackPop(parserConf,sufixProd.bodyLength());
+
+            parserConf.setAction(sufixReduction);
+
             for (int s: super.table.statesReachedBy(p.getHead()))
             {
-                ParserConfiguration succParserConfig=parserConfig.clone();
+                ParserConfiguration succParserConfig=parserConf.clone();
 
-                succParserConfig.stackPeek().state=s;
+                succParserConfig.stackPush(new ParserStackNode(s,genTerminals));
 
                 configs.add(succParserConfig);
             }
         }
         else
         {
-            ParserConfiguration parserConfig;
+            ParserConfiguration parserConf;
+            int genTerminals;
 
             assert stackSize == p.bodyLength();
 
-            // TODO is this right?!
-            parserConfig=super.reduce(parent,reduction,input).iterator().next();
+            /* TODO refactor this */
+            parserConf=super.newParserConfiguration(parent);
+            genTerminals=super.stackPop(parserConf,p.bodyLength());
 
-            /* TODO factor this in a method */
+            parserConf.setAction(reduction);
+
             for (int s: super.table.statesReachedBy(p.getHead()))
             {
-                ParserConfiguration succParserConfig=parserConfig.clone();
+                ParserConfiguration succParserConfig=parserConf.clone();
 
-                succParserConfig.stackPeek().state=s;
+                succParserConfig.stackPush(new ParserStackNode(s,genTerminals));
 
                 configs.add(succParserConfig);
             }
@@ -244,8 +260,11 @@ public class ParserSubwords
         throws ParserAbortedException
     {
         assert input.size() != 0;
+
+        /* TODO
         assert !(input.get(input.size()-1) instanceof EOITerminal)
             : "input should not end with $ in the subword parser";
+        */
 
         return super.parse(input,pcb);
     }
