@@ -47,6 +47,7 @@ import gluon.grammar.Production;
 import gluon.parsing.parsingTable.ParsingTable;
 import gluon.parsing.parsingTable.parsingAction.*;
 import gluon.parsing.parser.Parser;
+import gluon.parsing.parser.ParserSubwords;
 import gluon.parsing.parser.ParserCallback;
 import gluon.parsing.parser.ParserAbortedException;
 import gluon.parsing.parseTree.ParseTree;
@@ -271,7 +272,6 @@ public class AnalysisMain
 
         gluon.profiling.Profiling.inc("final:alloc-sites-total");
 
-
         gluon.profiling.Timer.start("final:analysis-behavior");
         programBehavior.analyze();
         gluon.profiling.Timer.stop("final:analysis-behavior");
@@ -280,6 +280,8 @@ public class AnalysisMain
 
         gluon.profiling.Profiling.inc("final:grammar-productions-total",
                                       grammar.size());
+
+        assert gluon.parsing.parser.ParserSubwords.isParsable(grammar);
 
         parsingTable=new ParsingTable(grammar);
 
@@ -290,7 +292,7 @@ public class AnalysisMain
         gluon.profiling.Profiling.inc("final:parsing-table-state-number-total",
                                       parsingTable.numberOfStates());
 
-        return new Parser(parsingTable);
+        return new ParserSubwords(parsingTable);
     }
 
     private void checkThread(SootMethod thread)

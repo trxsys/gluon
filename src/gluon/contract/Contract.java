@@ -140,7 +140,6 @@ public class Contract
             contractWord=new ArrayList<Terminal>(word.size()+1);
 
             contractWord.addAll(word);
-            contractWord.add(new gluon.grammar.EOITerminal());
 
             contract.add(contractWord);
         }

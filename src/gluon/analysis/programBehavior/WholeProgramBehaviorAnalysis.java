@@ -102,21 +102,13 @@ public class WholeProgramBehaviorAnalysis
 
         super.grammar.setStart(new PPNonTerminal(super.alias(entryMethod),entryMethod));
 
-        gluon.profiling.Timer.start("final:analysis-behavior-grammar-opt");
-        super.grammar=CfgOptimizer.optimize(super.grammar);
-        gluon.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
-
-        gluon.profiling.Timer.start("analysis-behavior-grammar-add-subwords");
-        super.grammar=CfgSubwords.subwordGfg(super.grammar);
-        gluon.profiling.Timer.stop("analysis-behavior-grammar-add-subwords");
-
-        gluon.profiling.Timer.start("final:analysis-behavior-grammar-opt");
-        super.grammar=CfgOptimizer.optimize(super.grammar);
-        gluon.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
-
         gluon.profiling.Timer.start("final:analysis-behavior-grammar-rm-epsilon");
         super.grammar=CfgRemoveEpsilons.removeEpsilons(super.grammar);
         gluon.profiling.Timer.stop("final:analysis-behavior-grammar-rm-epsilon");
+
+        gluon.profiling.Timer.start("final:analysis-behavior-grammar-opt");
+        super.grammar=CfgOptimizer.optimize(super.grammar);
+        gluon.profiling.Timer.stop("final:analysis-behavior-grammar-opt");
 
         super.addNewStart();
 

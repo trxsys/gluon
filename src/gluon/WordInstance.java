@@ -191,8 +191,6 @@ public class WordInstance
 
         parsedWord=getParsingTerminals();
 
-        assert parsedWord.size() == word.size()-1; /* -1 because of the '$' */
-
         for (int i=0; i < parsedWord.size(); i++)
         {
             PPTerminal termC=(PPTerminal)word.get(i);
