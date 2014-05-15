@@ -42,6 +42,7 @@ enum ParserStatus
     ERROR
 }
 
+/* TODO: restructure stack to make it simpler? */
 class ParserStackNode {
     public int state;
     public int generateTerminals;

@@ -692,8 +692,12 @@ public class ParsingTable
         first=null;
         follow=null;
         stateMap=null;
-        states=null;
         grammar=null;
+    }
+
+    public Set<Item> getStateItems(int n)
+    {
+        return states.get(n);
     }
 
     /* Return the states directly reached by transitions of label s.

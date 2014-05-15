@@ -141,8 +141,6 @@ public class Contract
 
             contractWord.addAll(word);
 
-            contractWord.add(new gluon.grammar.EOITerminal());
-
             contract.add(contractWord);
         }
     }

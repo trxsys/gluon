@@ -34,17 +34,6 @@ import gluon.grammar.EOITerminal;
 import gluon.parsing.parsingTable.ParsingTable;
 import gluon.parsing.parsingTable.parsingAction.*;
 
-/* This is a partially a implementation of the tomita parser. We do not merge 
- * configuration states as described in the full tomita implementation.
- *
- * This parser also detects and prune branches with unproductive loops in the
- * grammar.
- * A more aggressive pruning is done so that no two parsing trees with the same
- * lowest common ancestor are explored (PRUNE_BY_REPEATED_LCA).
- * Unfortunatly this cannot be done with contract with arguments since we may
- * prune LCA that would fail to match the arguments unification thus preventing
- * other LCA from being reported.
- */
 public class ParserNormal
     extends Parser
 {
@@ -72,8 +61,8 @@ public class ParserNormal
     public int parse(List<Terminal> input, ParserCallback pcb)
         throws ParserAbortedException
     {
-       assert input.size() > 0
-            && input.get(input.size()-1) instanceof EOITerminal
+        assert input.size() == 0
+            || input.get(input.size()-1) instanceof EOITerminal
             : "input should end with $";
 
        return super.parse(input,pcb);

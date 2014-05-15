@@ -25,6 +25,7 @@ import gluon.grammar.Production;
 import gluon.grammar.Symbol;
 import gluon.grammar.NonTerminal;
 import gluon.grammar.Terminal;
+import gluon.grammar.EOITerminal;
 
 import gluon.parsing.parsingTable.parsingAction.*;
 
@@ -66,7 +67,7 @@ public class ParseTree
                     if (node.getElem() instanceof Terminal)
                     {
                         Symbol nodeTerm=red.getProduction()
-                                                   .getBody().get(len-1-i);
+                            .getBody().get(len-1-i);
 
                         assert nodeTerm instanceof Terminal;
 
@@ -92,7 +93,14 @@ public class ParseTree
                 pos++;
             }
             else if (a instanceof ParsingActionAccept)
-                assert pos == word.size()-1; /* -1 because of $ */
+            {
+                int inputTerminals;
+
+                inputTerminals=word.size()
+                    -(word.get(word.size()-1) instanceof EOITerminal ? 1 : 0);
+
+                assert pos == inputTerminals;
+            }
     }
 
     public List<Terminal> getTerminals()

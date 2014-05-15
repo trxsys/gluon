@@ -19,7 +19,7 @@ package gluon.parsing.parsingTable;
 import gluon.grammar.Production;
 import gluon.grammar.Symbol;
 
-class Item
+public class Item
 {
     private final Production prod;
     private final int pos;
@@ -35,6 +35,19 @@ class Item
     public Production getProduction()
     {
         return prod;
+    }
+
+    /* If this is the item A → α . β then we return A → α.
+     */
+    public Production getPartialProduction()
+    {
+        Production p;
+
+        p=new Production(prod.getHead(),prod.getBody().subList(0,pos));
+
+        assert p.bodyLength() == pos;
+
+        return p;
     }
 
     public int getDotPos()

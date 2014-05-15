@@ -239,13 +239,6 @@ public class AnalysisMain
                             wordInst=new WordInstance((PPNonTerminal)lca,
                                                       word,actions);
 
-                            /* TODO: debug */
-                            System.out.println("      Actions:");
-                            for (ParsingAction a: actions)
-                                System.out.println("       "+a);
-                            System.out.println();
-                            System.out.println();
-
                             gluon.profiling.Timer.stop("parsing");
                             ret=checkWordInstance(wordInst,reported,vEquiv);
                             gluon.profiling.Timer.start("parsing");

@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Stack;
 
 import java.util.Collections;
 
@@ -35,6 +36,7 @@ import gluon.grammar.Terminal;
 import gluon.grammar.EOITerminal;
 
 import gluon.parsing.parsingTable.ParsingTable;
+import gluon.parsing.parsingTable.Item;
 import gluon.parsing.parsingTable.parsingAction.*;
 
 /* Subword parser as described in "Substring parsing for arbitrary context-free
@@ -129,6 +131,66 @@ public class ParserSubwords
         return !fail;
     }
 
+    /* Apply the reductions until we reach the start nonterminal.
+     */
+    private Collection<ParserConfiguration>
+        completeRemainingReductions(ParserConfiguration parent, List<Terminal> input)
+    {
+        final EOITerminal EOI=new EOITerminal();
+        final ParsingActionAccept ACCEPT=new ParsingActionAccept();
+        Stack<ParserConfiguration> parseLifo;
+        Collection<ParserConfiguration> accepts;
+
+        accepts=new LinkedList<ParserConfiguration>();
+
+        parseLifo=new Stack<ParserConfiguration>();
+        parseLifo.add(parent);
+
+        while (parseLifo.size() > 0)
+        {
+            ParserConfiguration parserConf=parseLifo.pop();
+            int state=parserConf.stackPeek().state;
+
+            // TODO maybe timeout here as well?
+
+            if (super.table.actions(state,EOI).contains(ACCEPT))
+            {
+                Collection<ParserConfiguration> a;
+
+                a=super.accept(parserConf,ACCEPT,input);
+
+                assert a.size() == 1;
+
+                accepts.addAll(a);
+
+                continue;
+            }
+
+            for (Item item: super.table.getStateItems(state))
+            {
+                Production partialProd=item.getPartialProduction();
+                ParsingActionReduce red=new ParsingActionReduce(partialProd);
+                Collection<ParserConfiguration> parserConfs;
+
+                parserConfs=this.reduce(parserConf,red,input);
+
+                for (ParserConfiguration conf: parserConfs)
+                {
+                    if (parserConf.isLoop(conf))
+                        continue;
+
+                    if (conf.getTerminalNum() == input.size()
+                        && conf.lca == null)
+                        conf.lca=red.getProduction().getHead();
+
+                    parseLifo.add(conf);
+                }
+            }
+        }
+
+        return accepts;
+    }
+
     @Override
     protected Collection<ParserConfiguration> shift(ParserConfiguration parent,
                                                     ParsingActionShift shift,
@@ -139,7 +201,7 @@ public class ParserSubwords
         parserConf=super.shift(parent,shift,input).iterator().next();
 
         if (parserConf.pos >= input.size())
-            return super.accept(parserConf,new ParsingActionAccept(),input);
+            return completeRemainingReductions(parserConf,input);
 
         return Collections.singleton(parserConf);
     }
@@ -158,11 +220,6 @@ public class ParserSubwords
 
         configs=new LinkedList<ParserConfiguration>();
 
-        /* TODO
-        System.err.println("  -> reduction "+reduction);
-        System.err.println("stack size: "+stackSize);
-        */
-
         if (stackSize > p.bodyLength())
             configs=super.reduce(parent,reduction,input);
         else if (stackSize < p.bodyLength())
@@ -173,7 +230,6 @@ public class ParserSubwords
             int genTerminals;
 
             /* TODO method to create this new reduction */
-
             sufixProd=new Production(p.getHead(),
                                      p.getBody().subList(p.bodyLength()-stackSize,
                                                          p.bodyLength()));
@@ -181,12 +237,6 @@ public class ParserSubwords
             assert sufixProd.bodyLength() == stackSize;
 
             sufixReduction=new ParsingActionReduce(sufixProd);
-
-            /* TODO
-            System.out.println(" -> stackSize < p.bodyLength(), old red: "+p);
-            System.out.println(" -> stackSize < p.bodyLength(), new red: "+sufixProd);
-            System.out.println();
-            */
 
             /* TODO refactor this */
             parserConf=super.newParserConfiguration(parent);
@@ -259,12 +309,9 @@ public class ParserSubwords
     public int parse(List<Terminal> input, ParserCallback pcb)
         throws ParserAbortedException
     {
-        assert input.size() != 0;
-
-        /* TODO
+        assert input.size() > 0;
         assert !(input.get(input.size()-1) instanceof EOITerminal)
-            : "input should not end with $ in the subword parser";
-        */
+            : "input should not end with $";
 
         return super.parse(input,pcb);
     }
