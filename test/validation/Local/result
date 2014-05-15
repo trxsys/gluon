@@ -23,17 +23,19 @@ Checking thread Local.run():
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.001s
+             analysis-behavior-grammar-opt      0.000s
                              total-parsing      0.002s
-                                     total     41.221s
-                       build-parsing-table      0.017s
-                                 soot-init     41.174s
-                         analysis-behavior      0.008s
+      analysis-behavior-grammar-rm-epsilon      0.001s
+                                     total     37.280s
+                  total-parsing-completeRR      0.000s
+                       build-parsing-table      0.002s
+                                 soot-init     37.246s
+                         analysis-behavior      0.005s
 
 Profiling Vars:
-          parsing-table-state-number-total    126
-                            parse-branches     11
+          parsing-table-state-number-total     20
+                            parse-branches      2
                                  cfg-nodes     86
                                parse-trees      1
                          alloc-sites-total      8
-                 grammar-productions-total    306
+                 grammar-productions-total     10

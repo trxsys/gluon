@@ -9,27 +9,29 @@ Checking thread TestThread1.run():
 
   Verifying word getFreeBlockIndex markAsAllocatedBlock:
 
-      Method: TestThread1.alloc_block()
+      Method: TestThread1.run()
       Calls Location: TestThread1.java:43 TestThread1.java:45
       Atomic: NO
 
-      Method: TestThread1.run()
+      Method: TestThread1.alloc_block()
       Calls Location: TestThread1.java:43 TestThread1.java:45
       Atomic: NO
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.006s
-                             total-parsing      0.333s
-                                     total     39.566s
-                       build-parsing-table      0.130s
-                                 soot-init     38.909s
-                         analysis-behavior      0.046s
+             analysis-behavior-grammar-opt      0.051s
+                             total-parsing      0.013s
+      analysis-behavior-grammar-rm-epsilon      0.045s
+                                     total     39.024s
+                  total-parsing-completeRR      0.007s
+                       build-parsing-table      0.009s
+                                 soot-init     38.869s
+                         analysis-behavior      0.109s
 
 Profiling Vars:
-          parsing-table-state-number-total    781
-                            parse-branches   5609
+          parsing-table-state-number-total     49
+                            parse-branches     54
                                  cfg-nodes    882
                                parse-trees      2
                          alloc-sites-total      8
-                 grammar-productions-total   1796
+                 grammar-productions-total     44

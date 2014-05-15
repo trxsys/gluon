@@ -25,17 +25,19 @@ Checking thread Lift.run():
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.018s
-                             total-parsing    113.241s
-                                     total    156.787s
-                       build-parsing-table      0.562s
-                                 soot-init     42.846s
-                         analysis-behavior      0.111s
+             analysis-behavior-grammar-opt      0.062s
+                             total-parsing      1.455s
+      analysis-behavior-grammar-rm-epsilon      0.089s
+                                     total     39.987s
+                  total-parsing-completeRR      0.869s
+                       build-parsing-table      0.022s
+                                 soot-init     38.314s
+                         analysis-behavior      0.174s
 
 Profiling Vars:
-          parsing-table-state-number-total   2736
-                            parse-branches  26992466
+          parsing-table-state-number-total    154
+                            parse-branches  110880
                                  cfg-nodes   2068
                                parse-trees      2
                          alloc-sites-total      8
-                 grammar-productions-total   5198
+                 grammar-productions-total    134

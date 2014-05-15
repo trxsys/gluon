@@ -25,17 +25,19 @@ Checking thread Client.run():
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.015s
-                             total-parsing      0.151s
-                                     total     44.097s
-                       build-parsing-table      0.346s
-                                 soot-init     43.468s
-                         analysis-behavior      0.108s
+             analysis-behavior-grammar-opt      0.035s
+                             total-parsing      0.090s
+      analysis-behavior-grammar-rm-epsilon      0.080s
+                                     total     41.505s
+                  total-parsing-completeRR      0.065s
+                       build-parsing-table      0.025s
+                                 soot-init     41.223s
+                         analysis-behavior      0.142s
 
 Profiling Vars:
-          parsing-table-state-number-total   2944
-                            parse-branches   5465
+          parsing-table-state-number-total    196
+                            parse-branches    724
                                  cfg-nodes   2256
                                parse-trees      2
                          alloc-sites-total     12
-                 grammar-productions-total   5696
+                 grammar-productions-total    170

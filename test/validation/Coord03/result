@@ -93,17 +93,19 @@ Checking thread T4.run():
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.015s
-                             total-parsing      0.003s
-                                     total     39.335s
-                       build-parsing-table      0.218s
-                                 soot-init     39.004s
-                         analysis-behavior      0.073s
+             analysis-behavior-grammar-opt      0.007s
+                             total-parsing      0.002s
+      analysis-behavior-grammar-rm-epsilon      0.030s
+                                     total     36.571s
+                  total-parsing-completeRR      0.000s
+                       build-parsing-table      0.005s
+                                 soot-init     36.486s
+                         analysis-behavior      0.052s
 
 Profiling Vars:
-          parsing-table-state-number-total   1676
-                            parse-branches     47
+          parsing-table-state-number-total    104
+                            parse-branches      4
                                  cfg-nodes   1028
                                parse-trees      1
                          alloc-sites-total     40
-                 grammar-productions-total   3000
+                 grammar-productions-total     56
