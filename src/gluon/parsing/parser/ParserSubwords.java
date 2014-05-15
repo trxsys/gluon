@@ -153,7 +153,7 @@ public class ParserSubwords
             ParserConfiguration parserConf=parseLifo.pop();
             int state=parserConf.stackPeek().state;
 
-            // TODO maybe timeout here as well?
+            /* TODO maybe timeout here as well? */
 
             if (super.table.actions(state,EOI).contains(ACCEPT))
             {
@@ -210,61 +210,31 @@ public class ParserSubwords
         return Collections.singleton(parserConf);
     }
 
-    /* The algorithm implemented here is from "Substring parsing for arbitrary
-     * context-free grammars" by Jan Rekers and Wilco Koorn.
-     */
-    @Override
-    protected Collection<ParserConfiguration> reduce(ParserConfiguration parent,
-                                                     ParsingActionReduce reduction,
-                                                     List<Terminal> input)
+    private ParsingActionReduce getSufixRedution(Production p,
+                                                 int takeOnly)
     {
-        Collection<ParserConfiguration> configs;
-        Production p=reduction.getProduction();
-        int stackSize=parent.stackSize();
+        Production sufixProd;
 
-        configs=new LinkedList<ParserConfiguration>();
+        sufixProd=new Production(p.getHead(),
+                                 p.getBody().subList(p.bodyLength()-takeOnly,
+                                                     p.bodyLength()));
 
-        if (stackSize > p.bodyLength())
-            configs=super.reduce(parent,reduction,input);
-        else if (stackSize < p.bodyLength())
-        {
+        assert sufixProd.bodyLength() == takeOnly;
+
+        return new ParsingActionReduce(sufixProd);
+    }
+
+    private Collection<ParserConfiguration>
+        reduceWithReachedByJump(ParserConfiguration parent,
+                                ParsingActionReduce reduction)
+    {
             ParserConfiguration parserConf;
-            ParsingActionReduce sufixReduction;
-            Production sufixProd;
+            Production p=reduction.getProduction();
+            Collection<ParserConfiguration> configs;
             int genTerminals;
 
-            /* TODO method to create this new reduction */
-            sufixProd=new Production(p.getHead(),
-                                     p.getBody().subList(p.bodyLength()-stackSize,
-                                                         p.bodyLength()));
+            configs=new LinkedList<ParserConfiguration>();
 
-            assert sufixProd.bodyLength() == stackSize;
-
-            sufixReduction=new ParsingActionReduce(sufixProd);
-
-            /* TODO refactor this */
-            parserConf=super.newParserConfiguration(parent);
-            genTerminals=super.stackPop(parserConf,sufixProd.bodyLength());
-
-            parserConf.setAction(sufixReduction);
-
-            for (int s: super.table.statesReachedBy(p.getHead()))
-            {
-                ParserConfiguration succParserConfig=parserConf.clone();
-
-                succParserConfig.stackPush(new ParserStackNode(s,genTerminals));
-
-                configs.add(succParserConfig);
-            }
-        }
-        else
-        {
-            ParserConfiguration parserConf;
-            int genTerminals;
-
-            assert stackSize == p.bodyLength();
-
-            /* TODO refactor this */
             parserConf=super.newParserConfiguration(parent);
             genTerminals=super.stackPop(parserConf,p.bodyLength());
 
@@ -278,6 +248,37 @@ public class ParserSubwords
 
                 configs.add(succParserConfig);
             }
+
+            return configs;
+    }
+
+    /* The algorithm implemented here is from "Substring parsing for arbitrary
+     * context-free grammars" by Jan Rekers and Wilco Koorn.
+     */
+    @Override
+    protected Collection<ParserConfiguration> reduce(ParserConfiguration parent,
+                                                     ParsingActionReduce reduction,
+                                                     List<Terminal> input)
+    {
+        Collection<ParserConfiguration> configs;
+        Production p=reduction.getProduction();
+        int stackSize=parent.stackSize();
+
+        if (stackSize > p.bodyLength())
+            configs=super.reduce(parent,reduction,input);
+        else if (stackSize < p.bodyLength())
+        {
+            ParsingActionReduce sufixReduction;
+
+            sufixReduction=getSufixRedution(p,stackSize);
+
+            configs=reduceWithReachedByJump(parent,sufixReduction);
+        }
+        else
+        {
+            assert stackSize == p.bodyLength();
+
+            configs=reduceWithReachedByJump(parent,reduction);
         }
 
         return configs;
