@@ -141,6 +141,8 @@ public class ParserSubwords
         Stack<ParserConfiguration> parseLifo;
         Collection<ParserConfiguration> accepts;
 
+        gluon.profiling.Timer.start("final:total-parsing-completeRR");
+
         accepts=new LinkedList<ParserConfiguration>();
 
         parseLifo=new Stack<ParserConfiguration>();
@@ -187,6 +189,8 @@ public class ParserSubwords
                 }
             }
         }
+
+        gluon.profiling.Timer.stop("final:total-parsing-completeRR");
 
         return accepts;
     }
