@@ -35,13 +35,6 @@ import gluon.grammar.EOITerminal;
 import gluon.parsing.parsingTable.ParsingTable;
 import gluon.parsing.parsingTable.parsingAction.*;
 
-enum ParserStatus
-{
-    RUNNING,
-    ACCEPTED,
-    ERROR
-}
-
 /* TODO: restructure stack to make it simpler? */
 class ParserStackNode {
     public int state;
@@ -69,7 +62,6 @@ class ParserConfiguration
     public NonTerminal lca;
 
     public int pos;
-    public ParserStatus status;
 
     public ParserConfiguration(ParserConfiguration parentConfig)
     {
@@ -79,8 +71,6 @@ class ParserConfiguration
         pos=parentConfig != null ? parentConfig.pos : 0;
         action=null;
         lca=parentConfig != null ? parentConfig.lca : null;
-
-        status=ParserStatus.RUNNING;
     }
 
     public ParserConfiguration()
@@ -188,7 +178,6 @@ class ParserConfiguration
         clone.action=action;
         clone.lca=lca;
         clone.pos=pos;
-        clone.status=status;
 
         return clone;
     }
@@ -212,9 +201,10 @@ public abstract class Parser
     private static final boolean PRUNE_BY_REPEATED_LCA=false;
 
     protected final ParsingTable table;
-    private Stack<ParserConfiguration> parseLifo;
 
+    private Stack<ParserConfiguration> parseLifo;
     private Set<NonTerminal> acceptedLCA;
+    protected ParserCallback parserCB;
 
     public Parser(ParsingTable t)
     {
@@ -232,6 +222,7 @@ public abstract class Parser
     protected Collection<ParserConfiguration> shift(ParserConfiguration parent,
                                                     ParsingActionShift shift,
                                                     List<Terminal> input)
+        throws ParserAbortedException
     {
         ParserConfiguration parserConf=newParserConfiguration(parent);
 
@@ -264,6 +255,7 @@ public abstract class Parser
     protected Collection<ParserConfiguration> reduce(ParserConfiguration parent,
                                                      ParsingActionReduce reduction,
                                                      List<Terminal> input)
+        throws ParserAbortedException
     {
         ParserConfiguration parserConf=newParserConfiguration(parent);
         Production p=reduction.getProduction();
@@ -284,18 +276,34 @@ public abstract class Parser
         return Collections.singleton(parserConf);
     }
 
+    private void acceptedDeliver(ParserConfiguration parserConf)
+    {
+        NonTerminal lca=parserConf.lca;
+
+        assert parserConf.lca != null;
+
+        parserCB.accepted(parserConf.getActionList(),lca);
+
+        if (PRUNE_BY_REPEATED_LCA)
+            acceptedLCA.add(lca);
+    }
+
     protected Collection<ParserConfiguration> accept(ParserConfiguration parent,
                                                      ParsingActionAccept accept,
                                                      List<Terminal> input)
+        throws ParserAbortedException
     {
         ParserConfiguration parserConf=newParserConfiguration(parent);
 
-        parserConf.status=ParserStatus.ACCEPTED;
         dprintln(parserConf.hashCode()+": accept");
 
         parserConf.setAction(accept);
 
-        return Collections.singleton(parserConf);
+        acceptedDeliver(parserConf);
+
+        gluon.profiling.Profiling.inc("final:parse-branches");
+
+        return new ArrayList<ParserConfiguration>(0);
     }
 
     protected ParserConfiguration newParserConfiguration(ParserConfiguration parent)
@@ -305,12 +313,12 @@ public abstract class Parser
 
     private void parseSingleStep(ParserConfiguration parserConf,
                                  List<Terminal> input)
+        throws ParserAbortedException
     {
         int s;
         Terminal t;
         Collection<ParsingAction> actions;
 
-        assert parserConf.status == ParserStatus.RUNNING;
         assert parserConf.pos < input.size();
 
         s=parserConf.stackPeek().state;
@@ -320,7 +328,6 @@ public abstract class Parser
         if (actions.size() == 0)
         {
             dprintln(parserConf.hashCode()+": error: actions("+s+","+t+")=∅");
-            parserConf.status=ParserStatus.ERROR;
 
             gluon.profiling.Profiling.inc("final:parse-branches");
 
@@ -374,14 +381,14 @@ public abstract class Parser
         getInitialConfigurations(List<Terminal> input);
 
     /* Argument input should be an ArrayList for performance reasons. */
-    public int parse(List<Terminal> input, ParserCallback pcb)
+    public void parse(List<Terminal> input, ParserCallback pcb)
         throws ParserAbortedException
     {
-        int ret=0;
         int counter=0; /* For calling pcb.shouldStop() */
 
         parseLifo=new Stack<ParserConfiguration>();
         acceptedLCA=new HashSet<NonTerminal>();
+        parserCB=pcb;
 
         for (ParserConfiguration initialConfig: getInitialConfigurations(input))
             parseLifo.add(initialConfig);
@@ -392,37 +399,15 @@ public abstract class Parser
 
             counter=(counter+1)%500000;
 
-            if (counter == 0 && pcb.shouldAbort())
+            if (counter == 0 && parserCB.shouldAbort())
                 throw new ParserAbortedException();
 
-            switch (parserConf.status)
-            {
-            case RUNNING : parseSingleStep(parserConf,input); break;
-            case ACCEPTED:
-                int z;
-                NonTerminal lca=parserConf.lca;
-
-                assert parserConf.lca != null;
-
-                z=pcb.accepted(parserConf.getActionList(),lca);
-
-                if (PRUNE_BY_REPEATED_LCA)
-                    acceptedLCA.add(lca);
-
-                if (z != 0)
-                    ret=z;
-
-                gluon.profiling.Profiling.inc("final:parse-branches");
-                break;
-            case ERROR   : assert false :
-                "Why do we have error configs in the parser lifo?"; break;
-            }
+            parseSingleStep(parserConf,input);
         }
 
         /* free memory */
         parseLifo=null;
         acceptedLCA=null;
-
-        return ret;
+        parserCB=null;
     }
 }

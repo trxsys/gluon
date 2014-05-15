@@ -24,5 +24,5 @@ import gluon.grammar.NonTerminal;
 public interface ParserCallback
 {
     public boolean shouldAbort();
-    public int accepted(List<ParsingAction> actions, NonTerminal lca);
+    public void accepted(List<ParsingAction> actions, NonTerminal lca);
 }

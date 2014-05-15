@@ -133,17 +133,16 @@ public class ParserSubwords
 
     /* Apply the reductions until we reach the start nonterminal.
      */
-    private Collection<ParserConfiguration>
+    private void
         completeRemainingReductions(ParserConfiguration parent, List<Terminal> input)
+        throws ParserAbortedException
     {
         final EOITerminal EOI=new EOITerminal();
         final ParsingActionAccept ACCEPT=new ParsingActionAccept();
         Stack<ParserConfiguration> parseLifo;
-        Collection<ParserConfiguration> accepts;
+        int counter=0; /* For calling pcb.shouldStop() */
 
         gluon.profiling.Timer.start("final:total-parsing-completeRR");
-
-        accepts=new LinkedList<ParserConfiguration>();
 
         parseLifo=new Stack<ParserConfiguration>();
         parseLifo.add(parent);
@@ -153,18 +152,19 @@ public class ParserSubwords
             ParserConfiguration parserConf=parseLifo.pop();
             int state=parserConf.stackPeek().state;
 
-            /* TODO maybe timeout here as well? */
+            counter=(counter+1)%500000;
+
+            if (counter == 0 && parserCB.shouldAbort())
+            {
+                gluon.profiling.Timer.stop("final:total-parsing-completeRR");
+                throw new ParserAbortedException();
+            }
 
             if (super.table.actions(state,EOI).contains(ACCEPT))
             {
-                Collection<ParserConfiguration> a;
-
-                a=super.accept(parserConf,ACCEPT,input);
-
-                assert a.size() == 1;
-
-                accepts.addAll(a);
-
+                gluon.profiling.Timer.stop("final:total-parsing-completeRR");
+                super.accept(parserConf,ACCEPT,input);
+                gluon.profiling.Timer.start("final:total-parsing-completeRR");
                 continue;
             }
 
@@ -191,27 +191,29 @@ public class ParserSubwords
         }
 
         gluon.profiling.Timer.stop("final:total-parsing-completeRR");
-
-        return accepts;
     }
 
     @Override
     protected Collection<ParserConfiguration> shift(ParserConfiguration parent,
                                                     ParsingActionShift shift,
                                                     List<Terminal> input)
+        throws ParserAbortedException
     {
         ParserConfiguration parserConf;
 
         parserConf=super.shift(parent,shift,input).iterator().next();
 
         if (parserConf.pos >= input.size())
-            return completeRemainingReductions(parserConf,input);
+        {
+            completeRemainingReductions(parserConf,input);
+
+            return new ArrayList<ParserConfiguration>();
+        }
 
         return Collections.singleton(parserConf);
     }
 
-    private ParsingActionReduce getSufixRedution(Production p,
-                                                 int takeOnly)
+    private ParsingActionReduce getSufixRedution(Production p, int takeOnly)
     {
         Production sufixProd;
 
@@ -259,6 +261,7 @@ public class ParserSubwords
     protected Collection<ParserConfiguration> reduce(ParserConfiguration parent,
                                                      ParsingActionReduce reduction,
                                                      List<Terminal> input)
+        throws ParserAbortedException
     {
         Collection<ParserConfiguration> configs;
         Production p=reduction.getProduction();
@@ -311,13 +314,13 @@ public class ParserSubwords
     }
 
     @Override
-    public int parse(List<Terminal> input, ParserCallback pcb)
+    public void parse(List<Terminal> input, ParserCallback pcb)
         throws ParserAbortedException
     {
         assert input.size() > 0;
         assert !(input.get(input.size()-1) instanceof EOITerminal)
             : "input should not end with $";
 
-        return super.parse(input,pcb);
+        super.parse(input,pcb);
     }
 }

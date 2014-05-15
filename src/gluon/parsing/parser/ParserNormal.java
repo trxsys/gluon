@@ -58,13 +58,13 @@ public class ParserNormal
     }
 
     @Override
-    public int parse(List<Terminal> input, ParserCallback pcb)
+    public void parse(List<Terminal> input, ParserCallback pcb)
         throws ParserAbortedException
     {
         assert input.size() == 0
             || input.get(input.size()-1) instanceof EOITerminal
             : "input should end with $";
 
-       return super.parse(input,pcb);
+        super.parse(input,pcb);
     }
 }

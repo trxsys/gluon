@@ -230,8 +230,8 @@ public class AnalysisMain
                             return now-startTime > Main.TIMEOUT;
                         }
 
-                        public int accepted(List<ParsingAction> actions,
-                                            NonTerminal lca)
+                        public void accepted(List<ParsingAction> actions,
+                                             NonTerminal lca)
                         {
                             int ret;
                             WordInstance wordInst;
@@ -243,11 +243,8 @@ public class AnalysisMain
                             ret=checkWordInstance(wordInst,reported,vEquiv);
                             gluon.profiling.Timer.start("parsing");
 
-
                             if (ret <= 0)
                                 System.out.println();
-
-                            return ret < 0 ? -1 : 0;
                         }
                     });
             }
@@ -381,8 +378,8 @@ public class AnalysisMain
                         return now-startTime > Main.TIMEOUT;
                     }
 
-                    public int accepted(List<ParsingAction> actions,
-                                        NonTerminal lca)
+                    public void accepted(List<ParsingAction> actions,
+                                         NonTerminal lca)
                     {
                         int ret;
                         WordInstance wordInst;
@@ -394,11 +391,8 @@ public class AnalysisMain
                         ret=checkWordInstance(wordInst,reported,vEquiv);
                         gluon.profiling.Timer.start("parsing");
 
-
                         if (ret <= 0)
                             System.out.println();
-
-                        return ret < 0 ? -1 : 0;
                     }
                 });
         }
@@ -468,8 +462,8 @@ public class AnalysisMain
                             return now-startTime > Main.TIMEOUT;
                         }
 
-                        public int accepted(List<ParsingAction> actions,
-                                            NonTerminal lca)
+                        public void accepted(List<ParsingAction> actions,
+                                             NonTerminal lca)
                         {
                             int ret;
                             WordInstance wordInst;
@@ -481,11 +475,8 @@ public class AnalysisMain
                             ret=checkWordInstance(wordInst,reported,vEquiv);
                             gluon.profiling.Timer.start("parsing");
 
-
                             if (ret <= 0)
                                 System.out.println();
-
-                            return ret < 0 ? -1 : 0;
                         }
                     });
             }
