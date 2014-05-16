@@ -63,9 +63,9 @@ public class ValueEquivAnalysis
         if (analizedMethods.contains(method))
             return;
 
-        analizedMethods.add(method);
-
         gluon.profiling.Timer.start("analysis-vequiv");
+
+        analizedMethods.add(method);
 
         for (Unit u: method.getActiveBody().getUnits())
             if (u instanceof AssignStmt)

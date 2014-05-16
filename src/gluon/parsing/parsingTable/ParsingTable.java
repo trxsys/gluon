@@ -639,6 +639,8 @@ public class ParsingTable
 
     public void buildParsingTable()
     {
+        gluon.profiling.Timer.start("build-parsing-table");
+
         assert goToTable == null : "Parsing table should only be built only once";
 
         assert grammar.hasUniqueStart() : "Grammar must only have a start production "
@@ -693,6 +695,8 @@ public class ParsingTable
         follow=null;
         stateMap=null;
         grammar=null;
+
+        gluon.profiling.Timer.stop("build-parsing-table");
     }
 
     public Set<Item> getStateItems(int n)

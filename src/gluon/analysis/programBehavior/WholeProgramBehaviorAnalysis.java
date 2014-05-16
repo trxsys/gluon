@@ -98,6 +98,8 @@ public class WholeProgramBehaviorAnalysis
     @Override
     public void analyze()
     {
+        gluon.profiling.Timer.start("analysis-behavior");
+
         analyzeReachableMethods(entryMethod);
 
         super.grammar.setStart(new PPNonTerminal(super.alias(entryMethod),entryMethod));
@@ -115,5 +117,7 @@ public class WholeProgramBehaviorAnalysis
         super.dprintln("Grammar: "+super.grammar);
 
         assert super.grammar.hasUniqueStart();
+
+        gluon.profiling.Timer.stop("analysis-behavior");
     }
 }

@@ -96,6 +96,8 @@ public class ThreadAnalysis
 
     public void analyze()
     {
+        gluon.profiling.Timer.start("analysis-threads");
+
         for (Iterator<MethodOrMethodContext> it=callGraph.sourceMethods();
              it.hasNext(); )
         {
@@ -115,6 +117,8 @@ public class ThreadAnalysis
                 analyzeReachableMethods(m);
             }
         }
+
+        gluon.profiling.Timer.stop("analysis-threads");
     }
 
     public Collection<SootMethod> getThreadsEntryMethod()

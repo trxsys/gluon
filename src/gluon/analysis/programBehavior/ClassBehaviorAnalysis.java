@@ -77,6 +77,8 @@ public class ClassBehaviorAnalysis
     @Override
     public void analyze()
     {
+        gluon.profiling.Timer.start("analysis-behavior");
+
         assert classA.getMethodCount() > 0;
 
         super.visited=new HashSet<Unit>();
@@ -119,5 +121,7 @@ public class ClassBehaviorAnalysis
         super.dprintln("Grammar: "+super.grammar);
 
         assert super.grammar.hasUniqueStart();
+
+        gluon.profiling.Timer.stop("analysis-behavior");
     }
 }

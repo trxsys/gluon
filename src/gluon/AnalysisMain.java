@@ -251,6 +251,8 @@ public class AnalysisMain
             BehaviorAnalysis ba=new WholeProgramBehaviorAnalysis(thread,module,as);
             ParserCallback pcb;
 
+            gluon.profiling.Profiling.inc("alloc-sites");
+
             if (Main.ATOMICITY_SYNCH)
             {
                 MonitorAnalysis monAnalysis=new MonitorAnalysis(scene);
@@ -282,26 +284,19 @@ public class AnalysisMain
         ParsingTable parsingTable;
         Cfg grammar;
 
-        gluon.profiling.Profiling.inc("alloc-sites-total");
-
-        gluon.profiling.Timer.start("analysis-behavior");
         programBehavior.analyze();
-        gluon.profiling.Timer.stop("analysis-behavior");
 
         grammar=programBehavior.getGrammar();
 
-        gluon.profiling.Profiling.inc("grammar-productions-total",
-                                      grammar.size());
+        gluon.profiling.Profiling.inc("grammar-productions",grammar.size());
 
         assert gluon.parsing.parser.ParserSubwords.isParsable(grammar);
 
         parsingTable=new ParsingTable(grammar);
 
-        gluon.profiling.Timer.start("build-parsing-table");
         parsingTable.buildParsingTable();
-        gluon.profiling.Timer.stop("build-parsing-table");
 
-        gluon.profiling.Profiling.inc("parsing-table-state-number-total",
+        gluon.profiling.Profiling.inc("parsing-table-states",
                                       parsingTable.numberOfStates());
 
         return new ParserSubwords(parsingTable);
@@ -410,6 +405,8 @@ public class AnalysisMain
             BehaviorAnalysis ba=new ClassBehaviorAnalysis(c,module,as);
             ParserCallback pcb;
 
+            gluon.profiling.Profiling.inc("alloc-sites");
+
             if (Main.ATOMICITY_SYNCH)
             {
                 MonitorAnalysis monAnalysis=new MonitorAnalysis(scene);
@@ -503,9 +500,7 @@ public class AnalysisMain
 
         dprintln("Loaded Contract.");
 
-        gluon.profiling.Timer.start("analysis-threads");
         threads=getThreads();
-        gluon.profiling.Timer.stop("analysis-threads");
 
         dprintln("Obtained "+threads.size()+" thread entry points.");
 
