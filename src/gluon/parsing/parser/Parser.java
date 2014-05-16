@@ -282,7 +282,11 @@ public abstract class Parser
 
         assert parserConf.lca != null;
 
+        gluon.profiling.Timer.stop("final:parsing");
+
         parserCB.accepted(parserConf.getActionList(),lca);
+
+        gluon.profiling.Timer.start("final:parsing");
 
         if (PRUNE_BY_REPEATED_LCA)
             acceptedLCA.add(lca);
@@ -386,6 +390,8 @@ public abstract class Parser
     {
         int counter=0; /* For calling pcb.shouldStop() */
 
+        gluon.profiling.Timer.start("final:parsing");
+
         parseLifo=new Stack<ParserConfiguration>();
         acceptedLCA=new HashSet<NonTerminal>();
         parserCB=pcb;
@@ -409,5 +415,7 @@ public abstract class Parser
         parseLifo=null;
         acceptedLCA=null;
         parserCB=null;
+
+        gluon.profiling.Timer.stop("final:parsing");
     }
 }
