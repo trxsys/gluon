@@ -182,7 +182,7 @@ public class AnalysisMain
         SootMethod lcaMethod;
         boolean atomic;
 
-        gluon.profiling.Timer.start("final:check-word-instance");
+        gluon.profiling.Timer.start("check-word-instance");
 
         assert wordInst.assertLCASanityCheck();
 
@@ -191,12 +191,12 @@ public class AnalysisMain
 
         if (!wordInst.argumentsMatch(vEquiv))
         {
-            gluon.profiling.Profiling.inc("final:discarded-trees-args-not-match");
-            gluon.profiling.Timer.stop("final:check-word-instance");
+            gluon.profiling.Profiling.inc("discarded-trees-args-not-match");
+            gluon.profiling.Timer.stop("check-word-instance");
             return 1;
         }
 
-        gluon.profiling.Profiling.inc("final:parse-trees");
+        gluon.profiling.Profiling.inc("parse-trees");
 
         reported.add(wordInst);
 
@@ -223,7 +223,7 @@ public class AnalysisMain
 
         System.out.println("      Atomic: "+(atomic ? "YES" : "NO"));
 
-        gluon.profiling.Timer.stop("final:check-word-instance");
+        gluon.profiling.Timer.stop("check-word-instance");
 
         return atomic ? 0 : -1;
     }
@@ -282,26 +282,26 @@ public class AnalysisMain
         ParsingTable parsingTable;
         Cfg grammar;
 
-        gluon.profiling.Profiling.inc("final:alloc-sites-total");
+        gluon.profiling.Profiling.inc("alloc-sites-total");
 
-        gluon.profiling.Timer.start("final:analysis-behavior");
+        gluon.profiling.Timer.start("analysis-behavior");
         programBehavior.analyze();
-        gluon.profiling.Timer.stop("final:analysis-behavior");
+        gluon.profiling.Timer.stop("analysis-behavior");
 
         grammar=programBehavior.getGrammar();
 
-        gluon.profiling.Profiling.inc("final:grammar-productions-total",
+        gluon.profiling.Profiling.inc("grammar-productions-total",
                                       grammar.size());
 
         assert gluon.parsing.parser.ParserSubwords.isParsable(grammar);
 
         parsingTable=new ParsingTable(grammar);
 
-        gluon.profiling.Timer.start("final:build-parsing-table");
+        gluon.profiling.Timer.start("build-parsing-table");
         parsingTable.buildParsingTable();
-        gluon.profiling.Timer.stop("final:build-parsing-table");
+        gluon.profiling.Timer.stop("build-parsing-table");
 
-        gluon.profiling.Profiling.inc("final:parsing-table-state-number-total",
+        gluon.profiling.Profiling.inc("parsing-table-state-number-total",
                                       parsingTable.numberOfStates());
 
         return new ParserSubwords(parsingTable);
@@ -478,7 +478,7 @@ public class AnalysisMain
         scene=Scene.v();
         assert scene.getMainMethod() != null;
 
-        gluon.profiling.Timer.stop("final:soot-init");
+        gluon.profiling.Timer.stop("soot-init");
 
         dprintln("Started MainAnalysis.");
 
@@ -503,13 +503,13 @@ public class AnalysisMain
 
         dprintln("Loaded Contract.");
 
-        gluon.profiling.Timer.start("final:analysis-threads");
+        gluon.profiling.Timer.start("analysis-threads");
         threads=getThreads();
-        gluon.profiling.Timer.stop("final:analysis-threads");
+        gluon.profiling.Timer.stop("analysis-threads");
 
         dprintln("Obtained "+threads.size()+" thread entry points.");
 
-        gluon.profiling.Profiling.set("final:threads",threads.size());
+        gluon.profiling.Profiling.set("threads",threads.size());
 
         initAtomicityAnalysis(threads);
 

@@ -320,7 +320,7 @@ public abstract class BehaviorAnalysis
         if (visited.contains(unit))
             return; /* Unit already taken care of */
 
-        gluon.profiling.Profiling.inc("final:cfg-nodes");
+        gluon.profiling.Profiling.inc("cfg-nodes");
 
         visited.add(unit);
 

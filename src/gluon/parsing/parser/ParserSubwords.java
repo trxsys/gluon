@@ -142,7 +142,7 @@ public class ParserSubwords
         Stack<ParserConfiguration> parseLifo;
         int counter=0; /* For calling pcb.shouldStop() */
 
-        gluon.profiling.Timer.start("final:total-parsing-completeRR");
+        gluon.profiling.Timer.start("total-parsing-completeRR");
 
         parseLifo=new Stack<ParserConfiguration>();
         parseLifo.add(parent);
@@ -156,15 +156,15 @@ public class ParserSubwords
 
             if (counter == 0 && parserCB.shouldAbort())
             {
-                gluon.profiling.Timer.stop("final:total-parsing-completeRR");
+                gluon.profiling.Timer.stop("total-parsing-completeRR");
                 throw new ParserAbortedException();
             }
 
             if (super.table.actions(state,EOI).contains(ACCEPT))
             {
-                gluon.profiling.Timer.stop("final:total-parsing-completeRR");
+                gluon.profiling.Timer.stop("total-parsing-completeRR");
                 super.accept(parserConf,ACCEPT,input);
-                gluon.profiling.Timer.start("final:total-parsing-completeRR");
+                gluon.profiling.Timer.start("total-parsing-completeRR");
                 continue;
             }
 
@@ -190,7 +190,7 @@ public class ParserSubwords
             }
         }
 
-        gluon.profiling.Timer.stop("final:total-parsing-completeRR");
+        gluon.profiling.Timer.stop("total-parsing-completeRR");
     }
 
     @Override

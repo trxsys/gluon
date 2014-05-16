@@ -282,11 +282,11 @@ public abstract class Parser
 
         assert parserConf.lca != null;
 
-        gluon.profiling.Timer.stop("final:parsing");
+        gluon.profiling.Timer.stop("parsing");
 
         parserCB.accepted(parserConf.getActionList(),lca);
 
-        gluon.profiling.Timer.start("final:parsing");
+        gluon.profiling.Timer.start("parsing");
 
         if (PRUNE_BY_REPEATED_LCA)
             acceptedLCA.add(lca);
@@ -305,7 +305,7 @@ public abstract class Parser
 
         acceptedDeliver(parserConf);
 
-        gluon.profiling.Profiling.inc("final:parse-branches");
+        gluon.profiling.Profiling.inc("parse-branches");
 
         return new ArrayList<ParserConfiguration>(0);
     }
@@ -333,7 +333,7 @@ public abstract class Parser
         {
             dprintln(parserConf.hashCode()+": error: actions("+s+","+t+")=∅");
 
-            gluon.profiling.Profiling.inc("final:parse-branches");
+            gluon.profiling.Profiling.inc("parse-branches");
 
             return;
         }
@@ -376,7 +376,7 @@ public abstract class Parser
                 if (!prune && !parserConf.isLoop(branch))
                     parseLifo.add(branch);
                 else
-                    gluon.profiling.Profiling.inc("final:parse-branches");
+                    gluon.profiling.Profiling.inc("parse-branches");
             }
         }
     }
@@ -390,7 +390,7 @@ public abstract class Parser
     {
         int counter=0; /* For calling pcb.shouldStop() */
 
-        gluon.profiling.Timer.start("final:parsing");
+        gluon.profiling.Timer.start("parsing");
 
         parseLifo=new Stack<ParserConfiguration>();
         acceptedLCA=new HashSet<NonTerminal>();
@@ -416,6 +416,6 @@ public abstract class Parser
         acceptedLCA=null;
         parserCB=null;
 
-        gluon.profiling.Timer.stop("final:parsing");
+        gluon.profiling.Timer.stop("parsing");
     }
 }

@@ -229,7 +229,7 @@ public class Main
     {
         Transform t;
 
-        gluon.profiling.Timer.start("final:soot-init");
+        gluon.profiling.Timer.start("soot-init");
 
         Options.v().set_whole_program(true);
         Options.v().set_whole_shimple(true);
@@ -298,10 +298,9 @@ public class Main
         System.out.println("Run Time:");
 
         for (String id: gluon.profiling.Timer.getIds())
-            if (id.startsWith("final:"))
-                System.out.printf("  %40s  %5d.%03ds\n",id.replace("final:",""),
-                                  gluon.profiling.Timer.getTime(id)/1000,
-                                  gluon.profiling.Timer.getTime(id)%1000);
+            System.out.printf("  %40s  %5d.%03ds\n",id,
+                              gluon.profiling.Timer.getTime(id)/1000,
+                              gluon.profiling.Timer.getTime(id)%1000);
     }
 
     private static void dumpProfilingVars()
@@ -310,9 +309,8 @@ public class Main
         System.out.println("Profiling Vars:");
 
         for (String id: gluon.profiling.Profiling.getIds())
-            if (id.startsWith("final:"))
-                System.out.printf("  %40s  %5d\n",id.replace("final:",""),
-                                  gluon.profiling.Profiling.get(id));
+            System.out.printf("  %40s  %5d\n",id,
+                              gluon.profiling.Profiling.get(id));
     }
 
     public static void main(String[] args)
@@ -332,9 +330,9 @@ public class Main
         if (moduleClassName == null)
             fatal("No module specified!");
 
-        gluon.profiling.Timer.start("final:total");
+        gluon.profiling.Timer.start("total");
         run();
-        gluon.profiling.Timer.stop("final:total");
+        gluon.profiling.Timer.stop("total");
 
         if (TIME)
             dumpRunTimes();
