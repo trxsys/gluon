@@ -49,7 +49,7 @@ public class ParserNormal
         ParserConfiguration initConfig=new ParserConfiguration();
         Collection<ParserConfiguration> configurations;
 
-        initConfig.stackPush(new ParserStackNode(table.getInitialState(),0));
+        initConfig.getStack().push(new ParsingStackNode(table.getInitialState(),0));
 
         configurations=new ArrayList<ParserConfiguration>(1);
         configurations.add(initConfig);

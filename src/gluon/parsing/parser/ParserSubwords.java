@@ -150,7 +150,7 @@ public class ParserSubwords
         while (parseLifo.size() > 0)
         {
             ParserConfiguration parserConf=parseLifo.pop();
-            int state=parserConf.stackPeek().state;
+            int state=parserConf.getState();
 
             counter=(counter+1)%500000;
 
@@ -259,7 +259,7 @@ public class ParserSubwords
             {
                 ParserConfiguration succParserConfig=parserConf.clone();
 
-                succParserConfig.stackPush(new ParserStackNode(s,genTerminals));
+                succParserConfig.getStack().push(new ParsingStackNode(s,genTerminals));
 
                 configs.add(succParserConfig);
             }
@@ -278,7 +278,7 @@ public class ParserSubwords
     {
         Collection<ParserConfiguration> configs;
         Production p=reduction.getProduction();
-        int stackSize=parent.stackSize();
+        int stackSize=parent.getStack().size();
 
         if (stackSize > p.bodyLength())
             configs=super.reduce(parent,reduction,input);
@@ -315,7 +315,7 @@ public class ParserSubwords
             /* We have alread read the terminal at input[0], hence the "1" passed
              * to the ParserStackNode contructor.
              */
-            initConfig.stackPush(new ParserStackNode(s,1));
+            initConfig.getStack().push(new ParsingStackNode(s,1));
             initConfig.pos=1; /* we already "read" the first terminal */
 
             initConfig.setAction(new ParsingActionShift(s));

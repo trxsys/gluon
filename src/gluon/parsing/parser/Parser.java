@@ -35,15 +35,75 @@ import gluon.grammar.EOITerminal;
 import gluon.parsing.parsingTable.ParsingTable;
 import gluon.parsing.parsingTable.parsingAction.*;
 
-/* TODO: restructure stack to make it simpler? */
-class ParserStackNode {
-    public int state;
-    public int generateTerminals;
+class ParsingStackNode
+{
+    public final int state;
+    public final int generatedTerminals;
 
-    public ParserStackNode(int s, int t)
+    public ParsingStackNode parent;
+
+    public ParsingStackNode(int s, int t)
     {
         state=s;
-        generateTerminals=t;
+        generatedTerminals=t;
+        parent=null;
+    }
+}
+
+class ParsingStack
+{
+    private ParsingStackNode top;
+    private int size;
+
+    public ParsingStack()
+    {
+        size=0;
+        top=null;
+    }
+
+    public int size()
+    {
+        return size;
+    }
+
+    public ParsingStackNode peek()
+    {
+        assert top != null;
+
+        return top;
+    }
+
+    public void push(ParsingStackNode node)
+    {
+        assert node.parent == null;
+
+        node.parent=top;
+        top=node;
+
+        size++;
+    }
+
+    public ParsingStackNode pop()
+    {
+        ParsingStackNode node=top;
+
+        assert top != null;
+
+        top=top.parent;
+
+        size--;
+
+        return top;
+    }
+
+    public ParsingStack clone()
+    {
+        ParsingStack clone=new ParsingStack();
+
+        clone.top=top;
+        clone.size=size;
+
+        return clone;
     }
 }
 
@@ -51,11 +111,9 @@ class ParserConfiguration
 {
     /* We need this so we don't lose reduction history due to stack pops
      */
-    private ParserConfiguration parentComplete;
-
     private ParserConfiguration parent;
 
-    private ParserStackNode stackTop;
+    private ParsingStack stack;
 
     private ParsingAction action;
 
@@ -65,17 +123,22 @@ class ParserConfiguration
 
     public ParserConfiguration(ParserConfiguration parentConfig)
     {
-        parentComplete=parentConfig;
+        assert parentConfig != null;
+
+        stack=parentConfig.stack.clone();
         parent=parentConfig;
-        stackTop=null;
-        pos=parentConfig != null ? parentConfig.pos : 0;
+        pos=parentConfig.pos;
         action=null;
-        lca=parentConfig != null ? parentConfig.lca : null;
+        lca=parentConfig.lca;
     }
 
     public ParserConfiguration()
     {
-        this(null);
+        stack=new ParsingStack();
+        parent=null;
+        pos=0;
+        action=null;
+        lca=null;
     }
 
     public void setAction(ParsingAction a)
@@ -88,59 +151,29 @@ class ParserConfiguration
         LinkedList<ParsingAction> alist
             =new LinkedList<ParsingAction>();
 
-        for (ParserConfiguration pc=this; pc != null; pc=pc.parentComplete)
+        for (ParserConfiguration pc=this; pc != null; pc=pc.parent)
             alist.addFirst(pc.action);
 
         return alist;
     }
 
-    /* TODO: optimize this so that we don't need to traverse the stack */
-    public int stackSize()
+    public ParsingStack getStack()
     {
-        int size=0;
-
-        for (ParserConfiguration pc=this; pc != null; pc=pc.parent)
-            size++;
-
-        return size;
-    }
-
-    public ParserStackNode stackPeek()
-    {
-        return stackTop != null ? stackTop : parent.stackPeek();
-    }
-
-    public void stackPush(ParserStackNode t)
-    {
-        assert stackTop == null;
-
-        stackTop=t;
-    }
-
-    public void stackPop()
-    {
-        if (stackTop != null)
-            stackTop=null;
-        else
-        {
-            assert parent != null;
-            assert parent.stackTop != null;
-            parent=parent.parent;
-        }
+        return stack;
     }
 
     public boolean isLoop(ParserConfiguration conf)
     {
         NonTerminal redHead;
         int loops=0;
-        int genTerminals=conf.stackPeek().generateTerminals;
+        int genTerminals=conf.getTerminalNum();
 
         if (!(conf.action instanceof ParsingActionReduce))
             return false;
 
         redHead=((ParsingActionReduce)conf.action).getProduction().getHead();
 
-        for (ParserConfiguration pc=this; pc != null; pc=pc.parentComplete)
+        for (ParserConfiguration pc=this; pc != null; pc=pc.parent)
         {
             ParsingActionReduce ancRed;
             NonTerminal ancRedHead;
@@ -151,7 +184,7 @@ class ParserConfiguration
 
             ancRed=(ParsingActionReduce)pc.action;
             ancRedHead=ancRed.getProduction().getHead();
-            ancGenTerminals=pc.stackPeek().generateTerminals;
+            ancGenTerminals=pc.getTerminalNum();
 
             if (ancGenTerminals < genTerminals)
                 return false;
@@ -165,17 +198,21 @@ class ParserConfiguration
 
     public int getTerminalNum()
     {
-        return stackPeek().generateTerminals;
+        return stack.peek().generatedTerminals;
+    }
+
+    public int getState()
+    {
+        return stack.peek().state;
     }
 
     public ParserConfiguration clone()
     {
         ParserConfiguration clone=new ParserConfiguration();
 
-        clone.parentComplete=parentComplete;
         clone.parent=parent;
-        clone.stackTop=stackTop;
         clone.action=action;
+        clone.stack=stack.clone();
         clone.lca=lca;
         clone.pos=pos;
 
@@ -217,7 +254,7 @@ public abstract class Parser
     {
         ParserConfiguration parserConf=newParserConfiguration(parent);
 
-        parserConf.stackPush(new ParserStackNode(shift.getState(),1));
+        parserConf.getStack().push(new ParsingStackNode(shift.getState(),1));
         parserConf.pos++;
 
         parserConf.setAction(shift);
@@ -236,8 +273,8 @@ public abstract class Parser
 
         for (int i=0; i < n; i++)
         {
-            genTerminals+=parserConf.stackPeek().generateTerminals;
-            parserConf.stackPop();
+            genTerminals+=parserConf.getTerminalNum();
+            parserConf.getStack().pop();
         }
 
         return genTerminals;
@@ -255,10 +292,10 @@ public abstract class Parser
 
         genTerminals=stackPop(parserConf,p.bodyLength());
 
-        s=parserConf.stackPeek().state;
+        s=parserConf.getState();
 
-        parserConf.stackPush(new ParserStackNode(table.goTo(s,p.getHead()),
-                                                 genTerminals));
+        parserConf.getStack().push(new ParsingStackNode(table.goTo(s,p.getHead()),
+                                                        genTerminals));
 
         parserConf.setAction(reduction);
 
@@ -313,7 +350,7 @@ public abstract class Parser
 
         assert parserConf.pos < input.size();
 
-        s=parserConf.stackPeek().state;
+        s=parserConf.getState();
         t=input.get(parserConf.pos);
         actions=table.actions(s,t);
 
