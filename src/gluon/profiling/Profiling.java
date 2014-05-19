@@ -18,19 +18,25 @@ package gluon.profiling;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.List;
 
 import java.util.HashMap;
+import java.util.ArrayList;
+
+import java.util.Collections;
 
 public class Profiling
 {
     private static Map<String,Integer> values;
 
-    static {
+    static
+    {
         values=new HashMap<String,Integer>();
     }
 
     private Profiling()
     {
+        assert false;
     }
 
     public static void set(String id, int v)
@@ -62,8 +68,14 @@ public class Profiling
         set(id,v+delta);
     }
 
-    public static Set<String> getIds()
+    public static List<String> getIds()
     {
-        return values.keySet();
+        List<String> ids=new ArrayList<String>(values.size());
+
+        ids.addAll(values.keySet());
+
+        Collections.sort(ids);
+
+        return ids;
     }
 }

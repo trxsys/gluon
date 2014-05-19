@@ -18,8 +18,12 @@ package gluon.profiling;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.List;
 
 import java.util.HashMap;
+import java.util.ArrayList;
+
+import java.util.Collections;
 
 public class Timer
 {
@@ -34,6 +38,7 @@ public class Timer
 
     private Timer()
     {
+        assert false;
     }
 
     public static void start(String id)
@@ -65,9 +70,15 @@ public class Timer
         timer.put(id,acc+delta);
     }
 
-    public static Set<String> getIds()
+    public static List<String> getIds()
     {
-        return timer.keySet();
+        List<String> ids=new ArrayList<String>(timer.size());
+
+        ids.addAll(timer.keySet());
+
+        Collections.sort(ids);
+
+        return ids;
     }
 
     public static long getTime(String id)
