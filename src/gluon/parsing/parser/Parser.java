@@ -165,13 +165,13 @@ class ParserConfiguration
     public boolean isLoop(ParserConfiguration conf)
     {
         NonTerminal redHead;
-        int loops=0;
-        int genTerminals=conf.getTerminalNum();
+        int genTerminals;
 
         if (!(conf.action instanceof ParsingActionReduce))
             return false;
 
         redHead=((ParsingActionReduce)conf.action).getProduction().getHead();
+        genTerminals=conf.getTerminalNum();
 
         for (ParserConfiguration pc=this; pc != null; pc=pc.parent)
         {
@@ -179,15 +179,22 @@ class ParserConfiguration
             NonTerminal ancRedHead;
             int ancGenTerminals;
 
+            /* This means that we encontered a shift which is productive,
+             * therefore we can stop now.
+             */
             if (!(pc.action instanceof ParsingActionReduce))
+            {
+                assert pc.action instanceof ParsingActionShift;
                 return false;
+            }
 
-            ancRed=(ParsingActionReduce)pc.action;
-            ancRedHead=ancRed.getProduction().getHead();
             ancGenTerminals=pc.getTerminalNum();
 
             if (ancGenTerminals < genTerminals)
                 return false;
+
+            ancRed=(ParsingActionReduce)pc.action;
+            ancRedHead=ancRed.getProduction().getHead();
 
             if (redHead.equals(ancRedHead))
                 return true;
