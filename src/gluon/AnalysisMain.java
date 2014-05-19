@@ -86,6 +86,7 @@ public class AnalysisMain
         private Set<WordInstance> reported;
         private ValueEquivAnalysis vEquiv;
         private long startTime;
+        private Set<WordInstance> reportedViolations;
 
         public ParserCallbackCheckWord(List<Terminal> word,
                                        Set<WordInstance> reported,
@@ -96,6 +97,17 @@ public class AnalysisMain
             this.reported=reported;
             this.vEquiv=vEquiv;
             this.startTime=startTime;
+
+            this.reportedViolations=new HashSet<WordInstance>();
+        }
+
+        public boolean pruneOnLCA(List<ParsingAction> actions, NonTerminal lca)
+        {
+            WordInstance wordInst;
+
+            wordInst=new WordInstance((PPNonTerminal)lca,word,actions);
+
+            return reportedViolations.contains(wordInst);
         }
 
         public boolean shouldAbort()
@@ -110,8 +122,7 @@ public class AnalysisMain
             return now-startTime > Main.TIMEOUT;
         }
 
-        public void accepted(List<ParsingAction> actions,
-                             NonTerminal lca)
+        public void accepted(List<ParsingAction> actions, NonTerminal lca)
         {
             int ret;
             WordInstance wordInst;
@@ -119,6 +130,9 @@ public class AnalysisMain
             wordInst=new WordInstance((PPNonTerminal)lca,word,actions);
 
             ret=checkWordInstance(wordInst,reported,vEquiv);
+
+            if (ret < 0) /* we have a contract violations*/
+                reportedViolations.add(wordInst);
 
             if (ret <= 0)
                 System.out.println();
@@ -175,6 +189,10 @@ public class AnalysisMain
         return relevantThreads;
     }
 
+    /* Returns > 0 if the word is ignored;
+     *         = 0 if the word is atomic;
+     *         < 0 if the word is a contract violation.
+     */
     private int checkWordInstance(WordInstance wordInst,
                                   Set<WordInstance> reported,
                                   ValueEquivAnalysis vEquiv)
@@ -187,7 +205,10 @@ public class AnalysisMain
         assert wordInst.assertLCASanityCheck();
 
         if (reported.contains(wordInst))
+        {
+            gluon.profiling.Timer.stop("check-word-instance");
             return 1;
+        }
 
         if (!wordInst.argumentsMatch(vEquiv))
         {
@@ -265,7 +286,6 @@ public class AnalysisMain
 
             dprintln("Created parser for thread "+thread.getName()
                      +"(), allocation site "+as+".");
-
 
             pcb=new ParserCallbackCheckWord(word,reported,vEquiv,startTime);
 

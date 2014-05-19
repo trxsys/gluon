@@ -298,7 +298,7 @@ public class Main
         System.out.println("Run Time:");
 
         for (String id: gluon.profiling.Timer.getIds())
-            System.out.printf("  %40s  %5d.%03ds\n",id,
+            System.out.printf("  %40s  %6d.%03ds\n",id,
                               gluon.profiling.Timer.getTime(id)/1000,
                               gluon.profiling.Timer.getTime(id)%1000);
     }
@@ -309,7 +309,7 @@ public class Main
         System.out.println("Profiling Vars:");
 
         for (String id: gluon.profiling.Profiling.getIds())
-            System.out.printf("  %40s  %5d\n",id,
+            System.out.printf("  %40s  %9d\n",id,
                               gluon.profiling.Profiling.get(id));
     }
 

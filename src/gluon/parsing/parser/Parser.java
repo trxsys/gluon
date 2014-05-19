@@ -183,34 +183,25 @@ class ParserConfiguration
     }
 }
 
-/* This is a partially a implementation of the tomita parser. We do not merge
+/* This is a partial implementation of the tomita parser. We do not merge
  * configuration states as described in the full tomita implementation.
  *
  * This parser also detects and prune branches with unproductive loops in the
  * grammar.
- * A more aggressive pruning is done so that no two parsing trees with the same
- * lowest common ancestor are explored (PRUNE_BY_REPEATED_LCA).
- * Unfortunatly this cannot be done with contract with arguments since we may
- * prune LCA that would fail to match the arguments unification thus preventing
- * other LCA from being reported.
  */
 public abstract class Parser
 {
     private static final boolean DEBUG=false;
 
-    private static final boolean PRUNE_BY_REPEATED_LCA=false;
-
     protected final ParsingTable table;
 
     private Stack<ParserConfiguration> parseLifo;
-    private Set<NonTerminal> acceptedLCA;
     protected ParserCallback parserCB;
 
     public Parser(ParsingTable t)
     {
         table=t;
         parseLifo=null;
-        acceptedLCA=null;
     }
 
     protected void dprintln(String s)
@@ -287,9 +278,6 @@ public abstract class Parser
         parserCB.accepted(parserConf.getActionList(),lca);
 
         gluon.profiling.Timer.start("parsing");
-
-        if (PRUNE_BY_REPEATED_LCA)
-            acceptedLCA.add(lca);
     }
 
     protected Collection<ParserConfiguration> accept(ParserConfiguration parent,
@@ -368,8 +356,7 @@ public abstract class Parser
 
                     branch.lca=red.getProduction().getHead();
 
-                    if (PRUNE_BY_REPEATED_LCA
-                        && acceptedLCA.contains(branch.lca))
+                    if (parserCB.pruneOnLCA(parserConf.getActionList(),branch.lca))
                         prune=true;
                 }
 
@@ -393,7 +380,6 @@ public abstract class Parser
         gluon.profiling.Timer.start("parsing");
 
         parseLifo=new Stack<ParserConfiguration>();
-        acceptedLCA=new HashSet<NonTerminal>();
         parserCB=pcb;
 
         for (ParserConfiguration initialConfig: getInitialConfigurations(input))
@@ -413,7 +399,6 @@ public abstract class Parser
 
         /* free memory */
         parseLifo=null;
-        acceptedLCA=null;
         parserCB=null;
 
         gluon.profiling.Timer.stop("parsing");
