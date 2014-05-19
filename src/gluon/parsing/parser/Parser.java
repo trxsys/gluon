@@ -344,6 +344,13 @@ public abstract class Parser
                 boolean prune=false;
                 int inputTerminals;
 
+                if (action instanceof ParsingActionReduce
+                    && parserConf.isLoop(branch))
+                {
+                    gluon.profiling.Profiling.inc("parse-branches");
+                    continue;
+                }
+
                 inputTerminals=input.size()
                     -(input.get(input.size()-1) instanceof EOITerminal ? 1 : 0);
 
@@ -360,7 +367,7 @@ public abstract class Parser
                         prune=true;
                 }
 
-                if (!prune && !parserConf.isLoop(branch))
+                if (!prune)
                     parseLifo.add(branch);
                 else
                     gluon.profiling.Profiling.inc("parse-branches");

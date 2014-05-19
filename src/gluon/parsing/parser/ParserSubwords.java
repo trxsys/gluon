@@ -142,7 +142,7 @@ public class ParserSubwords
         Stack<ParserConfiguration> parseLifo;
         int counter=0; /* For calling pcb.shouldStop() */
 
-        gluon.profiling.Timer.start("total-parsing-completeRR");
+        gluon.profiling.Timer.start("parsing-completeRR");
 
         parseLifo=new Stack<ParserConfiguration>();
         parseLifo.add(parent);
@@ -156,15 +156,15 @@ public class ParserSubwords
 
             if (counter == 0 && parserCB.shouldAbort())
             {
-                gluon.profiling.Timer.stop("total-parsing-completeRR");
+                gluon.profiling.Timer.stop("parsing-completeRR");
                 throw new ParserAbortedException();
             }
 
             if (super.table.actions(state,EOI).contains(ACCEPT))
             {
-                gluon.profiling.Timer.stop("total-parsing-completeRR");
+                gluon.profiling.Timer.stop("parsing-completeRR");
                 super.accept(parserConf,ACCEPT,input);
-                gluon.profiling.Timer.start("total-parsing-completeRR");
+                gluon.profiling.Timer.start("parsing-completeRR");
                 continue;
             }
 
@@ -178,19 +178,32 @@ public class ParserSubwords
 
                 for (ParserConfiguration conf: parserConfs)
                 {
+                    boolean prune=false;
+
                     if (parserConf.isLoop(conf))
+                    {
+                        gluon.profiling.Profiling.inc("parse-branches");
                         continue;
+                    }
 
                     if (conf.getTerminalNum() == input.size()
                         && conf.lca == null)
+                    {
                         conf.lca=red.getProduction().getHead();
 
-                    parseLifo.add(conf);
+                        if (parserCB.pruneOnLCA(conf.getActionList(),conf.lca))
+                            prune=true;
+                    }
+
+                    if (!prune)
+                        parseLifo.add(conf);
+                    else
+                        gluon.profiling.Profiling.inc("parse-branches");
                 }
             }
         }
 
-        gluon.profiling.Timer.stop("total-parsing-completeRR");
+        gluon.profiling.Timer.stop("parsing-completeRR");
     }
 
     @Override
