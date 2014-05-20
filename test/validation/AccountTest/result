@@ -25,19 +25,22 @@ Checking thread Update.run():
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.002s
-                             total-parsing      0.003s
-      analysis-behavior-grammar-rm-epsilon      0.004s
-                                     total     36.899s
-                  total-parsing-completeRR      0.000s
-                       build-parsing-table      0.002s
-                                 soot-init     36.862s
-                         analysis-behavior      0.009s
+                         analysis-behavior       0.007s
+             analysis-behavior-grammar-opt       0.002s
+      analysis-behavior-grammar-rm-epsilon       0.004s
+                          analysis-threads       0.004s
+                       build-parsing-table       0.003s
+                       check-word-instance       0.000s
+                                   parsing       0.002s
+                        parsing-completeRR       0.002s
+                                 soot-init      37.170s
+                                     total      37.205s
 
 Profiling Vars:
-          parsing-table-state-number-total     28
-                            parse-branches      8
-                                 cfg-nodes    158
-                               parse-trees      2
-                         alloc-sites-total      8
-                 grammar-productions-total     14
+                               alloc-sites          8
+                                 cfg-nodes        158
+                       grammar-productions         14
+                            parse-branches         17
+                               parse-trees          2
+                      parsing-table-states         28
+                                   threads          2

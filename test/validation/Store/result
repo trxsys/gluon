@@ -27,19 +27,22 @@ Checking thread Supplier.run():
 
 
 Run Time:
-             analysis-behavior-grammar-opt      0.019s
-                             total-parsing      0.006s
-      analysis-behavior-grammar-rm-epsilon      0.029s
-                                     total     38.190s
-                  total-parsing-completeRR      0.003s
-                       build-parsing-table      0.004s
-                                 soot-init     38.100s
-                         analysis-behavior      0.058s
+                         analysis-behavior       0.059s
+             analysis-behavior-grammar-opt       0.019s
+      analysis-behavior-grammar-rm-epsilon       0.030s
+                          analysis-threads       0.004s
+                       build-parsing-table       0.004s
+                       check-word-instance       0.001s
+                                   parsing       0.003s
+                        parsing-completeRR       0.002s
+                                 soot-init      37.298s
+                                     total      37.386s
 
 Profiling Vars:
-          parsing-table-state-number-total     21
-                            parse-branches      8
-                                 cfg-nodes    559
-                               parse-trees      1
-                         alloc-sites-total      4
-                 grammar-productions-total     15
+                               alloc-sites          4
+                                 cfg-nodes        559
+                       grammar-productions         15
+                            parse-branches         40
+                               parse-trees          1
+                      parsing-table-states         21
+                                   threads          4
