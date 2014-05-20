@@ -160,6 +160,20 @@ public class ParserSubwords
                 throw new ParserAbortedException();
             }
 
+            /* If this is the *first* configuration of this branch to have an
+             * LCA this is the best place to try to prune it.
+             *
+             * This *should not* be done before adding the configuration on the
+             * lifo.
+             */
+            if (parserConf.firstToReachedLCA()
+                && parserCB.pruneOnLCA(parserConf.getActionList(),
+                                       parserConf.lca))
+            {
+                gluon.profiling.Profiling.inc("parse-branches");
+                continue;
+            }
+
             if (super.table.actions(state,EOI).contains(ACCEPT))
             {
                 gluon.profiling.Timer.stop("parsing-completeRR");
@@ -178,8 +192,6 @@ public class ParserSubwords
 
                 for (ParserConfiguration conf: parserConfs)
                 {
-                    boolean prune=false;
-
                     if (parserConf.isLoop(conf))
                     {
                         gluon.profiling.Profiling.inc("parse-branches");
@@ -188,17 +200,9 @@ public class ParserSubwords
 
                     if (conf.getTerminalNum() == input.size()
                         && conf.lca == null)
-                    {
                         conf.lca=red.getProduction().getHead();
 
-                        if (parserCB.pruneOnLCA(conf.getActionList(),conf.lca))
-                            prune=true;
-                    }
-
-                    if (!prune)
-                        parseLifo.add(conf);
-                    else
-                        gluon.profiling.Profiling.inc("parse-branches");
+                    parseLifo.add(conf);
                 }
             }
         }
@@ -303,6 +307,7 @@ public class ParserSubwords
     @Override
     protected Collection<ParserConfiguration>
         getInitialConfigurations(List<Terminal> input)
+        throws ParserAbortedException
     {
         Collection<ParserConfiguration> configurations;
 
@@ -310,15 +315,10 @@ public class ParserSubwords
 
         for (int s: super.table.statesReachedBy(input.get(0)))
         {
-            ParserConfiguration initConfig=new ParserConfiguration();
+            ParserConfiguration initConfig;
+            ParsingActionShift shift=new ParsingActionShift(s);
 
-            /* We have alread read the terminal at input[0], hence the "1" passed
-             * to the ParserStackNode contructor.
-             */
-            initConfig.getStack().push(new ParsingStackNode(s,1));
-            initConfig.pos=1; /* we already "read" the first terminal */
-
-            initConfig.setAction(new ParsingActionShift(s));
+            initConfig=shift(null,shift,input).iterator().next();
 
             configurations.add(initConfig);
         }

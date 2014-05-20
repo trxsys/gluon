@@ -123,22 +123,34 @@ class ParserConfiguration
 
     public ParserConfiguration(ParserConfiguration parentConfig)
     {
-        assert parentConfig != null;
-
-        stack=parentConfig.stack.clone();
         parent=parentConfig;
-        pos=parentConfig.pos;
         action=null;
-        lca=parentConfig.lca;
+
+        if (parentConfig != null)
+        {
+            stack=parentConfig.stack.clone();
+            lca=parentConfig.lca;
+            pos=parentConfig.pos;
+        }
+        else
+        {
+            stack=new ParsingStack();
+            lca=null;
+            pos=0;
+        }
     }
 
     public ParserConfiguration()
     {
-        stack=new ParsingStack();
-        parent=null;
-        pos=0;
-        action=null;
-        lca=null;
+        this(null);
+    }
+
+    /* Indicates if this is the first configuration to reach the LCA in this
+     * parsing branch.
+     */
+    public boolean firstToReachedLCA()
+    {
+        return lca != null && parent.lca == null;
     }
 
     public void setAction(ParsingAction a)
@@ -385,11 +397,9 @@ public abstract class Parser
 
             for (ParserConfiguration branch: branches)
             {
-                boolean prune=false;
                 int inputTerminals;
 
-                if (action instanceof ParsingActionReduce
-                    && parserConf.isLoop(branch))
+                if (parserConf.isLoop(branch))
                 {
                     gluon.profiling.Profiling.inc("parse-branches");
                     continue;
@@ -406,21 +416,16 @@ public abstract class Parser
                     ParsingActionReduce red=(ParsingActionReduce)action;
 
                     branch.lca=red.getProduction().getHead();
-
-                    if (parserCB.pruneOnLCA(parserConf.getActionList(),branch.lca))
-                        prune=true;
                 }
 
-                if (!prune)
-                    parseLifo.add(branch);
-                else
-                    gluon.profiling.Profiling.inc("parse-branches");
+                parseLifo.add(branch);
             }
         }
     }
 
     protected abstract Collection<ParserConfiguration>
-        getInitialConfigurations(List<Terminal> input);
+        getInitialConfigurations(List<Terminal> input)
+        throws ParserAbortedException;
 
     /* Argument input should be an ArrayList for performance reasons. */
     public void parse(List<Terminal> input, ParserCallback pcb)
@@ -444,6 +449,20 @@ public abstract class Parser
 
             if (counter == 0 && parserCB.shouldAbort())
                 throw new ParserAbortedException();
+
+            /* If this is the *first* configuration of this branch to have an
+             * LCA this is the best place to try to prune it.
+             *
+             * This *should not* be done before adding the configuration on the
+             * lifo.
+             */
+            if (parserConf.firstToReachedLCA()
+                && parserCB.pruneOnLCA(parserConf.getActionList(),
+                                       parserConf.lca))
+            {
+                gluon.profiling.Profiling.inc("parse-branches");
+                continue;
+            }
 
             parseSingleStep(parserConf,input);
         }

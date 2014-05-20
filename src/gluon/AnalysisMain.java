@@ -86,7 +86,7 @@ public class AnalysisMain
         private Set<WordInstance> reported;
         private ValueEquivAnalysis vEquiv;
         private long startTime;
-        private Set<WordInstance> reportedViolations;
+        private Set<WordInstance> checkedInstances;
 
         public ParserCallbackCheckWord(List<Terminal> word,
                                        Set<WordInstance> reported,
@@ -98,7 +98,7 @@ public class AnalysisMain
             this.vEquiv=vEquiv;
             this.startTime=startTime;
 
-            this.reportedViolations=new HashSet<WordInstance>();
+            this.checkedInstances=new HashSet<WordInstance>();
         }
 
         public boolean pruneOnLCA(List<ParsingAction> actions, NonTerminal lca)
@@ -107,7 +107,7 @@ public class AnalysisMain
 
             wordInst=new WordInstance((PPNonTerminal)lca,word,actions);
 
-            return reportedViolations.contains(wordInst);
+            return checkedInstances.contains(wordInst);
         }
 
         public boolean shouldAbort()
@@ -131,8 +131,7 @@ public class AnalysisMain
 
             ret=checkWordInstance(wordInst,reported,vEquiv);
 
-            if (ret < 0) /* we have a contract violations*/
-                reportedViolations.add(wordInst);
+            checkedInstances.add(wordInst);
 
             if (ret <= 0)
                 System.out.println();
