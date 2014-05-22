@@ -280,8 +280,7 @@ public class WordInstance
             PPTerminal tterm=thisParsingTerminals.get(i);
             PPTerminal oterm=otherParsingTerminals.get(i);
 
-            if (tterm.getLineNumber() != oterm.getLineNumber()
-                || !tterm.getSourceFile().equals(oterm.getSourceFile()))
+            if (!tterm.getCodeUnit().equals(oterm.getCodeUnit()))
                 return false;
         }
 
