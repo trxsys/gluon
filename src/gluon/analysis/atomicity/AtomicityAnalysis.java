@@ -64,7 +64,7 @@ public class AtomicityAnalysis
         synchMode=true;
     }
 
-    private static boolean isAtomicAnnotated(SootMethod method)
+    public static boolean isAtomicAnnotated(SootMethod method)
     {
         Tag tag=method.getTag("VisibilityAnnotationTag");
 
@@ -98,18 +98,8 @@ public class AtomicityAnalysis
 
             nonterm=(PBNonTerminal)n.getElem();
 
-            if (!synchMode)
-            {
-                if (isAtomicAnnotated(nonterm.getMethod()))
-                    return true;
-            }
-            else
-            {
-                if (nonterm.isSynchBlock()
-                    || (nonterm.getMethod() != null
-                        && nonterm.getMethod().isSynchronized()))
-                    return true;
-            }
+            if (nonterm.isAtomic())
+                return true;
         }
 
         return false;

@@ -23,14 +23,14 @@ public class PBNonTerminal
 {
     private SootMethod method;
     private boolean noRemove;
-    private boolean synchBlock;
+    private boolean atomic;
 
     public PBNonTerminal(String s, SootMethod m)
     {
         super(s);
         method=m;
         noRemove=false;
-        synchBlock=false;
+        atomic=false;
     }
 
     public SootMethod getMethod()
@@ -43,19 +43,23 @@ public class PBNonTerminal
         noRemove=true;
     }
 
-    public void setSynchBlock()
+    public void setAtomic()
     {
-        synchBlock=true;
+        atomic=true;
     }
 
-    public boolean isSynchBlock()
+    public boolean isAtomic()
     {
-        return synchBlock;
+        assert !atomic || noRemove;
+
+        return atomic;
     }
 
     @Override
     public boolean noRemove()
     {
+        assert !atomic || noRemove;
+
         return noRemove;
     }
 
@@ -84,7 +88,7 @@ public class PBNonTerminal
         PBNonTerminal clone=new PBNonTerminal(super.name,method);
 
         clone.noRemove=noRemove;
-        clone.synchBlock=synchBlock;
+        clone.atomic=atomic;
 
         return clone;
     }
