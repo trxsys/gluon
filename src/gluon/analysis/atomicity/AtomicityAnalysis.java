@@ -42,8 +42,8 @@ import soot.jimple.toolkits.callgraph.Edge;
 
 import gluon.WordInstance;
 
-import gluon.analysis.programBehavior.PPTerminal;
-import gluon.analysis.programBehavior.PPNonTerminal;
+import gluon.analysis.programBehavior.PBTerminal;
+import gluon.analysis.programBehavior.PBNonTerminal;
 
 import gluon.parsing.parseTree.ParseTree;
 import gluon.parsing.parseTree.ParseTreeNode;
@@ -92,11 +92,11 @@ public class AtomicityAnalysis
          */
         for (ParseTreeNode n=tree.getLCA(); n != null; n=n.getParent())
         {
-            PPNonTerminal nonterm;
+            PBNonTerminal nonterm;
 
-            assert n.getElem() instanceof PPNonTerminal;
+            assert n.getElem() instanceof PBNonTerminal;
 
-            nonterm=(PPNonTerminal)n.getElem();
+            nonterm=(PBNonTerminal)n.getElem();
 
             if (!synchMode)
             {

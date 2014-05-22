@@ -25,8 +25,8 @@ import soot.jimple.AssignStmt;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InvokeStmt;
 
-import gluon.analysis.programBehavior.PPTerminal;
-import gluon.analysis.programBehavior.PPNonTerminal;
+import gluon.analysis.programBehavior.PBTerminal;
+import gluon.analysis.programBehavior.PBNonTerminal;
 import gluon.analysis.valueEquivalence.ValueEquivAnalysis;
 import gluon.analysis.valueEquivalence.ValueM;
 
@@ -44,11 +44,11 @@ public class WordInstance
 {
     private static final boolean DEBUG=false;
 
-    private PPNonTerminal lca;
+    private PBNonTerminal lca;
     private List<Terminal> word;
     private List<ParsingAction> actions;
 
-    public WordInstance(PPNonTerminal lca, List<Terminal> word,
+    public WordInstance(PBNonTerminal lca, List<Terminal> word,
                         List<ParsingAction> actions)
     {
         this.lca=lca;
@@ -72,7 +72,7 @@ public class WordInstance
         return lca.getMethod();
     }
 
-    public PPNonTerminal getLCA()
+    public PBNonTerminal getLCA()
     {
         return lca;
     }
@@ -93,11 +93,11 @@ public class WordInstance
     }
 
     /* Memoization */
-    private List<PPTerminal> parsingTerminals=null;
-    public List<PPTerminal> getParsingTerminals()
+    private List<PBTerminal> parsingTerminals=null;
+    public List<PBTerminal> getParsingTerminals()
     {
         ParseTree tree;
-        List<PPTerminal> ppterms;
+        List<PBTerminal> ppterms;
         List<Terminal> terms;
 
         if (parsingTerminals != null)
@@ -106,10 +106,10 @@ public class WordInstance
         tree=getParseTree();
 
         terms=tree.getTerminals();
-        ppterms=new ArrayList<PPTerminal>(terms.size());
+        ppterms=new ArrayList<PBTerminal>(terms.size());
 
         for (Terminal t: terms)
-            ppterms.add((PPTerminal)t);
+            ppterms.add((PBTerminal)t);
 
         return parsingTerminals=ppterms;
     }
@@ -156,9 +156,9 @@ public class WordInstance
             if (term instanceof gluon.grammar.EOITerminal)
                 break;
 
-            assert term instanceof PPTerminal;
+            assert term instanceof PBTerminal;
 
-            r+=(i > 0 ? " " : "")+((PPTerminal)term).getFullName();
+            r+=(i > 0 ? " " : "")+((PBTerminal)term).getFullName();
         }
 
         return r;
@@ -185,7 +185,7 @@ public class WordInstance
 
     public boolean argumentsMatch(ValueEquivAnalysis vEquiv)
     {
-        List<PPTerminal> parsedWord;
+        List<PBTerminal> parsedWord;
         /* contract variable -> program value */
         Map<String,ValueM> unif=new HashMap<String,ValueM>();
 
@@ -193,8 +193,8 @@ public class WordInstance
 
         for (int i=0; i < parsedWord.size(); i++)
         {
-            PPTerminal termC=(PPTerminal)word.get(i);
-            PPTerminal termP=parsedWord.get(i);
+            PBTerminal termC=(PBTerminal)word.get(i);
+            PBTerminal termP=parsedWord.get(i);
             SootMethod method=termP.getCodeMethod();
             List<String> argumentsC;
             Unit unit;
@@ -258,8 +258,8 @@ public class WordInstance
     public boolean equals(Object o)
     {
         WordInstance other;
-        List<PPTerminal> thisParsingTerminals;
-        List<PPTerminal> otherParsingTerminals;
+        List<PBTerminal> thisParsingTerminals;
+        List<PBTerminal> otherParsingTerminals;
 
         if (!(o instanceof WordInstance))
             return false;
@@ -277,8 +277,8 @@ public class WordInstance
 
         for (int i=0; i < thisParsingTerminals.size(); i++)
         {
-            PPTerminal tterm=thisParsingTerminals.get(i);
-            PPTerminal oterm=otherParsingTerminals.get(i);
+            PBTerminal tterm=thisParsingTerminals.get(i);
+            PBTerminal oterm=otherParsingTerminals.get(i);
 
             if (!tterm.getCodeUnit().equals(oterm.getCodeUnit()))
                 return false;
@@ -292,7 +292,7 @@ public class WordInstance
     {
         int h=getLCAMethod().getSignature().hashCode();
 
-        for (PPTerminal t: getParsingTerminals())
+        for (PBTerminal t: getParsingTerminals())
             h=h^(t.getLineNumber()*92821)^t.getSourceFile().hashCode();
 
         return h;

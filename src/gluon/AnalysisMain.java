@@ -30,8 +30,8 @@ import gluon.analysis.programBehavior.BehaviorAnalysis;
 import gluon.analysis.programBehavior.WholeProgramBehaviorAnalysis;
 import gluon.analysis.programBehavior.ClassBehaviorAnalysis;
 import gluon.analysis.programBehavior.BehaviorAnalysis;
-import gluon.analysis.programBehavior.PPTerminal;
-import gluon.analysis.programBehavior.PPNonTerminal;
+import gluon.analysis.programBehavior.PBTerminal;
+import gluon.analysis.programBehavior.PBNonTerminal;
 import gluon.analysis.atomicity.AtomicityAnalysis;
 import gluon.analysis.valueEquivalence.ValueEquivAnalysis;
 import gluon.analysis.valueEquivalence.ValueM;
@@ -105,7 +105,7 @@ public class AnalysisMain
         {
             WordInstance wordInst;
 
-            wordInst=new WordInstance((PPNonTerminal)lca,word,actions);
+            wordInst=new WordInstance((PBNonTerminal)lca,word,actions);
 
             return checkedInstances.contains(wordInst);
         }
@@ -127,7 +127,7 @@ public class AnalysisMain
             int ret;
             WordInstance wordInst;
 
-            wordInst=new WordInstance((PPNonTerminal)lca,word,actions);
+            wordInst=new WordInstance((PBNonTerminal)lca,word,actions);
 
             ret=checkWordInstance(wordInst,reported,vEquiv);
 
@@ -231,7 +231,7 @@ public class AnalysisMain
 
         System.out.print("      Calls Location:");
 
-        for (PPTerminal t: wordInst.getParsingTerminals())
+        for (PBTerminal t: wordInst.getParsingTerminals())
         {
             int linenum=t.getLineNumber();
             String source=t.getSourceFile();

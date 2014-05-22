@@ -65,11 +65,11 @@ public class ClassBehaviorAnalysis
     public static Cfg emptyGrammar()
     {
         Cfg grammar=new Cfg();
-        Production prod=new Production(new PPNonTerminal("S",null));
+        Production prod=new Production(new PBNonTerminal("S",null));
 
         grammar.addProduction(prod);
 
-        grammar.setStart(new PPNonTerminal("S",null));
+        grammar.setStart(new PBNonTerminal("S",null));
 
         return grammar;
     }
@@ -86,12 +86,12 @@ public class ClassBehaviorAnalysis
         for (SootMethod m: classA.getMethods())
             if (m.hasActiveBody())
             {
-                PPNonTerminal nonterm;
+                PBNonTerminal nonterm;
                 Production production;
 
                 nonterm=super.analyzeMethod(m);
 
-                production=new Production(new PPNonTerminal("S'",null));
+                production=new Production(new PBNonTerminal("S'",null));
 
                 production.appendToBody(nonterm);
 
@@ -106,7 +106,7 @@ public class ClassBehaviorAnalysis
             return;
         }
 
-        super.grammar.setStart(new PPNonTerminal("S'",null));
+        super.grammar.setStart(new PBNonTerminal("S'",null));
 
         gluon.profiling.Timer.start("grammar-rm-epsilon");
         super.grammar=CfgRemoveEpsilons.removeEpsilons(super.grammar);

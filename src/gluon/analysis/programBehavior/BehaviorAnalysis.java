@@ -265,7 +265,7 @@ public abstract class BehaviorAnalysis
     private void analyzeUnitEnterMonitor(SootMethod method, UnitGraph cfg,
                                          EnterMonitorStmt unit)
     {
-        PPNonTerminal synchNonTerm=new PPNonTerminal(alias(unit)+"@",method);
+        PBNonTerminal synchNonTerm=new PBNonTerminal(alias(unit)+"@",method);
 
         synchNonTerm.setSynchBlock();
         synchNonTerm.setNoRemove();
@@ -277,12 +277,12 @@ public abstract class BehaviorAnalysis
 
             for (Unit exitmonsucc: cfg.getSuccsOf(exitmon))
             {
-                PPNonTerminal head=new PPNonTerminal(alias(unit),method);
+                PBNonTerminal head=new PBNonTerminal(alias(unit),method);
                 Production production=new Production(head);
 
                 production.appendToBody(synchNonTerm);
 
-                production.appendToBody(new PPNonTerminal(alias(exitmonsucc),
+                production.appendToBody(new PBNonTerminal(alias(exitmonsucc),
                                                           method));
 
                 grammar.addProduction(production);
@@ -294,7 +294,7 @@ public abstract class BehaviorAnalysis
         {
             Production production=new Production(synchNonTerm);
 
-            production.appendToBody(new PPNonTerminal(alias(succ),method));
+            production.appendToBody(new PBNonTerminal(alias(succ),method));
 
             grammar.addProduction(production);
         }
@@ -354,22 +354,22 @@ public abstract class BehaviorAnalysis
                     foundMethodCall(calledMethod);
 
                     if (!ignoreMethodCall(calledMethod))
-                        prodBodyPrefix=new PPNonTerminal(alias(calledMethod),method);
+                        prodBodyPrefix=new PBNonTerminal(alias(calledMethod),method);
                 }
                 break;
             }
             case SOMETIMES: addProdSkipPrefix=true; /* fall through */
-            case ALWAYS: prodBodyPrefix=new PPTerminal(calledMethod,unit,method); break;
+            case ALWAYS: prodBodyPrefix=new PBTerminal(calledMethod,unit,method); break;
             }
         }
 
         assert addProdSkipPrefix ? prodBodyPrefix != null : true;
 
-        PPNonTerminal prodHead=new PPNonTerminal(alias(unit),method);
+        PBNonTerminal prodHead=new PBNonTerminal(alias(unit),method);
 
         for (Unit succ: cfg.getSuccsOf(unit))
         {
-            PPNonTerminal succNonTerm=new PPNonTerminal(alias(succ),method);
+            PBNonTerminal succNonTerm=new PBNonTerminal(alias(succ),method);
 
             if (prodBodyPrefix == null || addProdSkipPrefix)
                 addUnitToSymbol(unit,succNonTerm,method);
@@ -396,7 +396,7 @@ public abstract class BehaviorAnalysis
                                      Symbol body2,
                                      SootMethod method)
     {
-        PPNonTerminal head=new PPNonTerminal(alias(unit),method);
+        PBNonTerminal head=new PBNonTerminal(alias(unit),method);
         Production production=new Production(head);
 
         production.appendToBody(body1);
@@ -408,7 +408,7 @@ public abstract class BehaviorAnalysis
     private void addUnitToSymbol(Unit unit, Symbol body,
                                  SootMethod method)
     {
-        PPNonTerminal head=new PPNonTerminal(alias(unit),method);
+        PBNonTerminal head=new PBNonTerminal(alias(unit),method);
         Production production=new Production(head);
 
         production.appendToBody(body);
@@ -418,7 +418,7 @@ public abstract class BehaviorAnalysis
 
     private void addUnitToEmptyProduction(Unit unit, SootMethod method)
     {
-        PPNonTerminal head=new PPNonTerminal(alias(unit),method);
+        PBNonTerminal head=new PBNonTerminal(alias(unit),method);
         Production production=new Production(head);
 
         grammar.addProduction(production);
@@ -427,9 +427,9 @@ public abstract class BehaviorAnalysis
     private void addMethodToHeadProduction(SootMethod method,
                                            Unit entryPoint)
     {
-        PPNonTerminal head=new PPNonTerminal(alias(method),method);
+        PBNonTerminal head=new PBNonTerminal(alias(method),method);
         Production production=new Production(head);
-        Symbol body=new PPNonTerminal(alias(entryPoint),method);
+        Symbol body=new PBNonTerminal(alias(entryPoint),method);
 
         head.setNoRemove();
 
@@ -440,7 +440,7 @@ public abstract class BehaviorAnalysis
 
     /* Adds the patterns of method to grammar
      */
-    protected PPNonTerminal analyzeMethod(SootMethod method)
+    protected PBNonTerminal analyzeMethod(SootMethod method)
     {
         UnitGraph cfg;
 
@@ -459,7 +459,7 @@ public abstract class BehaviorAnalysis
             analyzeUnit(method,cfg,head);
         }
 
-        return new PPNonTerminal(alias(method),method);
+        return new PBNonTerminal(alias(method),method);
     }
 
     public Cfg getGrammar()
@@ -472,7 +472,7 @@ public abstract class BehaviorAnalysis
     protected void addNewStart()
     {
         NonTerminal oldStart=grammar.getStart();
-        NonTerminal newStart=new PPNonTerminal(oldStart.toString()+'\'',
+        NonTerminal newStart=new PBNonTerminal(oldStart.toString()+'\'',
                                                null);
         Production prod=new Production(newStart);
 

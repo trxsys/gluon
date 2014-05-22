@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /* Represents a call to the module under analysis */
-public class PPTerminal
+public class PBTerminal
     extends gluon.grammar.Terminal
 {
     private final SootMethod method; /* module's method */
@@ -41,7 +41,7 @@ public class PPTerminal
     private List<String> arguments;
     private String ret; /* null if not used */
 
-    public PPTerminal(SootMethod m, Unit u, SootMethod cUnitMethod)
+    public PBTerminal(SootMethod m, Unit u, SootMethod cUnitMethod)
     {
         super(m.getName());
         method=m;
@@ -51,7 +51,7 @@ public class PPTerminal
         codeUnitMethod=cUnitMethod;
     }
 
-    public PPTerminal(String s)
+    public PBTerminal(String s)
     {
         super(s);
         method=null;
@@ -160,21 +160,21 @@ public class PPTerminal
     @Override
     public boolean equals(Object o)
     {
-        PPTerminal other;
+        PBTerminal other;
 
-        if (!(o instanceof PPTerminal))
+        if (!(o instanceof PBTerminal))
             return false;
 
-        other=(PPTerminal)o;
+        other=(PBTerminal)o;
 
         return other.name.equals(super.name);
     }
 
     @Override
-    public PPTerminal clone()
+    public PBTerminal clone()
     {
-        PPTerminal clone=method != null ? new PPTerminal(method,codeUnit,codeUnitMethod)
-            : new PPTerminal(super.getName());
+        PBTerminal clone=method != null ? new PBTerminal(method,codeUnit,codeUnitMethod)
+            : new PBTerminal(super.getName());
 
         clone.arguments=new ArrayList<String>(arguments.size());
         clone.arguments.addAll(arguments);

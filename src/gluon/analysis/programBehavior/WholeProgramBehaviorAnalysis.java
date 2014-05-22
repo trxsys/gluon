@@ -102,7 +102,7 @@ public class WholeProgramBehaviorAnalysis
 
         analyzeReachableMethods(entryMethod);
 
-        super.grammar.setStart(new PPNonTerminal(super.alias(entryMethod),entryMethod));
+        super.grammar.setStart(new PBNonTerminal(super.alias(entryMethod),entryMethod));
 
         gluon.profiling.Timer.start("grammar-rm-epsilon");
         super.grammar=CfgRemoveEpsilons.removeEpsilons(super.grammar);

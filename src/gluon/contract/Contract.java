@@ -25,7 +25,7 @@ import gluon.contract.parsing.ContractVisitorExtractWords;
 import gluon.contract.parsing.node.*;
 
 import gluon.grammar.Terminal;
-import gluon.analysis.programBehavior.PPTerminal;
+import gluon.analysis.programBehavior.PBTerminal;
 
 import soot.tagkit.AnnotationTag;
 import soot.tagkit.Tag;
@@ -113,11 +113,11 @@ public class Contract
         ast=parseContract(clause);
         ast.apply(visitorWords);
 
-        for (List<PPTerminal> word: visitorWords.getWords())
+        for (List<PBTerminal> word: visitorWords.getWords())
         {
             List<Terminal> contractWord;
 
-            for (PPTerminal t: word)
+            for (PBTerminal t: word)
                 if (module.declaresMethodByName(t.getName()))
                 {
                     try

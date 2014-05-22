@@ -20,7 +20,7 @@ import gluon.contract.parsing.node.*;
 import gluon.contract.parsing.analysis.Analysis;
 
 import gluon.grammar.Terminal;
-import gluon.analysis.programBehavior.PPTerminal;
+import gluon.analysis.programBehavior.PBTerminal;
 
 import java.util.Collection;
 import java.util.List;
@@ -31,13 +31,13 @@ import java.util.ArrayList;
 public class ContractVisitorExtractWords
     implements Analysis
 {
-    private Map<Node,Collection<List<PPTerminal>>> words;
+    private Map<Node,Collection<List<PBTerminal>>> words;
     private Node root;
 
     public ContractVisitorExtractWords()
     {
         root=null;
-        words=new HashMap<Node,Collection<List<PPTerminal>>>(64);
+        words=new HashMap<Node,Collection<List<PBTerminal>>>(64);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ContractVisitorExtractWords
     @Override
     public void caseAAltClause(AAltClause node)
     {
-        List<List<PPTerminal>> w=new ArrayList<List<PPTerminal>>(16);
+        List<List<PBTerminal>> w=new ArrayList<List<PBTerminal>>(16);
 
         node.getL().apply(this);
         node.getR().apply(this);
@@ -64,15 +64,15 @@ public class ContractVisitorExtractWords
     @Override
     public void caseAConcatClause(AConcatClause node)
     {
-        List<List<PPTerminal>> w=new ArrayList<List<PPTerminal>>(16);
+        List<List<PBTerminal>> w=new ArrayList<List<PBTerminal>>(16);
 
         node.getL().apply(this);
         node.getR().apply(this);
 
-        for (List<PPTerminal> wl: words.get(node.getL()))
-            for (List<PPTerminal> wr: words.get(node.getR()))
+        for (List<PBTerminal> wl: words.get(node.getL()))
+            for (List<PBTerminal> wr: words.get(node.getR()))
             {
-                List<PPTerminal> wlr=new ArrayList<PPTerminal>(wl.size()+wr.size());
+                List<PBTerminal> wlr=new ArrayList<PBTerminal>(wl.size()+wr.size());
 
                 wlr.addAll(wl);
                 wlr.addAll(wr);
@@ -86,10 +86,10 @@ public class ContractVisitorExtractWords
     @Override
     public void caseAMethodClause(AMethodClause node)
     {
-        List<List<PPTerminal>> w=new ArrayList<List<PPTerminal>>(1);
-        List<PPTerminal> word=new ArrayList<PPTerminal>(1);
+        List<List<PBTerminal>> w=new ArrayList<List<PBTerminal>>(1);
+        List<PBTerminal> word=new ArrayList<PBTerminal>(1);
         String methodName=node.getMethod().getText();
-        PPTerminal term=new PPTerminal(methodName);
+        PBTerminal term=new PBTerminal(methodName);
 
         for (TId varId: node.getId())
         {
@@ -110,7 +110,7 @@ public class ContractVisitorExtractWords
         words.put(node,w);
     }
 
-    public Collection<List<PPTerminal>> getWords()
+    public Collection<List<PBTerminal>> getWords()
     {
         assert root != null && words.containsKey(root);
 

@@ -18,14 +18,14 @@ package gluon.analysis.programBehavior;
 
 import soot.SootMethod;
 
-public class PPNonTerminal
+public class PBNonTerminal
     extends gluon.grammar.NonTerminal
 {
     private SootMethod method;
     private boolean noRemove;
     private boolean synchBlock;
 
-    public PPNonTerminal(String s, SootMethod m)
+    public PBNonTerminal(String s, SootMethod m)
     {
         super(s);
         method=m;
@@ -68,20 +68,20 @@ public class PPNonTerminal
     @Override
     public boolean equals(Object o)
     {
-        PPNonTerminal other;
+        PBNonTerminal other;
 
-        if (!(o instanceof PPNonTerminal))
+        if (!(o instanceof PBNonTerminal))
             return false;
 
-        other=(PPNonTerminal)o;
+        other=(PBNonTerminal)o;
 
         return other.name.equals(super.name);
     }
 
     @Override
-    public PPNonTerminal clone()
+    public PBNonTerminal clone()
     {
-        PPNonTerminal clone=new PPNonTerminal(super.name,method);
+        PBNonTerminal clone=new PBNonTerminal(super.name,method);
 
         clone.noRemove=noRemove;
         clone.synchBlock=synchBlock;
