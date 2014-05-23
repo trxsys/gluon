@@ -307,6 +307,18 @@ public class AnalysisMain
 
         grammar=programBehavior.getGrammar();
 
+
+        // begin TODO
+        AtomicityAnalysis aa=new AtomicityAnalysis(grammar);
+
+        if (Main.ATOMICITY_SYNCH)
+            aa.setSynchMode();
+
+        aa.analyze();
+        atomicityAnalysis=aa;
+        // end TODO
+
+
         gluon.profiling.Profiling.inc("grammar-productions",grammar.size());
 
         assert gluon.parsing.parser.ParserSubwords.isParsable(grammar);
@@ -344,10 +356,12 @@ public class AnalysisMain
 
     private void initAtomicityAnalysis(Collection<SootMethod> threads)
     {
+        /* TODO
         atomicityAnalysis=new AtomicityAnalysis();
 
         if (Main.ATOMICITY_SYNCH)
             atomicityAnalysis.setSynchMode();
+        */
     }
 
     private SootClass getModuleClass()

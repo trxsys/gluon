@@ -45,23 +45,59 @@ import gluon.WordInstance;
 import gluon.analysis.programBehavior.PBTerminal;
 import gluon.analysis.programBehavior.PBNonTerminal;
 
-import gluon.parsing.parseTree.ParseTree;
-import gluon.parsing.parseTree.ParseTreeNode;
+import gluon.grammar.Cfg;
+import gluon.grammar.NonTerminal;
+import gluon.grammar.Production;
+import gluon.grammar.Symbol;
+
+class NonTermAtomicity
+{
+    public final PBNonTerminal nonterm;
+    public final boolean reachedAtomically;
+
+    public NonTermAtomicity(PBNonTerminal nont, boolean ra)
+    {
+        nonterm=nont;
+        reachedAtomically=ra;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return nonterm.hashCode()^(reachedAtomically ? 0 : 0x6d24f632);
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        NonTermAtomicity other;
+
+        if (!(o instanceof NonTermAtomicity))
+            return false;
+
+        other=(NonTermAtomicity)o;
+
+        return reachedAtomically == other.reachedAtomically
+            && nonterm.equals(other.nonterm);
+    }
+}
 
 public class AtomicityAnalysis
 {
     private static final String ATOMIC_METHOD_ANNOTATION="Atomic";
 
+    private Cfg grammar;
     private boolean synchMode;
 
-    public AtomicityAnalysis()
-    {
-        synchMode=false;
-    }
+    private final Map<NonTerminal,Boolean> nontermsAtomicity;
 
-    public void setSynchMode()
+    public AtomicityAnalysis(Cfg grammar)
     {
-        synchMode=true;
+        int nonterms=2*grammar.getNonTerminals().size();
+
+        this.grammar=grammar;
+        this.synchMode=false;
+        this.nontermsAtomicity=new HashMap<NonTerminal,Boolean>(nonterms);
     }
 
     public static boolean isAtomicAnnotated(SootMethod method)
@@ -81,27 +117,66 @@ public class AtomicityAnalysis
         return false;
     }
 
+    public void setSynchMode()
+    {
+        synchMode=true;
+    }
+
+    public void analyze()
+    {
+        Queue<NonTermAtomicity> queue=new LinkedList<NonTermAtomicity>();
+        Set<NonTermAtomicity> enqueued=new HashSet<NonTermAtomicity>();
+        NonTermAtomicity start;
+
+        assert !((PBNonTerminal)grammar.getStart()).isAtomic()
+            : "The start symbol should be artificial.";
+
+        start=new NonTermAtomicity((PBNonTerminal)grammar.getStart(),false);
+
+        queue.add(start);
+        enqueued.add(start);
+
+        while (queue.size() > 0)
+        {
+            NonTermAtomicity nonterma=queue.poll();
+            PBNonTerminal nonterm=nonterma.nonterm;
+            boolean reachedAtomically=nonterma.reachedAtomically;
+
+            if (!nontermsAtomicity.containsKey(nonterm))
+                nontermsAtomicity.put(nonterm,reachedAtomically);
+            else
+                nontermsAtomicity.put(nonterm,
+                                      nontermsAtomicity.get(nonterm)
+                                      && reachedAtomically);
+
+            for (Production p: grammar.getProductionsOf(nonterm))
+                for (Symbol s: p.getBody())
+                {
+                    PBNonTerminal n;
+                    NonTermAtomicity succ;
+
+                    if (!(s instanceof PBNonTerminal))
+                        continue;
+
+                    n=(PBNonTerminal)s;
+
+                    succ=new NonTermAtomicity(n,reachedAtomically
+                                              || n.isAtomic());
+
+                    if (!enqueued.contains(succ))
+                    {
+                        queue.add(succ);
+                        enqueued.add(succ);
+                    }
+                }
+        }
+    }
+
     public boolean isAtomic(WordInstance word)
     {
-        ParseTree tree=word.getParseTree();
+        assert word.getLCA() != null;
+        assert nontermsAtomicity.containsKey(word.getLCA());
 
-        assert word.getLCA().equals(tree.getLCA().getElem());
-
-        /* Climb the tree from the LCA to the root.
-         * If some of these nodes is atomically executed then this is atomic.
-         */
-        for (ParseTreeNode n=tree.getLCA(); n != null; n=n.getParent())
-        {
-            PBNonTerminal nonterm;
-
-            assert n.getElem() instanceof PBNonTerminal;
-
-            nonterm=(PBNonTerminal)n.getElem();
-
-            if (nonterm.isAtomic())
-                return true;
-        }
-
-        return false;
+        return nontermsAtomicity.get(word.getLCA());
     }
 }
