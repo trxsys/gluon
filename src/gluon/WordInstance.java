@@ -77,6 +77,7 @@ public class WordInstance
         return lca;
     }
 
+    /* Memoization */
     private ParseTree parseTree=null;
     public ParseTree getParseTree()
     {
@@ -88,6 +89,8 @@ public class WordInstance
         tree=new ParseTree(word,actions);
 
         tree.buildTree();
+
+        assert lca.equals(tree.getLCA().getElem());
 
         return tree;
     }
@@ -112,20 +115,6 @@ public class WordInstance
             ppterms.add((PBTerminal)t);
 
         return parsingTerminals=ppterms;
-    }
-
-    public boolean assertLCASanityCheck()
-    {
-        if (DEBUG)
-        {
-            ParseTree ptree=new ParseTree(word,actions);
-
-            ptree.buildTree();
-
-            return lca.equals(ptree.getLCA().getElem());
-        }
-        else
-            return true;
     }
 
     public String actionsStr()

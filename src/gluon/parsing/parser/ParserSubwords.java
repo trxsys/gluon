@@ -160,20 +160,6 @@ public class ParserSubwords
                 throw new ParserAbortedException();
             }
 
-            /* If this is the *first* configuration of this branch to have an
-             * LCA this is the best place to try to prune it.
-             *
-             * This *should not* be done before adding the configuration on the
-             * lifo.
-             */
-            if (parserConf.firstToReachedLCA()
-                && parserCB.pruneOnLCA(parserConf.getActionList(),
-                                       parserConf.lca))
-            {
-                gluon.profiling.Profiling.inc("parse-branches");
-                continue;
-            }
-
             if (super.table.actions(state,EOI).contains(ACCEPT))
             {
                 gluon.profiling.Timer.stop("parsing-completeRR");
@@ -200,7 +186,21 @@ public class ParserSubwords
 
                     if (conf.getTerminalNum() == input.size()
                         && conf.lca == null)
+                    {
+                        boolean cont;
+
                         conf.lca=red.getProduction().getHead();
+
+                        gluon.profiling.Timer.stop("parsing");
+                        cont=parserCB.onLCA(conf.getActionList(),conf.lca);
+                        gluon.profiling.Timer.start("parsing");
+
+                        if (!cont)
+                        {
+                             gluon.profiling.Profiling.inc("parse-branches");
+                             continue;
+                        }
+                    }
 
                     parseLifo.add(conf);
                 }

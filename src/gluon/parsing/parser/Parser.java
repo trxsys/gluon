@@ -414,8 +414,19 @@ public abstract class Parser
                     && action instanceof ParsingActionReduce)
                 {
                     ParsingActionReduce red=(ParsingActionReduce)action;
+                    boolean cont;
 
                     branch.lca=red.getProduction().getHead();
+
+                    gluon.profiling.Timer.stop("parsing");
+                    cont=parserCB.onLCA(branch.getActionList(),branch.lca);
+                    gluon.profiling.Timer.start("parsing");
+
+                    if (!cont)
+                    {
+                        gluon.profiling.Profiling.inc("parse-branches");
+                        continue;
+                    }
                 }
 
                 parseLifo.add(branch);
@@ -449,20 +460,6 @@ public abstract class Parser
 
             if (counter == 0 && parserCB.shouldAbort())
                 throw new ParserAbortedException();
-
-            /* If this is the *first* configuration of this branch to have an
-             * LCA this is the best place to try to prune it.
-             *
-             * This *should not* be done before adding the configuration on the
-             * lifo.
-             */
-            if (parserConf.firstToReachedLCA()
-                && parserCB.pruneOnLCA(parserConf.getActionList(),
-                                       parserConf.lca))
-            {
-                gluon.profiling.Profiling.inc("parse-branches");
-                continue;
-            }
 
             parseSingleStep(parserConf,input);
         }

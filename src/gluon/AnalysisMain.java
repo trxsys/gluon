@@ -86,7 +86,6 @@ public class AnalysisMain
         private Set<WordInstance> reported;
         private ValueEquivAnalysis vEquiv;
         private long startTime;
-        private Set<WordInstance> checkedInstances;
 
         public ParserCallbackCheckWord(List<Terminal> word,
                                        Set<WordInstance> reported,
@@ -97,17 +96,21 @@ public class AnalysisMain
             this.reported=reported;
             this.vEquiv=vEquiv;
             this.startTime=startTime;
-
-            this.checkedInstances=new HashSet<WordInstance>();
         }
 
-        public boolean pruneOnLCA(List<ParsingAction> actions, NonTerminal lca)
+        public boolean onLCA(List<ParsingAction> actions, NonTerminal lca)
         {
             WordInstance wordInst;
+            int ret;
 
             wordInst=new WordInstance((PBNonTerminal)lca,word,actions);
 
-            return checkedInstances.contains(wordInst);
+            ret=checkWordInstance(wordInst,reported,vEquiv);
+
+            if (ret <= 0)
+                System.out.println();
+
+            return false;
         }
 
         public boolean shouldAbort()
@@ -124,17 +127,7 @@ public class AnalysisMain
 
         public void accepted(List<ParsingAction> actions, NonTerminal lca)
         {
-            int ret;
-            WordInstance wordInst;
-
-            wordInst=new WordInstance((PBNonTerminal)lca,word,actions);
-
-            ret=checkWordInstance(wordInst,reported,vEquiv);
-
-            checkedInstances.add(wordInst);
-
-            if (ret <= 0)
-                System.out.println();
+            assert false : "We should be prunning everything on LCA";
         }
     };
 
@@ -200,8 +193,6 @@ public class AnalysisMain
         boolean atomic;
 
         gluon.profiling.Timer.start("check-word-instance");
-
-        assert wordInst.assertLCASanityCheck();
 
         if (reported.contains(wordInst))
         {

@@ -23,13 +23,15 @@ import gluon.grammar.NonTerminal;
 
 public interface ParserCallback
 {
-    /* Whenever the parser reaches an LCA this is called to check if that
-     * parsing branch should be prunes.
+    /* Whenever the parser reaches an LCA this is called with the list of
+     * parsing actions so far.
      * Notice that this only contains a partial parse tree (up to the LCA);
      * there might be multiple ways to complete this tree up to the start
      * nonterminal.
+     *
+     * If the return value is false the parsing branch is discarded.
      */
-    public boolean pruneOnLCA(List<ParsingAction> actions, NonTerminal lca);
+    public boolean onLCA(List<ParsingAction> actions, NonTerminal lca);
 
     /* Called periodically while the parser is running.
      * It can be used to implement a timeout when the parser is running for too
