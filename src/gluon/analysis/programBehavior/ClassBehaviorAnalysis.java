@@ -103,6 +103,9 @@ public class ClassBehaviorAnalysis
         if (grammar.size() == 0)
         {
             super.grammar=emptyGrammar();
+
+            gluon.profiling.Timer.stop("analysis-behavior");
+
             return;
         }
 
