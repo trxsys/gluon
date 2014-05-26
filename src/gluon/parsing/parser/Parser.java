@@ -459,7 +459,10 @@ public abstract class Parser
             counter=(counter+1)%500000;
 
             if (counter == 0 && parserCB.shouldAbort())
+            {
+                gluon.profiling.Timer.stop("parsing");
                 throw new ParserAbortedException();
+            }
 
             parseSingleStep(parserConf,input);
         }

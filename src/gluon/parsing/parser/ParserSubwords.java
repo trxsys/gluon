@@ -157,6 +157,7 @@ public class ParserSubwords
             if (counter == 0 && parserCB.shouldAbort())
             {
                 gluon.profiling.Timer.stop("parsing-completeRR");
+                gluon.profiling.Timer.stop("parsing");
                 throw new ParserAbortedException();
             }
 
