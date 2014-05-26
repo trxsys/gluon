@@ -27,11 +27,11 @@ import java.util.Collections;
 
 public class Profiling
 {
-    private static Map<String,Integer> values;
+    private static Map<String,Long> values;
 
     static
     {
-        values=new HashMap<String,Integer>();
+        values=new HashMap<String,Long>();
     }
 
     private Profiling()
@@ -39,14 +39,14 @@ public class Profiling
         assert false;
     }
 
-    public static void set(String id, int v)
+    public static void set(String id, long v)
     {
         values.put(id,v);
     }
 
-    public static int get(String id)
+    public static long get(String id)
     {
-        Integer v=values.get(id);
+        Long v=values.get(id);
 
         assert v != null;
 
@@ -60,10 +60,10 @@ public class Profiling
 
     public static void inc(String id, int delta)
     {
-        Integer v=values.get(id);
+        Long v=values.get(id);
 
         if (v == null)
-            v=0;
+            v=0L;
 
         set(id,v+delta);
     }
