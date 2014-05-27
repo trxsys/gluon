@@ -182,6 +182,8 @@ class ParserConfiguration
         if (!(conf.action instanceof ParsingActionReduce))
             return false;
 
+        gluon.profiling.Timer.start("isloop");
+
         redHead=((ParsingActionReduce)conf.action).getProduction().getHead();
         genTerminals=conf.getTerminalNum();
 
@@ -194,23 +196,33 @@ class ParserConfiguration
             /* This means that we encontered a shift which is productive,
              * therefore we can stop now.
              */
-            if (!(pc.action instanceof ParsingActionReduce))
+            if (pc.action instanceof ParsingActionShift)
             {
-                assert pc.action instanceof ParsingActionShift;
+                gluon.profiling.Timer.stop("isloop");
                 return false;
             }
+
+            assert pc.action instanceof ParsingActionReduce;
 
             ancGenTerminals=pc.getTerminalNum();
 
             if (ancGenTerminals < genTerminals)
+            {
+                gluon.profiling.Timer.stop("isloop");
                 return false;
+            }
 
             ancRed=(ParsingActionReduce)pc.action;
             ancRedHead=ancRed.getProduction().getHead();
 
             if (redHead.equals(ancRedHead))
+            {
+                gluon.profiling.Timer.stop("isloop");
                 return true;
+            }
         }
+
+        gluon.profiling.Timer.stop("isloop");
 
         return false;
     }
