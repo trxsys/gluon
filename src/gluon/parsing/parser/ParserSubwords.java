@@ -193,7 +193,9 @@ public class ParserSubwords
                         conf.lca=red.getProduction().getHead();
 
                         gluon.profiling.Timer.stop("parsing");
+                        gluon.profiling.Timer.stop("parsing-completeRR");
                         cont=parserCB.onLCA(conf.getActionList(),conf.lca);
+                        gluon.profiling.Timer.start("parsing-completeRR");
                         gluon.profiling.Timer.start("parsing");
 
                         if (!cont)
