@@ -30,6 +30,7 @@ import gluon.grammar.NonTerminal;
 
 import gluon.analysis.pointsTo.PointsToInformation;
 import gluon.analysis.monitor.MonitorAnalysis;
+import gluon.analysis.atomicity.AtomicityAnalysis;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -267,8 +268,10 @@ public abstract class BehaviorAnalysis
     {
         PBNonTerminal synchNonTerm=new PBNonTerminal(alias(unit)+"@",method);
 
-        synchNonTerm.setSynchBlock();
+        assert isSynchMode();
+
         synchNonTerm.setNoRemove();
+        synchNonTerm.setAtomic();
 
         /* Add A  → A@ D */
         for (ExitMonitorStmt exitmon: monitorAnalysis.getExitMonitor(unit))
@@ -432,6 +435,17 @@ public abstract class BehaviorAnalysis
         Symbol body=new PBNonTerminal(alias(entryPoint),method);
 
         head.setNoRemove();
+
+        if (isSynchMode())
+        {
+            if (method.isSynchronized())
+                head.setAtomic();
+        }
+        else
+        {
+            if (AtomicityAnalysis.isAtomicAnnotated(method))
+                head.setAtomic();
+        }
 
         production.appendToBody(body);
 

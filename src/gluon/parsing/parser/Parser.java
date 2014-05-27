@@ -182,6 +182,8 @@ class ParserConfiguration
         if (!(conf.action instanceof ParsingActionReduce))
             return false;
 
+        gluon.profiling.Timer.start("isloop");
+
         redHead=((ParsingActionReduce)conf.action).getProduction().getHead();
         genTerminals=conf.getTerminalNum();
 
@@ -194,23 +196,33 @@ class ParserConfiguration
             /* This means that we encontered a shift which is productive,
              * therefore we can stop now.
              */
-            if (!(pc.action instanceof ParsingActionReduce))
+            if (pc.action instanceof ParsingActionShift)
             {
-                assert pc.action instanceof ParsingActionShift;
+                gluon.profiling.Timer.stop("isloop");
                 return false;
             }
+
+            assert pc.action instanceof ParsingActionReduce;
 
             ancGenTerminals=pc.getTerminalNum();
 
             if (ancGenTerminals < genTerminals)
+            {
+                gluon.profiling.Timer.stop("isloop");
                 return false;
+            }
 
             ancRed=(ParsingActionReduce)pc.action;
             ancRedHead=ancRed.getProduction().getHead();
 
             if (redHead.equals(ancRedHead))
+            {
+                gluon.profiling.Timer.stop("isloop");
                 return true;
+            }
         }
+
+        gluon.profiling.Timer.stop("isloop");
 
         return false;
     }
@@ -414,8 +426,19 @@ public abstract class Parser
                     && action instanceof ParsingActionReduce)
                 {
                     ParsingActionReduce red=(ParsingActionReduce)action;
+                    boolean cont;
 
                     branch.lca=red.getProduction().getHead();
+
+                    gluon.profiling.Timer.stop("parsing");
+                    cont=parserCB.onLCA(branch.getActionList(),branch.lca);
+                    gluon.profiling.Timer.start("parsing");
+
+                    if (!cont)
+                    {
+                        gluon.profiling.Profiling.inc("parse-branches");
+                        continue;
+                    }
                 }
 
                 parseLifo.add(branch);
@@ -448,20 +471,9 @@ public abstract class Parser
             counter=(counter+1)%500000;
 
             if (counter == 0 && parserCB.shouldAbort())
-                throw new ParserAbortedException();
-
-            /* If this is the *first* configuration of this branch to have an
-             * LCA this is the best place to try to prune it.
-             *
-             * This *should not* be done before adding the configuration on the
-             * lifo.
-             */
-            if (parserConf.firstToReachedLCA()
-                && parserCB.pruneOnLCA(parserConf.getActionList(),
-                                       parserConf.lca))
             {
-                gluon.profiling.Profiling.inc("parse-branches");
-                continue;
+                gluon.profiling.Timer.stop("parsing");
+                throw new ParserAbortedException();
             }
 
             parseSingleStep(parserConf,input);

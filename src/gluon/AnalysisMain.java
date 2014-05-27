@@ -74,40 +74,63 @@ public class AnalysisMain
     private Scene scene;
     private String moduleName; /* Name of the module to analyze */
     private SootClass module;  /* Class of the module to analyze */
-    private AtomicityAnalysis atomicityAnalysis;
     private Contract contract;
 
     private String contractRaw;
 
+    /* TODO: we should have a class called AnalysisContext */
     class ParserCallbackCheckWord
         implements ParserCallback
     {
         private List<Terminal> word;
-        private Set<WordInstance> reported;
+        private Set<WordInstance> verifiedWords;
+        private AtomicityAnalysis atomicityAnalysis;
         private ValueEquivAnalysis vEquiv;
         private long startTime;
-        private Set<WordInstance> checkedInstances;
+
+        private int reported;
 
         public ParserCallbackCheckWord(List<Terminal> word,
-                                       Set<WordInstance> reported,
+                                       Set<WordInstance> verifiedWords,
+                                       AtomicityAnalysis atomicityAnalysis,
                                        ValueEquivAnalysis vEquiv,
                                        long startTime)
         {
             this.word=word;
-            this.reported=reported;
+            this.verifiedWords=verifiedWords;
+            this.atomicityAnalysis=atomicityAnalysis;
             this.vEquiv=vEquiv;
             this.startTime=startTime;
 
-            this.checkedInstances=new HashSet<WordInstance>();
+            this.reported=0;
         }
 
-        public boolean pruneOnLCA(List<ParsingAction> actions, NonTerminal lca)
+        public int getReported()
+        {
+            return reported;
+        }
+
+        public boolean onLCA(List<ParsingAction> actions, NonTerminal lca)
         {
             WordInstance wordInst;
+            int ret;
 
             wordInst=new WordInstance((PBNonTerminal)lca,word,actions);
 
-            return checkedInstances.contains(wordInst);
+            if (verifiedWords.contains(wordInst))
+                return false;
+
+            ret=checkWordInstance(wordInst,atomicityAnalysis,vEquiv);
+
+            verifiedWords.add(wordInst);
+
+            if (ret <= 0)
+                reported++;
+
+            if (ret <= 0)
+                System.out.println();
+
+            return false;
         }
 
         public boolean shouldAbort()
@@ -124,17 +147,7 @@ public class AnalysisMain
 
         public void accepted(List<ParsingAction> actions, NonTerminal lca)
         {
-            int ret;
-            WordInstance wordInst;
-
-            wordInst=new WordInstance((PBNonTerminal)lca,word,actions);
-
-            ret=checkWordInstance(wordInst,reported,vEquiv);
-
-            checkedInstances.add(wordInst);
-
-            if (ret <= 0)
-                System.out.println();
+            assert false : "We should be prunning everything on LCA";
         }
     };
 
@@ -143,7 +156,6 @@ public class AnalysisMain
         scene=null;
         moduleName=null;
         module=null;
-        atomicityAnalysis=null;
         contract=null;
         contractRaw=null;
     }
@@ -193,21 +205,13 @@ public class AnalysisMain
      *         < 0 if the word is a contract violation.
      */
     private int checkWordInstance(WordInstance wordInst,
-                                  Set<WordInstance> reported,
+                                  AtomicityAnalysis atomicity,
                                   ValueEquivAnalysis vEquiv)
     {
         SootMethod lcaMethod;
         boolean atomic;
 
         gluon.profiling.Timer.start("check-word-instance");
-
-        assert wordInst.assertLCASanityCheck();
-
-        if (reported.contains(wordInst))
-        {
-            gluon.profiling.Timer.stop("check-word-instance");
-            return 1;
-        }
 
         if (!wordInst.argumentsMatch(vEquiv))
         {
@@ -218,9 +222,7 @@ public class AnalysisMain
 
         gluon.profiling.Profiling.inc("parse-trees");
 
-        reported.add(wordInst);
-
-        atomic=atomicityAnalysis.isAtomic(wordInst);
+        atomic=atomicity.isAtomic(wordInst);
 
         dprintln("      Lowest common ancestor: "+wordInst.getLCA());
 
@@ -253,9 +255,10 @@ public class AnalysisMain
                                  ValueEquivAnalysis vEquiv)
         throws ParserAbortedException
     {
-        Set<WordInstance> reported=new HashSet<WordInstance>();
+        Set<WordInstance> verifiedWords=new HashSet<WordInstance>();
         long startTime=System.currentTimeMillis()/1000;
         Collection<AllocNode> moduleAllocSites;
+        int reported=0;
 
         System.out.println("  Verifying word "+WordInstance.wordStr(word)+":");
         System.out.println();
@@ -269,7 +272,9 @@ public class AnalysisMain
         {
             Parser parser;
             BehaviorAnalysis ba=new WholeProgramBehaviorAnalysis(thread,module,as);
-            ParserCallback pcb;
+            AtomicityAnalysis aa;
+            Cfg grammar;
+            ParserCallbackCheckWord pcb;
 
             gluon.profiling.Profiling.inc("alloc-sites");
 
@@ -281,31 +286,49 @@ public class AnalysisMain
                 ba.setSynchMode(monAnalysis);
             }
 
-            parser=makeParser(ba);
+            ba.analyze();
+
+            grammar=ba.getGrammar();
+
+            aa=new AtomicityAnalysis(grammar);
+
+            if (Main.ATOMICITY_SYNCH)
+                aa.setSynchMode();
+
+            aa.analyze();
+
+            parser=makeParser(grammar);
 
             dprintln("Created parser for thread "+thread.getName()
                      +"(), allocation site "+as+".");
 
-            pcb=new ParserCallbackCheckWord(word,reported,vEquiv,startTime);
+            pcb=new ParserCallbackCheckWord(word,verifiedWords,aa,vEquiv,startTime);
 
             parser.parse(word,pcb);
+
+            reported+=pcb.getReported();
         }
 
-        if (reported.size() == 0)
+        if (reported == 0)
         {
             System.out.println("    No occurrences");
             System.out.println();
         }
     }
 
-    private Parser makeParser(BehaviorAnalysis programBehavior)
+    private Parser makeParser(Cfg grammar)
     {
         ParsingTable parsingTable;
-        Cfg grammar;
 
-        programBehavior.analyze();
+        // begin TODO
+        AtomicityAnalysis aa=new AtomicityAnalysis(grammar);
 
-        grammar=programBehavior.getGrammar();
+        if (Main.ATOMICITY_SYNCH)
+            aa.setSynchMode();
+
+        aa.analyze();
+        // end TODO
+
 
         gluon.profiling.Profiling.inc("grammar-productions",grammar.size());
 
@@ -342,14 +365,6 @@ public class AnalysisMain
             }
     }
 
-    private void initAtomicityAnalysis(Collection<SootMethod> threads)
-    {
-        atomicityAnalysis=new AtomicityAnalysis();
-
-        if (Main.ATOMICITY_SYNCH)
-            atomicityAnalysis.setSynchMode();
-    }
-
     private SootClass getModuleClass()
     {
         assert moduleName != null;
@@ -371,11 +386,13 @@ public class AnalysisMain
                                                     ValueEquivAnalysis vEquiv)
         throws ParserAbortedException
     {
-        Set<WordInstance> reported=new HashSet<WordInstance>();
+        Set<WordInstance> verifiedWords=new HashSet<WordInstance>();
         long startTime=System.currentTimeMillis()/1000;
         Parser parser;
+        Cfg grammar;
         BehaviorAnalysis ba=new ClassBehaviorAnalysis(c,module);
-        ParserCallback pcb;
+        AtomicityAnalysis aa;
+        ParserCallbackCheckWord pcb;
 
         System.out.println("  Verifying word "+WordInstance.wordStr(word)+":");
         System.out.println();
@@ -388,13 +405,24 @@ public class AnalysisMain
             ba.setSynchMode(monAnalysis);
         }
 
-        parser=makeParser(ba);
+        ba.analyze();
 
-        pcb=new ParserCallbackCheckWord(word,reported,vEquiv,startTime);
+        grammar=ba.getGrammar();
+
+        aa=new AtomicityAnalysis(grammar);
+
+        if (Main.ATOMICITY_SYNCH)
+            aa.setSynchMode();
+
+        aa.analyze();
+
+        parser=makeParser(grammar);
+
+        pcb=new ParserCallbackCheckWord(word,verifiedWords,aa,vEquiv,startTime);
 
         parser.parse(word,pcb);
 
-        if (reported.size() == 0)
+        if (pcb.getReported() == 0)
         {
             System.out.println("    No occurrences");
             System.out.println();
@@ -406,9 +434,10 @@ public class AnalysisMain
                                                ValueEquivAnalysis vEquiv)
         throws ParserAbortedException
     {
-        Set<WordInstance> reported=new HashSet<WordInstance>();
+        Set<WordInstance> verifiedWords=new HashSet<WordInstance>();
         long startTime=System.currentTimeMillis()/1000;
         Collection<AllocNode> moduleAllocSites;
+        int reported=0;
 
         System.out.println("  Verifying word "+WordInstance.wordStr(word)+":");
         System.out.println();
@@ -421,8 +450,10 @@ public class AnalysisMain
         for (soot.jimple.spark.pag.AllocNode as: moduleAllocSites)
         {
             Parser parser;
+            Cfg grammar;
             BehaviorAnalysis ba=new ClassBehaviorAnalysis(c,module,as);
-            ParserCallback pcb;
+            AtomicityAnalysis aa;
+            ParserCallbackCheckWord pcb;
 
             gluon.profiling.Profiling.inc("alloc-sites");
 
@@ -434,17 +465,30 @@ public class AnalysisMain
                 ba.setSynchMode(monAnalysis);
             }
 
-            parser=makeParser(ba);
+            ba.analyze();
+
+            grammar=ba.getGrammar();
+
+            aa=new AtomicityAnalysis(grammar);
+
+            if (Main.ATOMICITY_SYNCH)
+                aa.setSynchMode();
+
+            aa.analyze();
+
+            parser=makeParser(grammar);
 
             dprintln("Created parser for class "+c.getName()
                      +", allocation site "+as+".");
 
-            pcb=new ParserCallbackCheckWord(word,reported,vEquiv,startTime);
+            pcb=new ParserCallbackCheckWord(word,verifiedWords,aa,vEquiv,startTime);
 
             parser.parse(word,pcb);
+
+            reported+=pcb.getReported();
         }
 
-        if (reported.size() == 0)
+        if (reported == 0)
         {
             System.out.println("    No occurrences");
             System.out.println();
@@ -524,8 +568,6 @@ public class AnalysisMain
         dprintln("Obtained "+threads.size()+" thread entry points.");
 
         gluon.profiling.Profiling.set("threads",threads.size());
-
-        initAtomicityAnalysis(threads);
 
         if (Main.CLASS_SCOPE)
             for (SootClass c: scene.getClasses())
