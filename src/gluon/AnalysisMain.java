@@ -115,10 +115,15 @@ public class AnalysisMain
             WordInstance wordInst;
             int ret;
 
+            gluon.profiling.Timer.start(".onLCA");
+
             wordInst=new WordInstance((PBNonTerminal)lca,word,actions);
 
             if (verifiedWords.contains(wordInst))
+            {
+                gluon.profiling.Timer.stop(".onLCA");
                 return false;
+            }
 
             ret=checkWordInstance(wordInst,atomicityAnalysis,vEquiv);
 
@@ -129,6 +134,8 @@ public class AnalysisMain
 
             if (ret <= 0)
                 System.out.println();
+
+            gluon.profiling.Timer.stop(".onLCA");
 
             return false;
         }

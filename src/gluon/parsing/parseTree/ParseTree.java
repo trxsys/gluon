@@ -48,6 +48,8 @@ public class ParseTree
         Stack<ParseTreeNode> stack=new Stack<ParseTreeNode>();
         int pos=0;
 
+        gluon.profiling.Timer.start(".buildTree");
+
         leafs=new ArrayList<ParseTreeNode>(word.size());
 
         for (ParsingAction a: actions)
@@ -101,6 +103,8 @@ public class ParseTree
 
                 assert pos == inputTerminals;
             }
+
+        gluon.profiling.Timer.stop(".buildTree");
     }
 
     public List<Terminal> getTerminals()

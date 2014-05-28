@@ -182,7 +182,7 @@ class ParserConfiguration
         if (!(conf.action instanceof ParsingActionReduce))
             return false;
 
-        gluon.profiling.Timer.start("isloop");
+        gluon.profiling.Timer.start(".isLoop");
 
         redHead=((ParsingActionReduce)conf.action).getProduction().getHead();
         genTerminals=conf.getTerminalNum();
@@ -198,7 +198,7 @@ class ParserConfiguration
              */
             if (pc.action instanceof ParsingActionShift)
             {
-                gluon.profiling.Timer.stop("isloop");
+                gluon.profiling.Timer.stop(".isLoop");
                 return false;
             }
 
@@ -208,7 +208,7 @@ class ParserConfiguration
 
             if (ancGenTerminals < genTerminals)
             {
-                gluon.profiling.Timer.stop("isloop");
+                gluon.profiling.Timer.stop(".isLoop");
                 return false;
             }
 
@@ -217,12 +217,12 @@ class ParserConfiguration
 
             if (redHead.equals(ancRedHead))
             {
-                gluon.profiling.Timer.stop("isloop");
+                gluon.profiling.Timer.stop(".isLoop");
                 return true;
             }
         }
 
-        gluon.profiling.Timer.stop("isloop");
+        gluon.profiling.Timer.stop(".isLoop");
 
         return false;
     }
