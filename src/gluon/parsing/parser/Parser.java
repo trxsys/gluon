@@ -121,6 +121,22 @@ class ParserConfiguration
 
     public int pos;
 
+    /* Bitmap bloom filter used to improve isLoop() performance.
+     *
+     * This filter represents the set of nonterminals reduced since the last
+     * shift.  For instance if we have the following actions:
+     *
+     *    < ..., shift, red[A → B] >
+     *
+     * then bloomFilter.mayContain(A).  We use this to quickly return false
+     * in isLoop() if no reduction is made [since the last shift] to a given
+     * nonterminal.
+     *
+     * setAction() maintains this bloom filter.
+     */
+    private static final int RED_BF_SIZE=61; /* a prime number */
+    private long reductionsBloomFilter;
+
     public ParserConfiguration(ParserConfiguration parentConfig)
     {
         parent=parentConfig;
@@ -131,12 +147,14 @@ class ParserConfiguration
             stack=parentConfig.stack.clone();
             lca=parentConfig.lca;
             pos=parentConfig.pos;
+            reductionsBloomFilter=parentConfig.reductionsBloomFilter;
         }
         else
         {
             stack=new ParsingStack();
             lca=null;
             pos=0;
+            reductionsBloomFilter=0;
         }
     }
 
@@ -145,16 +163,32 @@ class ParserConfiguration
         this(null);
     }
 
-    /* Indicates if this is the first configuration to reach the LCA in this
-     * parsing branch.
-     */
-    public boolean firstToReachedLCA()
+    private void redBFClear()
     {
-        return lca != null && parent.lca == null;
+        reductionsBloomFilter=0;
+    }
+
+    private void redBFAdd(NonTerminal nonterm)
+    {
+        int bit=nonterm.hashCode()%RED_BF_SIZE;
+
+        reductionsBloomFilter=reductionsBloomFilter|(1L<<bit);
+    }
+
+    private boolean redBFmayContain(NonTerminal nonterm)
+    {
+        int bit=nonterm.hashCode()%RED_BF_SIZE;
+
+        return (reductionsBloomFilter&(1L<<bit)) != 0;
     }
 
     public void setAction(ParsingAction a)
     {
+        if (a instanceof ParsingActionShift)
+            redBFClear();
+        else if (a instanceof ParsingActionReduce)
+            redBFAdd(((ParsingActionReduce)a).getProduction().getHead());
+
         action=a;
     }
 
@@ -186,6 +220,12 @@ class ParserConfiguration
 
         redHead=((ParsingActionReduce)conf.action).getProduction().getHead();
         genTerminals=conf.getTerminalNum();
+
+        if (!redBFmayContain(redHead))
+        {
+            gluon.profiling.Timer.stop(".isLoop");
+            return false;
+        }
 
         for (ParserConfiguration pc=this; pc != null; pc=pc.parent)
         {
@@ -246,6 +286,7 @@ class ParserConfiguration
         clone.stack=stack.clone();
         clone.lca=lca;
         clone.pos=pos;
+        clone.reductionsBloomFilter=reductionsBloomFilter;
 
         return clone;
     }
