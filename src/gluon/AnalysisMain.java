@@ -340,16 +340,6 @@ public class AnalysisMain
     {
         ParsingTable parsingTable;
 
-        // begin TODO
-        AtomicityAnalysis aa=new AtomicityAnalysis(grammar);
-
-        if (Main.ATOMICITY_SYNCH)
-            aa.setSynchMode();
-
-        aa.analyze();
-        // end TODO
-
-
         gluon.profiling.Profiling.inc("grammar-productions",grammar.size());
 
         assert gluon.parsing.parser.ParserSubwords.isParsable(grammar);
