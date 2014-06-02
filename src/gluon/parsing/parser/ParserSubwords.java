@@ -131,14 +131,51 @@ public class ParserSubwords
         return !fail;
     }
 
+
+
+    /* TODO */
+    private Collection<ParsingAction>
+        getSuccessorActions(ParserConfiguration parserConf,
+                            List<Terminal> input)
+    {
+        final EOITerminal EOI=new EOITerminal();
+        final ParsingActionAccept ACCEPT=new ParsingActionAccept();
+        Collection<ParsingAction> actions;
+        int state=parserConf.getState();
+        Collection<Item> items;
+
+        items=super.table.getStateItems(state);
+
+        actions=new ArrayList<ParsingAction>(items.size()+1);
+
+        for (Item item: items)
+        {
+            Production partialProd=item.getPartialProduction();
+            ParsingActionReduce red=new ParsingActionReduce(partialProd);
+
+            actions.add(red);
+        }
+
+        if (super.table.actions(state,EOI).contains(ACCEPT))
+        {
+            assert items.size() == 0 : "When we find an action there should "
+                +"not be any possible alternative";
+
+            actions.add(new ParsingActionAccept());
+        }
+
+        return actions;
+    }
+
+
+
+
     /* Apply the reductions until we reach the start nonterminal.
      */
     private void
         completeRemainingReductions(ParserConfiguration parent, List<Terminal> input)
         throws ParserAbortedException
     {
-        final EOITerminal EOI=new EOITerminal();
-        final ParsingActionAccept ACCEPT=new ParsingActionAccept();
         Stack<ParserConfiguration> parseLifo;
         int counter=0; /* For calling pcb.shouldStop() */
 
@@ -150,7 +187,6 @@ public class ParserSubwords
         while (parseLifo.size() > 0)
         {
             ParserConfiguration parserConf=parseLifo.pop();
-            int state=parserConf.getState();
 
             counter=(counter+1)%500000;
 
@@ -161,40 +197,44 @@ public class ParserSubwords
                 throw new ParserAbortedException();
             }
 
-            if (super.table.actions(state,EOI).contains(ACCEPT))
+            for (ParsingAction action: getSuccessorActions(parserConf,input))
             {
-                gluon.profiling.Timer.stop("parsing-completeRR");
-                super.accept(parserConf,ACCEPT,input);
-                gluon.profiling.Timer.start("parsing-completeRR");
-                continue;
-            }
+                Collection<ParserConfiguration> branches=null;
 
-            for (Item item: super.table.getStateItems(state))
-            {
-                Production partialProd=item.getPartialProduction();
-                ParsingActionReduce red=new ParsingActionReduce(partialProd);
-                Collection<ParserConfiguration> parserConfs;
+                if (action instanceof ParsingActionShift)
+                    branches=shift(parserConf,(ParsingActionShift)action,input);
+                else if (action instanceof ParsingActionReduce)
+                    branches=reduce(parserConf,(ParsingActionReduce)action,input);
+                else if (action instanceof ParsingActionAccept)
+                    branches=accept(parserConf,(ParsingActionAccept)action,input);
+                else
+                    assert false;
 
-                parserConfs=this.reduce(parserConf,red,input);
-
-                for (ParserConfiguration conf: parserConfs)
+                for (ParserConfiguration branch: branches)
                 {
-                    if (parserConf.isLoop(conf))
+                    int inputTerminals;
+
+                    if (parserConf.isLoop(branch))
                     {
                         gluon.profiling.Profiling.inc("parse-branches");
                         continue;
                     }
 
-                    if (conf.getTerminalNum() == input.size()
-                        && conf.lca == null)
+                    inputTerminals=input.size()
+                        -(input.get(input.size()-1) instanceof EOITerminal ? 1 : 0);
+
+                    if (branch.getTerminalNum() == inputTerminals
+                        && branch.lca == null
+                        && action instanceof ParsingActionReduce)
                     {
+                        ParsingActionReduce red=(ParsingActionReduce)action;
                         boolean cont;
 
-                        conf.lca=red.getProduction().getHead();
+                        branch.lca=red.getProduction().getHead();
 
                         gluon.profiling.Timer.stop("parsing");
                         gluon.profiling.Timer.stop("parsing-completeRR");
-                        cont=parserCB.onLCA(conf.getActionList(),conf.lca);
+                        cont=parserCB.onLCA(branch.getActionList(),branch.lca);
                         gluon.profiling.Timer.start("parsing-completeRR");
                         gluon.profiling.Timer.start("parsing");
 
@@ -205,7 +245,7 @@ public class ParserSubwords
                         }
                     }
 
-                    parseLifo.add(conf);
+                    parseLifo.add(branch);
                 }
             }
         }

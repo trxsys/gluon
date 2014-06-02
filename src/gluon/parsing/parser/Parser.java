@@ -412,23 +412,32 @@ public abstract class Parser
         return new ParserConfiguration(parent);
     }
 
+    private Collection<ParsingAction>
+        getSuccessorActions(ParserConfiguration parserConf,
+                            List<Terminal> input)
+    {
+        Terminal term;
+        int state;
+
+        assert parserConf.pos < input.size();
+
+        state=parserConf.getState();
+        term=input.get(parserConf.pos);
+
+        return table.actions(state,term);
+    }
+
     private void parseSingleStep(ParserConfiguration parserConf,
                                  List<Terminal> input)
         throws ParserAbortedException
     {
-        int s;
-        Terminal t;
         Collection<ParsingAction> actions;
 
-        assert parserConf.pos < input.size();
-
-        s=parserConf.getState();
-        t=input.get(parserConf.pos);
-        actions=table.actions(s,t);
+        actions=getSuccessorActions(parserConf,input);
 
         if (actions.size() == 0)
         {
-            dprintln(parserConf.hashCode()+": error: actions("+s+","+t+")=∅");
+            dprintln(parserConf.hashCode()+": error: actions=∅");
 
             gluon.profiling.Profiling.inc("parse-branches");
 
