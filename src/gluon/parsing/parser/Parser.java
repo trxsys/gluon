@@ -137,30 +137,28 @@ class ParserConfiguration
     private static final int RED_BF_SIZE=61; /* a prime number */
     private long reductionsBloomFilter;
 
-    public ParserConfiguration(ParserConfiguration parentConfig)
-    {
-        parent=parentConfig;
-        action=null;
-
-        if (parentConfig != null)
-        {
-            stack=parentConfig.stack.clone();
-            lca=parentConfig.lca;
-            pos=parentConfig.pos;
-            reductionsBloomFilter=parentConfig.reductionsBloomFilter;
-        }
-        else
-        {
-            stack=new ParsingStack();
-            lca=null;
-            pos=0;
-            reductionsBloomFilter=0;
-        }
-    }
-
     public ParserConfiguration()
     {
-        this(null);
+        parent=null;
+        action=null;
+
+        stack=new ParsingStack();
+        lca=null;
+        pos=0;
+        reductionsBloomFilter=0;
+    }
+
+    public ParserConfiguration makeSuccessor()
+    {
+        ParserConfiguration succ;
+        ParserConfiguration parentConfig=this;
+
+        succ=parentConfig.clone();
+
+        succ.parent=parentConfig;
+        succ.action=null;
+
+        return succ;
     }
 
     private void redBFClear()
@@ -277,16 +275,35 @@ class ParserConfiguration
         return stack.peek().state;
     }
 
+    public Collection<ParsingAction> getSuccessorActions(ParsingTable table,
+                                                         List<Terminal> input)
+    {
+        Terminal term;
+        int state;
+
+        assert pos < input.size();
+
+        state=getState();
+        term=input.get(pos);
+
+        return table.actions(state,term);
+    }
+
+    protected void copy(ParserConfiguration src)
+    {
+        parent=src.parent;
+        action=src.action;
+        stack=src.stack.clone();
+        lca=src.lca;
+        pos=src.pos;
+        reductionsBloomFilter=src.reductionsBloomFilter;
+    }
+
     public ParserConfiguration clone()
     {
         ParserConfiguration clone=new ParserConfiguration();
 
-        clone.parent=parent;
-        clone.action=action;
-        clone.stack=stack.clone();
-        clone.lca=lca;
-        clone.pos=pos;
-        clone.reductionsBloomFilter=reductionsBloomFilter;
+        clone.copy(this);
 
         return clone;
     }
@@ -324,7 +341,10 @@ public abstract class Parser
                                                     List<Terminal> input)
         throws ParserAbortedException
     {
-        ParserConfiguration parserConf=newParserConfiguration(parent);
+        ParserConfiguration parserConf;
+
+        parserConf=parent == null ? new ParserConfiguration()
+                                  : parent.makeSuccessor();
 
         parserConf.getStack().push(new ParsingStackNode(shift.getState(),1));
         parserConf.pos++;
@@ -357,7 +377,7 @@ public abstract class Parser
                                                      List<Terminal> input)
         throws ParserAbortedException
     {
-        ParserConfiguration parserConf=newParserConfiguration(parent);
+        ParserConfiguration parserConf=parent.makeSuccessor();
         Production p=reduction.getProduction();
         int s;
         int genTerminals;
@@ -394,7 +414,7 @@ public abstract class Parser
                                                      List<Terminal> input)
         throws ParserAbortedException
     {
-        ParserConfiguration parserConf=newParserConfiguration(parent);
+        ParserConfiguration parserConf=parent.makeSuccessor();
 
         dprintln(parserConf.hashCode()+": accept");
 
@@ -407,33 +427,13 @@ public abstract class Parser
         return new ArrayList<ParserConfiguration>(0);
     }
 
-    protected ParserConfiguration newParserConfiguration(ParserConfiguration parent)
-    {
-        return new ParserConfiguration(parent);
-    }
-
-    private Collection<ParsingAction>
-        getSuccessorActions(ParserConfiguration parserConf,
-                            List<Terminal> input)
-    {
-        Terminal term;
-        int state;
-
-        assert parserConf.pos < input.size();
-
-        state=parserConf.getState();
-        term=input.get(parserConf.pos);
-
-        return table.actions(state,term);
-    }
-
     private void parseSingleStep(ParserConfiguration parserConf,
                                  List<Terminal> input)
         throws ParserAbortedException
     {
         Collection<ParsingAction> actions;
 
-        actions=getSuccessorActions(parserConf,input);
+        actions=parserConf.getSuccessorActions(table,input);
 
         if (actions.size() == 0)
         {
