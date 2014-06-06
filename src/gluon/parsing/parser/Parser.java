@@ -23,6 +23,7 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import java.util.Collections;
 
@@ -141,13 +142,21 @@ class ParserConfigurationTopState
 
 class ParserConfiguration
 {
-    /* We need this so we don't lose reduction history due to stack pops
-     */
-    private ParserConfiguration parent;
+    private class ParserHistory
+    {
+        public final ParsingAction action;
+        public final int generatedTerminals;
+
+        public ParserHistory(ParsingAction a, int t)
+        {
+            action=a;
+            generatedTerminals=t;
+        }
+    }
 
     private ParsingStack stack;
 
-    private ParsingAction action;
+    private LinkedList<ParserHistory> history;
 
     public NonTerminal lca;
 
@@ -171,26 +180,12 @@ class ParserConfiguration
 
     public ParserConfiguration()
     {
-        parent=null;
-        action=null;
+        history=new LinkedList<ParserHistory>();
 
         stack=new ParsingStack();
         lca=null;
         pos=0;
         reductionsBloomFilter=0;
-    }
-
-    public ParserConfiguration makeSuccessor()
-    {
-        ParserConfiguration succ;
-        ParserConfiguration parentConfig=this;
-
-        succ=parentConfig.clone();
-
-        succ.parent=parentConfig;
-        succ.action=null;
-
-        return succ;
     }
 
     private void redBFClear()
@@ -212,25 +207,32 @@ class ParserConfiguration
         return (reductionsBloomFilter&(1L<<bit)) != 0;
     }
 
-    public void setAction(ParsingAction a)
+    /* This should always be called *after* the stack is changed as a result of
+     * this action.
+     */
+    public void addAction(ParsingAction action)
     {
-        if (a instanceof ParsingActionShift)
+        if (action instanceof ParsingActionShift)
             redBFClear();
-        else if (a instanceof ParsingActionReduce)
-            redBFAdd(((ParsingActionReduce)a).getProduction().getHead());
+        else if (action instanceof ParsingActionReduce)
+            redBFAdd(((ParsingActionReduce)action).getProduction().getHead());
 
-        action=a;
+        history.add(new ParserHistory(action,getTerminalNum()));
+    }
+
+    public ParsingAction getLastAction()
+    {
+        return history.getLast().action;
     }
 
     public List<ParsingAction> getActionList()
     {
-        LinkedList<ParsingAction> alist
-            =new LinkedList<ParsingAction>();
+        List<ParsingAction> actions=new LinkedList<ParsingAction>();
 
-        for (ParserConfiguration pc=this; pc != null; pc=pc.parent)
-            alist.addFirst(pc.action);
+        for (ParserHistory ph: history)
+            actions.add(ph.action);
 
-        return alist;
+        return actions;
     }
 
     public ParsingStack getStack()
@@ -243,12 +245,13 @@ class ParserConfiguration
         NonTerminal redHead;
         int genTerminals;
 
-        if (!(conf.action instanceof ParsingActionReduce))
+        if (!(conf.getLastAction() instanceof ParsingActionReduce))
             return false;
 
         gluon.profiling.Timer.start(".isLoop");
 
-        redHead=((ParsingActionReduce)conf.action).getProduction().getHead();
+        redHead=((ParsingActionReduce)conf.getLastAction()).getProduction()
+                                                           .getHead();
         genTerminals=conf.getTerminalNum();
 
         if (!redBFmayContain(redHead))
@@ -257,8 +260,11 @@ class ParserConfiguration
             return false;
         }
 
-        for (ParserConfiguration pc=this; pc != null; pc=pc.parent)
+        for (Iterator<ParserHistory> it=history.descendingIterator();
+             it.hasNext(); )
         {
+            ParserHistory ph=it.next();
+            ParsingAction action=ph.action;
             ParsingActionReduce ancRed;
             NonTerminal ancRedHead;
             int ancGenTerminals;
@@ -266,15 +272,15 @@ class ParserConfiguration
             /* This means that we encontered a shift which is productive,
              * therefore we can stop now.
              */
-            if (pc.action instanceof ParsingActionShift)
+            if (action instanceof ParsingActionShift)
             {
                 gluon.profiling.Timer.stop(".isLoop");
                 return false;
             }
 
-            assert pc.action instanceof ParsingActionReduce;
+            assert action instanceof ParsingActionReduce;
 
-            ancGenTerminals=pc.getTerminalNum();
+            ancGenTerminals=ph.generatedTerminals;
 
             if (ancGenTerminals < genTerminals)
             {
@@ -282,7 +288,7 @@ class ParserConfiguration
                 return false;
             }
 
-            ancRed=(ParsingActionReduce)pc.action;
+            ancRed=(ParsingActionReduce)action;
             ancRedHead=ancRed.getProduction().getHead();
 
             if (redHead.equals(ancRedHead))
@@ -328,9 +334,11 @@ class ParserConfiguration
 
     protected void copy(ParserConfiguration src)
     {
-        parent=src.parent;
-        action=src.action;
         stack=src.stack.clone();
+
+        history=new LinkedList<ParserHistory>();
+        history.addAll(src.history);
+
         lca=src.lca;
         pos=src.pos;
         reductionsBloomFilter=src.reductionsBloomFilter;
@@ -381,12 +389,12 @@ public abstract class Parser
         ParserConfiguration parserConf;
 
         parserConf=parent == null ? new ParserConfiguration()
-                                  : parent.makeSuccessor();
+                                  : parent.clone();
 
         parserConf.getStack().push(new ParsingStackNode(shift.getState(),1));
         parserConf.pos++;
 
-        parserConf.setAction(shift);
+        parserConf.addAction(shift);
 
         dprintln(parserConf.hashCode()+": shift "+shift.getState());
 
@@ -414,7 +422,7 @@ public abstract class Parser
                                                      List<Terminal> input)
         throws ParserAbortedException
     {
-        ParserConfiguration parserConf=parent.makeSuccessor();
+        ParserConfiguration parserConf=parent.clone();
         Production p=reduction.getProduction();
         int s;
         int genTerminals;
@@ -426,7 +434,7 @@ public abstract class Parser
         parserConf.getStack().push(new ParsingStackNode(table.goTo(s,p.getHead()),
                                                         genTerminals));
 
-        parserConf.setAction(reduction);
+        parserConf.addAction(reduction);
 
         dprintln(parserConf.hashCode()+": reduce "+p);
 
@@ -451,11 +459,11 @@ public abstract class Parser
                                                      List<Terminal> input)
         throws ParserAbortedException
     {
-        ParserConfiguration parserConf=parent.makeSuccessor();
+        ParserConfiguration parserConf=parent.clone();
 
         dprintln(parserConf.hashCode()+": accept");
 
-        parserConf.setAction(accept);
+        parserConf.addAction(accept);
 
         acceptedDeliver(parserConf);
 

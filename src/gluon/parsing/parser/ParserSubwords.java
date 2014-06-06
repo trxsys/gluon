@@ -248,16 +248,16 @@ public class ParserSubwords
 
             configs=new LinkedList<ParserConfiguration>();
 
-            parserConf=parent.makeSuccessor();
+            parserConf=parent.clone();
             genTerminals=super.stackPop(parserConf,p.bodyLength());
-
-            parserConf.setAction(reduction);
 
             for (int s: super.table.statesReachedBy(p.getHead()))
             {
                 ParserConfiguration succParserConfig=parserConf.clone();
 
                 succParserConfig.getStack().push(new ParsingStackNode(s,genTerminals));
+
+                succParserConfig.addAction(reduction);
 
                 configs.add(succParserConfig);
             }
