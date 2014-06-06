@@ -77,6 +77,8 @@ class ParserConfigurationCompleteReductions
         int state=super.getState();
         Collection<Item> items;
 
+        assert pos == input.size();
+
         items=table.getStateItems(state);
 
         actions=new ArrayList<ParsingAction>(items.size()+1);
