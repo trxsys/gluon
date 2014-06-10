@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -37,16 +39,72 @@ import gluon.parsing.parsingTable.parsingAction.*;
 
 class ParsingStackNode
 {
-    public final int state;
-    public final int generatedTerminals;
+    public int state;
+    public int generatedTerminals;
+
+    /* If generatedTerminalsByNonTerm.get(nonterm) = m then this subtree has a
+     * nonterminal that consumed m terminals and no more.
+     *
+     * This is used to prune unproductive loops.
+     */
+    private Map<NonTerminal,Integer> terminalsByNonTerm;
 
     public ParsingStackNode parent;
 
-    public ParsingStackNode(int s, int t)
+    public ParsingStackNode()
     {
-        state=s;
-        generatedTerminals=t;
+        state=-1;
+        generatedTerminals=0;
+
+        terminalsByNonTerm=new HashMap<NonTerminal,Integer>();
+
         parent=null;
+    }
+
+    public ParsingStackNode(int state, int generatedTerminals)
+    {
+        this();
+
+        this.state=state;
+        this.generatedTerminals=generatedTerminals;
+    }
+
+    public int getTerminalsByNonTerm(NonTerminal nonterm)
+    {
+        Integer terms=terminalsByNonTerm.get(nonterm);
+
+        return terms == null ? 0 : terms;
+    }
+
+    public void updateTerminalsByNonTerm(NonTerminal nonterm, int terms)
+    {
+        int currentTerms=getTerminalsByNonTerm(nonterm);
+
+        if (terms > currentTerms)
+            terminalsByNonTerm.put(nonterm,terms);
+    }
+
+    public Set<Map.Entry<NonTerminal,Integer>>
+        getNonTermTerminals()
+    {
+        return terminalsByNonTerm.entrySet();
+    }
+
+    public ParsingStackNode clone()
+    {
+        ParsingStackNode clone=new ParsingStackNode();
+
+        clone.state=state;
+        clone.generatedTerminals=generatedTerminals;
+
+        /* We don't need to do a deep clone of this map because it will be
+         * read-only from now on.
+         */
+        clone.terminalsByNonTerm=terminalsByNonTerm;
+
+        clone.parent=parent;
+
+        return clone;
     }
 }
 
@@ -142,41 +200,22 @@ class ParserConfigurationTopState
 
 class ParserConfiguration
 {
+    // TODO: if this ends up only containing a single field
     private class ParserHistory
     {
         public final ParsingAction action;
-        public final int generatedTerminals;
 
-        public ParserHistory(ParsingAction a, int t)
+        public ParserHistory(ParsingAction a)
         {
             action=a;
-            generatedTerminals=t;
         }
     }
 
     private ParsingStack stack;
-
     private LinkedList<ParserHistory> history;
-
-    public NonTerminal lca;
-
     public int pos;
 
-    /* Bitmap bloom filter used to improve isLoop() performance.
-     *
-     * This filter represents the set of nonterminals reduced since the last
-     * shift.  For instance if we have the following actions:
-     *
-     *    < ..., shift, red[A → B] >
-     *
-     * then bloomFilter.mayContain(A).  We use this to quickly return false
-     * in isLoop() if no reduction is made [since the last shift] to a given
-     * nonterminal.
-     *
-     * setAction() maintains this bloom filter.
-     */
-    private static final int RED_BF_SIZE=61; /* a prime number */
-    private long reductionsBloomFilter;
+    public NonTerminal lca;
 
     public ParserConfiguration()
     {
@@ -185,26 +224,6 @@ class ParserConfiguration
         stack=new ParsingStack();
         lca=null;
         pos=0;
-        reductionsBloomFilter=0;
-    }
-
-    private void redBFClear()
-    {
-        reductionsBloomFilter=0;
-    }
-
-    private void redBFAdd(NonTerminal nonterm)
-    {
-        int bit=nonterm.hashCode()%RED_BF_SIZE;
-
-        reductionsBloomFilter=reductionsBloomFilter|(1L<<bit);
-    }
-
-    private boolean redBFmayContain(NonTerminal nonterm)
-    {
-        int bit=nonterm.hashCode()%RED_BF_SIZE;
-
-        return (reductionsBloomFilter&(1L<<bit)) != 0;
     }
 
     /* This should always be called *after* the stack is changed as a result of
@@ -212,12 +231,7 @@ class ParserConfiguration
      */
     public void addAction(ParsingAction action)
     {
-        if (action instanceof ParsingActionShift)
-            redBFClear();
-        else if (action instanceof ParsingActionReduce)
-            redBFAdd(((ParsingActionReduce)action).getProduction().getHead());
-
-        history.add(new ParserHistory(action,getTerminalNum()));
+        history.add(new ParserHistory(action));
     }
 
     public ParsingAction getLastAction()
@@ -242,63 +256,34 @@ class ParserConfiguration
 
     public boolean isLoop(ParserConfiguration conf)
     {
-        NonTerminal redHead;
-        int genTerminals;
+        ParsingAction action=conf.getLastAction();
+        Production reduction;
+        NonTerminal head;
+        ParsingStackNode subTree;
 
-        if (!(conf.getLastAction() instanceof ParsingActionReduce))
+        if (!(action instanceof ParsingActionReduce))
             return false;
 
-        gluon.profiling.Timer.start(".isLoop");
+        reduction=((ParsingActionReduce)action).getProduction();
+        head=reduction.getHead();
 
-        redHead=((ParsingActionReduce)conf.getLastAction()).getProduction()
-                                                           .getHead();
-        genTerminals=conf.getTerminalNum();
+        subTree=stack.peek();
 
-        if (!redBFmayContain(redHead))
+        /* This iterates all the subtrees of the reduction made. */
+        for (int i=0; i < reduction.bodyLength(); i++)
         {
-            gluon.profiling.Timer.stop(".isLoop");
-            return false;
-        }
-
-        for (Iterator<ParserHistory> it=history.descendingIterator();
-             it.hasNext(); )
-        {
-            ParserHistory ph=it.next();
-            ParsingAction action=ph.action;
-            ParsingActionReduce ancRed;
-            NonTerminal ancRedHead;
-            int ancGenTerminals;
-
-            /* This means that we encontered a shift which is productive,
-             * therefore we can stop now.
+            /* If this condition is true then there is a subtree that contains
+             * /head/, and in that subtree head consumes the same number of
+             * terminals as the branch /conf/.  This means that /conf/ contains
+             * a loop (since there are two /head/ in the tree) and that loop is
+             * inproductive (since from those two points of the tree no extra
+             * terminal were consumed).
              */
-            if (action instanceof ParsingActionShift)
-            {
-                gluon.profiling.Timer.stop(".isLoop");
-                return false;
-            }
-
-            assert action instanceof ParsingActionReduce;
-
-            ancGenTerminals=ph.generatedTerminals;
-
-            if (ancGenTerminals < genTerminals)
-            {
-                gluon.profiling.Timer.stop(".isLoop");
-                return false;
-            }
-
-            ancRed=(ParsingActionReduce)action;
-            ancRedHead=ancRed.getProduction().getHead();
-
-            if (redHead.equals(ancRedHead))
-            {
-                gluon.profiling.Timer.stop(".isLoop");
+            if (subTree.getTerminalsByNonTerm(head) == conf.getTerminalNum())
                 return true;
-            }
-        }
 
-        gluon.profiling.Timer.stop(".isLoop");
+            subTree=subTree.parent;
+        }
 
         return false;
     }
@@ -341,7 +326,6 @@ class ParserConfiguration
 
         lca=src.lca;
         pos=src.pos;
-        reductionsBloomFilter=src.reductionsBloomFilter;
     }
 
     public ParserConfiguration clone()
@@ -401,20 +385,34 @@ public abstract class Parser
         return Collections.singleton(parserConf);
     }
 
-    /* Pops n elements from the stack and returns the number of terminals
-     * generated by the poped elements.
+    /* Pops n elements from the stack, returns the number of terminals
+     * generated by the poped elements, and updates the "terminals by nonterm"
+     * of the next stack node.
      */
-    protected int stackPop(ParserConfiguration parserConf, int n)
+    protected void stackPop(ParserConfiguration parserConf, int n,
+                            ParsingStackNode newStackNode,
+                            NonTerminal reductionHead)
     {
-        int genTerminals=0;
-
         for (int i=0; i < n; i++)
         {
-            genTerminals+=parserConf.getTerminalNum();
+            ParsingStackNode subtree;
+
+            newStackNode.generatedTerminals+=parserConf.getTerminalNum();
+            subtree=parserConf.getStack().peek();
+
             parserConf.getStack().pop();
+
+            for (Map.Entry<NonTerminal,Integer> e: subtree.getNonTermTerminals())
+            {
+                NonTerminal nonterm=e.getKey();
+                int terms=e.getValue();
+
+                newStackNode.updateTerminalsByNonTerm(nonterm,terms);
+            }
         }
 
-        return genTerminals;
+        newStackNode.updateTerminalsByNonTerm(reductionHead,
+                                              newStackNode.generatedTerminals);
     }
 
     protected Collection<ParserConfiguration> reduce(ParserConfiguration parent,
@@ -424,15 +422,16 @@ public abstract class Parser
     {
         ParserConfiguration parserConf=parent.clone();
         Production p=reduction.getProduction();
+        ParsingStackNode newStackNode=new ParsingStackNode();
         int s;
-        int genTerminals;
 
-        genTerminals=stackPop(parserConf,p.bodyLength());
+        stackPop(parserConf,p.bodyLength(),newStackNode,p.getHead());
 
         s=parserConf.getState();
 
-        parserConf.getStack().push(new ParsingStackNode(table.goTo(s,p.getHead()),
-                                                        genTerminals));
+        newStackNode.state=table.goTo(s,p.getHead());
+
+        parserConf.getStack().push(newStackNode);
 
         parserConf.addAction(reduction);
 

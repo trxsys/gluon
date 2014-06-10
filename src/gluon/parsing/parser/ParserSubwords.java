@@ -244,18 +244,21 @@ public class ParserSubwords
             ParserConfiguration parserConf;
             Production p=reduction.getProduction();
             Collection<ParserConfiguration> configs;
-            int genTerminals;
+            ParsingStackNode newStackNode=new ParsingStackNode();
 
             configs=new LinkedList<ParserConfiguration>();
 
             parserConf=parent.clone();
-            genTerminals=super.stackPop(parserConf,p.bodyLength());
+            super.stackPop(parserConf,p.bodyLength(),newStackNode,p.getHead());
 
             for (int s: super.table.statesReachedBy(p.getHead()))
             {
                 ParserConfiguration succParserConfig=parserConf.clone();
+                ParsingStackNode succNewStackNode=newStackNode.clone();
 
-                succParserConfig.getStack().push(new ParsingStackNode(s,genTerminals));
+                succNewStackNode.state=s;
+
+                succParserConfig.getStack().push(succNewStackNode);
 
                 succParserConfig.addAction(reduction);
 
