@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
+import java.util.Stack;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
@@ -350,13 +351,13 @@ public abstract class Parser
 
     protected final ParsingTable table;
 
-    private Queue<ParserConfiguration> parseQueue;
+    private Stack<ParserConfiguration> parseLifo;
     protected ParserCallback parserCB;
 
     public Parser(ParsingTable t)
     {
         table=t;
-        parseQueue=null;
+        parseLifo=null;
     }
 
     protected void dprintln(String s)
@@ -535,7 +536,7 @@ public abstract class Parser
                     }
                 }
 
-                parseQueue.add(branch);
+                parseLifo.add(branch);
             }
         }
     }
@@ -552,15 +553,15 @@ public abstract class Parser
 
         gluon.profiling.Timer.start("parsing");
 
-        parseQueue=new LinkedList<ParserConfiguration>();
+        parseLifo=new Stack<ParserConfiguration>();
         parserCB=pcb;
 
         for (ParserConfiguration initialConfig: getInitialConfigurations(input))
-            parseQueue.add(initialConfig);
+            parseLifo.add(initialConfig);
 
-        while (parseQueue.size() > 0)
+        while (parseLifo.size() > 0)
         {
-            ParserConfiguration parserConf=parseQueue.remove();
+            ParserConfiguration parserConf=parseLifo.pop();
 
             counter=(counter+1)%500000;
 
@@ -574,7 +575,7 @@ public abstract class Parser
         }
 
         /* free memory */
-        parseQueue=null;
+        parseLifo=null;
         parserCB=null;
 
         gluon.profiling.Timer.stop("parsing");
