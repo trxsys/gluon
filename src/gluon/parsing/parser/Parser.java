@@ -18,7 +18,6 @@ package gluon.parsing.parser;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 import java.util.HashSet;
@@ -168,26 +167,15 @@ class ParsingStack
 
 class ParserConfiguration
 {
-    // TODO: if this ends up only containing a single field
-    private class ParserHistory
-    {
-        public final ParsingAction action;
-
-        public ParserHistory(ParsingAction a)
-        {
-            action=a;
-        }
-    }
-
     private ParsingStack stack;
-    private LinkedList<ParserHistory> history;
+    private LinkedList<ParsingAction> actions;
     public int pos;
 
     public NonTerminal lca;
 
     public ParserConfiguration()
     {
-        history=new LinkedList<ParserHistory>();
+        actions=new LinkedList<ParsingAction>();
 
         stack=new ParsingStack();
         lca=null;
@@ -199,21 +187,16 @@ class ParserConfiguration
      */
     public void addAction(ParsingAction action)
     {
-        history.add(new ParserHistory(action));
+        actions.add(action);
     }
 
     public ParsingAction getLastAction()
     {
-        return history.getLast().action;
+        return actions.getLast();
     }
 
     public List<ParsingAction> getActionList()
     {
-        List<ParsingAction> actions=new LinkedList<ParsingAction>();
-
-        for (ParserHistory ph: history)
-            actions.add(ph.action);
-
         return actions;
     }
 
@@ -250,6 +233,8 @@ class ParserConfiguration
             if (subTree.getTerminalsByNonTerm(head) == conf.getTerminalNum())
                 return true;
 
+            assert subTree.getTerminalsByNonTerm(head) < conf.getTerminalNum();
+
             subTree=subTree.parent;
         }
 
@@ -284,8 +269,8 @@ class ParserConfiguration
     {
         stack=src.stack.clone();
 
-        history=new LinkedList<ParserHistory>();
-        history.addAll(src.history);
+        actions=new LinkedList<ParsingAction>();
+        actions.addAll(src.actions);
 
         lca=src.lca;
         pos=src.pos;
@@ -360,8 +345,8 @@ public abstract class Parser
         {
             ParsingStackNode subtree;
 
-            newStackNode.generatedTerminals+=parserConf.getTerminalNum();
             subtree=parserConf.getStack().peek();
+            newStackNode.generatedTerminals+=subtree.generatedTerminals;
 
             parserConf.getStack().pop();
 

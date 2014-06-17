@@ -88,7 +88,8 @@ class ParserConfigurationCompleteReductions
             Production partialProd=item.getPartialProduction();
             ParsingActionReduce red=new ParsingActionReduce(partialProd);
 
-            actions.add(red);
+            if (partialProd.bodyLength() > 0)
+                actions.add(red);
         }
 
         if (table.actions(state,EOI).contains(ACCEPT))
@@ -228,6 +229,8 @@ public class ParserSubwords
     {
         Production sufixProd;
 
+        assert takeOnly > 0;
+
         sufixProd=new Production(p.getHead(),
                                  p.getBody().subList(p.bodyLength()-takeOnly,
                                                      p.bodyLength()));
@@ -241,31 +244,31 @@ public class ParserSubwords
         reduceWithReachedByJump(ParserConfiguration parent,
                                 ParsingActionReduce reduction)
     {
-            ParserConfiguration parserConf;
-            Production p=reduction.getProduction();
-            Collection<ParserConfiguration> configs;
-            ParsingStackNode newStackNode=new ParsingStackNode();
+        ParserConfiguration parserConf;
+        Production p=reduction.getProduction();
+        Collection<ParserConfiguration> configs;
+        ParsingStackNode newStackNode=new ParsingStackNode();
 
-            configs=new LinkedList<ParserConfiguration>();
+        configs=new LinkedList<ParserConfiguration>();
 
-            parserConf=parent.clone();
-            super.stackPop(parserConf,p.bodyLength(),newStackNode,p.getHead());
+        parserConf=parent.clone();
+        super.stackPop(parserConf,p.bodyLength(),newStackNode,p.getHead());
 
-            for (int s: super.table.statesReachedBy(p.getHead()))
-            {
-                ParserConfiguration succParserConfig=parserConf.clone();
-                ParsingStackNode succNewStackNode=newStackNode.clone();
+        for (int s: super.table.statesReachedBy(p.getHead()))
+        {
+            ParserConfiguration succParserConfig=parserConf.clone();
+            ParsingStackNode succNewStackNode=newStackNode.clone();
 
-                succNewStackNode.state=s;
+            succNewStackNode.state=s;
 
-                succParserConfig.getStack().push(succNewStackNode);
+            succParserConfig.getStack().push(succNewStackNode);
 
-                succParserConfig.addAction(reduction);
+            succParserConfig.addAction(reduction);
 
-                configs.add(succParserConfig);
-            }
+            configs.add(succParserConfig);
+        }
 
-            return configs;
+        return configs;
     }
 
     /* The algorithm implemented here is from "Substring parsing for arbitrary
