@@ -166,39 +166,6 @@ class ParsingStack
     }
 }
 
-/* This class represents the top state of the parser configuration, used to
- * merge parser configurations when they reach a mergable state.
- */
-class ParserConfigurationTopState
-{
-    private int state;
-    private int pos;
-
-    public ParserConfigurationTopState(int s, int p)
-    {
-        state=s;
-        pos=p;
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        ParserConfigurationTopState other;
-
-        assert o instanceof ParserConfigurationTopState;
-
-        other=(ParserConfigurationTopState)o;
-
-        return other.state == state && other.pos == pos;
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return state^(92821*pos);
-    }
-}
-
 class ParserConfiguration
 {
     // TODO: if this ends up only containing a single field
@@ -311,11 +278,6 @@ class ParserConfiguration
         term=input.get(pos);
 
         return table.actions(state,term);
-    }
-
-    public ParserConfigurationTopState getTopState()
-    {
-        return new ParserConfigurationTopState(getState(),pos);
     }
 
     protected void copy(ParserConfiguration src)
