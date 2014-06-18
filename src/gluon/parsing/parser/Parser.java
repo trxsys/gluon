@@ -167,15 +167,27 @@ class ParsingStack
 
 class ParserConfiguration
 {
-    private ParsingStack stack;
-    private LinkedList<ParsingAction> actions;
-    public int pos;
+    private class ParserHistory
+    {
+        public final ParsingAction action;
 
+        public final ParserHistory parent;
+
+        public ParserHistory(ParsingAction a, ParserHistory p)
+        {
+            action=a;
+            parent=p;
+        }
+    }
+
+    private ParsingStack stack;
+    private ParserHistory history;
+    public int pos;
     public NonTerminal lca;
 
     public ParserConfiguration()
     {
-        actions=new LinkedList<ParsingAction>();
+        history=null;
 
         stack=new ParsingStack();
         lca=null;
@@ -187,16 +199,26 @@ class ParserConfiguration
      */
     public void addAction(ParsingAction action)
     {
-        actions.add(action);
+        ParserHistory h=new ParserHistory(action,history);
+
+        history=h;
     }
 
     public ParsingAction getLastAction()
     {
-        return actions.getLast();
+        return history.action;
     }
 
     public List<ParsingAction> getActionList()
     {
+        LinkedList<ParsingAction> actions=new LinkedList<ParsingAction>();
+
+        for (ParserHistory h=history; h != null; h=h.parent)
+        {
+            assert h.action != null;
+            actions.addFirst(h.action);
+        }
+
         return actions;
     }
 
@@ -268,10 +290,7 @@ class ParserConfiguration
     protected void copy(ParserConfiguration src)
     {
         stack=src.stack.clone();
-
-        actions=new LinkedList<ParsingAction>();
-        actions.addAll(src.actions);
-
+        history=src.history;
         lca=src.lca;
         pos=src.pos;
     }
