@@ -23,16 +23,17 @@ Checking thread Local.run():
 
 
 Run Time:
+                                .buildTree       0.000s
+                                    .onLCA       0.001s
                          analysis-behavior       0.005s
-             analysis-behavior-grammar-opt       0.000s
-      analysis-behavior-grammar-rm-epsilon       0.003s
                           analysis-threads       0.004s
-                       build-parsing-table       0.003s
-                       check-word-instance       0.000s
-                                   parsing       0.001s
-                        parsing-completeRR       0.001s
-                                 soot-init      37.762s
-                                     total      37.794s
+                       build-parsing-table       0.001s
+                       check-word-instance       0.001s
+                               grammar-opt       0.000s
+                        grammar-rm-epsilon       0.004s
+                                   parsing       0.002s
+                                 soot-init      38.579s
+                                     total      38.612s
 
 Profiling Vars:
                                alloc-sites          8

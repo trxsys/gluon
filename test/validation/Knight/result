@@ -15,22 +15,23 @@ Checking thread Solver.run():
 
 
 Run Time:
-                         analysis-behavior       0.091s
-             analysis-behavior-grammar-opt       0.052s
-      analysis-behavior-grammar-rm-epsilon       0.030s
-                          analysis-threads       0.003s
+                                .buildTree       0.000s
+                                    .onLCA       0.001s
+                         analysis-behavior       0.191s
+                          analysis-threads       0.004s
                        build-parsing-table       0.002s
                        check-word-instance       0.001s
-                                   parsing       0.002s
-                        parsing-completeRR       0.001s
-                                 soot-init      37.784s
-                                     total      37.901s
+                               grammar-opt       0.149s
+                        grammar-rm-epsilon       0.032s
+                                   parsing       0.001s
+                                 soot-init      37.403s
+                                     total      37.622s
 
 Profiling Vars:
                                alloc-sites          4
                                  cfg-nodes        605
                        grammar-productions         14
-                            parse-branches          4
+                            parse-branches          1
                                parse-trees          1
                       parsing-table-states         21
                                    threads          2

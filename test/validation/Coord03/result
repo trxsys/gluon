@@ -93,16 +93,17 @@ Checking thread T4.run():
 
 
 Run Time:
-                         analysis-behavior       0.049s
-             analysis-behavior-grammar-opt       0.010s
-      analysis-behavior-grammar-rm-epsilon       0.025s
+                                .buildTree       0.001s
+                                    .onLCA       0.001s
+                         analysis-behavior       0.051s
                           analysis-threads       0.004s
                        build-parsing-table       0.007s
                        check-word-instance       0.001s
+                               grammar-opt       0.008s
+                        grammar-rm-epsilon       0.029s
                                    parsing       0.001s
-                        parsing-completeRR       0.000s
-                                 soot-init      37.154s
-                                     total      37.239s
+                                 soot-init      38.877s
+                                     total      38.971s
 
 Profiling Vars:
                                alloc-sites         40

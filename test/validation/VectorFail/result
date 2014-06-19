@@ -23,22 +23,23 @@ Checking thread MyThread.run():
 
 
 Run Time:
+                                .buildTree       0.000s
+                                    .onLCA       0.000s
                          analysis-behavior       0.018s
-             analysis-behavior-grammar-opt       0.005s
-      analysis-behavior-grammar-rm-epsilon       0.007s
                           analysis-threads       0.004s
-                       build-parsing-table       0.002s
-                       check-word-instance       0.001s
-                                   parsing       0.001s
-                        parsing-completeRR       0.000s
-                                 soot-init      37.647s
-                                     total      37.693s
+                       build-parsing-table       0.003s
+                       check-word-instance       0.000s
+                               grammar-opt       0.003s
+                        grammar-rm-epsilon       0.008s
+                                   parsing       0.003s
+                                 soot-init      37.378s
+                                     total      37.426s
 
 Profiling Vars:
                                alloc-sites          8
                                  cfg-nodes        244
                        grammar-productions         14
-                            parse-branches          8
+                            parse-branches          7
                                parse-trees          1
                       parsing-table-states         30
                                    threads          2

@@ -21,16 +21,17 @@ Checking thread Task.run():
 
 
 Run Time:
-                         analysis-behavior       0.008s
-             analysis-behavior-grammar-opt       0.001s
-      analysis-behavior-grammar-rm-epsilon       0.004s
+                                .buildTree       0.000s
+                                    .onLCA       0.001s
+                         analysis-behavior       0.011s
                           analysis-threads       0.004s
-                       build-parsing-table       0.001s
+                       build-parsing-table       0.002s
                        check-word-instance       0.001s
+                               grammar-opt       0.001s
+                        grammar-rm-epsilon       0.005s
                                    parsing       0.001s
-                        parsing-completeRR       0.000s
-                                 soot-init      37.513s
-                                     total      37.547s
+                                 soot-init      37.333s
+                                     total      37.368s
 
 Profiling Vars:
                                alloc-sites          6

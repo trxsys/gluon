@@ -25,22 +25,23 @@ Checking thread Lift.run():
 
 
 Run Time:
-                         analysis-behavior       0.187s
-             analysis-behavior-grammar-opt       0.083s
-      analysis-behavior-grammar-rm-epsilon       0.082s
+                                .buildTree       0.000s
+                                    .onLCA       0.001s
+                         analysis-behavior       0.269s
                           analysis-threads       0.004s
-                       build-parsing-table       0.024s
-                       check-word-instance       0.409s
-                                   parsing       1.105s
-                        parsing-completeRR       1.020s
-                                 soot-init      39.445s
-                                     total      41.600s
+                       build-parsing-table       0.032s
+                       check-word-instance       0.001s
+                               grammar-opt       0.093s
+                        grammar-rm-epsilon       0.141s
+                                   parsing       0.003s
+                                 soot-init      40.038s
+                                     total      40.371s
 
 Profiling Vars:
                                alloc-sites          8
                                  cfg-nodes       2068
                        grammar-productions        134
-                            parse-branches    1285689
+                            parse-branches          2
                                parse-trees          2
-                      parsing-table-states        154
+                      parsing-table-states        155
                                    threads          2

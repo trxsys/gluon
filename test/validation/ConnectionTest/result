@@ -25,22 +25,23 @@ Checking thread GUI.run():
 
 
 Run Time:
+                                .buildTree       0.001s
+                                    .onLCA       0.001s
                          analysis-behavior       0.025s
-             analysis-behavior-grammar-opt       0.006s
-      analysis-behavior-grammar-rm-epsilon       0.012s
                           analysis-threads       0.004s
-                       build-parsing-table       0.006s
-                       check-word-instance       0.000s
-                                   parsing       0.009s
-                        parsing-completeRR       0.008s
-                                 soot-init      37.096s
-                                     total      37.162s
+                       build-parsing-table       0.008s
+                       check-word-instance       0.001s
+                               grammar-opt       0.005s
+                        grammar-rm-epsilon       0.013s
+                                   parsing       0.001s
+                                 soot-init      38.669s
+                                     total      38.727s
 
 Profiling Vars:
                                alloc-sites          8
                                  cfg-nodes        354
                        grammar-productions         38
-                            parse-branches        372
+                            parse-branches          2
                                parse-trees          2
                       parsing-table-states         46
                                    threads          2

@@ -21,26 +21,27 @@ Checking thread Client.run():
 
       Method: Client.insert_new_expression()
       Calls Location: Client.java:46 Client.java:62
-      Atomic: YES
+      Atomic: NO
 
 
 Run Time:
-                         analysis-behavior       0.267s
-             analysis-behavior-grammar-opt       0.139s
-      analysis-behavior-grammar-rm-epsilon       0.099s
-                          analysis-threads       0.003s
-                       build-parsing-table       0.030s
-                       check-word-instance       0.007s
-                                   parsing       0.026s
-                        parsing-completeRR       0.025s
-                                 soot-init      42.487s
-                                     total      42.847s
+                                .buildTree       0.000s
+                                    .onLCA       0.003s
+                         analysis-behavior       0.201s
+                          analysis-threads       0.005s
+                       build-parsing-table       0.036s
+                       check-word-instance       0.003s
+                               grammar-opt       0.070s
+                        grammar-rm-epsilon       0.099s
+                                   parsing       0.003s
+                                 soot-init      42.558s
+                                     total      42.830s
 
 Profiling Vars:
                                alloc-sites         12
                                  cfg-nodes       2256
                        grammar-productions        170
-                            parse-branches       1488
+                            parse-branches          8
                                parse-trees          2
                       parsing-table-states        196
                                    threads          2
