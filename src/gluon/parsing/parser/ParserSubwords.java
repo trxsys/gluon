@@ -39,6 +39,83 @@ import gluon.parsing.parsingTable.ParsingTable;
 import gluon.parsing.parsingTable.Item;
 import gluon.parsing.parsingTable.parsingAction.*;
 
+
+/* Extends ParserConfiguration to override the semantics of
+ * getSuccessorActions() to perform the reductions that are missing
+ * due to the way the subword parser works.
+ *
+ * This does not comform with the Liskov substitution principle but it was
+ * the least ugly solution I found.
+ */
+class ParserConfigurationCompleteReductions
+    extends ParserConfiguration
+{
+    public ParserConfigurationCompleteReductions()
+    {
+        super();
+    }
+
+    public static ParserConfiguration
+        makeParserConfigCR(ParserConfiguration parserConfig)
+    {
+        ParserConfiguration parserConfigCR;
+
+        parserConfigCR=new ParserConfigurationCompleteReductions();
+
+        parserConfigCR.copy(parserConfig);
+
+        return parserConfigCR;
+    }
+
+    @Override
+    public Collection<ParsingAction> getSuccessorActions(ParsingTable table,
+                                                         List<Terminal> input)
+    {
+        final EOITerminal EOI=new EOITerminal();
+        final ParsingActionAccept ACCEPT=new ParsingActionAccept();
+        Collection<ParsingAction> actions;
+        int state=super.getState();
+        Collection<Item> items;
+
+        assert pos == input.size();
+
+        items=table.getStateItems(state);
+
+        actions=new ArrayList<ParsingAction>(items.size()+1);
+
+        for (Item item: items)
+        {
+            Production partialProd=item.getPartialProduction();
+            ParsingActionReduce red=new ParsingActionReduce(partialProd);
+
+            if (partialProd.bodyLength() > 0)
+                actions.add(red);
+        }
+
+        if (table.actions(state,EOI).contains(ACCEPT))
+        {
+            assert items.size() == 0 : "When we find an action there "
+                +"should not be any possible alternative";
+
+            actions.add(new ParsingActionAccept());
+        }
+
+        return actions;
+    }
+
+    @Override
+    public ParserConfiguration clone()
+    {
+        ParserConfiguration clone;
+
+        clone=new ParserConfigurationCompleteReductions();
+
+        clone.copy(this);
+
+        return clone;
+    }
+}
+
 /* Subword parser as described in "Substring parsing for arbitrary context-free
  * grammars", J Rekers, W Koorn, 1991.
  */
@@ -131,88 +208,6 @@ public class ParserSubwords
         return !fail;
     }
 
-    /* Apply the reductions until we reach the start nonterminal.
-     */
-    private void
-        completeRemainingReductions(ParserConfiguration parent, List<Terminal> input)
-        throws ParserAbortedException
-    {
-        final EOITerminal EOI=new EOITerminal();
-        final ParsingActionAccept ACCEPT=new ParsingActionAccept();
-        Stack<ParserConfiguration> parseLifo;
-        int counter=0; /* For calling pcb.shouldStop() */
-
-        gluon.profiling.Timer.start("parsing-completeRR");
-
-        parseLifo=new Stack<ParserConfiguration>();
-        parseLifo.add(parent);
-
-        while (parseLifo.size() > 0)
-        {
-            ParserConfiguration parserConf=parseLifo.pop();
-            int state=parserConf.getState();
-
-            counter=(counter+1)%500000;
-
-            if (counter == 0 && parserCB.shouldAbort())
-            {
-                gluon.profiling.Timer.stop("parsing-completeRR");
-                gluon.profiling.Timer.stop("parsing");
-                throw new ParserAbortedException();
-            }
-
-            if (super.table.actions(state,EOI).contains(ACCEPT))
-            {
-                gluon.profiling.Timer.stop("parsing-completeRR");
-                super.accept(parserConf,ACCEPT,input);
-                gluon.profiling.Timer.start("parsing-completeRR");
-                continue;
-            }
-
-            for (Item item: super.table.getStateItems(state))
-            {
-                Production partialProd=item.getPartialProduction();
-                ParsingActionReduce red=new ParsingActionReduce(partialProd);
-                Collection<ParserConfiguration> parserConfs;
-
-                parserConfs=this.reduce(parserConf,red,input);
-
-                for (ParserConfiguration conf: parserConfs)
-                {
-                    if (parserConf.isLoop(conf))
-                    {
-                        gluon.profiling.Profiling.inc("parse-branches");
-                        continue;
-                    }
-
-                    if (conf.getTerminalNum() == input.size()
-                        && conf.lca == null)
-                    {
-                        boolean cont;
-
-                        conf.lca=red.getProduction().getHead();
-
-                        gluon.profiling.Timer.stop("parsing");
-                        gluon.profiling.Timer.stop("parsing-completeRR");
-                        cont=parserCB.onLCA(conf.getActionList(),conf.lca);
-                        gluon.profiling.Timer.start("parsing-completeRR");
-                        gluon.profiling.Timer.start("parsing");
-
-                        if (!cont)
-                        {
-                             gluon.profiling.Profiling.inc("parse-branches");
-                             continue;
-                        }
-                    }
-
-                    parseLifo.add(conf);
-                }
-            }
-        }
-
-        gluon.profiling.Timer.stop("parsing-completeRR");
-    }
-
     @Override
     protected Collection<ParserConfiguration> shift(ParserConfiguration parent,
                                                     ParsingActionShift shift,
@@ -224,11 +219,8 @@ public class ParserSubwords
         parserConf=super.shift(parent,shift,input).iterator().next();
 
         if (parserConf.pos >= input.size())
-        {
-            completeRemainingReductions(parserConf,input);
-
-            return new ArrayList<ParserConfiguration>();
-        }
+            parserConf=ParserConfigurationCompleteReductions
+                           .makeParserConfigCR(parserConf);
 
         return Collections.singleton(parserConf);
     }
@@ -236,6 +228,8 @@ public class ParserSubwords
     private ParsingActionReduce getSufixRedution(Production p, int takeOnly)
     {
         Production sufixProd;
+
+        assert takeOnly > 0;
 
         sufixProd=new Production(p.getHead(),
                                  p.getBody().subList(p.bodyLength()-takeOnly,
@@ -250,28 +244,31 @@ public class ParserSubwords
         reduceWithReachedByJump(ParserConfiguration parent,
                                 ParsingActionReduce reduction)
     {
-            ParserConfiguration parserConf;
-            Production p=reduction.getProduction();
-            Collection<ParserConfiguration> configs;
-            int genTerminals;
+        ParserConfiguration parserConf;
+        Production p=reduction.getProduction();
+        Collection<ParserConfiguration> configs;
+        ParsingStackNode newStackNode=new ParsingStackNode();
 
-            configs=new LinkedList<ParserConfiguration>();
+        configs=new LinkedList<ParserConfiguration>();
 
-            parserConf=super.newParserConfiguration(parent);
-            genTerminals=super.stackPop(parserConf,p.bodyLength());
+        parserConf=parent.clone();
+        super.stackPop(parserConf,p.bodyLength(),newStackNode,p.getHead());
 
-            parserConf.setAction(reduction);
+        for (int s: super.table.statesReachedBy(p.getHead()))
+        {
+            ParserConfiguration succParserConfig=parserConf.clone();
+            ParsingStackNode succNewStackNode=newStackNode.clone();
 
-            for (int s: super.table.statesReachedBy(p.getHead()))
-            {
-                ParserConfiguration succParserConfig=parserConf.clone();
+            succNewStackNode.state=s;
 
-                succParserConfig.getStack().push(new ParsingStackNode(s,genTerminals));
+            succParserConfig.getStack().push(succNewStackNode);
 
-                configs.add(succParserConfig);
-            }
+            succParserConfig.addAction(reduction);
 
-            return configs;
+            configs.add(succParserConfig);
+        }
+
+        return configs;
     }
 
     /* The algorithm implemented here is from "Substring parsing for arbitrary
