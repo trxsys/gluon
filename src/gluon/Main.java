@@ -274,6 +274,7 @@ public class Main
         SootClass mainClass=Scene.v().loadClassAndSupport(mainClassName);
 
         Scene.v().addBasicClass(mainClassName,SootClass.SIGNATURES);
+        Scene.v().addBasicClass(moduleClassName,SootClass.SIGNATURES);
         Scene.v().loadNecessaryClasses();
         Scene.v().loadDynamicClasses();
 
@@ -281,10 +282,17 @@ public class Main
         catch (Exception _) { fatal("error loading main class"); }
 
         if (CLASS_SCOPE)
+        {
             for (SootClass c: Scene.v().getClasses())
                 for (soot.SootMethod m: c.getMethods())
                     try { m.retrieveActiveBody(); }
                     catch (Exception _) {}
+
+            for (SootClass c: Scene.v().dynamicClasses())
+                for (soot.SootMethod m: c.getMethods())
+                    try { m.retrieveActiveBody(); }
+                    catch (Exception _) {}
+        }
 
         /* Points-to analises */
         SparkTransformer.v().transform("",getSparkOptions());
