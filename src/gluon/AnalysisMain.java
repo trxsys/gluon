@@ -584,11 +584,16 @@ public class AnalysisMain
         gluon.profiling.Profiling.set("threads",threads.size());
 
         if (Main.CLASS_SCOPE)
+        {
             for (SootClass c: scene.getClasses())
-                checkClass(c);
+                if (!module.equals(c))
+                    checkClass(c);
+        }
         else
+        {
             for (SootMethod m: threads)
                 checkThread(m);
+        }
     }
 
     @Override

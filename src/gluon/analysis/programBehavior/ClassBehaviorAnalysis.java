@@ -83,6 +83,7 @@ public class ClassBehaviorAnalysis
         gluon.profiling.Timer.start("analysis-behavior");
 
         assert classA.getMethodCount() > 0;
+        assert !classA.equals(super.module);
 
         super.visited=new HashSet<Unit>();
 

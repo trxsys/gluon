@@ -109,7 +109,7 @@ public abstract class BehaviorAnalysis
 {
     private static final boolean DEBUG=false;
 
-    private SootClass module; /* module under analysis */
+    protected SootClass module; /* module under analysis */
     /* Allocation site of the "object" under analysis.
      * null if we are performing the analysis for a static module
      */
