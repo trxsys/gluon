@@ -21,6 +21,7 @@ import soot.SootClass;
 import soot.Local;
 import soot.PointsToAnalysis;
 import soot.PointsToSet;
+import soot.Type;
 
 import soot.jimple.spark.pag.PAG;
 import soot.jimple.spark.pag.Node;
@@ -40,6 +41,16 @@ public class PointsToInformation
         assert false;
     }
 
+    public static boolean isModuleInstance(Type module, Type obj)
+    {
+        Type leastCommonType;
+
+        try { leastCommonType=module.merge(obj,Scene.v()); }
+        catch (Exception _) { return false; }
+
+        return leastCommonType.equals(module);
+    }
+
     public static Collection<AllocNode> getModuleAllocationSites(SootClass module)
     {
         Collection<AllocNode> allocSites=new LinkedList<AllocNode>();
@@ -56,7 +67,7 @@ public class PointsToInformation
         {
             AllocNode an=(AllocNode)it.next();
 
-            if (an.getType().equals(module.getType()))
+            if (isModuleInstance(module.getType(),an.getType()))
                 allocSites.add(an);
         }
 

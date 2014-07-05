@@ -188,9 +188,11 @@ public abstract class BehaviorAnalysis
             && expr instanceof InstanceInvokeExpr)
         {
             Value obj=((InstanceInvokeExpr)expr).getBase();
+            boolean isMod;
 
-            return obj.getType().equals(module.getType()) ? ModCall.SOMETIMES
-                                                          : ModCall.NEVER;
+            isMod=PointsToInformation.isModuleInstance(module.getType(),obj.getType());
+
+            return isMod ? ModCall.SOMETIMES : ModCall.NEVER;
         }
 
         /* We only consider "modules" as instances from objects.
