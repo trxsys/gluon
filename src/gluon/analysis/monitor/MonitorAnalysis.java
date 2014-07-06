@@ -20,7 +20,9 @@ import soot.Scene;
 import soot.SootClass;
 import soot.SootMethod;
 import soot.Unit;
+import soot.Type;
 
+import soot.jimple.InstanceInvokeExpr;
 import soot.jimple.EnterMonitorStmt;
 import soot.jimple.ExitMonitorStmt;
 
@@ -33,6 +35,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collection;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 class StackNode<E>
 {
@@ -95,6 +99,9 @@ public class MonitorAnalysis
             stack=stack.parent();
         }
 
+        if (stack != null)
+            thisIsSynch(unit,stack.element());
+
         for (Unit succ: cfg.getSuccsOf(unit))
             analyzeUnit(method,succ,cfg,stack);
     }
@@ -106,24 +113,81 @@ public class MonitorAnalysis
         return exitMon.get(enterMon);
     }
 
+    // synch -> type -> calls
+    private Map<Object,Map<Type,List<SootMethod>>> synchCalls
+        =new HashMap<Object,Map<Type,List<SootMethod>>>();
+
+    private void thisIsSynch(Unit unit, Object synchContext)
+    {
+        soot.jimple.InstanceInvokeExpr invoke;
+        soot.jimple.InvokeExpr expr;
+        Type t;
+        SootMethod m;
+
+        if (!((soot.jimple.Stmt)unit).containsInvokeExpr())
+            return;
+
+        expr=((soot.jimple.Stmt)unit).getInvokeExpr();
+
+        if (!(expr instanceof InstanceInvokeExpr))
+            return;
+
+        invoke=(InstanceInvokeExpr)expr;
+
+        t=invoke.getBase().getType();
+        m=invoke.getMethod();
+
+        if (!synchCalls.containsKey(synchContext))
+            synchCalls.put(synchContext,
+                           new HashMap<Type,List<SootMethod>>());
+
+        Map<Type,List<SootMethod>> calls=synchCalls.get(synchContext);
+
+        if (!calls.containsKey(t))
+            calls.put(t,new LinkedList<SootMethod>());
+
+        calls.get(t).add(m);
+    }
+
+    private void printSynchCalls()
+    {
+        for (Object synchContext: synchCalls.keySet())
+            for (Type t: synchCalls.get(synchContext).keySet())
+            {
+                List<SootMethod> seq=synchCalls.get(synchContext).get(t);
+
+                if (seq.size() > 1)
+                    System.err.println(seq.size()+" "+t+"    "+seq);
+            }
+    }
+
     public void analyze()
     {
         visited=new HashSet<Unit>();
 
         for (SootClass c: scene.getClasses())
-            for (SootMethod m: c.getMethods())
-            {
-                UnitGraph cfg;
+            if (c.isJavaLibraryClass()
+                || gluon.Main.WITH_JAVA_LIB)
+                for (SootMethod m: c.getMethods())
+                {
+                    UnitGraph cfg;
 
-                if (!m.hasActiveBody())
-                    continue;
+                    if (!m.hasActiveBody())
+                        continue;
 
-                cfg=new BriefUnitGraph(m.getActiveBody());
+                    cfg=new BriefUnitGraph(m.getActiveBody());
 
-                for (Unit head: cfg.getHeads())
-                    analyzeUnit(m,head,cfg,null);
-            }
+                    if (m.isSynchronized())
+                        for (Unit u: m.getActiveBody().getUnits())
+                            thisIsSynch(u,m);
+
+                    for (Unit head: cfg.getHeads())
+                        analyzeUnit(m,head,cfg,null);
+                }
+
+        printSynchCalls();
 
         visited=null;
+        synchCalls=null;
     }
 }
