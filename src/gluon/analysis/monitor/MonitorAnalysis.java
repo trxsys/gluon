@@ -111,18 +111,20 @@ public class MonitorAnalysis
         visited=new HashSet<Unit>();
 
         for (SootClass c: scene.getClasses())
-            for (SootMethod m: c.getMethods())
-            {
-                UnitGraph cfg;
+            if (!c.isJavaLibraryClass()
+                || gluon.Main.WITH_JAVA_LIB)
+                for (SootMethod m: c.getMethods())
+                {
+                    UnitGraph cfg;
 
-                if (!m.hasActiveBody())
-                    continue;
+                    if (!m.hasActiveBody())
+                        continue;
 
-                cfg=new BriefUnitGraph(m.getActiveBody());
+                    cfg=new BriefUnitGraph(m.getActiveBody());
 
-                for (Unit head: cfg.getHeads())
-                    analyzeUnit(m,head,cfg,null);
-            }
+                    for (Unit head: cfg.getHeads())
+                        analyzeUnit(m,head,cfg,null);
+                }
 
         visited=null;
     }
