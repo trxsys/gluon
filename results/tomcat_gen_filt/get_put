@@ -1,0 +1,90 @@
+  Verifying word get(X) put(X,_):
+
+      Method: Digester.startPrefixMapping()
+      Calls Location: Digester.java:1410 Digester.java:1413
+      Atomic: NO
+
+      Method: Digester.push()
+      Calls Location: Digester.java:2545 Digester.java:2548
+      Atomic: NO
+--
+  Verifying word get(X) put(X,_):
+
+      Method: StandardContext.filterStart()
+      Calls Location: StandardContext.java:4076 StandardContext.java:4078
+      Atomic: NO
+
+      Method: StandardContext.addChild()
+      Calls Location: StandardContext.java:2752 StandardContext.java:2759
+      Atomic: NO
+
+      Method: StandardContext.addServletMapping()
+      Calls Location: StandardContext.java:2752 StandardContext.java:2759
+      Atomic: YES
+
+      Method: StandardContext.addParameter()
+      Calls Location: StandardContext.java:2664 StandardContext.java:2670
+      Atomic: NO
+--
+  Verifying word get(X) put(X,_):
+
+      Method: Registry.loadDescriptors()
+      Calls Location: Registry.java:825 Registry.java:841
+      Atomic: NO
+
+      Method: Registry.getRegistry()
+      Calls Location: Registry.java:156 Registry.java:161
+      Atomic: YES
+--
+  Verifying word get(X) put(X,_):
+
+      Method: StringCache.toString()
+      Calls Location: StringCache.java:400 StringCache.java:411
+      Atomic: YES
+
+      Method: StringCache.toString()
+      Calls Location: StringCache.java:288 StringCache.java:301
+      Atomic: YES
+--
+  Verifying word get(X) put(X,_):
+
+      Method: RulesBase.add()
+      Calls Location: RulesBase.java:155 RulesBase.java:158
+      Atomic: NO
+--
+  Verifying word get(X) put(X,_):
+
+      Method: StringManager.getManager()
+      Calls Location: StringManager.java:245 StringManager.java:249
+      Atomic: YES
+--
+  Verifying word get(X) put(X,_):
+
+      Method: IntrospectionUtils.processArgs()
+      Calls Location: IntrospectionUtils.java:837 IntrospectionUtils.java:842
+      Atomic: NO
+--
+  Verifying word get(X) put(X,_):
+
+      Method: Registry.getId()
+      Calls Location: Registry.java:361 Registry.java:373
+      Atomic: YES
+
+      Method: Registry.getId()
+      Calls Location: Registry.java:367 Registry.java:370
+      Atomic: YES
+
+      Method: Registry.getId()
+      Calls Location: Registry.java:353 Registry.java:370
+      Atomic: YES
+
+      Method: Registry.getId()
+      Calls Location: Registry.java:353 Registry.java:356
+      Atomic: YES
+--
+  Verifying word get(X) put(X,_):
+
+      Method: StringManager.getManager()
+      Calls Location: StringManager.java:211 StringManager.java:214
+      Atomic: YES
+--

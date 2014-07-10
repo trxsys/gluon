@@ -1,0 +1,424 @@
+  Verifying word isInfoEnabled info:
+
+      Method: Catalina.load()
+      Calls Location: Catalina.java:549 Catalina.java:550
+      Atomic: NO
+
+      Method: Catalina.process()
+      Calls Location: Catalina.java:549 Catalina.java:603
+      Atomic: NO
+
+      Method: Catalina.process()
+      Calls Location: Catalina.java:549 Catalina.java:550
+      Atomic: NO
+
+      Method: Catalina.start()
+      Calls Location: Catalina.java:549 Catalina.java:603
+      Atomic: NO
+
+      Method: Catalina.start()
+      Calls Location: Catalina.java:602 Catalina.java:603
+      Atomic: NO
+--
+  Verifying word isInfoEnabled info:
+
+      Method: Embedded.start()
+      Calls Location: Embedded.java:805 Embedded.java:806
+      Atomic: NO
+
+      Method: Embedded.start()
+      Calls Location: Embedded.java:805 Embedded.java:889
+      Atomic: NO
+--
+  Verifying word isInfoEnabled info:
+
+      Method: StandardService.initialize()
+      Calls Location: StandardService.java:661 StandardService.java:662
+      Atomic: NO
+
+      Method: StandardService.start()
+      Calls Location: StandardService.java:505 StandardService.java:506
+      Atomic: NO
+
+      Method: StandardService.start()
+      Calls Location: StandardService.java:516 StandardService.java:517
+      Atomic: NO
+
+      Method: StandardService.stop()
+      Calls Location: StandardService.java:595 StandardService.java:596
+      Atomic: NO
+
+      Method: StandardService.start()
+      Calls Location: StandardService.java:661 StandardService.java:517
+      Atomic: NO
+--
+  Verifying word isInfoEnabled info:
+
+      Method: Connector.start()
+      Calls Location: Connector.java:1172 Connector.java:1173
+      Atomic: NO
+
+      Method: Connector.start()
+      Calls Location: Connector.java:1191 Connector.java:1192
+      Atomic: NO
+
+      Method: Connector.initialize()
+      Calls Location: Connector.java:1090 Connector.java:1091
+      Atomic: NO
+
+      Method: Connector.start()
+      Calls Location: Connector.java:1090 Connector.java:1192
+      Atomic: NO
+
+      Method: Connector.start()
+      Calls Location: Connector.java:1090 Connector.java:1173
+      Atomic: NO
+--
+  Verifying word isInfoEnabled info:
+
+      Method: StandardEngine.start()
+      Calls Location: StandardEngine.java:451 StandardEngine.java:452
+      Atomic: NO
+--
+  Verifying word isInfoEnabled info:
+
+      Method: StandardContext.start()
+      Calls Location: StandardContext.java:4848 StandardContext.java:4849
+      Atomic: YES
+
+      Method: StandardContext.start()
+      Calls Location: StandardContext.java:4848 StandardContext.java:5604
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4848 StandardContext.java:5573
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4848 StandardContext.java:4849
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4848 StandardContext.java:5604
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4848 StandardContext.java:4448
+      Atomic: YES
+--
+  Verifying word isInfoEnabled info:
+
+      Method: FactoryCreateRule.begin()
+      Calls Location: FactoryCreateRule.java:377 FactoryCreateRule.java:378
+      Atomic: NO
+--
+  Verifying word isInfoEnabled info:
+
+      Method: ContainerBase.stop()
+      Calls Location: ContainerBase.java:1086 ContainerBase.java:1087
+      Atomic: YES
+
+      Method: ContainerBase.start()
+      Calls Location: ContainerBase.java:1027 ContainerBase.java:1028
+      Atomic: YES
+--
+  Verifying word isInfoEnabled info:
+
+      Method: HostConfig.deployDirectory()
+      Calls Location: HostConfig.java:1023 HostConfig.java:1024
+      Atomic: NO
+
+      Method: HostConfig.deployDirectories()
+      Calls Location: HostConfig.java:1023 HostConfig.java:1024
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:1023 HostConfig.java:1024
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:1023 HostConfig.java:904
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:1023 HostConfig.java:624
+      Atomic: NO
+
+      Method: HostConfig.deployWAR()
+      Calls Location: HostConfig.java:903 HostConfig.java:904
+      Atomic: NO
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:903 HostConfig.java:1024
+      Atomic: NO
+
+      Method: HostConfig.deployWARs()
+      Calls Location: HostConfig.java:903 HostConfig.java:904
+      Atomic: NO
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:903 HostConfig.java:1024
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:903 HostConfig.java:1024
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:903 HostConfig.java:904
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:903 HostConfig.java:624
+      Atomic: NO
+
+      Method: HostConfig.deployDescriptor()
+      Calls Location: HostConfig.java:623 HostConfig.java:624
+      Atomic: NO
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:623 HostConfig.java:1024
+      Atomic: NO
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:623 HostConfig.java:904
+      Atomic: NO
+
+      Method: HostConfig.deployDescriptors()
+      Calls Location: HostConfig.java:623 HostConfig.java:624
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:623 HostConfig.java:1024
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:623 HostConfig.java:904
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:623 HostConfig.java:624
+      Atomic: NO
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:623 HostConfig.java:1024
+      Atomic: NO
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:623 HostConfig.java:904
+      Atomic: NO
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1208 HostConfig.java:1209
+      Atomic: NO
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1208 HostConfig.java:1273
+      Atomic: NO
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1208 HostConfig.java:1156
+      Atomic: NO
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1208 HostConfig.java:904
+      Atomic: NO
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1208 HostConfig.java:1024
+      Atomic: NO
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1208 HostConfig.java:624
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:1208 HostConfig.java:1024
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:1208 HostConfig.java:904
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:1208 HostConfig.java:624
+      Atomic: NO
+
+      Method: HostConfig.checkResources()
+      Calls Location: HostConfig.java:1272 HostConfig.java:1273
+      Atomic: YES
+
+      Method: HostConfig.checkResources()
+      Calls Location: HostConfig.java:1208 HostConfig.java:1209
+      Atomic: YES
+
+      Method: HostConfig.checkResources()
+      Calls Location: HostConfig.java:1155 HostConfig.java:1156
+      Atomic: YES
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1272 HostConfig.java:1209
+      Atomic: NO
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1272 HostConfig.java:1273
+      Atomic: NO
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1272 HostConfig.java:1156
+      Atomic: NO
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1272 HostConfig.java:904
+      Atomic: NO
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1272 HostConfig.java:1024
+      Atomic: NO
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1272 HostConfig.java:624
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:1272 HostConfig.java:1024
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:1272 HostConfig.java:904
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:1272 HostConfig.java:624
+      Atomic: NO
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1155 HostConfig.java:1209
+      Atomic: NO
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1155 HostConfig.java:1273
+      Atomic: NO
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1155 HostConfig.java:1156
+      Atomic: NO
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1155 HostConfig.java:904
+      Atomic: NO
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1155 HostConfig.java:1024
+      Atomic: NO
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1155 HostConfig.java:624
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:1155 HostConfig.java:1024
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:1155 HostConfig.java:904
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:1155 HostConfig.java:624
+      Atomic: NO
+--
+  Verifying word isInfoEnabled info:
+
+      Method: Parameters.processParameters()
+      Calls Location: Parameters.java:430 Parameters.java:257
+      Atomic: NO
+
+      Method: Parameters.processParameters()
+      Calls Location: Parameters.java:430 Parameters.java:441
+      Atomic: NO
+
+      Method: Parameters.processParameters()
+      Calls Location: Parameters.java:430 Parameters.java:367
+      Atomic: NO
+
+      Method: Parameters.processParameters()
+      Calls Location: Parameters.java:430 Parameters.java:471
+      Atomic: NO
+--
+  Verifying word isInfoEnabled info:
+
+      Method: RealmBase.stop()
+      Calls Location: RealmBase.java:1085 RealmBase.java:1086
+      Atomic: NO
+
+      Method: RealmBase.start()
+      Calls Location: RealmBase.java:1048 RealmBase.java:1049
+      Atomic: NO
+--
+  Verifying word isInfoEnabled info:
+
+      Method: ManagerBase.getSession()
+      Calls Location: ManagerBase.java:1337 ManagerBase.java:1338
+      Atomic: NO
+
+      Method: ManagerBase.getLastAccessedTime()
+      Calls Location: ManagerBase.java:1403 ManagerBase.java:1404
+      Atomic: NO
+
+      Method: ManagerBase.getSessionAttribute()
+      Calls Location: ManagerBase.java:1337 ManagerBase.java:1338
+      Atomic: NO
+
+      Method: ManagerBase.getSession()
+      Calls Location: ManagerBase.java:1362 ManagerBase.java:1363
+      Atomic: NO
+
+      Method: ManagerBase.getCreationTime()
+      Calls Location: ManagerBase.java:1413 ManagerBase.java:1414
+      Atomic: NO
+
+      Method: ManagerBase.expireSession()
+      Calls Location: ManagerBase.java:1386 ManagerBase.java:1387
+      Atomic: NO
+--
+  Verifying word size keySet:
+
+      Method: StandardContext.findServletMappings()
+      Calls Location: StandardContext.java:3284 StandardContext.java:3285
+      Atomic: YES
+
+      Method: StandardContext.findTaglibs()
+      Calls Location: StandardContext.java:3351 StandardContext.java:3352
+      Atomic: YES
+
+      Method: StandardContext.findParameters()
+      Calls Location: StandardContext.java:3202 StandardContext.java:3203
+      Atomic: YES
+
+      Method: StandardContext.findMimeMappings()
+      Calls Location: StandardContext.java:3171 StandardContext.java:3172
+      Atomic: YES
+
+      Method: StandardContext.findStatusPages()
+      Calls Location: StandardContext.java:3317 StandardContext.java:3318
+      Atomic: YES
+
+      Method: StandardContext.start()
+      Calls Location: StandardContext.java:3202 StandardContext.java:4104
+      Atomic: YES
+
+      Method: StandardContext.start()
+      Calls Location: StandardContext.java:3202 StandardContext.java:4069
+      Atomic: YES
+--
+  Verifying word size keySet:
+
+      Method: StandardWrapper.findInitParameters()
+      Calls Location: StandardWrapper.java:941 StandardWrapper.java:942
+      Atomic: NO
+
+      Method: StandardWrapper.findSecurityReferences()
+      Calls Location: StandardWrapper.java:991 StandardWrapper.java:992
+      Atomic: NO
+--

@@ -1,0 +1,224 @@
+  Verifying word size get:
+
+      Method: Bootstrap.main()
+      Calls Location: Bootstrap.java:179 Bootstrap.java:180
+      Atomic: NO
+
+      Method: Bootstrap.initClassLoaders()
+      Calls Location: Bootstrap.java:179 Bootstrap.java:180
+      Atomic: NO
+
+      Method: Bootstrap.createClassLoader()
+      Calls Location: Bootstrap.java:179 Bootstrap.java:180
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: StandardService.stop()
+      Calls Location: StandardService.java:623 StandardService.java:624
+      Atomic: YES
+
+      Method: StandardService.start()
+      Calls Location: StandardService.java:531 StandardService.java:532
+      Atomic: YES
+
+      Method: StandardService.start()
+      Calls Location: StandardService.java:453 StandardService.java:532
+      Atomic: NO
+
+      Method: StandardService.getExecutor()
+      Calls Location: StandardService.java:466 StandardService.java:468
+      Atomic: YES
+
+      Method: StandardService.getExecutor()
+      Calls Location: StandardService.java:466 StandardService.java:467
+      Atomic: YES
+--
+  Verifying word size get:
+
+      Method: Registry.registerComponent()
+      Calls Location: Registry.java:591 Registry.java:592
+      Atomic: NO
+
+      Method: Registry.unregisterComponent()
+      Calls Location: Registry.java:591 Registry.java:592
+      Atomic: NO
+
+      Method: Registry.invoke()
+      Calls Location: Registry.java:591 Registry.java:592
+      Atomic: NO
+
+      Method: Registry.getMBeanServer()
+      Calls Location: Registry.java:591 Registry.java:592
+      Atomic: YES
+--
+  Verifying word size get:
+
+      Method: StringCache.toString()
+      Calls Location: StringCache.java:373 StringCache.java:374
+      Atomic: YES
+
+      Method: StringCache.toString()
+      Calls Location: StringCache.java:261 StringCache.java:262
+      Atomic: YES
+--
+  Verifying word size get:
+
+      Method: ArrayStack.peek()
+      Calls Location: ArrayStack.java:106 ArrayStack.java:110
+      Atomic: NO
+
+      Method: ArrayStack.peek()
+      Calls Location: ArrayStack.java:88 ArrayStack.java:92
+      Atomic: NO
+
+      Method: ArrayStack.search()
+      Calls Location: ArrayStack.java:154 ArrayStack.java:157
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: Request.getLocale()
+      Calls Location: Request.java:1067 Request.java:1068
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: Parameters.getParameter()
+      Calls Location: Parameters.java:161 Parameters.java:164
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: CallMethodMultiRule.end()
+      Calls Location: WebRuleSet.java:780 WebRuleSet.java:781
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: StandardSession.writeObject()
+      Calls Location: StandardSession.java:1580 StandardSession.java:1585
+      Atomic: NO
+
+      Method: StandardSession.writeObject()
+      Calls Location: StandardSession.java:1580 StandardSession.java:1587
+      Atomic: NO
+
+      Method: StandardSession.writeObject()
+      Calls Location: StandardSession.java:1580 StandardSession.java:1583
+      Atomic: NO
+
+      Method: StandardSession.writeObject()
+      Calls Location: StandardSession.java:1580 StandardSession.java:1587
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: RequestGroupInfo.setMaxTime()
+      Calls Location: RequestGroupInfo.java:65 RequestGroupInfo.java:66
+      Atomic: YES
+
+      Method: RequestGroupInfo.setProcessingTime()
+      Calls Location: RequestGroupInfo.java:82 RequestGroupInfo.java:83
+      Atomic: YES
+
+      Method: RequestGroupInfo.setErrorCount()
+      Calls Location: RequestGroupInfo.java:116 RequestGroupInfo.java:117
+      Atomic: YES
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:65 RequestGroupInfo.java:117
+      Atomic: NO
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:82 RequestGroupInfo.java:66
+      Atomic: NO
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:82 RequestGroupInfo.java:117
+      Atomic: NO
+
+      Method: RequestGroupInfo.setRequestCount()
+      Calls Location: RequestGroupInfo.java:99 RequestGroupInfo.java:100
+      Atomic: YES
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:99 RequestGroupInfo.java:66
+      Atomic: NO
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:99 RequestGroupInfo.java:83
+      Atomic: NO
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:99 RequestGroupInfo.java:117
+      Atomic: NO
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:133 RequestGroupInfo.java:66
+      Atomic: NO
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:133 RequestGroupInfo.java:100
+      Atomic: NO
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:133 RequestGroupInfo.java:117
+      Atomic: NO
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:133 RequestGroupInfo.java:83
+      Atomic: NO
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:133 RequestGroupInfo.java:151
+      Atomic: NO
+
+      Method: RequestGroupInfo.setBytesSent()
+      Calls Location: RequestGroupInfo.java:150 RequestGroupInfo.java:151
+      Atomic: YES
+
+      Method: RequestGroupInfo.getMaxTime()
+      Calls Location: RequestGroupInfo.java:55 RequestGroupInfo.java:56
+      Atomic: YES
+
+      Method: RequestGroupInfo.getErrorCount()
+      Calls Location: RequestGroupInfo.java:107 RequestGroupInfo.java:108
+      Atomic: YES
+
+      Method: RequestGroupInfo.setBytesReceived()
+      Calls Location: RequestGroupInfo.java:133 RequestGroupInfo.java:134
+      Atomic: YES
+
+      Method: RequestGroupInfo.getProcessingTime()
+      Calls Location: RequestGroupInfo.java:73 RequestGroupInfo.java:74
+      Atomic: YES
+
+      Method: RequestGroupInfo.getBytesReceived()
+      Calls Location: RequestGroupInfo.java:124 RequestGroupInfo.java:125
+      Atomic: YES
+
+      Method: RequestGroupInfo.getRequestCount()
+      Calls Location: RequestGroupInfo.java:90 RequestGroupInfo.java:91
+      Atomic: YES
+
+      Method: RequestGroupInfo.getBytesSent()
+      Calls Location: RequestGroupInfo.java:141 RequestGroupInfo.java:142
+      Atomic: YES
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:150 RequestGroupInfo.java:66
+      Atomic: NO
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:150 RequestGroupInfo.java:100
+      Atomic: NO
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:150 RequestGroupInfo.java:117
+      Atomic: NO
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:150 RequestGroupInfo.java:83
+      Atomic: NO
+--

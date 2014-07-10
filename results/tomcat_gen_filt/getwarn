@@ -1,0 +1,25 @@
+  Verifying word getWarnings logFindings:
+
+      Method: ContextConfig.applicationWebConfig()
+      Calls Location: ContextConfig.java:367 ContextConfig.java:370
+      Atomic: YES
+
+      Method: ContextConfig.processDefaultWebConfig()
+      Calls Location: ContextConfig.java:681 ContextConfig.java:684
+      Atomic: YES
+
+      Method: ContextConfig.defaultWebConfig()
+      Calls Location: ContextConfig.java:681 ContextConfig.java:684
+      Atomic: NO
+
+      Method: ContextConfig.start()
+      Calls Location: ContextConfig.java:681 ContextConfig.java:370
+      Atomic: YES
+
+      Method: ContextConfig.processContextConfig()
+      Calls Location: ContextConfig.java:789 ContextConfig.java:792
+      Atomic: YES
+
+      Method: ContextConfig.contextConfig()
+      Calls Location: ContextConfig.java:789 ContextConfig.java:792
+      Atomic: NO

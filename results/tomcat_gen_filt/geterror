@@ -1,0 +1,10 @@
+  Verifying word getErrorCode getErrorCode:
+
+      Method: StandardContext.addErrorPage()
+      Calls Location: StandardContext.java:2467 StandardContext.java:2470
+      Atomic: YES
+
+      Method: StandardContext.removeErrorPage()
+      Calls Location: StandardContext.java:3629 StandardContext.java:3632
+      Atomic: YES
+--

@@ -1,0 +1,189 @@
+  Verifying word fireLifecycleEvent fireLifecycleEvent:
+
+      Method: StandardServer.stop()
+      Calls Location: StandardServer.java:782 StandardServer.java:792
+      Atomic: NO
+
+      Method: StandardServer.start()
+      Calls Location: StandardServer.java:747 StandardServer.java:759
+      Atomic: NO
+
+      Method: StandardServer.start()
+      Calls Location: StandardServer.java:745 StandardServer.java:747
+      Atomic: NO
+
+      Method: StandardServer.stop()
+      Calls Location: StandardServer.java:780 StandardServer.java:792
+      Atomic: NO
+
+      Method: StandardServer.stop()
+      Calls Location: StandardServer.java:780 StandardServer.java:782
+      Atomic: NO
+
+      Method: StandardServer.start()
+      Calls Location: StandardServer.java:745 StandardServer.java:759
+      Atomic: NO
+--
+  Verifying word fireLifecycleEvent fireLifecycleEvent:
+
+      Method: StandardService.stop()
+      Calls Location: StandardService.java:594 StandardService.java:647
+      Atomic: NO
+
+      Method: StandardService.start()
+      Calls Location: StandardService.java:518 StandardService.java:550
+      Atomic: NO
+
+      Method: StandardService.stop()
+      Calls Location: StandardService.java:572 StandardService.java:647
+      Atomic: NO
+
+      Method: StandardService.stop()
+      Calls Location: StandardService.java:572 StandardService.java:594
+      Atomic: NO
+
+      Method: StandardService.start()
+      Calls Location: StandardService.java:515 StandardService.java:518
+      Atomic: NO
+
+      Method: StandardService.start()
+      Calls Location: StandardService.java:515 StandardService.java:550
+      Atomic: NO
+--
+  Verifying word fireLifecycleEvent fireLifecycleEvent:
+
+      Method: StandardContext.start()
+      Calls Location: StandardContext.java:4854 StandardContext.java:4953
+      Atomic: YES
+
+      Method: StandardContext.start()
+      Calls Location: StandardContext.java:4854 StandardContext.java:4854
+      Atomic: YES
+
+      Method: StandardContext.start()
+      Calls Location: StandardContext.java:4854 StandardContext.java:4899
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4854 StandardContext.java:4899
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4854 StandardContext.java:4953
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4854 StandardContext.java:4616
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4854 StandardContext.java:4854
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4854 StandardContext.java:4472
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4854 StandardContext.java:4704
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4854 StandardContext.java:4983
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4854 StandardContext.java:5703
+      Atomic: YES
+
+      Method: StandardContext.start()
+      Calls Location: StandardContext.java:4899 StandardContext.java:4953
+      Atomic: YES
+
+      Method: StandardContext.start()
+      Calls Location: StandardContext.java:4899 StandardContext.java:4854
+      Atomic: YES
+
+      Method: StandardContext.start()
+      Calls Location: StandardContext.java:4899 StandardContext.java:4899
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4899 StandardContext.java:4899
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4899 StandardContext.java:4953
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4899 StandardContext.java:4616
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4899 StandardContext.java:4854
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4899 StandardContext.java:4472
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4899 StandardContext.java:4704
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4899 StandardContext.java:4983
+      Atomic: YES
+
+      Method: StandardContext.reload()
+      Calls Location: StandardContext.java:4899 StandardContext.java:5703
+      Atomic: YES
+--
+  Verifying word fireLifecycleEvent fireLifecycleEvent:
+
+      Method: ContainerBase.start()
+      Calls Location: ContainerBase.java:1065 ContainerBase.java:1071
+      Atomic: YES
+
+      Method: ContainerBase.stop()
+      Calls Location: ContainerBase.java:1098 ContainerBase.java:1139
+      Atomic: YES
+
+      Method: ContainerBase.stop()
+      Calls Location: ContainerBase.java:1092 ContainerBase.java:1098
+      Atomic: YES
+
+      Method: ContainerBase.start()
+      Calls Location: ContainerBase.java:1033 ContainerBase.java:1065
+      Atomic: YES
+
+      Method: ContainerBase.stop()
+      Calls Location: ContainerBase.java:1092 ContainerBase.java:1139
+      Atomic: YES
+
+      Method: ContainerBase.start()
+      Calls Location: ContainerBase.java:1033 ContainerBase.java:1071
+      Atomic: YES
+--
+  Verifying word fireLifecycleEvent fireLifecycleEvent:
+
+      Method: StandardPipeline.start()
+      Calls Location: StandardPipeline.java:239 StandardPipeline.java:242
+      Atomic: YES
+
+      Method: StandardPipeline.stop()
+      Calls Location: StandardPipeline.java:264 StandardPipeline.java:280
+      Atomic: YES
+
+      Method: StandardPipeline.stop()
+      Calls Location: StandardPipeline.java:261 StandardPipeline.java:280
+      Atomic: YES
+
+      Method: StandardPipeline.stop()
+      Calls Location: StandardPipeline.java:261 StandardPipeline.java:264
+      Atomic: YES
+
+      Method: StandardPipeline.start()
+      Calls Location: StandardPipeline.java:222 StandardPipeline.java:239
+      Atomic: YES

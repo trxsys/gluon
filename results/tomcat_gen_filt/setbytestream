@@ -1,0 +1,30 @@
+  Verifying word setByteStream getSystemId:
+
+      Method: ContextConfig.applicationWebConfig()
+      Calls Location: ContextConfig.java:351 ContextConfig.java:370
+      Atomic: YES
+
+      Method: ContextConfig.defaultWebConfig()
+      Calls Location: ContextConfig.java:671 ContextConfig.java:665
+      Atomic: NO
+
+      Method: ContextConfig.defaultWebConfig()
+      Calls Location: ContextConfig.java:671 ContextConfig.java:684
+      Atomic: NO
+
+      Method: ContextConfig.start()
+      Calls Location: ContextConfig.java:671 ContextConfig.java:370
+      Atomic: YES
+
+      Method: ContextConfig.processDefaultWebConfig()
+      Calls Location: ContextConfig.java:671 ContextConfig.java:684
+      Atomic: YES
+
+      Method: ContextConfig.processContextConfig()
+      Calls Location: ContextConfig.java:781 ContextConfig.java:792
+      Atomic: YES
+
+      Method: ContextConfig.contextConfig()
+      Calls Location: ContextConfig.java:781 ContextConfig.java:792
+      Atomic: NO
+--

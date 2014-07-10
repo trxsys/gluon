@@ -1,0 +1,44 @@
+  Verifying word isRegistered(X) invoke(X,_,_,_):
+
+      Method: StandardServer.storeContext()
+      Calls Location: StandardServer.java:661 StandardServer.java:662
+      Atomic: YES
+--
+  Verifying word isRegistered(X) invoke(X,_,_,_):
+
+      Method: Connector.findContainer()
+      Calls Location: Connector.java:1319 Connector.java:1320
+      Atomic: NO
+--
+  Verifying word isRegistered(X) invoke(X,_,_,_):
+
+      Method: StandardEngine.start()
+      Calls Location: StandardEngine.java:438 StandardEngine.java:439
+      Atomic: NO
+--
+  Verifying word isRegistered(X) invoke(X,_,_,_):
+
+      Method: StandardContext.start()
+      Calls Location: StandardContext.java:4507 StandardContext.java:4508
+      Atomic: YES
+
+      Method: StandardContext.init()
+      Calls Location: StandardContext.java:5646 StandardContext.java:5685
+      Atomic: NO
+--
+  Verifying word isRegistered(X) invoke(X,_,_,_):
+
+      Method: StandardHost.init()
+      Calls Location: StandardHost.java:869 StandardHost.java:872
+      Atomic: NO
+
+      Method: StandardHost.start()
+      Calls Location: StandardHost.java:781 StandardHost.java:782
+      Atomic: YES
+--
+  Verifying word isRegistered(X) invoke(X,_,_,_):
+
+      Method: ContainerBase.init()
+      Calls Location: ContainerBase.java:1160 ContainerBase.java:1163
+      Atomic: NO
+--

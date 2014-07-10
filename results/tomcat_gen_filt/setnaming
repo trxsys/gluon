@@ -1,0 +1,26 @@
+  Verifying word setNamingResources getName:
+
+      Method: NamingResources.addService()
+      Calls Location: NamingResources.java:376 NamingResources.java:377
+      Atomic: YES
+
+      Method: NamingResources.addResource()
+      Calls Location: NamingResources.java:302 NamingResources.java:303
+      Atomic: YES
+
+      Method: NamingResources.addResourceEnvRef()
+      Calls Location: NamingResources.java:324 NamingResources.java:325
+      Atomic: YES
+
+      Method: NamingResources.addLocalEjb()
+      Calls Location: NamingResources.java:246 NamingResources.java:247
+      Atomic: YES
+
+      Method: NamingResources.addEjb()
+      Calls Location: NamingResources.java:180 NamingResources.java:181
+      Atomic: YES
+
+      Method: NamingResources.addResourceLink()
+      Calls Location: NamingResources.java:350 NamingResources.java:351
+      Atomic: YES
+--

@@ -1,0 +1,234 @@
+  Verifying word parse reset:
+
+      Method: ContextConfig.applicationWebConfig()
+      Calls Location: ContextConfig.java:365 ContextConfig.java:401
+      Atomic: YES
+
+      Method: ContextConfig.start()
+      Calls Location: ContextConfig.java:680 ContextConfig.java:401
+      Atomic: YES
+
+      Method: ContextConfig.start()
+      Calls Location: ContextConfig.java:680 ContextConfig.java:401
+      Atomic: YES
+
+      Method: ContextConfig.start()
+      Calls Location: ContextConfig.java:680 ContextConfig.java:401
+      Atomic: YES
+
+      Method: ContextConfig.start()
+      Calls Location: ContextConfig.java:680 ContextConfig.java:401
+      Atomic: YES
+
+      Method: ContextConfig.defaultWebConfig()
+      Calls Location: ContextConfig.java:680 ContextConfig.java:706
+      Atomic: NO
+
+      Method: ContextConfig.defaultWebConfig()
+      Calls Location: ContextConfig.java:680 ContextConfig.java:706
+      Atomic: NO
+
+      Method: ContextConfig.defaultWebConfig()
+      Calls Location: ContextConfig.java:680 ContextConfig.java:706
+      Atomic: NO
+
+      Method: ContextConfig.processDefaultWebConfig()
+      Calls Location: ContextConfig.java:680 ContextConfig.java:706
+      Atomic: YES
+
+      Method: ContextConfig.processContextConfig()
+      Calls Location: ContextConfig.java:788 ContextConfig.java:819
+      Atomic: YES
+
+      Method: ContextConfig.contextConfig()
+      Calls Location: ContextConfig.java:788 ContextConfig.java:819
+      Atomic: NO
+
+      Method: ContextConfig.contextConfig()
+      Calls Location: ContextConfig.java:788 ContextConfig.java:819
+      Atomic: NO
+
+      Method: ContextConfig.contextConfig()
+      Calls Location: ContextConfig.java:788 ContextConfig.java:819
+      Atomic: NO
+--
+  Verifying word parse reset:
+
+      Method: TldConfig.tldScanStream()
+      Calls Location: TldConfig.java:451 TldConfig.java:456
+      Atomic: YES
+
+      Method: TldConfig.tldScanJar()
+      Calls Location: TldConfig.java:451 TldConfig.java:456
+      Atomic: NO
+
+      Method: TldConfig.tldScanJar()
+      Calls Location: TldConfig.java:451 TldConfig.java:456
+      Atomic: NO
+
+      Method: TldConfig.execute()
+      Calls Location: TldConfig.java:451 TldConfig.java:456
+      Atomic: NO
+
+      Method: TldConfig.execute()
+      Calls Location: TldConfig.java:451 TldConfig.java:456
+      Atomic: NO
+--
+  Verifying word parse reset:
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:1035 HostConfig.java:974
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:1035 HostConfig.java:1092
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:1035 HostConfig.java:736
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:1035 HostConfig.java:736
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:1035 HostConfig.java:974
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:1035 HostConfig.java:1092
+      Atomic: NO
+
+      Method: HostConfig.deployDirectories()
+      Calls Location: HostConfig.java:1035 HostConfig.java:1092
+      Atomic: NO
+
+      Method: HostConfig.deployDirectories()
+      Calls Location: HostConfig.java:1035 HostConfig.java:1092
+      Atomic: NO
+
+      Method: HostConfig.deployDirectory()
+      Calls Location: HostConfig.java:1035 HostConfig.java:1092
+      Atomic: YES
+
+      Method: HostConfig.deployWAR()
+      Calls Location: HostConfig.java:911 HostConfig.java:974
+      Atomic: YES
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:911 HostConfig.java:1092
+      Atomic: NO
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:911 HostConfig.java:1092
+      Atomic: NO
+
+      Method: HostConfig.deployWARs()
+      Calls Location: HostConfig.java:911 HostConfig.java:974
+      Atomic: NO
+
+      Method: HostConfig.deployWARs()
+      Calls Location: HostConfig.java:911 HostConfig.java:974
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:911 HostConfig.java:974
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:911 HostConfig.java:1092
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:911 HostConfig.java:736
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:911 HostConfig.java:736
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:911 HostConfig.java:974
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:911 HostConfig.java:1092
+      Atomic: NO
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:911 HostConfig.java:1092
+      Atomic: NO
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:911 HostConfig.java:1092
+      Atomic: NO
+
+      Method: HostConfig.deployDescriptors()
+      Calls Location: HostConfig.java:631 HostConfig.java:736
+      Atomic: NO
+
+      Method: HostConfig.deployDescriptors()
+      Calls Location: HostConfig.java:631 HostConfig.java:736
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:631 HostConfig.java:974
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:631 HostConfig.java:1092
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:631 HostConfig.java:736
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:631 HostConfig.java:736
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:631 HostConfig.java:974
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:631 HostConfig.java:1092
+      Atomic: NO
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:631 HostConfig.java:974
+      Atomic: NO
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:631 HostConfig.java:1092
+      Atomic: NO
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:631 HostConfig.java:974
+      Atomic: NO
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:631 HostConfig.java:1092
+      Atomic: NO
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:631 HostConfig.java:974
+      Atomic: NO
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:631 HostConfig.java:1092
+      Atomic: NO
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:631 HostConfig.java:974
+      Atomic: NO
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:631 HostConfig.java:1092
+      Atomic: NO
+
+      Method: HostConfig.deployDescriptor()
+      Calls Location: HostConfig.java:631 HostConfig.java:736
+      Atomic: YES
+--

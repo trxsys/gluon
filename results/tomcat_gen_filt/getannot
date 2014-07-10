@@ -1,0 +1,30 @@
+  Verifying word getAnnotationProcessor getAnnotationProcessor:
+
+      Method: StandardWrapper.loadServlet()
+      Calls Location: StandardWrapper.java:1153 StandardWrapper.java:1154
+      Atomic: YES
+
+      Method: StandardWrapper.unload()
+      Calls Location: StandardWrapper.java:1500 StandardWrapper.java:1500
+      Atomic: YES
+
+      Method: StandardWrapper.unload()
+      Calls Location: StandardWrapper.java:1454 StandardWrapper.java:1500
+      Atomic: YES
+
+      Method: StandardWrapper.allocate()
+      Calls Location: StandardWrapper.java:1154 StandardWrapper.java:1153
+      Atomic: NO
+
+      Method: StandardWrapper.allocate()
+      Calls Location: StandardWrapper.java:1154 StandardWrapper.java:1154
+      Atomic: NO
+
+      Method: StandardWrapper.allocate()
+      Calls Location: StandardWrapper.java:1153 StandardWrapper.java:1153
+      Atomic: NO
+
+      Method: StandardWrapper.allocate()
+      Calls Location: StandardWrapper.java:1153 StandardWrapper.java:1154
+      Atomic: NO
+--

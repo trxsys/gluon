@@ -1,0 +1,353 @@
+Checking class RequestGroupInfo:
+
+  Verifying word setProcessingTime setErrorCount:
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:160 RequestGroupInfo.java:162
+      Atomic: NO
+
+     COMMON:
+     [java] An atomic composition (AC) found by ICfinder-COMP in method resetCounters of class org.apache.coyote.RequestGroupInfo
+     [java] invocation at line 160: virtualinvoke r0.<org.apache.coyote.RequestGroupInfo: void setProcessingTime(long)>(0L)
+     [java] invocation at line 162: virtualinvoke r0.<org.apache.coyote.RequestGroupInfo: void setErrorCount(int)>(0)
+
+--
+
+Checking class RequestGroupInfo:
+
+  Verifying word setProcessingTime setMaxTime:
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:160 RequestGroupInfo.java:161
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method resetCounters of class org.apache.coyote.RequestGroupInfo
+     [java] invocation at line 160: virtualinvoke r0.<org.apache.coyote.RequestGroupInfo: void setProcessingTime(long)>(0L)
+     [java] invocation at line 161: virtualinvoke r0.<org.apache.coyote.RequestGroupInfo: void setMaxTime(long)>(0L)
+
+--
+
+Checking class RequestGroupInfo:
+
+  Verifying word setRequestCount setErrorCount:
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:159 RequestGroupInfo.java:162
+      Atomic: NO
+
+      COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method resetCounters of class org.apache.coyote.RequestGroupInfo
+     [java] invocation at line 159: virtualinvoke r0.<org.apache.coyote.RequestGroupInfo: void setRequestCount(int)>(0)
+     [java] invocation at line 162: virtualinvoke r0.<org.apache.coyote.RequestGroupInfo: void setErrorCount(int)>(0)
+
+--
+
+Checking class RequestGroupInfo:
+
+  Verifying word setRequestCount setMaxTime:
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:159 RequestGroupInfo.java:161
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method resetCounters of class org.apache.coyote.RequestGroupInfo
+     [java] invocation at line 159: virtualinvoke r0.<org.apache.coyote.RequestGroupInfo: void setRequestCount(int)>(0)
+     [java] invocation at line 161: virtualinvoke r0.<org.apache.coyote.RequestGroupInfo: void setMaxTime(long)>(0L)
+--
+
+Checking class RequestGroupInfo:
+
+  Verifying word setBytesReceived setBytesSent:
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:157 RequestGroupInfo.java:158
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method resetCounters of class org.apache.coyote.RequestGroupInfo
+     [java] invocation at line 157: virtualinvoke r0.<org.apache.coyote.RequestGroupInfo: void setBytesReceived(long)>(0L)
+     [java] invocation at line 158: virtualinvoke r0.<org.apache.coyote.RequestGroupInfo: void setBytesSent(long)>(0L)
+--
+
+Checking class RequestGroupInfo:
+
+  Verifying word setBytesReceived setErrorCount:
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:157 RequestGroupInfo.java:162
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method resetCounters of class org.apache.coyote.RequestGroupInfo
+     [java] invocation at line 157: virtualinvoke r0.<org.apache.coyote.RequestGroupInfo: void setBytesReceived(long)>(0L)
+     [java] invocation at line 162: virtualinvoke r0.<org.apache.coyote.RequestGroupInfo: void setErrorCount(int)>(0)
+--
+
+Checking class RequestGroupInfo:
+
+  Verifying word setBytesReceived setMaxTime:
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:157 RequestGroupInfo.java:161
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method resetCounters of class org.apache.coyote.RequestGroupInfo
+     [java] invocation at line 157: virtualinvoke r0.<org.apache.coyote.RequestGroupInfo: void setBytesReceived(long)>(0L)
+     [java] invocation at line 161: virtualinvoke r0.<org.apache.coyote.RequestGroupInfo: void setMaxTime(long)>(0L)
+--
+
+Checking class RequestGroupInfo:
+
+  Verifying word setBytesSent setErrorCount:
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:158 RequestGroupInfo.java:162
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method resetCounters of class org.apache.coyote.RequestGroupInfo
+     [java] invocation at line 158: virtualinvoke r0.<org.apache.coyote.RequestGroupInfo: void setBytesSent(long)>(0L)
+     [java] invocation at line 162: virtualinvoke r0.<org.apache.coyote.RequestGroupInfo: void setErrorCount(int)>(0)
+--
+
+Checking class RequestGroupInfo:
+
+  Verifying word setBytesSent setMaxTime:
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:158 RequestGroupInfo.java:161
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method resetCounters of class org.apache.coyote.RequestGroupInfo
+     [java] invocation at line 158: virtualinvoke r0.<org.apache.coyote.RequestGroupInfo: void setBytesSent(long)>(0L)
+     [java] invocation at line 161: virtualinvoke r0.<org.apache.coyote.RequestGroupInfo: void setMaxTime(long)>(0L)
+--
+
+Checking class NamingContextListener:
+
+  Verifying word findResourceLinks findServices:
+
+      Method: NamingContextListener.createNamingContext()
+      Calls Location: NamingContextListener.java:628 NamingContextListener.java:660
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method createNamingContext of class org.apache.catalina.core.NamingContextListener
+     [java] invocation at line 620: r1 = virtualinvoke $r26.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextResourceLink[] findResourceLinks()>()
+     [java] invocation at line 652: r6 = virtualinvoke $r36.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextService[] findServices()>()
+--
+
+Checking class NamingContextListener:
+
+  Verifying word findResourceLinks findEjbs:
+
+      Method: NamingContextListener.createNamingContext()
+      Calls Location: NamingContextListener.java:628 NamingContextListener.java:654
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method createNamingContext of class org.apache.catalina.core.NamingContextListener
+     [java] invocation at line 620: r1 = virtualinvoke $r26.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextResourceLink[] findResourceLinks()>()
+     [java] invocation at line 646: r5 = virtualinvoke $r34.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextEjb[] findEjbs()>()
+--
+
+Checking class NamingContextListener:
+
+  Verifying word findResourceLinks findResources:
+
+      Method: NamingContextListener.createNamingContext()
+      Calls Location: NamingContextListener.java:628 NamingContextListener.java:635
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method createNamingContext of class org.apache.catalina.core.NamingContextListener
+     [java] invocation at line 620: r1 = virtualinvoke $r26.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextResourceLink[] findResourceLinks()>()
+     [java] invocation at line 627: r2 = virtualinvoke $r28.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextResource[] findResources()>()
+--
+
+Checking class NamingContextListener:
+
+  Verifying word findResourceLinks findResourceEnvRefs:
+
+      Method: NamingContextListener.createNamingContext()
+      Calls Location: NamingContextListener.java:628 NamingContextListener.java:641
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method createNamingContext of class org.apache.catalina.core.NamingContextListener
+     [java] invocation at line 620: r1 = virtualinvoke $r26.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextResourceLink[] findResourceLinks()>()
+     [java] invocation at line 633: r3 = virtualinvoke $r30.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextResourceEnvRef[] findResourceEnvRefs()>()
+--
+
+Checking class NamingContextListener:
+
+  Verifying word findResourceLinks findEnvironments:
+
+      Method: NamingContextListener.createNamingContext()
+      Calls Location: NamingContextListener.java:628 NamingContextListener.java:647
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method createNamingContext of class org.apache.catalina.core.NamingContextListener
+     [java] invocation at line 620: r1 = virtualinvoke $r26.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextResourceLink[] findResourceLinks()>()
+     [java] invocation at line 639: r4 = virtualinvoke $r32.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextEnvironment[] findEnvironments()>()
+--
+
+Checking class NamingContextListener:
+
+  Verifying word findResources findResourceEnvRefs:
+
+      Method: NamingContextListener.createNamingContext()
+      Calls Location: NamingContextListener.java:635 NamingContextListener.java:641
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method createNamingContext of class org.apache.catalina.core.NamingContextListener
+     [java] invocation at line 620: r1 = virtualinvoke $r26.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextResourceLink[] findResourceLinks()>()
+     [java] invocation at line 633: r3 = virtualinvoke $r30.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextResourceEnvRef[] findResourceEnvRefs()>()
+--
+
+Checking class NamingContextListener:
+
+  Verifying word findResources findEnvironments:
+
+      Method: NamingContextListener.createNamingContext()
+      Calls Location: NamingContextListener.java:635 NamingContextListener.java:647
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method createNamingContext of class org.apache.catalina.core.NamingContextListener
+     [java] invocation at line 627: r2 = virtualinvoke $r28.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextResource[] findResources()>()
+     [java] invocation at line 639: r4 = virtualinvoke $r32.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextEnvironment[] findEnvironments()>()
+--
+
+Checking class NamingContextListener:
+
+  Verifying word findResourceEnvRefs findEnvironments:
+
+      Method: NamingContextListener.createNamingContext()
+      Calls Location: NamingContextListener.java:641 NamingContextListener.java:647
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method createNamingContext of class org.apache.catalina.core.NamingContextListener
+     [java] invocation at line 633: r3 = virtualinvoke $r30.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextResourceEnvRef[] findResourceEnvRefs()>()
+     [java] invocation at line 639: r4 = virtualinvoke $r32.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextEnvironment[] findEnvironments()>()
+--
+
+Checking class HostConfig:
+
+  Verifying word deployDescriptor deployDirectory:
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:559 HostConfig.java:567
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method deployApps of class org.apache.catalina.startup.HostConfig
+     [java] invocation at line 521: virtualinvoke r0.<org.apache.catalina.startup.HostConfig: void deployDescriptor(java.lang.String,java.io.File,java.lang.String)>(r1, r7, $r17)
+     [java] invocation at line 529: virtualinvoke r0.<org.apache.catalina.startup.HostConfig: void deployDirectory(java.lang.String,java.io.File,java.lang.String)>(r1, r9, r5)
+--
+
+Checking class HostConfig:
+
+  Verifying word deployDescriptor deployWAR:
+
+      Method: HostConfig.deployApps()
+      Calls Location: HostConfig.java:559 HostConfig.java:563
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method deployApps of class org.apache.catalina.startup.HostConfig
+     [java] invocation at line 521: virtualinvoke r0.<org.apache.catalina.startup.HostConfig: void deployDescriptor(java.lang.String,java.io.File,java.lang.String)>(r1, r7, $r17)
+     [java] invocation at line 525: virtualinvoke r0.<org.apache.catalina.startup.HostConfig: void deployWAR(java.lang.String,java.io.File,java.lang.String)>(r1, r8, $r26)
+--
+
+Checking class HostConfig:
+
+  Verifying word deployDescriptor isServiced:
+
+      Method: HostConfig.deployDescriptors()
+      Calls Location: HostConfig.java:601 HostConfig.java:596
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method deployDescriptors of class org.apache.catalina.startup.HostConfig
+     [java] invocation at line 563: virtualinvoke r0.<org.apache.catalina.startup.HostConfig: void deployDescriptor(java.lang.String,java.io.File,java.lang.String)>(r5, r3, r6)
+     [java] invocation at line 558: $z4 = virtualinvoke r0.<org.apache.catalina.startup.HostConfig: boolean isServiced(java.lang.String)>(r5)
+--
+
+Checking class HostConfig:
+
+  Verifying word isServiced deployWAR:
+
+      Method: HostConfig.deployWARs()
+      Calls Location: HostConfig.java:773 HostConfig.java:778
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method deployWARs of class org.apache.catalina.startup.HostConfig
+     [java] invocation at line 735: $z8 = virtualinvoke r0.<org.apache.catalina.startup.HostConfig: boolean isServiced(java.lang.String)>(r18)
+     [java] invocation at line 740: virtualinvoke r0.<org.apache.catalina.startup.HostConfig: void deployWAR(java.lang.String,java.io.File,java.lang.String)>(r18, r3, r5)
+
+--
+
+Checking class HostConfig:
+
+  Verifying word isServiced checkResources:
+
+      Method: HostConfig.check()
+      Calls Location: HostConfig.java:1381 HostConfig.java:1382
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method check of class org.apache.catalina.startup.HostConfig
+     [java] invocation at line 1341: $z1 = virtualinvoke r0.<org.apache.catalina.startup.HostConfig: boolean isServiced(java.lang.String)>($r8)
+     [java] invocation at line 1342: virtualinvoke r0.<org.apache.catalina.startup.HostConfig: void checkResources(org.apache.catalina.startup.HostConfig$DeployedApplication)>($r9)
+--
+
+Checking class NamingResources:
+
+  Verifying word findEnvironment removeEnvironment:
+
+      Method: NamingResources.addEnvironment()
+      Calls Location: NamingResources.java:196 NamingResources.java:200
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-COMP in method removeEnvironment of class org.apache.catalina.mbeans.NamingResourcesMBean
+     [java] invocation at line 271: r3 = virtualinvoke r2.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextEnvironment findEnvironment(java.lang.String)>(r1)
+     [java] invocation at line 276: virtualinvoke r2.<org.apache.catalina.deploy.NamingResources: void removeEnvironment(java.lang.String)>(r1)
+
+--
+
+Checking class NamingResources:
+
+  Verifying word findResourceLink removeResourceLink:
+
+      Method: NamingResources.addEnvironment()
+      Calls Location: NamingResources.java:197 NamingResources.java:210
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-USE in method addEnvironment of class org.apache.catalina.deploy.NamingResources
+     [java] invocation at line 197: r3 = virtualinvoke r0.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextResourceLink findResourceLink(java.lang.String)>($r8)
+     [java] invocation at line 210: virtualinvoke r0.<org.apache.catalina.deploy.NamingResources: void removeResourceLink(java.lang.String)>($r15)
+--
+
+Checking class NamingResources:
+
+  Verifying word findResourceLink removeResourceLink:
+
+      Method: NamingResources.addEnvironment()
+      Calls Location: NamingResources.java:197 NamingResources.java:210
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-USE in method addEnvironment of class org.apache.catalina.deploy.NamingResources
+     [java] invocation at line 197: r3 = virtualinvoke r0.<org.apache.catalina.deploy.NamingResources: org.apache.catalina.deploy.ContextResourceLink findResourceLink(java.lang.String)>($r8)
+     [java] invocation at line 210: virtualinvoke r0.<org.apache.catalina.deploy.NamingResources: void removeResourceLink(java.lang.String)>($r15)

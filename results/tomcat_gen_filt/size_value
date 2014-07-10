@@ -1,0 +1,74 @@
+  Verifying word size values:
+
+      Method: StandardContext.findErrorPages()
+      Calls Location: StandardContext.java:3017 StandardContext.java:3018
+      Atomic: YES
+
+      Method: StandardContext.findMessageDestinations()
+      Calls Location: StandardContext.java:3115 StandardContext.java:3117
+      Atomic: YES
+
+      Method: StandardContext.findFilterDefs()
+      Calls Location: StandardContext.java:3054 StandardContext.java:3055
+      Atomic: YES
+
+      Method: StandardContext.findErrorPages()
+      Calls Location: StandardContext.java:3014 StandardContext.java:3018
+      Atomic: YES
+
+      Method: StandardContext.findErrorPages()
+      Calls Location: StandardContext.java:3014 StandardContext.java:3015
+      Atomic: YES
+--
+  Verifying word size values:
+
+      Method: NamingResources.findResources()
+      Calls Location: NamingResources.java:555 NamingResources.java:556
+      Atomic: YES
+
+      Method: NamingResources.findMessageDestinationRefs()
+      Calls Location: NamingResources.java:494 NamingResources.java:496
+      Atomic: YES
+
+      Method: NamingResources.findEjbs()
+      Calls Location: NamingResources.java:406 NamingResources.java:407
+      Atomic: YES
+
+      Method: NamingResources.findResourceEnvRefs()
+      Calls Location: NamingResources.java:585 NamingResources.java:586
+      Atomic: YES
+
+      Method: NamingResources.findServices()
+      Calls Location: NamingResources.java:614 NamingResources.java:615
+      Atomic: YES
+
+      Method: NamingResources.findResourceLinks()
+      Calls Location: NamingResources.java:539 NamingResources.java:541
+      Atomic: YES
+
+      Method: NamingResources.findEnvironments()
+      Calls Location: NamingResources.java:436 NamingResources.java:437
+      Atomic: YES
+
+      Method: NamingResources.findLocalEjbs()
+      Calls Location: NamingResources.java:465 NamingResources.java:466
+      Atomic: YES
+--
+  Verifying word size values:
+
+      Method: ContainerBase.destroy()
+      Calls Location: ContainerBase.java:868 ContainerBase.java:869
+      Atomic: NO
+
+      Method: ContainerBase.stop()
+      Calls Location: ContainerBase.java:868 ContainerBase.java:869
+      Atomic: YES
+
+      Method: ContainerBase.findChildren()
+      Calls Location: ContainerBase.java:868 ContainerBase.java:869
+      Atomic: YES
+
+      Method: ContainerBase.getChildren()
+      Calls Location: ContainerBase.java:1525 ContainerBase.java:1526
+      Atomic: NO
+--

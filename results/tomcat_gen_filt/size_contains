@@ -1,0 +1,11 @@
+  Verifying word size contains:
+
+      Method: BaseAttributeFilter.isNotificationEnabled()
+      Calls Location: BaseAttributeFilter.java:136 BaseAttributeFilter.java:139
+      Atomic: YES
+--
+  Verifying word size contains:
+
+      Method: FixedNotificationFilter.isNotificationEnabled()
+      Calls Location: FixedNotificationFilter.java:86 FixedNotificationFilter.java:89
+      Atomic: YES

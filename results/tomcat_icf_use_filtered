@@ -1,0 +1,67 @@
+  Verifying word recycleWorkerThread recycleWorkerThread:
+
+      Method: NioEndpoint$Worker.run()
+      Calls Location: NioEndpoint.java:2109 NioEndpoint.java:2109
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-USE in method run of class org.apache.tomcat.util.net.NioEndpoint$Worker
+     [java] invocation at line 2080: virtualinvoke $r23.<org.apache.tomcat.util.net.NioEndpoint: void recycleWorkerThread(org.apache.tomcat.util.net.NioEndpoint$Worker)>(r0)
+     [java] invocation at line 2080: virtualinvoke $r37.<org.apache.tomcat.util.net.NioEndpoint: void recycleWorkerThread(org.apache.tomcat.util.net.NioEndpoint$Worker)>(r0)
+
+--
+  Verifying word findRole createRole:
+
+      Method: MemoryGroupCreationFactory.createObject()
+      Calls Location: MemoryUserDatabase.java:675 MemoryUserDatabase.java:677
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-USE in method createObject of class org.apache.catalina.users.MemoryGroupCreationFactory
+     [java] invocation at line 675: r6 = virtualinvoke $r10.<org.apache.catalina.users.MemoryUserDatabase: org.apache.catalina.Role findRole(java.lang.String)>(r9)
+     [java] invocation at line 677: r6 = virtualinvoke $r11.<org.apache.catalina.users.MemoryUserDatabase: org.apache.catalina.Role createRole(java.lang.String,java.lang.String)>(r9, null)
+--
+  Verifying word findRole createRole:
+
+      Method: MemoryUserCreationFactory.createObject()
+      Calls Location: MemoryUserDatabase.java:789 MemoryUserDatabase.java:791
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-USE in method createObject of class org.apache.catalina.users.MemoryUserCreationFactory
+     [java] invocation at line 789: r17 = virtualinvoke $r16.<org.apache.catalina.users.MemoryUserDatabase: org.apache.catalina.Role findRole(java.lang.String)>(r15)
+     [java] invocation at line 791: r17 = virtualinvoke $r18.<org.apache.catalina.users.MemoryUserDatabase: org.apache.catalina.Role createRole(java.lang.String,java.lang.String)>(r15, null)
+--
+  Verifying word findParameters findParameter:
+
+      Method: StandardContext.mergeParameters()
+      Calls Location: StandardContext.java:4815 StandardContext.java:4817
+      Atomic: NO
+
+     NOT COMMON, but correctly idenfitied possible AV
+--
+  Verifying word removeSession findSessions:
+
+      Method: SingleSignOn.deregister()
+      Calls Location: SingleSignOn.java:486 SingleSignOn.java:489
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-USE in method deregister of class org.apache.catalina.authenticator.SingleSignOn
+     [java] invocation at line 486: virtualinvoke r10.<org.apache.catalina.authenticator.SingleSignOnEntry: void removeSession(org.apache.catalina.Session)>(r2)
+     [java] invocation at line 489: r4 = virtualinvoke r10.<org.apache.catalina.authenticator.SingleSignOnEntry: org.apache.catalina.Session[] findSessions()>()
+
+      Method: SingleSignOn.removeSession()
+      Calls Location: SingleSignOn.java:689 SingleSignOn.java:698
+      Atomic: NO
+
+     COMMON
+     [java] An atomic composition (AC) found by ICfinder-USE in method removeSession of class org.apache.catalina.authenticator.SingleSignOn
+     [java] invocation at line 689: virtualinvoke r4.<org.apache.catalina.authenticator.SingleSignOnEntry: void removeSession(org.apache.catalina.Session)>(r2)
+     [java] invocation at line 698: $r17 = virtualinvoke r4.<org.apache.catalina.authenticator.SingleSignOnEntry: org.apache.catalina.Session[] findSessions()>()
+
+      Method: SingleSignOn.removeSession()
+      Calls Location: SingleSignOn.java:689 SingleSignOn.java:520
+      Atomic: NO
+
+     NOT COMMON, but correctly idenfitied possible AV

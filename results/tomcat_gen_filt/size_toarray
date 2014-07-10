@@ -1,0 +1,130 @@
+  Verifying word size toArray:
+
+      Method: Bootstrap.main()
+      Calls Location: Bootstrap.java:179 Bootstrap.java:171
+      Atomic: NO
+
+      Method: Bootstrap.main()
+      Calls Location: Bootstrap.java:179 Bootstrap.java:172
+      Atomic: NO
+
+      Method: Bootstrap.initClassLoaders()
+      Calls Location: Bootstrap.java:179 Bootstrap.java:171
+      Atomic: NO
+
+      Method: Bootstrap.initClassLoaders()
+      Calls Location: Bootstrap.java:179 Bootstrap.java:172
+      Atomic: NO
+--
+  Verifying word size toArray:
+
+      Method: StandardService.findExecutors()
+      Calls Location: StandardService.java:453 StandardService.java:454
+      Atomic: YES
+
+      Method: StandardService.stop()
+      Calls Location: StandardService.java:623 StandardService.java:454
+      Atomic: NO
+--
+  Verifying word size toArray:
+
+      Method: StandardHost.findReloadedContextMemoryLeaks()
+      Calls Location: StandardHost.java:628 StandardHost.java:628
+      Atomic: NO
+--
+  Verifying word size toArray:
+
+      Method: WebappLoader.getLoaderRepositories()
+      Calls Location: WebappLoader.java:468 WebappLoader.java:469
+      Atomic: NO
+--
+  Verifying word size toArray:
+
+      Method: Registry.findManagedBeans()
+      Calls Location: Registry.java:443 Registry.java:444
+      Atomic: NO
+--
+  Verifying word size toArray:
+
+      Method: ContainerBase.fireContainerEvent()
+      Calls Location: ContainerBase.java:1406 ContainerBase.java:1411
+      Atomic: NO
+
+      Method: ContainerBase.destroy()
+      Calls Location: ContainerBase.java:1406 ContainerBase.java:1411
+      Atomic: NO
+
+      Method: ContainerBase.stop()
+      Calls Location: ContainerBase.java:1406 ContainerBase.java:1411
+      Atomic: YES
+
+      Method: ContainerBase.findContainerListeners()
+      Calls Location: ContainerBase.java:883 ContainerBase.java:885
+      Atomic: YES
+--
+  Verifying word size toArray:
+
+      Method: Mapper.getContextNames()
+      Calls Location: Mapper.java:300 Mapper.java:301
+      Atomic: NO
+
+      Method: Mapper.getWrapperNames()
+      Calls Location: Mapper.java:534 Mapper.java:535
+      Atomic: NO
+--
+  Verifying word size toArray:
+
+      Method: Response.getCookies()
+      Calls Location: Response.java:868 Response.java:868
+      Atomic: NO
+--
+  Verifying word size toArray:
+
+      Method: TldConfig.getTldListeners()
+      Calls Location: TldConfig.java:284 TldConfig.java:285
+      Atomic: NO
+--
+  Verifying word size toArray:
+
+      Method: StandardWrapper.findMappings()
+      Calls Location: StandardWrapper.java:957 StandardWrapper.java:957
+      Atomic: NO
+--
+  Verifying word size toArray:
+
+      Method: HostConfig.filterAppPaths()
+      Calls Location: HostConfig.java:541 HostConfig.java:541
+      Atomic: NO
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:541 HostConfig.java:541
+      Atomic: NO
+--
+  Verifying word size toArray:
+
+      Method: Parameters.getParameterValues()
+      Calls Location: Parameters.java:148 Parameters.java:148
+      Atomic: NO
+--
+  Verifying word size toArray:
+
+      Method: RealmBase.resultsToArray()
+      Calls Location: RealmBase.java:741 RealmBase.java:742
+      Atomic: NO
+--
+  Verifying word size toArray:
+
+      Method: StandardSession.fireSessionEvent()
+      Calls Location: StandardSession.java:1653 StandardSession.java:1658
+      Atomic: NO
+--
+  Verifying word size toArray:
+
+      Method: ApplicationHttpRequest.mergeParameters()
+      Calls Location: ApplicationHttpRequest.java:847 ApplicationHttpRequest.java:848
+      Atomic: NO
+
+      Method: ApplicationHttpRequest.mergeValues()
+      Calls Location: ApplicationHttpRequest.java:847 ApplicationHttpRequest.java:848
+      Atomic: NO
+--

@@ -1,0 +1,13 @@
+--
+  Verifying word add poll:
+
+      Method: ManagerBase.createSession()
+      Calls Location: ManagerBase.java:911 ManagerBase.java:912
+      Atomic: YES
+--
+  Verifying word add poll:
+
+      Method: StandardSession.expire()
+      Calls Location: StandardSession.java:781 StandardSession.java:782
+      Atomic: YES
+

@@ -1,0 +1,401 @@
+List
+
+  size get:
+
+      Method: Bootstrap.initClassLoaders()
+      Calls Location: Bootstrap.java:179 Bootstrap.java:180
+      Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+        if (MBeanServerFactory.findMBeanServer(null).size() > 0) {
+            mBeanServer =
+                (MBeanServer) MBeanServerFactory.findMBeanServer(null).get(0);
+	}
+
+      Method: Bootstrap.createClassLoader()
+      Calls Location: Bootstrap.java:179 Bootstrap.java:180
+      Atomic: NO
+
+    	    repeated
+
+      Method: Bootstrap.main()
+      Calls Location: Bootstrap.java:179 Bootstrap.java:180
+      Atomic: NO
+
+     	    repeated
+
+      Method: Request.getLocale()
+      Calls Location: Request.java:1067 Request.java:1068
+      Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+        if (locales.size() > 0) {
+            return ((Locale) locales.get(0));
+        } 
+
+      Method: Parameters.getParameter()
+      Calls Location: Parameters.java:161 Parameters.java:164
+      Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+            if(values.size() == 0) {
+                return "";
+            }
+            return values.get(0);
+
+      Method: CallMethodMultiRule.end()
+      Calls Location: WebRuleSet.java:780 WebRuleSet.java:781
+      Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+        for (int j = 0; j < multiParams.size(); j++) {
+            Object param = multiParams.get(j);
+	    ...
+	    }
+
+      Method: StandardSession.writeObject()
+      Calls Location: StandardSession.java:1580 StandardSession.java:1587
+      Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+        int n = saveNames.size();
+	...
+        for (int i = 0; i < n; i++) {
+            stream.writeObject((String) saveNames.get(i));
+	    	...
+                    manager.getContainer().getLogger().debug
+                        ("  storing attribute '" + saveNames.get(i) +
+                        "' with value '" + saveValues.get(i) + "'");
+
+
+      Method: StandardSession.writeObject()
+      Calls Location: StandardSession.java:1580 StandardSession.java:1585
+      Atomic: NO
+
+        int n = saveNames.size();
+	...
+        for (int i = 0; i < n; i++) {
+            stream.writeObject((String) saveNames.get(i));
+
+      Method: StandardSession.writeObject()
+      Calls Location: StandardSession.java:1580 StandardSession.java:1583
+      Atomic: NO
+
+      Method: StandardService.stop()
+      Calls Location: StandardService.java:623 StandardService.java:624
+      Atomic: YES
+
+      Method: StandardService.start()
+      Calls Location: StandardService.java:531 StandardService.java:532
+      Atomic: YES
+
+      Method: StandardService.start()
+      Calls Location: StandardService.java:453 StandardService.java:532
+      Atomic: YES
+
+      Method: StandardService.getExecutor()
+      Calls Location: StandardService.java:466 StandardService.java:467
+      Atomic: YES
+
+      Method: StandardService.getExecutor()
+      Calls Location: StandardService.java:466 StandardService.java:468
+      Atomic: YES
+
+      Method: Registry.getMBeanServer()
+      Calls Location: Registry.java:591 Registry.java:592
+      Atomic: YES
+
+      Method: Registry.invoke()
+      Calls Location: Registry.java:591 Registry.java:592
+      Atomic: YES
+
+      Method: Registry.registerComponent()
+      Calls Location: Registry.java:591 Registry.java:592
+      Atomic: YES
+
+      Method: Registry.unregisterComponent()
+      Calls Location: Registry.java:591 Registry.java:592
+      Atomic: YES
+
+      Method: StringCache.toString()
+      Calls Location: StringCache.java:261 StringCache.java:262
+      Atomic: YES
+
+      Method: StringCache.toString()
+      Calls Location: StringCache.java:373 StringCache.java:374
+      Atomic: YES
+
+      Method: RequestGroupInfo.setMaxTime()
+      Calls Location: RequestGroupInfo.java:65 RequestGroupInfo.java:66
+      Atomic: YES
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:65 RequestGroupInfo.java:117
+      Atomic: YES
+
+      Method: RequestGroupInfo.setErrorCount()
+      Calls Location: RequestGroupInfo.java:116 RequestGroupInfo.java:117
+      Atomic: YES
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:82 RequestGroupInfo.java:66
+      Atomic: YES
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:82 RequestGroupInfo.java:117
+      Atomic: YES
+
+      Method: RequestGroupInfo.setProcessingTime()
+      Calls Location: RequestGroupInfo.java:82 RequestGroupInfo.java:83
+      Atomic: YES
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:99 RequestGroupInfo.java:66
+      Atomic: YES
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:99 RequestGroupInfo.java:117
+      Atomic: YES
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:99 RequestGroupInfo.java:83
+      Atomic: YES
+
+      Method: RequestGroupInfo.setRequestCount()
+      Calls Location: RequestGroupInfo.java:99 RequestGroupInfo.java:100
+      Atomic: YES
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:150 RequestGroupInfo.java:66
+      Atomic: YES
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:150 RequestGroupInfo.java:117
+      Atomic: YES
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:150 RequestGroupInfo.java:83
+      Atomic: YES
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:150 RequestGroupInfo.java:100
+      Atomic: YES
+
+      Method: RequestGroupInfo.setBytesSent()
+      Calls Location: RequestGroupInfo.java:150 RequestGroupInfo.java:151
+      Atomic: YES
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:133 RequestGroupInfo.java:66
+      Atomic: YES
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:133 RequestGroupInfo.java:117
+      Atomic: YES
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:133 RequestGroupInfo.java:83
+      Atomic: YES
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:133 RequestGroupInfo.java:100
+      Atomic: YES
+
+      Method: RequestGroupInfo.resetCounters()
+      Calls Location: RequestGroupInfo.java:133 RequestGroupInfo.java:151
+      Atomic: YES
+
+      Method: RequestGroupInfo.getErrorCount()
+      Calls Location: RequestGroupInfo.java:107 RequestGroupInfo.java:108
+      Atomic: YES
+
+      Method: RequestGroupInfo.getProcessingTime()
+      Calls Location: RequestGroupInfo.java:73 RequestGroupInfo.java:74
+      Atomic: YES
+
+      Method: RequestGroupInfo.setBytesReceived()
+      Calls Location: RequestGroupInfo.java:133 RequestGroupInfo.java:134
+      Atomic: YES
+
+      Method: RequestGroupInfo.getBytesReceived()
+      Calls Location: RequestGroupInfo.java:124 RequestGroupInfo.java:125
+      Atomic: YES
+
+      Method: RequestGroupInfo.getBytesSent()
+      Calls Location: RequestGroupInfo.java:141 RequestGroupInfo.java:142
+      Atomic: YES
+
+      Method: RequestGroupInfo.getMaxTime()
+      Calls Location: RequestGroupInfo.java:55 RequestGroupInfo.java:56
+      Atomic: YES
+
+      Method: RequestGroupInfo.getRequestCount()
+      Calls Location: RequestGroupInfo.java:90 RequestGroupInfo.java:91
+      Atomic: YES
+
+Map
+
+  containsKey(X) put(X,_):
+
+    Method: ClassLoaderLogManager.addLogger()
+    Calls Location: ClassLoaderLogManager.java:129 ClassLoaderLogManager.java:132
+    Atomic: YES
+
+    	    already atomic. correctly identified.
+
+    Method: ApplicationContext.setAttribute()
+    Calls Location: ApplicationContext.java:794 ApplicationContext.java:799
+    Atomic: NO
+
+    	    false positive due to conservative points-to analysis
+
+    Method: ApplicationContext.setInitParameter()
+    Calls Location: ApplicationContext.java:276 ApplicationContext.java:280
+    Atomic: NO
+
+    	    same bug reported in ICFinder
+
+        if (parameters.containsKey(name)) {
+            return false;
+        }
+
+        parameters.put(name, value);
+
+
+    Method: ApplicationContext.setAttributeReadOnly()
+    Calls Location: ApplicationContext.java:895 ApplicationContext.java:896
+    Atomic: NO
+
+    	    false positive due to conservative points-to analysis
+
+  containsKey(X) get(X):
+
+     Method: ApplicationContext.clearAttributes()
+     Calls Location: ApplicationContext.java:730 ApplicationContext.java:734
+     Atomic: NO
+
+    	    false positive due to conservative points-to analysis
+
+     Method: ApplicationContext.clearAttributes()
+     Calls Location: ApplicationContext.java:732 ApplicationContext.java:734
+     Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+        found = attributes.containsKey(name);
+        if (found)
+            value = attributes.get(name);
+
+
+     Method: ApplicationContext.removeAttribute()
+     Calls Location: ApplicationContext.java:730 ApplicationContext.java:734
+     Atomic: NO
+
+    	    false positive due to conservative points-to analysis
+
+     Method: ApplicationContext.removeAttribute()
+     Calls Location: ApplicationContext.java:732 ApplicationContext.java:734
+     Atomic: NO
+
+     	     repeated
+
+     Method: ApplicationContext.setAttribute()
+     Calls Location: ApplicationContext.java:794 ApplicationContext.java:796
+     Atomic: NO
+
+    	    false positive due to conservative points-to analysis
+
+  containsKey(X) remove(X):
+
+    Method: ApplicationContext.removeAttribute()
+    Calls Location: ApplicationContext.java:730 ApplicationContext.java:735
+    Atomic: NO
+
+    	    false positive due to conservative points-to analysis
+
+    Method: ApplicationContext.removeAttribute()
+    Calls Location: ApplicationContext.java:732 ApplicationContext.java:735
+    Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+        found = attributes.containsKey(name);
+        if (found) {
+            value = attributes.get(name);
+            attributes.remove(name);
+        } 
+
+    Method: ApplicationContext.clearAttributes()
+    Calls Location: ApplicationContext.java:730 ApplicationContext.java:735
+    Atomic: NO
+
+    	    false positive due to conservative points-to analysis
+
+    Method: ApplicationContext.clearAttributes()
+    Calls Location: ApplicationContext.java:732 ApplicationContext.java:735
+    Atomic: NO
+
+    	    repeated
+
+Set
+
+  contains(X) add(X):
+
+      Method: Request.setUserPrincipal()
+      Calls Location: Request.java:1834 Request.java:1840
+      Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+            if ( (subject != null) && 
+                 (!subject.getPrincipals().contains(principal)) ){
+                subject.getPrincipals().add(principal);
+            } else if (session != null &&
+                        session.getAttribute(Globals.SUBJECT_ATTR) == null) {
+                subject = new Subject();
+                subject.getPrincipals().add(principal);         
+            }
+
+      Method: Request.setUserPrincipal()
+      Calls Location: Request.java:1834 Request.java:1836
+      Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+            if ( (subject != null) && 
+                 (!subject.getPrincipals().contains(principal)) ){
+                subject.getPrincipals().add(principal);
+            } else if (session != null &&
+                        session.getAttribute(Globals.SUBJECT_ATTR) == null) {
+                subject = new Subject();
+                subject.getPrincipals().add(principal);         
+            }
+
+      Method: HostConfig.lifecycleEvent()
+      Calls Location: HostConfig.java:754 HostConfig.java:766
+      Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+            if (files[i].toLowerCase().endsWith(".war") && dir.isFile()
+                    && !invalidWars.contains(files[i]) ) {
+         
+		...
+       
+                 if (!validateContextPath(appBase, contextPath)) {
+                    ...
+                    invalidWars.add(files[i]);
+                    continue;
+                }
+	}
+
+      Method: HostConfig.deployWARs()
+      Calls Location: HostConfig.java:754 HostConfig.java:766
+      Atomic: NO
+
+      	      repeated

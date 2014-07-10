@@ -1,0 +1,236 @@
+List
+
+  35 occurences
+
+Map
+
+  containsKey(X) put(X,_):
+
+    Method: AttributeSource.addAttributeImpl()
+    Calls Location: AttributeSource.java:247 AttributeSource.java:250
+    Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+      if (!attributes.containsKey(curInterface)) {
+        // invalidate state to force recomputation in captureState()
+        this.currentState[0] = null;
+        attributes.put(curInterface, att);
+        attributeImpls.put(clazz, att);
+      }
+
+    Method: AttributeSource.addAttributeImpl()
+    Calls Location: AttributeSource.java:237 AttributeSource.java:251
+    Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+
+      if (attributeImpls.containsKey(clazz)) return;
+
+      ...
+    
+      attributeImpls.put(clazz, att);
+
+
+    Method: IndexFileDeleter.deleteCommits()
+    Calls Location: IndexFileDeleter.java:541 IndexFileDeleter.java:543
+    Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+        if (!refCounts.containsKey(fileName)) {
+	      rc = new RefCount(fileName);
+	            refCounts.put(fileName, rc);
+        }
+
+    Method: IndexFileDeleter.getRefCount()
+    Calls Location: IndexFileDeleter.java:541 IndexFileDeleter.java:543
+    Atomic: NO
+
+    	    repeated
+
+    Method: IndexFileDeleter.<init>()
+    Calls Location: IndexFileDeleter.java:541 IndexFileDeleter.java:543
+    Atomic: NO
+
+    	    repeated
+
+    Method: IndexFileDeleter.decRef()
+    Calls Location: IndexFileDeleter.java:541 IndexFileDeleter.java:543
+    Atomic: NO
+
+    	    repeated
+
+    Method: IndexFileDeleter.incRef()
+    Calls Location: IndexFileDeleter.java:541 IndexFileDeleter.java:543
+    Atomic: NO
+
+    	    repeated
+
+    Method: IndexFileDeleter.checkpoint()
+    Calls Location: IndexFileDeleter.java:541 IndexFileDeleter.java:543
+    Atomic: NO
+
+    	    repeated
+
+    Method: CompoundFileWriter.createOutput()
+    Calls Location: CompoundFileWriter.java:219 CompoundFileWriter.java:224
+    Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+          if (entries.containsKey(name))
+	          throw new IllegalArgumentException();
+
+          entries.put(name, entry);
+
+    Method: MapOfSets.put()
+    Calls Location: MapOfSets.java:55 MapOfSets.java:59
+    Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+        if (theMap.containsKey(key)) {
+    	  theSet = theMap.get(key);
+        } else {
+          theSet = new HashSet<V>(23);
+          theMap.put(key, theSet);
+        }
+
+    Method: MapOfSets.putAll()
+    Calls Location: MapOfSets.java:72 MapOfSets.java:76
+    Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+        if (theMap.containsKey(key)) {
+          theSet = theMap.get(key);
+        } else {
+          theSet = new HashSet<V>(23);
+          theMap.put(key, theSet);
+        }
+
+  containsKey(X) get(X):
+
+    Method: FieldInfos$FieldNumbers.contains()
+    Calls Location: FieldInfos.java:232 FieldInfos.java:236
+    Atomic: YES
+
+    	    already atomic.
+       	    false positive due to conservative points-to analysis
+
+    Method: IndexFileDeleter.getRefCount()
+    Calls Location: IndexFileDeleter.java:541 IndexFileDeleter.java:545
+    Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+        if (!refCounts.containsKey(fileName)) {
+          rc = new RefCount(fileName);
+          refCounts.put(fileName, rc);
+        } else {
+          rc = refCounts.get(fileName);
+        }
+
+    Method: IndexFileDeleter.deleteCommits()
+    Calls Location: IndexFileDeleter.java:541 IndexFileDeleter.java:545
+    Atomic: NO
+
+    	    repeated
+
+    Method: IndexFileDeleter.<init>()
+    Calls Location: IndexFileDeleter.java:541 IndexFileDeleter.java:545
+    Atomic: NO
+
+    	    repeated
+
+    Method: IndexFileDeleter.decRef()
+    Calls Location: IndexFileDeleter.java:541 IndexFileDeleter.java:545
+    Atomic: NO
+
+    	    repeated
+
+    Method: IndexFileDeleter.incRef()
+    Calls Location: IndexFileDeleter.java:541 IndexFileDeleter.java:545
+    Atomic: NO
+
+    	    repeated
+
+    Method: IndexFileDeleter.checkpoint()
+    Calls Location: IndexFileDeleter.java:541 IndexFileDeleter.java:545
+    Atomic: NO
+
+    	    repeated
+
+    Method: MapOfSets.put()
+    Calls Location: MapOfSets.java:55 MapOfSets.java:56
+    Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+        if (theMap.containsKey(key))
+	      theSet = theMap.get(key);
+
+    Method: MapOfSets.putAll()
+    Calls Location: MapOfSets.java:72 MapOfSets.java:73
+    Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+        if (theMap.containsKey(key))
+	      theSet = theMap.get(key);
+
+  containsKey(X) remove(X):
+
+    Method: CompoundFileWriter.createOutput()
+    Calls Location: CompoundFileWriter.java:219 CompoundFileWriter.java:244
+    Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+    try {
+      if (entries.containsKey(name)) {
+        throw new IllegalArgumentException("File " + name + " already exists");
+      }
+
+    } finally {
+      if (!success) {
+        entries.remove(name);
+        }
+    }
+
+Set
+
+  contains(X) add(X):
+
+      Method: IndexWriter.copySegmentAsIs()
+      Calls Location: IndexWriter.java:2726 IndexWriter.java:2743
+      Atomic: NO
+
+       	    false positive due to conservative points-to analysis
+
+      Method: IndexWriter.copySegmentAsIs()
+      Calls Location: IndexWriter.java:2742 IndexWriter.java:2743
+      Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+        assert !copiedFiles.contains(file): "file \"" + file + "\" is being copied more than once";
+        copiedFiles.add(file);
+
+      Method: IndexWriter.copySegmentAsIs()
+      Calls Location: IndexWriter.java:2728 IndexWriter.java:2731
+      Atomic: NO
+
+     	     correctly detected possible atomicity violation:
+
+          if (dsFilesCopied.contains(newFileName)) {
+            continue;
+          }
+          dsFilesCopied.add(newFileName);
+
+
+      Method: CompoundFileWriter.createOutput()
+      Calls Location: CompoundFileWriter.java:226 CompoundFileWriter.java:227
+      Atomic: NO

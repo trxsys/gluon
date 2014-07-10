@@ -1,0 +1,42 @@
+               Occurences  | # Violations  |  False Positives  |  Potencial Violations
+                Already    |               |  points-to | ow   |
+                 Synch     |               |            |      |
+______________________________________________________________________________________
+Lucene Map         1       |       20      |      0     |   0  |        20
+Lucene List        T       |        T      |      *     |   *  |         *
+Lucene Set         0       |        4      |      1     |   0  |         3
+______________________________________________________________________________________
+Tomcat Map         1       |       12      |      7     |   0  |         5
+Tomcat List       38       |        9      |      0     |   0  |         9
+Tomcat Set         0       |        4      |      0     |   0  |         4
+
+============= Tomcat Gen ============= 
+
+               Occurences  | # Violations  |  False Positives  |  Potencial Atomicity
+                Already    |   Contract    |  points-to | ow   |      Violations
+                 Synch     |               |            |      |
+______________________________________________________________________________________
+*                  4       |        2      |      0     |   0  |         2                getWarnings logFindings
+*                 15       |        2      |      0     |   0  |         2                size values
+*                  3       |        4      |      0     |   0  |         1                getAnnotationProcessor getAnnotationProcessor
+*                  3       |        5      |      0     |   0  |         5                isRegistered invoke (***verificar se podem ser removidos***)
+*                 10       |        8      |      0     |   0  |         8                get put
+*                 33       |       12      |      4     |   0  |         8                fireLifecycleEvent fireLifecycleEvent
+*                  3       |       22      |      -     |   -  |         -                size toArray
+*                  1       |       25      |      -     |   -  |         -                hasMoreElements nextElement
+*                 19       |       32      |      -     |   -  |         -                size get
+                  11       |       46      |      -     |   -  |         -                parse reset
+______ IGNORE: no strong correlation__________________________________________________
+                   4       |        3      |      -     |   -  |         -                setByteStream getSystemId
+______ IGNORE: too many violations ___________________________________________________
+                  18       |       81      |      -     |   -  |         -                isInfoEnabled info
+                 110       |      838      |      -     |   -  |         -                isDebugEnabled debug
+______ IGNORE: violations=0 __________________________________________________________
+                   6       |        0      |      -     |   -  |         -                setNamingResources getName
+                   2       |        0      |      -     |   -  |         -                size contains
+                   2       |        0      |      -     |   -  |         -                add poll
+                   2       |        0      |      -     |   -  |         -                getErrorCode getErrorCode
+                   2       |        0      |      -     |   -  |         -                getErrors logFindings
+
+
+---> upload resultados carla
