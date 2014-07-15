@@ -1,6 +1,6 @@
   Verifying word hasMoreElements nextElement:
 
-      Method: CatalinaProperties.loadProperties()
+****  Method: CatalinaProperties.loadProperties()
       Calls Location: CatalinaProperties.java:136 CatalinaProperties.java:137
       Atomic: NO
 --
@@ -10,13 +10,13 @@
       Calls Location: Request.java:1129 Request.java:1130
       Atomic: NO
 
-      Method: Request.parseLocales()
+****  Method: Request.parseLocales()
       Calls Location: Request.java:2738 Request.java:2739
       Atomic: NO
 --
   Verifying word hasMoreElements nextElement:
 
-      Method: Response.getHeaderValues()
+****  Method: Response.getHeaderValues()
       Calls Location: Response.java:913 Response.java:914
       Atomic: NO
 --
@@ -48,11 +48,11 @@
 --
   Verifying word hasMoreElements nextElement:
 
-      Method: WebappClassLoader.findResources()
+****  Method: WebappClassLoader.findResources()
       Calls Location: WebappClassLoader.java:1334 WebappClassLoader.java:1335
       Atomic: NO
 
-      Method: WebappClassLoader.findResources()
+****  Method: WebappClassLoader.findResources()
       Calls Location: WebappClassLoader.java:1290 WebappClassLoader.java:1291
       Atomic: NO
 
@@ -72,31 +72,31 @@
 --
   Verifying word hasMoreElements nextElement:
 
-      Method: ServiceRef.toString()
+****  Method: ServiceRef.toString()
       Calls Location: ServiceRef.java:188 ServiceRef.java:189
       Atomic: NO
 --
   Verifying word hasMoreElements nextElement:
 
-      Method: HandlerRef.toString()
+****  Method: HandlerRef.toString()
       Calls Location: HandlerRef.java:157 HandlerRef.java:158
       Atomic: NO
 --
   Verifying word hasMoreElements nextElement:
 
-      Method: ResourceRef.toString()
+****  Method: ResourceRef.toString()
       Calls Location: ResourceRef.java:151 ResourceRef.java:152
       Atomic: NO
 --
   Verifying word hasMoreElements nextElement:
 
-      Method: StringManager.getManager()
+****  Method: StringManager.getManager()
       Calls Location: StringManager.java:247 StringManager.java:248
       Atomic: NO
 --
   Verifying word hasMoreElements nextElement:
 
-      Method: MimeHeaders.toString()
+****  Method: MimeHeaders.toString()
       Calls Location: MimeHeaders.java:165 MimeHeaders.java:166
       Atomic: NO
 
@@ -104,7 +104,7 @@
       Calls Location: MimeHeaders.java:168 MimeHeaders.java:166
       Atomic: NO
 
-      Method: MimeHeaders.toString()
+****  Method: MimeHeaders.toString()
       Calls Location: MimeHeaders.java:168 MimeHeaders.java:171
       Atomic: NO
 
@@ -114,11 +114,11 @@
 --
   Verifying word hasMoreElements nextElement:
 
-      Method: ManagerBase.getSession()
+****  Method: ManagerBase.getSession()
       Calls Location: ManagerBase.java:1374 ManagerBase.java:1375
       Atomic: NO
 
-      Method: ManagerBase.getSession()
+****  Method: ManagerBase.getSession()
       Calls Location: ManagerBase.java:1369 ManagerBase.java:1375
       Atomic: NO
 --
@@ -130,7 +130,7 @@
 --
   Verifying word hasMoreElements nextElement:
 
-      Method: ApplicationHttpRequest$AttributeNamesEnumerator.findNext()
+****  Method: ApplicationHttpRequest$AttributeNamesEnumerator.findNext()
       Calls Location: ApplicationHttpRequest.java:941 ApplicationHttpRequest.java:942
       Atomic: NO
 --

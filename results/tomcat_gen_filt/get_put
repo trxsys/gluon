@@ -1,10 +1,10 @@
   Verifying word get(X) put(X,_):
 
-      Method: Digester.startPrefixMapping()
+****  Method: Digester.startPrefixMapping()
       Calls Location: Digester.java:1410 Digester.java:1413
       Atomic: NO
 
-      Method: Digester.push()
+****  Method: Digester.push()
       Calls Location: Digester.java:2545 Digester.java:2548
       Atomic: NO
 --
@@ -22,13 +22,13 @@
       Calls Location: StandardContext.java:2752 StandardContext.java:2759
       Atomic: YES
 
-      Method: StandardContext.addParameter()
+!!!!  Method: StandardContext.addParameter()
       Calls Location: StandardContext.java:2664 StandardContext.java:2670
       Atomic: NO
 --
   Verifying word get(X) put(X,_):
 
-      Method: Registry.loadDescriptors()
+****  Method: Registry.loadDescriptors()
       Calls Location: Registry.java:825 Registry.java:841
       Atomic: NO
 

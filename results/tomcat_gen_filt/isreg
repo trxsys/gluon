@@ -6,13 +6,13 @@
 --
   Verifying word isRegistered(X) invoke(X,_,_,_):
 
-      Method: Connector.findContainer()
+****  Method: Connector.findContainer()
       Calls Location: Connector.java:1319 Connector.java:1320
       Atomic: NO
 --
   Verifying word isRegistered(X) invoke(X,_,_,_):
 
-      Method: StandardEngine.start()
+!!!!  Method: StandardEngine.start()
       Calls Location: StandardEngine.java:438 StandardEngine.java:439
       Atomic: NO
 --

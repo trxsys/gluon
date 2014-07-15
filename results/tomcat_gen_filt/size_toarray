@@ -34,7 +34,7 @@
 --
   Verifying word size toArray:
 
-      Method: WebappLoader.getLoaderRepositories()
+****  Method: WebappLoader.getLoaderRepositories()
       Calls Location: WebappLoader.java:468 WebappLoader.java:469
       Atomic: NO
 --
@@ -46,11 +46,11 @@
 --
   Verifying word size toArray:
 
-      Method: ContainerBase.fireContainerEvent()
+!!!!  Method: ContainerBase.fireContainerEvent()
       Calls Location: ContainerBase.java:1406 ContainerBase.java:1411
       Atomic: NO
 
-      Method: ContainerBase.destroy()
+"""" Method: ContainerBase.destroy()
       Calls Location: ContainerBase.java:1406 ContainerBase.java:1411
       Atomic: NO
 
@@ -74,13 +74,13 @@
 --
   Verifying word size toArray:
 
-      Method: Response.getCookies()
+****  Method: Response.getCookies()
       Calls Location: Response.java:868 Response.java:868
       Atomic: NO
 --
   Verifying word size toArray:
 
-      Method: TldConfig.getTldListeners()
+****  Method: TldConfig.getTldListeners()
       Calls Location: TldConfig.java:284 TldConfig.java:285
       Atomic: NO
 --
@@ -102,19 +102,19 @@
 --
   Verifying word size toArray:
 
-      Method: Parameters.getParameterValues()
+****  Method: Parameters.getParameterValues()
       Calls Location: Parameters.java:148 Parameters.java:148
       Atomic: NO
 --
   Verifying word size toArray:
 
-      Method: RealmBase.resultsToArray()
+****  Method: RealmBase.resultsToArray()
       Calls Location: RealmBase.java:741 RealmBase.java:742
       Atomic: NO
 --
   Verifying word size toArray:
 
-      Method: StandardSession.fireSessionEvent()
+!!!!  Method: StandardSession.fireSessionEvent()
       Calls Location: StandardSession.java:1653 StandardSession.java:1658
       Atomic: NO
 --

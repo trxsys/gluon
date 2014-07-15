@@ -64,33 +64,19 @@
 --
   Verifying word size get:
 
-      Method: ArrayStack.peek()
-      Calls Location: ArrayStack.java:106 ArrayStack.java:110
-      Atomic: NO
-
-      Method: ArrayStack.peek()
-      Calls Location: ArrayStack.java:88 ArrayStack.java:92
-      Atomic: NO
-
-      Method: ArrayStack.search()
-      Calls Location: ArrayStack.java:154 ArrayStack.java:157
-      Atomic: NO
---
-  Verifying word size get:
-
-      Method: Request.getLocale()
+****  Method: Request.getLocale()
       Calls Location: Request.java:1067 Request.java:1068
       Atomic: NO
 --
   Verifying word size get:
 
-      Method: Parameters.getParameter()
+****  Method: Parameters.getParameter()
       Calls Location: Parameters.java:161 Parameters.java:164
       Atomic: NO
 --
   Verifying word size get:
 
-      Method: CallMethodMultiRule.end()
+****  Method: CallMethodMultiRule.end()
       Calls Location: WebRuleSet.java:780 WebRuleSet.java:781
       Atomic: NO
 --

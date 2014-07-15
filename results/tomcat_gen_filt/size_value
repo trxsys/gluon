@@ -68,7 +68,22 @@
       Calls Location: ContainerBase.java:868 ContainerBase.java:869
       Atomic: YES
 
-      Method: ContainerBase.getChildren()
+!!!!  Method: ContainerBase.getChildren()
       Calls Location: ContainerBase.java:1525 ContainerBase.java:1526
       Atomic: NO
+
+    public ObjectName[] getChildren() {
+        ObjectName result[]=new ObjectName[children.size()];
+        Iterator it=children.values().iterator();
+        int i=0;
+        while( it.hasNext() ) {
+            Object next=it.next();
+            if( next instanceof ContainerBase ) {
+                result[i++]=((ContainerBase)next).getJmxName();
+            }
+        }
+        return result;
+    }
+
+
 --

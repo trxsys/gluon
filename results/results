@@ -12,31 +12,36 @@ Tomcat Set         0       |        4      |      0     |   0  |         4
 
 ============= Tomcat Gen ============= 
 
-               Occurences  | # Violations  |  False Positives  |  Potencial Atomicity
-                Already    |   Contract    |  points-to | ow   |      Violations
-                 Synch     |               |            |      |
-______________________________________________________________________________________
-*                  4       |        2      |      0     |   0  |         2                getWarnings logFindings
-*                 15       |        2      |      0     |   0  |         2                size values
-*                  3       |        4      |      0     |   0  |         1                getAnnotationProcessor getAnnotationProcessor
-*                  3       |        5      |      0     |   0  |         5                isRegistered invoke (***verificar se podem ser removidos***)
-*                 10       |        8      |      0     |   0  |         8                get put
-*                 33       |       12      |      4     |   0  |         8                fireLifecycleEvent fireLifecycleEvent
-*                  3       |       22      |      -     |   -  |         -                size toArray
-*                  1       |       25      |      -     |   -  |         -                hasMoreElements nextElement
-*                 19       |       32      |      -     |   -  |         -                size get
-                  11       |       46      |      -     |   -  |         -                parse reset
-______ IGNORE: no strong correlation__________________________________________________
-                   4       |        3      |      -     |   -  |         -                setByteStream getSystemId
-______ IGNORE: too many violations ___________________________________________________
-                  18       |       81      |      -     |   -  |         -                isInfoEnabled info
-                 110       |      838      |      -     |   -  |         -                isDebugEnabled debug
-______ IGNORE: violations=0 __________________________________________________________
-                   6       |        0      |      -     |   -  |         -                setNamingResources getName
-                   2       |        0      |      -     |   -  |         -                size contains
-                   2       |        0      |      -     |   -  |         -                add poll
-                   2       |        0      |      -     |   -  |         -                getErrorCode getErrorCode
-                   2       |        0      |      -     |   -  |         -                getErrors logFindings
+               Occurences  | # Violations  |  False Positives  |  Potencial Atomicity  |  Atomicity
+                Already    |   Contract    |  points-to | ow   |      Violations       |  Violations
+                 Synch     |               |            |      |        ****           |     !!!!
+______________________________________________________________________________________________________
+                   3       |        4      |      0     |   0  |         1             |       0        getAnnotationProcessor getAnnotationProcessor
+                  15       |        2      |      1     |   0  |         1             |       1        size values
+                   4       |        2      |      0     |   0  |         2             |       0        getWarnings logFindings
+                  19       |       29      |      4     |   0  |         3             |       0        size get
+                   3       |        5      |      0     |   0  |         2             |       1        isRegistered invoke
+                  10       |        8      |      0     |   0  |         8             |       1        get put
+                  33       |       12      |      4     |   0  |         8             |       0        fireLifecycleEvent fireLifecycleEvent
+                   3       |       22      |      4     |   0  |         8             |       2        size toArray
+                   1       |       25      |      3     |   0  |        14             |       0        hasMoreElements nextElement
+                  11       |       46      |      -     |   -  |         -             |       -        parse reset
+______ IGNORE: no strong correlation__________________________________________________________________
+                   4       |        3      |      -     |   -  |         -             |       -        setByteStream getSystemId
+______ IGNORE: too many violations ___________________________________________________________________
+                  18       |       81      |      -     |   -  |         -             |       -        isInfoEnabled info
+                 110       |      838      |      -     |   -  |         -             |       -        isDebugEnabled debug
+______ IGNORE: violations=0 __________________________________________________________________________
+                   6       |        0      |      -     |   -  |         -             |       -        setNamingResources getName
+                   2       |        0      |      -     |   -  |         -             |       -        size contains
+                   2       |        0      |      -     |   -  |         -             |       -        add poll
+                   2       |        0      |      -     |   -  |         -             |       -        getErrorCode getErrorCode
+                   2       |        0      |      -     |   -  |         -             |       -        getErrors logFindings
 
+============= Lucene Gen ============= 
 
----> upload resultados carla
+               Occurences  | # Violations  |  False Positives  |  Potencial Atomicity  |  Atomicity
+                Already    |   Contract    |  points-to | ow   |      Violations       |  Violations
+                 Synch     |               |            |      |        ****           |     !!!!
+______________________________________________________________________________________________________
+                   -       |        -      |      -     |   -  |         -             |       -        
