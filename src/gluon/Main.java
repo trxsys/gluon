@@ -297,6 +297,18 @@ public class Main
         /* Points-to analises */
         SparkTransformer.v().transform("",getSparkOptions());
 
+        {
+            int count=0;
+
+            for (SootClass c: Scene.v().getClasses())
+                if (c.toString().contains("derby")
+                    && !c.toString().contains("Testing"))
+                    count++;
+
+            System.out.println("classes: "+count);
+            System.exit(0);
+        }
+
         PackManager.v().runPacks();
     }
 

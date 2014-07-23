@@ -3,7 +3,7 @@
 cd ..
 
 # this is just to test performance
-./gluon.sh --timeout 10000000 -t -p -s -y -r --classpath \
+./gluon.sh --timeout 5 -t -p -s -y -r --classpath \
     ../lucene-4.6.1/build/demo/classes/java/:../lucene-4.6.1/build/core/classes/java/ \
     --module java.util.Map \
     --contract "containsKey(X) put(X,_)" \

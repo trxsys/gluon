@@ -137,6 +137,9 @@ public class MonitorAnalysis
         t=invoke.getBase().getType();
         m=invoke.getMethod();
 
+        if (m.isConstructor() || m.isPrivate())
+            return;
+
         if (!synchCalls.containsKey(synchContext))
             synchCalls.put(synchContext,
                            new HashMap<Type,List<SootMethod>>());
@@ -151,14 +154,80 @@ public class MonitorAnalysis
 
     private void printSynchCalls()
     {
+        final boolean SCRIPT=true;
+
+        Map<List<SootMethod>,Integer> m
+            =new HashMap<List<SootMethod>,Integer>();
+
         for (Object synchContext: synchCalls.keySet())
             for (Type t: synchCalls.get(synchContext).keySet())
             {
                 List<SootMethod> seq=synchCalls.get(synchContext).get(t);
 
-                if (seq.size() > 1)
-                    System.err.println(seq.size()+" "+t+"    "+seq);
+                if (seq.size() <= 1)
+                    continue;
+
+                if (!m.containsKey(seq))
+                    m.put(seq,0);
+
+                m.put(seq,m.get(seq)+1);
             }
+
+        if (SCRIPT)
+        {
+            System.err.println("#! /bin/bash");
+            System.err.println();
+            System.err.println("cd ..");
+            System.err.println();
+            System.err.println("rm -f tests_out");
+            System.err.println();
+        }
+
+        for (List<SootMethod> seq: m.keySet())
+        {
+            int count=m.get(seq);
+            int len=seq.size();
+            SootClass c=seq.get(0).getDeclaringClass();
+
+            if (count < 2)
+                continue;
+
+            if (SCRIPT)
+            {
+                int i;
+
+                /*
+                  ./gluon.sh --timeout 5 -t -p -s -y -r \
+                  --classpath ../db-derby-10.10.2.0-src/classes \
+                  --module java.util.List \
+                  --contract 'size size' \
+                  org.apache.derbyTesting.functionTests.harness.RunTest
+                 */
+
+                System.err.println("./gluon.sh --timeout 5 -t -p -s -y -r "
+                                   +"--classpath ../db-derby-10.10.2.0-src/classes \\");
+                System.err.println("    --module "+c.getName()+" \\");
+                System.err.print("    --contract \"");
+
+                i=0;
+                for (SootMethod method: seq)
+                    System.err.print((i++ > 0 ? " " : "")+method.getName());
+
+                System.err.println("\" \\");
+                System.err.println("    org.apache.derbyTesting.functionTests.harness.RunTest "
+                                   +">> tests_out");
+                System.err.println();
+            }
+            else
+            {
+                System.err.print(count+" "+c.getName()+":   ");
+
+                for (SootMethod method: seq)
+                    System.err.print(" "+method.getName());
+
+                System.err.println();
+            }
+        }
     }
 
     public void analyze()
@@ -166,7 +235,7 @@ public class MonitorAnalysis
         visited=new HashSet<Unit>();
 
         for (SootClass c: scene.getClasses())
-            if (c.isJavaLibraryClass()
+            if (!c.isJavaLibraryClass()
                 || gluon.Main.WITH_JAVA_LIB)
                 for (SootMethod m: c.getMethods())
                 {
@@ -185,7 +254,11 @@ public class MonitorAnalysis
                         analyzeUnit(m,head,cfg,null);
                 }
 
-        printSynchCalls();
+        if (true)
+        {
+            // printSynchCalls();
+            System.exit(0);
+        }
 
         visited=null;
         synchCalls=null;

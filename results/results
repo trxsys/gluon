@@ -10,23 +10,37 @@ Tomcat Map         1       |       12      |      7     |   0  |         5
 Tomcat List       38       |        9      |      0     |   0  |         9
 Tomcat Set         0       |        4      |      0     |   0  |         4
 
+============= ICF results ============= 
+
+             |           |       |        |                        Missed by gluon
+             | ICF Total | Gluon | Common | Module/Methods | Calls inside | ICF gives wrong | Call Across       | ICF false positive
+             |           |       |        |   not found    |    module    |   call order    | Different Modules | due to lack of points-to
+___________________________________________________________________________________________________________________________________________
+Tomcat COMP  |    104    |   25  |   25   |       30       |     38       |       11 (‽)    |      0            |         0
+Tomcat USE   |    109    |    7 †|    5   |       37       |     50       |        0        |      1 (‽)        |         2
+
+ -> lucene <-
+
+† The two additional violations detected by gluon seem to actually represent atomicity violations
+
+
 ============= Tomcat Gen ============= 
 
                Occurences  | # Violations  |  False Positives  |  Potencial Atomicity  |  Atomicity
                 Already    |   Contract    |  points-to | ow   |      Violations       |  Violations
-                 Synch     |               |            |      |        ****           |     !!!!
+                 Synch     |               |            |      |        ****           |     !!!! (captured by icfinder)
 ______________________________________________________________________________________________________
                    3       |        4      |      0     |   0  |         1             |       0        getAnnotationProcessor getAnnotationProcessor
-                  15       |        2      |      1     |   0  |         1             |       1        size values
+                  15       |        2      |      1     |   0  |         1             |       1 (0)    size values
                    4       |        2      |      0     |   0  |         2             |       0        getWarnings logFindings
                   19       |       29      |      4     |   0  |         3             |       0        size get
-                   3       |        5      |      0     |   0  |         2             |       1        isRegistered invoke
-                  10       |        8      |      0     |   0  |         8             |       1        get put
+                   3       |        5      |      0     |   0  |         2             |       1 (0)    isRegistered invoke
+                  10       |        8      |      0     |   0  |         8             |       1 (0)    get put
                   33       |       12      |      4     |   0  |         8             |       0        fireLifecycleEvent fireLifecycleEvent
-                   3       |       22      |      4     |   0  |         8             |       2        size toArray
+                   3       |       22      |      4     |   0  |         8             |       2 (0)    size toArray
                    1       |       25      |      3     |   0  |        14             |       0        hasMoreElements nextElement
                   11       |       46      |      -     |   -  |         -             |       -        parse reset
-______ IGNORE: no strong correlation__________________________________________________________________
+______ IGNORE: no strong correlation _________________________________________________________________
                    4       |        3      |      -     |   -  |         -             |       -        setByteStream getSystemId
 ______ IGNORE: too many violations ___________________________________________________________________
                   18       |       81      |      -     |   -  |         -             |       -        isInfoEnabled info
@@ -44,4 +58,21 @@ ______ IGNORE: violations=0 ____________________________________________________
                 Already    |   Contract    |  points-to | ow   |      Violations       |  Violations
                  Synch     |               |            |      |        ****           |     !!!!
 ______________________________________________________________________________________________________
-                   -       |        -      |      -     |   -  |         -             |       -        
+                  27       |        1      |      1     |   0  |         0             |       0        initWritableLiveDocs delete getPendingDeleteCount
+                   6       |        2      |      0     |   0  |         2             |       0        seekExact docs
+                   3       |        1      |      0     |   0  |         0             |       0        flushAllThreads finishFullFlush
+                  94       |        4      |      2     |   0  |         0             |       0        contains remove
+                   8       |       30      |     20     |   0  |         0             |       0        deleteFile deleteNewFiles
+                  18       |       36      |      4     |   0  |        23             |       0        get put
+                  12       |       98      |     17     |   0  |        51             |       0        size get
+______ IGNORE: too many violations ___________________________________________________________________
+                  94       |      441      |      -     |   -  |         -             |       -        hasNext next
+                  36       |      189      |      -     |   -  |         -             |       -        isEnabled message
+______ IGNORE: no strong correlation _________________________________________________________________
+                   4       |       67      |      -     |   -  |         -             |       -        deleteFile deleteFile
+                  24       |       48      |      -     |   -  |         -             |       -        getDocCount getDocCount
+______ IGNORE: violations=0 __________________________________________________________________________
+                   2       |        0      |      -     |   -  |         -             |       -        abortPendingFlushes waitForFlush
+                   5       |        0      |      -     |   -  |         -             |       -        addAndGet get
+                   3       |        0      |      -     |   -  |         -             |       -        applyDeletesAndUpdates prune
+                   3       |        0      |      -     |   -  |         -             |       -        getMaxThreadStates getThreadState
