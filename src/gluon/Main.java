@@ -34,6 +34,9 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
+import java.util.Scanner;
+import java.io.File;
+
 public class Main
 {
     private static final String PROGNAME="gluon";
@@ -283,6 +286,21 @@ public class Main
 
         if (CLASS_SCOPE)
         {
+            for (String path: classPath.split(":"))
+                try
+                {
+                    Scanner sc=new Scanner(new File(path+"/LOADEXTRA"));
+
+                    while (sc.hasNext())
+                    {
+                        String c=sc.next();
+
+                        try { Scene.v().loadClassAndSupport(c); }
+                        catch (Exception _) {};
+                    }
+                }
+                catch (Exception _) {}
+
             for (SootClass c: Scene.v().getClasses())
                 for (soot.SootMethod m: c.getMethods())
                     try { m.retrieveActiveBody(); }
