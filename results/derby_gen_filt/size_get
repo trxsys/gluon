@@ -1,0 +1,129 @@
+  Verifying word size get:
+
+****  Method: Main.mergeZips()
+      Calls Location: Main.java:1280 Main.java:1282
+      Atomic: NO
+
+      Method: Main.getAllInfo()
+      Calls Location: Main.java:938 Main.java:1282
+      Atomic: NO
+
+      Method: Main.getAllInfo()
+      Calls Location: Main.java:936 Main.java:1282
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: NetworkServerControlImpl.getNextSession()
+      Calls Location: NetworkServerControlImpl.java:1862 NetworkServerControlImpl.java:1876
+      Atomic: YES
+
+      Method: NetworkServerControlImpl.executeWork()
+      Calls Location: NetworkServerControlImpl.java:2267 NetworkServerControlImpl.java:2319
+      Atomic: NO
+
+      Method: NetworkServerControlImpl.executeWork()
+      Calls Location: NetworkServerControlImpl.java:2267 NetworkServerControlImpl.java:2305
+      Atomic: NO
+
+      Method: NetworkServerControlImpl.executeWork()
+      Calls Location: NetworkServerControlImpl.java:2267 NetworkServerControlImpl.java:2288
+      Atomic: NO
+
+      Method: NetworkServerControlImpl.getNextSession()
+      Calls Location: NetworkServerControlImpl.java:1857 NetworkServerControlImpl.java:1876
+      Atomic: YES
+
+      Method: NetworkServerControlImpl.executeWork()
+      Calls Location: NetworkServerControlImpl.java:2267 NetworkServerControlImpl.java:2294
+      Atomic: NO
+
+      Method: NetworkServerControlImpl.executeWork()
+      Calls Location: NetworkServerControlImpl.java:2267 NetworkServerControlImpl.java:2336
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: EmbedStatement.executeLargeBatch()
+      Calls Location: EmbedStatement.java:1076 EmbedStatement.java:1089
+      Atomic: YES
+--
+    No occurrences
+
+Checking class GeneratedMethod:
+
+  Verifying word size get:
+--
+  Verifying word size get:
+
+****  Method: BaseMonitor.bootPersistentServices()
+      Calls Location: BaseMonitor.java:1726 BaseMonitor.java:1727
+      Atomic: NO
+
+****  Method: BaseMonitor.runWithState()
+      Calls Location: BaseMonitor.java:1726 BaseMonitor.java:1727
+      Atomic: NO
+
+****  Method: BaseMonitor.startServices()
+      Calls Location: BaseMonitor.java:1726 BaseMonitor.java:1727
+      Atomic: NO
+
+****  Method: BaseMonitor.bootProviderServices()
+      Calls Location: BaseMonitor.java:1726 BaseMonitor.java:1727
+      Atomic: NO
+
+!!!!  Method: BaseMonitor.shutdown()
+      Calls Location: BaseMonitor.java:181 BaseMonitor.java:206
+      Atomic: NO
+
+      Method: BaseMonitor.shutdown()
+      Calls Location: BaseMonitor.java:181 BaseMonitor.java:554
+      Atomic: NO
+
+      Method: BaseMonitor.shutdown()
+      Calls Location: BaseMonitor.java:181 BaseMonitor.java:551
+      Atomic: NO
+
+      Method: BaseMonitor.shutdown()
+      Calls Location: BaseMonitor.java:181 BaseMonitor.java:185
+      Atomic: YES
+
+      Method: BaseMonitor.bootService()
+      Calls Location: BaseMonitor.java:1726 BaseMonitor.java:1727
+      Atomic: YES
+
+      Method: BaseMonitor.findTopService()
+      Calls Location: BaseMonitor.java:553 BaseMonitor.java:554
+      Atomic: YES
+
+      Method: BaseMonitor.shutdown()
+      Calls Location: BaseMonitor.java:553 BaseMonitor.java:554
+      Atomic: YES
+
+      Method: BaseMonitor.shutdown()
+      Calls Location: BaseMonitor.java:553 BaseMonitor.java:551
+      Atomic: NO
+
+      Method: BaseMonitor.shutdown()
+      Calls Location: BaseMonitor.java:553 BaseMonitor.java:185
+      Atomic: NO
+
+      Method: BaseMonitor.shutdown()
+      Calls Location: BaseMonitor.java:553 BaseMonitor.java:206
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: TopService.bootModule()
+      Calls Location: TopService.java:283 TopService.java:284
+      Atomic: YES
+
+      Method: TopService.findModuleInstance()
+      Calls Location: TopService.java:237 TopService.java:238
+      Atomic: YES
+--
+  Verifying word size get:
+
+****  Method: RowUtil.toString()
+      Calls Location: RowUtil.java:507 RowUtil.java:509
+      Atomic: NO

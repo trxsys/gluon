@@ -1,0 +1,54 @@
+--
+  Verifying word isEmpty remove:
+
+      Method: ContextManager.popContext()
+      Calls Location: ContextManager.java:204 ContextManager.java:207
+      Atomic: NO
+
+      Method: ContextManager.popContext()
+      Calls Location: ContextManager.java:176 ContextManager.java:181
+      Atomic: NO
+--
+    No occurrences
+
+Checking class GeneratedMethod:
+
+  Verifying word isEmpty remove:
+--
+  Verifying word isEmpty remove:
+
+      Method: IndexStatisticsDaemonImpl.processingLoop()
+      Calls Location: IndexStatisticsDaemonImpl.java:956 IndexStatisticsDaemonImpl.java:957
+      Atomic: YES
+
+      Method: IndexStatisticsDaemonImpl.processingLoop()
+      Calls Location: IndexStatisticsDaemonImpl.java:956 IndexStatisticsDaemonImpl.java:957
+      Atomic: YES
+
+      Method: IndexStatisticsDaemonImpl.processingLoop()
+      Calls Location: IndexStatisticsDaemonImpl.java:956 IndexStatisticsDaemonImpl.java:957
+      Atomic: YES
+
+      Method: IndexStatisticsDaemonImpl.processingLoop()
+      Calls Location: IndexStatisticsDaemonImpl.java:924 IndexStatisticsDaemonImpl.java:957
+      Atomic: NO
+
+      Method: IndexStatisticsDaemonImpl.processingLoop()
+      Calls Location: IndexStatisticsDaemonImpl.java:956 IndexStatisticsDaemonImpl.java:957
+      Atomic: YES
+--
+  Verifying word isEmpty remove:
+
+      Method: PredicateList$PredicateWrapperList.retainLeadingContiguous()
+      Calls Location: PredicateList.java:4193 PredicateList.java:4224
+      Atomic: NO
+--
+  Verifying word isEmpty remove:
+
+      Method: RowOrderingImpl.optimizableAlwaysOrdered()
+      Calls Location: RowOrderingImpl.java:250 RowOrderingImpl.java:336
+      Atomic: NO
+
+      Method: RowOrderingImpl.optimizableAlwaysOrdered()
+      Calls Location: RowOrderingImpl.java:250 RowOrderingImpl.java:306
+      Atomic: NO

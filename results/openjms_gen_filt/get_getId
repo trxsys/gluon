@@ -1,0 +1,14 @@
+
+  Verifying word get getId:
+
+      Method: Consumers.add()
+      Calls Location: Consumers.java:145 Consumers.java:149
+      Atomic: YES
+
+--
+
+  Verifying word get getId:
+
+      Method: Messages.getMessages()
+      Calls Location: Messages.java:323 Messages.java:330
+      Atomic: NO

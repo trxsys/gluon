@@ -1,0 +1,402 @@
+--
+  Verifying word contains remove:
+
+      Method: IndexWriter.closeInternal()
+      Calls Location: IndexWriter.java:3729 IndexWriter.java:3919
+      Atomic: NO
+
+      Method: IndexWriter.closeInternal()
+      Calls Location: IndexWriter.java:3139 IndexWriter.java:3919
+      Atomic: NO
+--
+  Verifying word contains remove:
+
+      Method: NativeFSLock.obtain()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.obtain()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.obtain()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:252 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.obtain()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.obtain()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:253
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.release()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:277
+      Atomic: YES
+
+      Method: NativeFSLock.isLocked()
+      Calls Location: NativeFSLockFactory.java:189 NativeFSLockFactory.java:277
+      Atomic: YES
+--
+  Verifying word contains remove:
+
+      Method: BasicOperations.addEpsilons()
+      Calls Location: .java:752 BasicOperations.java:737
+      Atomic: NO
+--
+  Verifying word contains remove:
+
+****  Method: SpecialOperations.getFiniteStrings()
+      Calls Location: SpecialOperations.java:246 SpecialOperations.java:265
+      Atomic: NO
+--
+  Verifying word contains remove:
+
+      Method: SingleInstanceLockFactory.clearLock()
+      Calls Location: SingleInstanceLockFactory.java:49 SingleInstanceLockFactory.java:50
+      Atomic: YES

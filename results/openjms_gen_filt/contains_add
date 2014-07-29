@@ -1,0 +1,45 @@
+  Verifying word contains add:
+
+      Method: ServiceManager.getService()
+      Calls Location: ServiceManager.java:251 ServiceManager.java:270
+      Atomic: YES
+
+****  Method: ServiceManager.doStart()
+      Calls Location: ServiceManager.java:251 ServiceManager.java:270
+      Atomic: NO
+
+****  Method: ServiceManager.invokeSetters()
+      Calls Location: ServiceManager.java:251 ServiceManager.java:270
+      Atomic: NO
+
+****  Method: ServiceManager.doStop()
+      Calls Location: ServiceManager.java:251 ServiceManager.java:270
+      Atomic: NO
+
+****  Method: ServiceManager.createService()
+      Calls Location: ServiceManager.java:251 ServiceManager.java:270
+      Atomic: NO
+
+--
+
+  Verifying word contains add:
+
+      Method: DestinationManagerImpl.addDestinationEventListener()
+      Calls Location: DestinationManagerImpl.java:241 DestinationManagerImpl.java:242
+      Atomic: YES
+
+--
+
+  Verifying word contains add:
+
+      Method: SessionConsumer.queue()
+      Calls Location: SessionConsumer.java:537 SessionConsumer.java:538
+      Atomic: YES
+
+      Method: SessionConsumer.start()
+      Calls Location: SessionConsumer.java:537 SessionConsumer.java:538
+      Atomic: YES
+
+      Method: SessionConsumer.dispatch()
+      Calls Location: SessionConsumer.java:537 SessionConsumer.java:538
+      Atomic: NO

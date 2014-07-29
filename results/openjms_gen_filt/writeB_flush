@@ -1,0 +1,47 @@
+
+  Verifying word writeByte flush:
+
+      Method: Multiplexer.handlePingRequest()
+      Calls Location: Multiplexer.java:682 Multiplexer.java:684
+      Atomic: YES
+
+      Method: Multiplexer.run()
+      Calls Location: Multiplexer.java:682 Multiplexer.java:684
+      Atomic: NO
+
+****  Method: Multiplexer.authenticate()
+      Calls Location: Multiplexer.java:501 Multiplexer.java:502
+      Atomic: NO
+
+****  Method: Multiplexer.authenticate()
+      Calls Location: Multiplexer.java:498 Multiplexer.java:499
+      Atomic: NO
+
+****  Method: Multiplexer.authenticate()
+      Calls Location: Multiplexer.java:458 Multiplexer.java:460
+      Atomic: NO
+
+****  Method: Multiplexer.authenticate()
+      Calls Location: Multiplexer.java:454 Multiplexer.java:460
+      Atomic: NO
+
+      Method: Multiplexer.send()
+      Calls Location: Multiplexer.java:302 Multiplexer.java:306
+      Atomic: YES
+
+      Method: Multiplexer.ping()
+      Calls Location: Multiplexer.java:318 Multiplexer.java:320
+      Atomic: YES
+
+      Method: Multiplexer.send()
+      Calls Location: Multiplexer.java:241 Multiplexer.java:242
+      Atomic: YES
+
+      Method: Multiplexer.send()
+      Calls Location: Multiplexer.java:258 Multiplexer.java:260
+      Atomic: YES
+
+      Method: Multiplexer.send()
+      Calls Location: Multiplexer.java:278 Multiplexer.java:281
+      Atomic: YES
+

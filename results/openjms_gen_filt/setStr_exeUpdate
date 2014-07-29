@@ -1,0 +1,121 @@
+  Verifying word setString executeUpdate:
+
+****  Method: RDBMSAdapter.initSchemaVersion()
+      Calls Location: RDBMSAdapter.java:893 RDBMSAdapter.java:895
+      Atomic: NO
+
+--
+
+  Verifying word setString executeUpdate:
+
+      Method: SeedGenerator.next()
+      Calls Location: SeedGenerator.java:87 SeedGenerator.java:88
+      Atomic: YES
+
+      Method: SeedGenerator.next()
+      Calls Location: SeedGenerator.java:93 SeedGenerator.java:95
+      Atomic: YES
+
+      Method: SeedGenerator.next()
+      Calls Location: SeedGenerator.java:78 SeedGenerator.java:88
+      Atomic: YES
+
+      Method: SeedGenerator.next()
+      Calls Location: SeedGenerator.java:78 SeedGenerator.java:95
+      Atomic: YES
+
+--
+
+  Verifying word setString executeUpdate:
+
+      Method: Destinations.remove()
+      Calls Location: Destinations.java:165 Destinations.java:181
+      Atomic: YES
+
+      Method: Destinations.remove()
+      Calls Location: Destinations.java:165 Destinations.java:180
+      Atomic: YES
+
+      Method: Destinations.remove()
+      Calls Location: Destinations.java:165 Destinations.java:182
+      Atomic: YES
+
+      Method: Destinations.add()
+      Calls Location: Destinations.java:128 Destinations.java:131
+      Atomic: YES
+
+--
+
+  Verifying word setString executeUpdate:
+
+      Method: Consumers.add()
+      Calls Location: Consumers.java:169 Consumers.java:173
+      Atomic: YES
+
+      Method: Consumers.remove()
+      Calls Location: Consumers.java:217 Consumers.java:218
+      Atomic: YES
+
+      Method: Consumers.remove()
+      Calls Location: Consumers.java:217 Consumers.java:392
+      Atomic: YES
+
+--
+
+  Verifying word setString executeUpdate:
+
+****  Method: Messages.update()
+      Calls Location: Messages.java:187 Messages.java:190
+      Atomic: NO
+
+****  Method: Messages.add()
+      Calls Location: Messages.java:136 Messages.java:150
+      Atomic: NO
+
+****  Method: Messages.remove()
+      Calls Location: Messages.java:215 Messages.java:218
+      Atomic: NO
+
+--
+
+  Verifying word setString executeUpdate:
+
+****  Method: MessageHandles.updateMessageHandle()
+      Calls Location: MessageHandles.java:362 MessageHandles.java:367
+      Atomic: NO
+
+****  Method: MessageHandles.addMessageHandle()
+      Calls Location: MessageHandles.java:216 MessageHandles.java:226
+      Atomic: NO
+
+****  Method: MessageHandles.removeMessageHandle()
+      Calls Location: MessageHandles.java:289 MessageHandles.java:295
+      Atomic: NO
+
+****  Method: MessageHandles.removeMessageHandle()
+      Calls Location: MessageHandles.java:283 MessageHandles.java:295
+      Atomic: NO
+
+--
+
+  Verifying word setString executeUpdate:
+
+      Method: Users.add()
+      Calls Location: Users.java:84 Users.java:85
+      Atomic: YES
+
+      Method: Users.update()
+      Calls Location: Users.java:110 Users.java:111
+      Atomic: YES
+
+      Method: Users.remove()
+      Calls Location: Users.java:139 Users.java:140
+      Atomic: YES
+
+      Method: Users.update()
+      Calls Location: Users.java:109 Users.java:111
+      Atomic: YES
+
+      Method: Users.add()
+      Calls Location: Users.java:83 Users.java:85
+      Atomic: YES

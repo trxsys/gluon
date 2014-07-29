@@ -1,0 +1,245 @@
+  Verifying word get remove:
+
+      Method: UserManager.deleteUser()
+      Calls Location: UserManager.java:181 UserManager.java:301
+      Atomic: YES
+
+--
+
+  Verifying word get remove:
+
+      Method: ResourceManager.logTransactionState()
+      Calls Location: ResourceManager.java:1030 ResourceManager.java:1066
+      Atomic: YES
+
+      Method: ResourceManager.logTransactionState()
+      Calls Location: ResourceManager.java:1030 ResourceManager.java:1073
+      Atomic: YES
+
+      Method: ResourceManager.logTransactionState()
+      Calls Location: ResourceManager.java:1030 ResourceManager.java:390
+      Atomic: YES
+
+      Method: ResourceManager.logTransactionState()
+      Calls Location: ResourceManager.java:372 ResourceManager.java:390
+      Atomic: YES
+
+      Method: ResourceManager.logTransactionState()
+      Calls Location: ResourceManager.java:1069 ResourceManager.java:390
+      Atomic: YES
+
+      Method: ResourceManager.removeTridLogEntry()
+      Calls Location: ResourceManager.java:1069 ResourceManager.java:1073
+      Atomic: YES
+
+      Method: ResourceManager.logTransactionState()
+      Calls Location: ResourceManager.java:978 ResourceManager.java:1066
+      Atomic: YES
+
+      Method: ResourceManager.logTransactionState()
+      Calls Location: ResourceManager.java:978 ResourceManager.java:1073
+      Atomic: YES
+
+      Method: ResourceManager.logTransactionState()
+      Calls Location: ResourceManager.java:978 ResourceManager.java:390
+      Atomic: YES
+
+      Method: ResourceManager.rollback()
+      Calls Location: ResourceManager.java:1092 ResourceManager.java:1066
+      Atomic: YES
+
+      Method: ResourceManager.rollback()
+      Calls Location: ResourceManager.java:1092 ResourceManager.java:1073
+      Atomic: YES
+
+      Method: ResourceManager.rollback()
+      Calls Location: ResourceManager.java:1092 ResourceManager.java:390
+      Atomic: YES
+
+      Method: ResourceManager.commit()
+      Calls Location: ResourceManager.java:1092 ResourceManager.java:1066
+      Atomic: YES
+
+      Method: ResourceManager.commit()
+      Calls Location: ResourceManager.java:1092 ResourceManager.java:1073
+      Atomic: YES
+
+      Method: ResourceManager.commit()
+      Calls Location: ResourceManager.java:1092 ResourceManager.java:390
+      Atomic: YES
+
+--
+
+  Verifying word get remove:
+
+!!!!  Method: DestinationManagerImpl.removeDestination()
+      Calls Location: DestinationManagerImpl.java:229 DestinationManagerImpl.java:583
+      Atomic: NO
+
+!!!!  Method: DestinationManagerImpl.removeDestination()
+      Calls Location: DestinationManagerImpl.java:229 DestinationManagerImpl.java:706
+      Atomic: NO
+
+      Method: DestinationManagerImpl.removeDestination()
+      Calls Location: DestinationManagerImpl.java:316 DestinationManagerImpl.java:583
+      Atomic: NO
+
+      Method: DestinationManagerImpl.removeDestination()
+      Calls Location: DestinationManagerImpl.java:316 DestinationManagerImpl.java:706
+      Atomic: NO
+
+--
+
+  Verifying word get remove:
+
+      Method: ConsumerManagerImpl.doStop()
+      Calls Location: ConsumerManagerImpl.java:698 ConsumerManagerImpl.java:704
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.doStop()
+      Calls Location: ConsumerManagerImpl.java:698 ConsumerManagerImpl.java:426
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.doStop()
+      Calls Location: ConsumerManagerImpl.java:698 ConsumerManagerImpl.java:689
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.doStop()
+      Calls Location: ConsumerManagerImpl.java:698 ConsumerManagerImpl.java:695
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.unsubscribe()
+      Calls Location: ConsumerManagerImpl.java:698 ConsumerManagerImpl.java:704
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.unsubscribe()
+      Calls Location: ConsumerManagerImpl.java:698 ConsumerManagerImpl.java:195
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.unsubscribe()
+      Calls Location: ConsumerManagerImpl.java:698 ConsumerManagerImpl.java:720
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.unsubscribe()
+      Calls Location: ConsumerManagerImpl.java:698 ConsumerManagerImpl.java:689
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.unsubscribe()
+      Calls Location: ConsumerManagerImpl.java:698 ConsumerManagerImpl.java:695
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.removeConsumerEntry()
+      Calls Location: ConsumerManagerImpl.java:698 ConsumerManagerImpl.java:704
+      Atomic: NO
+
+      Method: ConsumerManagerImpl.closeConsumer()
+      Calls Location: ConsumerManagerImpl.java:404 ConsumerManagerImpl.java:704
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.closeConsumer()
+      Calls Location: ConsumerManagerImpl.java:404 ConsumerManagerImpl.java:426
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.closeConsumer()
+      Calls Location: ConsumerManagerImpl.java:404 ConsumerManagerImpl.java:689
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.closeConsumer()
+      Calls Location: ConsumerManagerImpl.java:404 ConsumerManagerImpl.java:695
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.doStop()
+      Calls Location: ConsumerManagerImpl.java:404 ConsumerManagerImpl.java:704
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.doStop()
+      Calls Location: ConsumerManagerImpl.java:404 ConsumerManagerImpl.java:426
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.doStop()
+      Calls Location: ConsumerManagerImpl.java:404 ConsumerManagerImpl.java:689
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.doStop()
+      Calls Location: ConsumerManagerImpl.java:404 ConsumerManagerImpl.java:695
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.unsubscribe()
+      Calls Location: ConsumerManagerImpl.java:230 ConsumerManagerImpl.java:704
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.createInactiveDurableConsumer()
+      Calls Location: ConsumerManagerImpl.java:578 ConsumerManagerImpl.java:704
+      Atomic: NO
+
+      Method: ConsumerManagerImpl.unsubscribe()
+      Calls Location: ConsumerManagerImpl.java:230 ConsumerManagerImpl.java:195
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.createInactiveDurableConsumer()
+      Calls Location: ConsumerManagerImpl.java:578 ConsumerManagerImpl.java:195
+      Atomic: NO
+
+      Method: ConsumerManagerImpl.unsubscribe()
+      Calls Location: ConsumerManagerImpl.java:230 ConsumerManagerImpl.java:720
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.unsubscribe()
+      Calls Location: ConsumerManagerImpl.java:230 ConsumerManagerImpl.java:689
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.createInactiveDurableConsumer()
+      Calls Location: ConsumerManagerImpl.java:578 ConsumerManagerImpl.java:689
+      Atomic: NO
+
+      Method: ConsumerManagerImpl.unsubscribe()
+      Calls Location: ConsumerManagerImpl.java:230 ConsumerManagerImpl.java:695
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.createInactiveDurableConsumer()
+      Calls Location: ConsumerManagerImpl.java:578 ConsumerManagerImpl.java:695
+      Atomic: NO
+
+--
+
+  Verifying word get remove:
+
+      Method: TransactionLog.getOpenTransactionList()
+      Calls Location: TransactionLog.java:396 TransactionLog.java:401
+      Atomic: NO
+
+      Method: TransactionLog.getOpenTransactionList()
+      Calls Location: TransactionLog.java:409 TransactionLog.java:401
+      Atomic: NO
+
+      Method: TransactionLog.getOpenTransactionList()
+      Calls Location: TransactionLog.java:386 TransactionLog.java:401
+      Atomic: NO
+
+--
+
+  Verifying word get remove:
+
+      Method: Destinations.remove()
+      Calls Location: Destinations.java:160 Destinations.java:186
+      Atomic: YES
+
+--
+
+  Verifying word get remove:
+
+      Method: Consumers.remove()
+      Calls Location: Consumers.java:209 Consumers.java:225
+      Atomic: YES
+
+--
+
+  Verifying word get remove:
+
+      Method: Multiplexer.run()
+      Calls Location: Multiplexer.java:777 Multiplexer.java:635
+      Atomic: NO
+
+      Method: Multiplexer.run()
+      Calls Location: Multiplexer.java:617 Multiplexer.java:635
+      Atomic: NO

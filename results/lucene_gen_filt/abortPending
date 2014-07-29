@@ -1,0 +1,11 @@
+--
+  Verifying word abortPendingFlushes waitForFlush:
+
+      Method: DocumentsWriter.lockAndAbortAll()
+      Calls Location: DocumentsWriter.java:253 DocumentsWriter.java:255
+      Atomic: YES
+
+      Method: DocumentsWriter.abort()
+      Calls Location: DocumentsWriter.java:226 DocumentsWriter.java:228
+      Atomic: YES
+--

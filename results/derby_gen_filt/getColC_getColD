@@ -1,0 +1,194 @@
+  Verifying word getColumnCount getColumnDescriptor:
+
+      Method: EmbedResultSet.insertRow()
+      Calls Location: EmbedResultSet.java:3644 EmbedResultSet.java:3651
+      Atomic: YES
+
+      Method: EmbedResultSet.updateRow()
+      Calls Location: EmbedResultSet.java:3755 EmbedResultSet.java:3760
+      Atomic: YES
+
+      Method: EmbedResultSet.updateObject()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:345
+      Atomic: NO
+
+      Method: EmbedResultSet.updateCharacterStreamInternal()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:4635
+      Atomic: NO
+
+      Method: EmbedResultSet.updateCharacterStreamInternal()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:4649
+      Atomic: NO
+
+      Method: EmbedResultSet.updateCharacterStreamInternal()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:345
+      Atomic: NO
+
+      Method: EmbedResultSet.updateCharacterStream()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:2268
+      Atomic: NO
+
+      Method: EmbedResultSet.updateCharacterStream()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:4649
+      Atomic: NO
+
+      Method: EmbedResultSet.updateCharacterStream()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:2274
+      Atomic: NO
+
+      Method: EmbedResultSet.updateCharacterStream()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:4635
+      Atomic: NO
+
+      Method: EmbedResultSet.updateCharacterStream()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:345
+      Atomic: NO
+
+      Method: EmbedResultSet.updateAsciiStream()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:2268
+      Atomic: NO
+
+      Method: EmbedResultSet.updateAsciiStream()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:4649
+      Atomic: NO
+
+      Method: EmbedResultSet.updateAsciiStream()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:2274
+      Atomic: NO
+
+      Method: EmbedResultSet.updateAsciiStream()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:4635
+      Atomic: NO
+
+      Method: EmbedResultSet.updateAsciiStream()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:345
+      Atomic: NO
+
+      Method: EmbedResultSet.checksBeforeUpdateAsciiStream()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:4635
+      Atomic: NO
+
+      Method: EmbedResultSet.checksBeforeUpdateCharacterStream()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:345
+      Atomic: NO
+
+      Method: EmbedResultSet.updateBinaryStream()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:2268
+      Atomic: NO
+
+      Method: EmbedResultSet.updateBinaryStream()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:4649
+      Atomic: NO
+
+      Method: EmbedResultSet.updateBinaryStream()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:2274
+      Atomic: NO
+
+      Method: EmbedResultSet.updateBinaryStream()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:4635
+      Atomic: NO
+
+      Method: EmbedResultSet.updateObject()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:4649
+      Atomic: NO
+
+      Method: EmbedResultSet.updateObject()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:2274
+      Atomic: NO
+
+      Method: EmbedResultSet.updateObject()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:4635
+      Atomic: NO
+
+      Method: EmbedResultSet.updateObject()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:345
+      Atomic: NO
+
+      Method: EmbedResultSet.updateObject()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:2268
+      Atomic: NO
+
+      Method: EmbedResultSet.updateBlob()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:2268
+      Atomic: NO
+
+      Method: EmbedResultSet.updateClob()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:2268
+      Atomic: NO
+
+      Method: EmbedResultSet.updateClob()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:4649
+      Atomic: NO
+
+      Method: EmbedResultSet.updateBlob()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:4649
+      Atomic: NO
+
+      Method: EmbedResultSet.updateBlob()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:2274
+      Atomic: NO
+
+      Method: EmbedResultSet.updateBlob()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:4635
+      Atomic: NO
+
+      Method: EmbedResultSet.updateClob()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:2274
+      Atomic: NO
+
+      Method: EmbedResultSet.updateClob()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:4635
+      Atomic: NO
+
+      Method: EmbedResultSet.updateClob()
+      Calls Location: EmbedResultSet.java:2264 EmbedResultSet.java:345
+      Atomic: NO
+
+--
+    No occurrences
+
+Checking class GeneratedMethod:
+
+  Verifying word getColumnCount getColumnDescriptor:
+--
+  Verifying word getColumnCount getColumnDescriptor:
+
+      Method: InsertResultSet.<init>()
+      Calls Location: InsertResultSet.java:364 InsertResultSet.java:368
+      Atomic: NO
+--
+  Verifying word getColumnCount getColumnDescriptor:
+
+****  Method: NormalizeResultSet.normalizeRow()
+      Calls Location: NormalizeResultSet.java:427 NormalizeResultSet.java:433
+      Atomic: NO
+
+      Method: NormalizeResultSet.normalizeRow()
+      Calls Location: NormalizeResultSet.java:427 NormalizeResultSet.java:339
+      Atomic: NO
+
+      Method: NormalizeResultSet.fetchResultTypes()
+      Calls Location: NormalizeResultSet.java:427 NormalizeResultSet.java:433
+      Atomic: NO
+
+      Method: NormalizeResultSet.normalizeRow()
+      Calls Location: NormalizeResultSet.java:363 NormalizeResultSet.java:433
+      Atomic: NO
+
+      Method: NormalizeResultSet.normalizeRow()
+      Calls Location: NormalizeResultSet.java:363 NormalizeResultSet.java:339
+      Atomic: NO
+--
+  Verifying word getColumnCount getColumnDescriptor:
+
+      Method: NoRowsResultSetImpl.evaluateGenerationClauses()
+      Calls Location: NoRowsResultSetImpl.java:687 NoRowsResultSetImpl.java:653
+      Atomic: NO
+
+****  Method: NoRowsResultSetImpl.setupGeneratedColumns()
+      Calls Location: NoRowsResultSetImpl.java:687 NoRowsResultSetImpl.java:696
+      Atomic: NO
+
+      Method: NoRowsResultSetImpl.setupGeneratedColumns()
+      Calls Location: NoRowsResultSetImpl.java:687 NoRowsResultSetImpl.java:710
+      Atomic: NO

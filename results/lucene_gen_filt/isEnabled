@@ -1,0 +1,925 @@
+  Verifying word isEnabled message:
+
+      Method: IndexWriter.commitMerge()
+      Calls Location: IndexWriter.java:3473 IndexWriter.java:3604
+      Atomic: YES
+
+      Method: IndexWriter.commitMerge()
+      Calls Location: IndexWriter.java:3473 IndexWriter.java:3536
+      Atomic: YES
+
+      Method: IndexWriter.merge()
+      Calls Location: IndexWriter.java:3473 IndexWriter.java:3680
+      Atomic: NO
+
+      Method: IndexWriter.merge()
+      Calls Location: IndexWriter.java:3473 IndexWriter.java:3700
+      Atomic: NO
+
+      Method: IndexWriter.merge()
+      Calls Location: IndexWriter.java:3473 IndexWriter.java:3754
+      Atomic: NO
+
+      Method: IndexWriter.merge()
+      Calls Location: IndexWriter.java:3473 IndexWriter.java:3773
+      Atomic: NO
+
+      Method: IndexWriter.merge()
+      Calls Location: IndexWriter.java:3473 IndexWriter.java:3737
+      Atomic: NO
+
+      Method: IndexWriter.merge()
+      Calls Location: IndexWriter.java:3473 IndexWriter.java:3778
+      Atomic: NO
+
+      Method: IndexWriter.merge()
+      Calls Location: IndexWriter.java:3473 IndexWriter.java:3731
+      Atomic: NO
+--
+  Verifying word isEnabled message:
+
+      Method: DocumentsWriter.doFlush()
+      Calls Location: DocumentsWriter.java:559 DocumentsWriter.java:560
+      Atomic: NO
+
+      Method: DocumentsWriter.flushAllThreads()
+      Calls Location: DocumentsWriter.java:559 DocumentsWriter.java:560
+      Atomic: NO
+
+      Method: DocumentsWriter.preUpdate()
+      Calls Location: DocumentsWriter.java:559 DocumentsWriter.java:560
+      Atomic: NO
+
+      Method: DocumentsWriter.flushAllThreads()
+      Calls Location: DocumentsWriter.java:559 DocumentsWriter.java:622
+      Atomic: NO
+
+      Method: DocumentsWriter.preUpdate()
+      Calls Location: DocumentsWriter.java:559 DocumentsWriter.java:361
+      Atomic: NO
+
+      Method: DocumentsWriter.preUpdate()
+      Calls Location: DocumentsWriter.java:559 DocumentsWriter.java:369
+      Atomic: NO
+
+      Method: DocumentsWriter.updateDocuments()
+      Calls Location: DocumentsWriter.java:559 DocumentsWriter.java:560
+      Atomic: NO
+
+      Method: DocumentsWriter.updateDocument()
+      Calls Location: DocumentsWriter.java:559 DocumentsWriter.java:560
+      Atomic: NO
+
+      Method: DocumentsWriter.updateDocuments()
+      Calls Location: DocumentsWriter.java:368 DocumentsWriter.java:560
+      Atomic: NO
+
+      Method: DocumentsWriter.updateDocument()
+      Calls Location: DocumentsWriter.java:368 DocumentsWriter.java:560
+      Atomic: NO
+
+      Method: DocumentsWriter.updateDocuments()
+      Calls Location: DocumentsWriter.java:348 DocumentsWriter.java:560
+      Atomic: NO
+
+      Method: DocumentsWriter.updateDocument()
+      Calls Location: DocumentsWriter.java:348 DocumentsWriter.java:560
+      Atomic: NO
+
+      Method: DocumentsWriter.preUpdate()
+      Calls Location: DocumentsWriter.java:368 DocumentsWriter.java:369
+      Atomic: NO
+
+      Method: DocumentsWriter.preUpdate()
+      Calls Location: DocumentsWriter.java:348 DocumentsWriter.java:349
+      Atomic: NO
+
+      Method: DocumentsWriter.preUpdate()
+      Calls Location: DocumentsWriter.java:348 DocumentsWriter.java:560
+      Atomic: NO
+
+      Method: DocumentsWriter.preUpdate()
+      Calls Location: DocumentsWriter.java:359 DocumentsWriter.java:560
+      Atomic: NO
+
+      Method: DocumentsWriter.preUpdate()
+      Calls Location: DocumentsWriter.java:359 DocumentsWriter.java:361
+      Atomic: NO
+
+      Method: DocumentsWriter.preUpdate()
+      Calls Location: DocumentsWriter.java:348 DocumentsWriter.java:361
+      Atomic: NO
+
+      Method: DocumentsWriter.preUpdate()
+      Calls Location: DocumentsWriter.java:359 DocumentsWriter.java:369
+      Atomic: NO
+
+      Method: DocumentsWriter.preUpdate()
+      Calls Location: DocumentsWriter.java:348 DocumentsWriter.java:369
+      Atomic: NO
+
+      Method: DocumentsWriter.updateDocuments()
+      Calls Location: DocumentsWriter.java:359 DocumentsWriter.java:560
+      Atomic: NO
+
+      Method: DocumentsWriter.updateDocument()
+      Calls Location: DocumentsWriter.java:359 DocumentsWriter.java:560
+      Atomic: NO
+
+      Method: DocumentsWriter.abort()
+      Calls Location: DocumentsWriter.java:231 DocumentsWriter.java:232
+      Atomic: YES
+
+      Method: DocumentsWriter.lockAndAbortAll()
+      Calls Location: DocumentsWriter.java:258 DocumentsWriter.java:259
+      Atomic: YES
+
+      Method: DocumentsWriter.unlockAllAfterAbortAll()
+      Calls Location: DocumentsWriter.java:289 DocumentsWriter.java:290
+      Atomic: YES
+
+      Method: DocumentsWriter.lockAndAbortAll()
+      Calls Location: DocumentsWriter.java:258 DocumentsWriter.java:290
+      Atomic: YES
+
+      Method: DocumentsWriter.unlockAllAfterAbortAll()
+      Calls Location: DocumentsWriter.java:300 DocumentsWriter.java:301
+      Atomic: YES
+
+      Method: DocumentsWriter.lockAndAbortAll()
+      Calls Location: DocumentsWriter.java:258 DocumentsWriter.java:301
+      Atomic: YES
+
+      Method: DocumentsWriter.anyChanges()
+      Calls Location: DocumentsWriter.java:309 DocumentsWriter.java:310
+      Atomic: NO
+
+      Method: DocumentsWriter.flushAllThreads()
+      Calls Location: DocumentsWriter.java:621 DocumentsWriter.java:622
+      Atomic: NO
+
+      Method: DocumentsWriter.flushAllThreads()
+      Calls Location: DocumentsWriter.java:309 DocumentsWriter.java:560
+      Atomic: NO
+
+      Method: DocumentsWriter.flushAllThreads()
+      Calls Location: DocumentsWriter.java:309 DocumentsWriter.java:622
+      Atomic: NO
+
+      Method: DocumentsWriter.abort()
+      Calls Location: DocumentsWriter.java:231 DocumentsWriter.java:232
+      Atomic: YES
+
+      Method: DocumentsWriter.flushAllThreads()
+      Calls Location: DocumentsWriter.java:595 DocumentsWriter.java:560
+      Atomic: NO
+
+      Method: DocumentsWriter.abort()
+      Calls Location: DocumentsWriter.java:213 DocumentsWriter.java:214
+      Atomic: YES
+
+      Method: DocumentsWriter.lockAndAbortAll()
+      Calls Location: DocumentsWriter.java:239 DocumentsWriter.java:259
+      Atomic: YES
+
+      Method: DocumentsWriter.lockAndAbortAll()
+      Calls Location: DocumentsWriter.java:258 DocumentsWriter.java:290
+      Atomic: YES
+
+      Method: DocumentsWriter.lockAndAbortAll()
+      Calls Location: DocumentsWriter.java:239 DocumentsWriter.java:290
+      Atomic: YES
+
+      Method: DocumentsWriter.flushAllThreads()
+      Calls Location: DocumentsWriter.java:595 DocumentsWriter.java:596
+      Atomic: NO
+
+      Method: DocumentsWriter.lockAndAbortAll()
+      Calls Location: DocumentsWriter.java:258 DocumentsWriter.java:301
+      Atomic: YES
+
+      Method: DocumentsWriter.lockAndAbortAll()
+      Calls Location: DocumentsWriter.java:239 DocumentsWriter.java:301
+      Atomic: YES
+
+      Method: DocumentsWriter.finishFullFlush()
+      Calls Location: DocumentsWriter.java:636 DocumentsWriter.java:637
+      Atomic: NO
+
+      Method: DocumentsWriter.flushAllThreads()
+      Calls Location: DocumentsWriter.java:595 DocumentsWriter.java:310
+      Atomic: NO
+
+      Method: DocumentsWriter.lockAndAbortAll()
+      Calls Location: DocumentsWriter.java:239 DocumentsWriter.java:240
+      Atomic: YES
+
+      Method: DocumentsWriter.flushAllThreads()
+      Calls Location: DocumentsWriter.java:595 DocumentsWriter.java:622
+      Atomic: NO
+
+      Method: DocumentsWriter.abort()
+      Calls Location: DocumentsWriter.java:213 DocumentsWriter.java:232
+      Atomic: YES
+
+      Method: DocumentsWriter.lockAndAbortAll()
+      Calls Location: DocumentsWriter.java:258 DocumentsWriter.java:259
+      Atomic: YES
+--
+  Verifying word isEnabled message:
+
+      Method: IndexFileDeleter.checkpoint()
+      Calls Location: IndexFileDeleter.java:466 IndexFileDeleter.java:468
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:466 IndexFileDeleter.java:283
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:466 IndexFileDeleter.java:596
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:466 IndexFileDeleter.java:511
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:466 IndexFileDeleter.java:582
+      Atomic: NO
+
+      Method: IndexFileDeleter.refresh()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:347
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:511
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:283
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:245
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:439
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:596
+      Atomic: NO
+
+      Method: IndexFileDeleter.deletePendingFiles()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:596
+      Atomic: NO
+
+      Method: IndexFileDeleter.refresh()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:596
+      Atomic: NO
+
+      Method: IndexFileDeleter.deleteNewFiles()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:596
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:582
+      Atomic: NO
+
+      Method: IndexFileDeleter.deletePendingFiles()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:582
+      Atomic: NO
+
+      Method: IndexFileDeleter.refresh()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:582
+      Atomic: NO
+
+      Method: IndexFileDeleter.deleteNewFiles()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:582
+      Atomic: NO
+
+      Method: IndexFileDeleter.deleteNewFiles()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:570
+      Atomic: NO
+
+      Method: IndexFileDeleter.deletePendingFiles()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:405
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:405
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:493
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:468
+      Atomic: NO
+
+      Method: IndexFileDeleter.deleteCommits()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:283
+      Atomic: NO
+
+      Method: IndexFileDeleter.deleteCommits()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:596
+      Atomic: NO
+
+      Method: IndexFileDeleter.deleteCommits()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:511
+      Atomic: NO
+
+      Method: IndexFileDeleter.deleteCommits()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:582
+      Atomic: NO
+
+      Method: IndexFileDeleter.checkpoint()
+      Calls Location: IndexFileDeleter.java:595 IndexFileDeleter.java:468
+      Atomic: NO
+--
+  Verifying word isEnabled message:
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:316 BufferedUpdatesStream.java:317
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:255 BufferedUpdatesStream.java:317
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:305 BufferedUpdatesStream.java:317
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:305 BufferedUpdatesStream.java:306
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:255 BufferedUpdatesStream.java:306
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:255 BufferedUpdatesStream.java:256
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:305 BufferedUpdatesStream.java:256
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.prune()
+      Calls Location: BufferedUpdatesStream.java:359 BufferedUpdatesStream.java:360
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:165 BufferedUpdatesStream.java:166
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:171 BufferedUpdatesStream.java:317
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:171 BufferedUpdatesStream.java:306
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.prune()
+      Calls Location: BufferedUpdatesStream.java:339 BufferedUpdatesStream.java:340
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.push()
+      Calls Location: BufferedUpdatesStream.java:93 BufferedUpdatesStream.java:94
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.prune()
+      Calls Location: BufferedUpdatesStream.java:339 BufferedUpdatesStream.java:360
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:171 BufferedUpdatesStream.java:256
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:171 BufferedUpdatesStream.java:172
+      Atomic: YES
+--
+  Verifying word isEnabled message:
+
+      Method: DocumentsWriterFlushControl.markForFullFlush()
+      Calls Location: DocumentsWriterFlushControl.java:537 DocumentsWriterFlushControl.java:538
+      Atomic: NO
+
+      Method: DocumentsWriterFlushControl.waitIfStalled()
+      Calls Location: DocumentsWriterFlushControl.java:679 DocumentsWriterFlushControl.java:680
+      Atomic: NO
+
+      Method: DocumentsWriterFlushControl.addFlushableState()
+      Calls Location: DocumentsWriterFlushControl.java:537 DocumentsWriterFlushControl.java:538
+      Atomic: NO
+--
+  Verifying word isEnabled message:
+
+      Method: FlushPolicy.assertMessage()
+      Calls Location: FlushPolicy.java:131 FlushPolicy.java:132
+      Atomic: NO
+--
+  Verifying word isEnabled message:
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:128 SegmentMerger.java:130
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:139 SegmentMerger.java:141
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:135 SegmentMerger.java:141
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:128 SegmentMerger.java:141
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:118 SegmentMerger.java:120
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:112 SegmentMerger.java:120
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:124 SegmentMerger.java:130
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:118 SegmentMerger.java:130
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:112 SegmentMerger.java:130
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:118 SegmentMerger.java:141
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:112 SegmentMerger.java:141
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:124 SegmentMerger.java:141
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:107 SegmentMerger.java:120
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:107 SegmentMerger.java:130
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:107 SegmentMerger.java:109
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:107 SegmentMerger.java:141
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:288 SegmentMerger.java:130
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:288 SegmentMerger.java:120
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:288 SegmentMerger.java:109
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:288 SegmentMerger.java:141
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:288 SegmentMerger.java:97
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:103 SegmentMerger.java:130
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:95 SegmentMerger.java:130
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:91 SegmentMerger.java:130
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:103 SegmentMerger.java:120
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:95 SegmentMerger.java:120
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:91 SegmentMerger.java:120
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:103 SegmentMerger.java:109
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:95 SegmentMerger.java:109
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:91 SegmentMerger.java:109
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:103 SegmentMerger.java:141
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:95 SegmentMerger.java:141
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:91 SegmentMerger.java:141
+      Atomic: NO
+
+      Method: SegmentMerger.setMatchingSegmentReaders()
+      Calls Location: SegmentMerger.java:288 SegmentMerger.java:289
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:95 SegmentMerger.java:97
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:91 SegmentMerger.java:97
+      Atomic: NO
+--
+  Verifying word isEnabled message:
+
+      Method: DocumentsWriterPerThread.abort()
+      Calls Location: DocumentsWriterPerThread.java:163 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.abort()
+      Calls Location: DocumentsWriterPerThread.java:163 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.sealFlushedSegment()
+      Calls Location: DocumentsWriterPerThread.java:577 DocumentsWriterPerThread.java:578
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.sealFlushedSegment()
+      Calls Location: DocumentsWriterPerThread.java:577 DocumentsWriterPerThread.java:578
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:490 DocumentsWriterPerThread.java:578
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.abort()
+      Calls Location: DocumentsWriterPerThread.java:151 DocumentsWriterPerThread.java:152
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:490 DocumentsWriterPerThread.java:152
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:490 DocumentsWriterPerThread.java:492
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.sealFlushedSegment()
+      Calls Location: DocumentsWriterPerThread.java:554 DocumentsWriterPerThread.java:555
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:490 DocumentsWriterPerThread.java:555
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:490 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.abort()
+      Calls Location: DocumentsWriterPerThread.java:151 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:490 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:490 DocumentsWriterPerThread.java:578
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.sealFlushedSegment()
+      Calls Location: DocumentsWriterPerThread.java:554 DocumentsWriterPerThread.java:578
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocuments()
+      Calls Location: DocumentsWriterPerThread.java:163 DocumentsWriterPerThread.java:152
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocuments()
+      Calls Location: DocumentsWriterPerThread.java:163 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocuments()
+      Calls Location: DocumentsWriterPerThread.java:163 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocument()
+      Calls Location: DocumentsWriterPerThread.java:163 DocumentsWriterPerThread.java:152
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocument()
+      Calls Location: DocumentsWriterPerThread.java:163 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocument()
+      Calls Location: DocumentsWriterPerThread.java:163 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocuments()
+      Calls Location: DocumentsWriterPerThread.java:163 DocumentsWriterPerThread.java:152
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocuments()
+      Calls Location: DocumentsWriterPerThread.java:163 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocuments()
+      Calls Location: DocumentsWriterPerThread.java:163 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocument()
+      Calls Location: DocumentsWriterPerThread.java:163 DocumentsWriterPerThread.java:152
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocument()
+      Calls Location: DocumentsWriterPerThread.java:163 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocument()
+      Calls Location: DocumentsWriterPerThread.java:163 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocuments()
+      Calls Location: DocumentsWriterPerThread.java:151 DocumentsWriterPerThread.java:152
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocuments()
+      Calls Location: DocumentsWriterPerThread.java:151 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocuments()
+      Calls Location: DocumentsWriterPerThread.java:151 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocument()
+      Calls Location: DocumentsWriterPerThread.java:151 DocumentsWriterPerThread.java:152
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocument()
+      Calls Location: DocumentsWriterPerThread.java:151 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocument()
+      Calls Location: DocumentsWriterPerThread.java:151 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:554 DocumentsWriterPerThread.java:152
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:554 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:554 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:577 DocumentsWriterPerThread.java:152
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:577 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:577 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:577 DocumentsWriterPerThread.java:152
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:577 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:577 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:452 DocumentsWriterPerThread.java:453
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.testPoint()
+      Calls Location: DocumentsWriterPerThread.java:235 DocumentsWriterPerThread.java:236
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:470 DocumentsWriterPerThread.java:472
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:458 DocumentsWriterPerThread.java:472
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:470 DocumentsWriterPerThread.java:578
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:458 DocumentsWriterPerThread.java:578
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:470 DocumentsWriterPerThread.java:152
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:458 DocumentsWriterPerThread.java:152
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:470 DocumentsWriterPerThread.java:478
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:458 DocumentsWriterPerThread.java:478
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:470 DocumentsWriterPerThread.java:492
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:458 DocumentsWriterPerThread.java:492
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:470 DocumentsWriterPerThread.java:555
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:458 DocumentsWriterPerThread.java:555
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:458 DocumentsWriterPerThread.java:459
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:470 DocumentsWriterPerThread.java:479
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:458 DocumentsWriterPerThread.java:479
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:470 DocumentsWriterPerThread.java:471
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:458 DocumentsWriterPerThread.java:471
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:470 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:458 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:470 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:458 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:470 DocumentsWriterPerThread.java:578
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:458 DocumentsWriterPerThread.java:578
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocuments()
+      Calls Location: DocumentsWriterPerThread.java:235 DocumentsWriterPerThread.java:152
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocument()
+      Calls Location: DocumentsWriterPerThread.java:235 DocumentsWriterPerThread.java:152
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocuments()
+      Calls Location: DocumentsWriterPerThread.java:235 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocument()
+      Calls Location: DocumentsWriterPerThread.java:235 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocuments()
+      Calls Location: DocumentsWriterPerThread.java:235 DocumentsWriterPerThread.java:164
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.updateDocument()
+      Calls Location: DocumentsWriterPerThread.java:235 DocumentsWriterPerThread.java:164
+      Atomic: NO
+--
+  Verifying word isEnabled message:
+
+      Method: TieredMergePolicy.findMerges()
+      Calls Location: TieredMergePolicy.java:613 TieredMergePolicy.java:617
+      Atomic: NO
+
+      Method: TieredMergePolicy.findForcedMerges()
+      Calls Location: TieredMergePolicy.java:613 TieredMergePolicy.java:617
+      Atomic: NO
+
+      Method: TieredMergePolicy.findForcedDeletesMerges()
+      Calls Location: TieredMergePolicy.java:613 TieredMergePolicy.java:617
+      Atomic: NO
+--
+  Verifying word isEnabled message:
+
+      Method: FlushByRamOrCountsPolicy.onInsert()
+      Calls Location: FlushByRamOrCountsPolicy.java:91 FlushByRamOrCountsPolicy.java:92
+      Atomic: NO
+
+      Method: FlushByRamOrCountsPolicy.onDelete()
+      Calls Location: FlushByRamOrCountsPolicy.java:74 FlushByRamOrCountsPolicy.java:75
+      Atomic: NO
+--
+  Verifying word isEnabled message:
+
+      Method: ConcurrentMergeScheduler.merge()
+      Calls Location: ConcurrentMergeScheduler.java:239 ConcurrentMergeScheduler.java:247
+      Atomic: YES
+
+      Method: ConcurrentMergeScheduler.updateMergeThreads()
+      Calls Location: ConcurrentMergeScheduler.java:239 ConcurrentMergeScheduler.java:247
+      Atomic: YES
+--
+  Verifying word isEnabled message:
+
+      Method: DocumentsWriterFlushQueue$FlushTicket.publishFlushedSegment()
+      Calls Location: DocumentsWriterFlushQueue.java:194 DocumentsWriterFlushQueue.java:195
+      Atomic: NO
+
+      Method: DocumentsWriterFlushQueue$FlushTicket.finishFlush()
+      Calls Location: DocumentsWriterFlushQueue.java:208 DocumentsWriterFlushQueue.java:209
+      Atomic: NO
+
+      Method: DocumentsWriterFlushQueue$FlushTicket.publishFlushedSegment()
+      Calls Location: DocumentsWriterFlushQueue.java:190 DocumentsWriterFlushQueue.java:191
+      Atomic: NO
+
+      Method: DocumentsWriterFlushQueue$FlushTicket.publishFlushedSegment()
+      Calls Location: DocumentsWriterFlushQueue.java:190 DocumentsWriterFlushQueue.java:195
+      Atomic: NO
+--
+  Verifying word isEnabled message:
+
+      Method: DocFieldProcessor.processDocument()
+      Calls Location: DocFieldProcessor.java:251 DocFieldProcessor.java:252
+      Atomic: NO

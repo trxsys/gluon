@@ -1,0 +1,10 @@
+
+  Verifying word writeLong flush:
+
+      Method: TransactionLog.logTransactionState()
+      Calls Location: TransactionLog.java:179 TransactionLog.java:181
+      Atomic: YES
+
+      Method: TransactionLog.logTransactionData()
+      Calls Location: TransactionLog.java:211 TransactionLog.java:213
+      Atomic: YES

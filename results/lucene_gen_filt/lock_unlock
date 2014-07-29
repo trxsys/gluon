@@ -1,0 +1,130 @@
+--
+  Verifying word lock unlock:
+
+      Method: DocumentsWriter.abort()
+      Calls Location: DocumentsWriter.java:219 DocumentsWriter.java:223
+      Atomic: YES
+
+      Method: DocumentsWriter.lockAndAbortAll()
+      Calls Location: DocumentsWriter.java:249 DocumentsWriter.java:297
+      Atomic: YES
+--
+  Verifying word lock unlock:
+
+      Method: DocumentsWriterPerThreadPool.newThreadState()
+      Calls Location: DocumentsWriterPerThreadPool.java:198 DocumentsWriterPerThreadPool.java:214
+      Atomic: YES
+
+      Method: DocumentsWriterPerThreadPool.newThreadState()
+      Calls Location: DocumentsWriterPerThreadPool.java:198 DocumentsWriterPerThreadPool.java:227
+      Atomic: YES
+
+      Method: DocumentsWriterPerThreadPool.numDeactivatedThreadStates()
+      Calls Location: DocumentsWriterPerThreadPool.java:308 DocumentsWriterPerThreadPool.java:314
+      Atomic: NO
+
+      Method: DocumentsWriterPerThreadPool.newThreadState()
+      Calls Location: DocumentsWriterPerThreadPool.java:198 DocumentsWriterPerThreadPool.java:227
+      Atomic: YES
+
+      Method: DocumentsWriterPerThreadPool.newThreadState()
+      Calls Location: DocumentsWriterPerThreadPool.java:198 DocumentsWriterPerThreadPool.java:214
+      Atomic: YES
+
+      Method: DocumentsWriterPerThreadPool.deactivateUnreleasedStates()
+      Calls Location: DocumentsWriterPerThreadPool.java:239 DocumentsWriterPerThreadPool.java:243
+      Atomic: YES
+--
+  Verifying word lock unlock:
+
+      Method: DocumentsWriterFlushControl.markForFullFlush()
+      Calls Location: DocumentsWriterFlushControl.java:481 DocumentsWriterFlushControl.java:503
+      Atomic: NO
+
+      Method: DocumentsWriterFlushControl.markForFullFlush()
+      Calls Location: DocumentsWriterFlushControl.java:481 DocumentsWriterFlushControl.java:503
+      Atomic: NO
+
+      Method: DocumentsWriterFlushControl.markForFullFlush()
+      Calls Location: DocumentsWriterFlushControl.java:481 DocumentsWriterFlushControl.java:332
+      Atomic: NO
+
+      Method: DocumentsWriterFlushControl.markForFullFlush()
+      Calls Location: DocumentsWriterFlushControl.java:481 DocumentsWriterFlushControl.java:503
+      Atomic: NO
+
+      Method: DocumentsWriterFlushControl.assertActiveDeleteQueue()
+      Calls Location: DocumentsWriterFlushControl.java:524 DocumentsWriterFlushControl.java:528
+      Atomic: NO
+
+      Method: DocumentsWriterFlushControl.markForFullFlush()
+      Calls Location: DocumentsWriterFlushControl.java:481 DocumentsWriterFlushControl.java:528
+      Atomic: NO
+
+      Method: DocumentsWriterFlushControl.markForFullFlush()
+      Calls Location: DocumentsWriterFlushControl.java:481 DocumentsWriterFlushControl.java:332
+      Atomic: NO
+
+      Method: DocumentsWriterFlushControl.markForFullFlush()
+      Calls Location: DocumentsWriterFlushControl.java:481 DocumentsWriterFlushControl.java:332
+      Atomic: NO
+
+      Method: DocumentsWriterFlushControl.markForFullFlush()
+      Calls Location: DocumentsWriterFlushControl.java:481 DocumentsWriterFlushControl.java:528
+      Atomic: NO
+
+      Method: DocumentsWriterFlushControl.doAfterDocument()
+      Calls Location: DocumentsWriterFlushControl.java:297 DocumentsWriterFlushControl.java:332
+      Atomic: YES
+
+      Method: DocumentsWriterFlushControl.doAfterDocument()
+      Calls Location: DocumentsWriterFlushControl.java:297 DocumentsWriterFlushControl.java:332
+      Atomic: YES
+
+      Method: DocumentsWriterFlushControl.doAfterDocument()
+      Calls Location: DocumentsWriterFlushControl.java:297 DocumentsWriterFlushControl.java:332
+      Atomic: YES
+
+      Method: DocumentsWriterFlushControl.checkoutAndBlock()
+      Calls Location: DocumentsWriterFlushControl.java:297 DocumentsWriterFlushControl.java:307
+      Atomic: NO
+--
+  Verifying word lock unlock:
+
+      Method: DocumentsWriterDeleteQueue.getBufferedUpdatesTermsSize()
+      Calls Location: DocumentsWriterDeleteQueue.java:406 DocumentsWriterDeleteQueue.java:425
+      Atomic: NO
+
+      Method: DocumentsWriterDeleteQueue.clear()
+      Calls Location: DocumentsWriterDeleteQueue.java:309 DocumentsWriterDeleteQueue.java:315
+      Atomic: NO
+
+      Method: DocumentsWriterDeleteQueue.forceApplyGlobalSlice()
+      Calls Location: DocumentsWriterDeleteQueue.java:406 DocumentsWriterDeleteQueue.java:415
+      Atomic: NO
+
+      Method: DocumentsWriterDeleteQueue.anyChanges()
+      Calls Location: DocumentsWriterDeleteQueue.java:175 DocumentsWriterDeleteQueue.java:185
+      Atomic: NO
+
+      Method: DocumentsWriterDeleteQueue.freezeGlobalBuffer()
+      Calls Location: DocumentsWriterDeleteQueue.java:209 DocumentsWriterDeleteQueue.java:234
+      Atomic: NO
+
+      Method: DocumentsWriterDeleteQueue.getBufferedUpdatesTermsSize()
+      Calls Location: DocumentsWriterDeleteQueue.java:420 DocumentsWriterDeleteQueue.java:425
+      Atomic: NO
+
+      Method: DocumentsWriterDeleteQueue.getBufferedUpdatesTermsSize()
+      Calls Location: DocumentsWriterDeleteQueue.java:420 DocumentsWriterDeleteQueue.java:415
+      Atomic: NO
+
+      Method: DocumentsWriterDeleteQueue.getBufferedUpdatesTermsSize()
+      Calls Location: DocumentsWriterDeleteQueue.java:420 DocumentsWriterDeleteQueue.java:415
+      Atomic: NO
+--
+  Verifying word lock unlock:
+
+      Method: DocumentsWriterFlushQueue.forcePurge()
+      Calls Location: DocumentsWriterFlushQueue.java:136 DocumentsWriterFlushQueue.java:140
+      Atomic: NO

@@ -1,0 +1,315 @@
+  Verifying word getDocCount getDocCount:
+
+      Method: IndexWriter.commitMerge()
+      Calls Location: IndexWriter.java:3451 IndexWriter.java:3529
+      Atomic: YES
+
+      Method: IndexWriter.commitMerge()
+      Calls Location: IndexWriter.java:3451 IndexWriter.java:3529
+      Atomic: YES
+
+      Method: IndexWriter.commitMerge()
+      Calls Location: IndexWriter.java:3451 IndexWriter.java:3546
+      Atomic: YES
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:3451 IndexWriter.java:4226
+      Atomic: NO
+
+      Method: IndexWriter.merge()
+      Calls Location: IndexWriter.java:3451 IndexWriter.java:3786
+      Atomic: NO
+
+      Method: IndexWriter.merge()
+      Calls Location: IndexWriter.java:3451 IndexWriter.java:3788
+      Atomic: NO
+
+      Method: IndexWriter.merge()
+      Calls Location: IndexWriter.java:3451 IndexWriter.java:3789
+      Atomic: NO
+
+      Method: IndexWriter.merge()
+      Calls Location: IndexWriter.java:3451 IndexWriter.java:3700
+      Atomic: NO
+--
+  Verifying word getDocCount getDocCount:
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:454 SegmentInfos.java:554
+      Atomic: NO
+
+      Method: SegmentInfos.read()
+      Calls Location: SegmentInfos.java:344 SegmentInfos.java:344
+      Atomic: NO
+
+      Method: SegmentInfos.totalDocCount()
+      Calls Location: SegmentInfos.java:1083 SegmentInfos.java:1083
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:454 SegmentInfos.java:454
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:554 SegmentInfos.java:554
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:554 SegmentInfos.java:454
+      Atomic: NO
+--
+  Verifying word getDocCount getDocCount:
+
+      Method: MergePolicy.size()
+      Calls Location: MergePolicy.java:515 MergePolicy.java:517
+      Atomic: NO
+
+      Method: MergePolicy.useCompoundFile()
+      Calls Location: MergePolicy.java:517 MergePolicy.java:517
+      Atomic: NO
+
+      Method: MergePolicy.useCompoundFile()
+      Calls Location: MergePolicy.java:517 MergePolicy.java:515
+      Atomic: NO
+
+      Method: MergePolicy.useCompoundFile()
+      Calls Location: MergePolicy.java:517 MergePolicy.java:515
+      Atomic: NO
+
+      Method: MergePolicy.useCompoundFile()
+      Calls Location: MergePolicy.java:515 MergePolicy.java:517
+      Atomic: NO
+
+      Method: MergePolicy.useCompoundFile()
+      Calls Location: MergePolicy.java:515 MergePolicy.java:515
+      Atomic: NO
+
+      Method: MergePolicy.useCompoundFile()
+      Calls Location: MergePolicy.java:515 MergePolicy.java:515
+      Atomic: NO
+
+      Method: MergePolicy.size()
+      Calls Location: MergePolicy.java:515 MergePolicy.java:517
+      Atomic: NO
+
+      Method: MergePolicy.size()
+      Calls Location: MergePolicy.java:515 MergePolicy.java:515
+      Atomic: NO
+
+      Method: MergePolicy.useCompoundFile()
+      Calls Location: MergePolicy.java:515 MergePolicy.java:517
+      Atomic: NO
+
+      Method: MergePolicy.useCompoundFile()
+      Calls Location: MergePolicy.java:515 MergePolicy.java:515
+      Atomic: NO
+
+      Method: MergePolicy.useCompoundFile()
+      Calls Location: MergePolicy.java:515 MergePolicy.java:515
+      Atomic: NO
+--
+  Verifying word getDocCount getDocCount:
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:240 BufferedUpdatesStream.java:241
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:241 BufferedUpdatesStream.java:241
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:291 BufferedUpdatesStream.java:241
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:290 BufferedUpdatesStream.java:241
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:241 BufferedUpdatesStream.java:290
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:291 BufferedUpdatesStream.java:290
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:240 BufferedUpdatesStream.java:290
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:290 BufferedUpdatesStream.java:290
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:241 BufferedUpdatesStream.java:240
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:291 BufferedUpdatesStream.java:240
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:240 BufferedUpdatesStream.java:240
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:290 BufferedUpdatesStream.java:240
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:290 BufferedUpdatesStream.java:291
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:241 BufferedUpdatesStream.java:291
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:291 BufferedUpdatesStream.java:291
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:240 BufferedUpdatesStream.java:291
+      Atomic: YES
+--
+  Verifying word getDocCount getDocCount:
+
+      Method: MergePolicy$OneMerge.totalNumDocs()
+      Calls Location: MergePolicy.java:275 MergePolicy.java:275
+      Atomic: NO
+
+      Method: MergePolicy$OneMerge.<init>()
+      Calls Location: MergePolicy.java:128 MergePolicy.java:128
+      Atomic: NO
+--
+  Verifying word getDocCount getDocCount:
+
+      Method: ReadersAndUpdates.verifyDocCounts()
+      Calls Location: ReadersAndUpdates.java:133 ReadersAndUpdates.java:133
+      Atomic: YES
+
+      Method: ReadersAndUpdates.verifyDocCounts()
+      Calls Location: ReadersAndUpdates.java:124 ReadersAndUpdates.java:124
+      Atomic: YES
+
+      Method: ReadersAndUpdates.verifyDocCounts()
+      Calls Location: ReadersAndUpdates.java:124 ReadersAndUpdates.java:133
+      Atomic: YES
+
+      Method: ReadersAndUpdates.initWritableLiveDocs()
+      Calls Location: ReadersAndUpdates.java:250 ReadersAndUpdates.java:260
+      Atomic: YES
+
+      Method: ReadersAndUpdates.verifyDocCounts()
+      Calls Location: ReadersAndUpdates.java:130 ReadersAndUpdates.java:133
+      Atomic: YES
+--
+  Verifying word getDocCount getDocCount:
+
+      Method: SegmentReader.checkBounds()
+      Calls Location: SegmentReader.java:294 SegmentReader.java:294
+      Atomic: NO
+--
+  Verifying word getDocCount getDocCount:
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:99 SegmentMerger.java:143
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:69 SegmentMerger.java:99
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:69 SegmentMerger.java:143
+      Atomic: NO
+--
+  Verifying word getDocCount getDocCount:
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:492 DocumentsWriterPerThread.java:529
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:471 DocumentsWriterPerThread.java:492
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:471 DocumentsWriterPerThread.java:529
+      Atomic: NO
+--
+  Verifying word getDocCount getDocCount:
+
+      Method: Lucene40LiveDocsFormat.writeLiveDocs()
+      Calls Location: Lucene40LiveDocsFormat.java:101 Lucene40LiveDocsFormat.java:102
+      Atomic: NO
+
+      Method: Lucene40LiveDocsFormat.readLiveDocs()
+      Calls Location: Lucene40LiveDocsFormat.java:92 Lucene40LiveDocsFormat.java:93
+      Atomic: NO
+
+      Method: Lucene40LiveDocsFormat.readLiveDocs()
+      Calls Location: Lucene40LiveDocsFormat.java:92 Lucene40LiveDocsFormat.java:92
+      Atomic: NO
+--
+  Verifying word getDocCount getDocCount:
+
+      Method: TieredMergePolicy.findForcedDeletesMerges()
+      Calls Location: TieredMergePolicy.java:564 TieredMergePolicy.java:564
+      Atomic: NO
+--
+  Verifying word getDocCount getDocCount:
+
+      Method: Lucene3xStoredFieldsReader.<init>()
+      Calls Location: Lucene3xStoredFieldsReader.java:179 Lucene3xStoredFieldsReader.java:180
+      Atomic: NO
+
+      Method: Lucene3xStoredFieldsReader.<init>()
+      Calls Location: Lucene3xStoredFieldsReader.java:144 Lucene3xStoredFieldsReader.java:179
+      Atomic: NO
+--
+  Verifying word getDocCount getDocCount:
+
+      Method: DocValuesProcessor.flush()
+      Calls Location: DocValuesProcessor.java:81 DocValuesProcessor.java:81
+      Atomic: NO
+--
+  Verifying word getDocCount getDocCount:
+
+      Method: FreqProxTermsWriterPerField.flush()
+      Calls Location: FreqProxTermsWriterPerField.java:483 FreqProxTermsWriterPerField.java:461
+      Atomic: NO
+
+      Method: FreqProxTermsWriterPerField.flush()
+      Calls Location: FreqProxTermsWriterPerField.java:461 FreqProxTermsWriterPerField.java:461
+      Atomic: NO
+
+      Method: FreqProxTermsWriterPerField.flush()
+      Calls Location: FreqProxTermsWriterPerField.java:461 FreqProxTermsWriterPerField.java:461
+      Atomic: NO
+
+      Method: FreqProxTermsWriterPerField.flush()
+      Calls Location: FreqProxTermsWriterPerField.java:483 FreqProxTermsWriterPerField.java:461
+      Atomic: NO
+
+      Method: FreqProxTermsWriterPerField.flush()
+      Calls Location: FreqProxTermsWriterPerField.java:461 FreqProxTermsWriterPerField.java:483
+      Atomic: NO
+
+      Method: FreqProxTermsWriterPerField.flush()
+      Calls Location: FreqProxTermsWriterPerField.java:483 FreqProxTermsWriterPerField.java:483
+      Atomic: NO
+
+      Method: FreqProxTermsWriterPerField.flush()
+      Calls Location: FreqProxTermsWriterPerField.java:381 FreqProxTermsWriterPerField.java:461
+      Atomic: NO
+
+      Method: FreqProxTermsWriterPerField.flush()
+      Calls Location: FreqProxTermsWriterPerField.java:381 FreqProxTermsWriterPerField.java:461
+      Atomic: NO
+
+      Method: FreqProxTermsWriterPerField.flush()
+      Calls Location: FreqProxTermsWriterPerField.java:381 FreqProxTermsWriterPerField.java:483
+      Atomic: NO

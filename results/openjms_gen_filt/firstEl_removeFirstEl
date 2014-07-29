@@ -1,0 +1,17 @@
+  Verifying word firstElement removeFirstElement:
+
+      Method: LeaseManager.expire()
+      Calls Location: LeaseManager.java:198 LeaseManager.java:205
+      Atomic: YES
+
+      Method: LeaseManager.run()
+      Calls Location: LeaseManager.java:198 LeaseManager.java:205
+      Atomic: YES
+
+--
+
+  Verifying word firstElement removeFirstElement:
+
+      Method: BasicEventManager.run()
+      Calls Location: BasicEventManager.java:213 BasicEventManager.java:231
+      Atomic: NO

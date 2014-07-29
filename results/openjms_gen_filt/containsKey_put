@@ -1,0 +1,189 @@
+  Verifying word containsKey put:
+
+!!!!  Method: AbstractDestinationCache.addConsumer()
+      Calls Location: AbstractDestinationCache.java:157 AbstractDestinationCache.java:158
+      Atomic: NO
+
+--
+
+  Verifying word containsKey put:
+
+!!!!  Method: AbstractTopicConsumerEndpoint.cacheAdded()
+      Calls Location: AbstractTopicConsumerEndpoint.java:316 AbstractTopicConsumerEndpoint.java:317
+      Atomic: NO
+
+--
+
+  Verifying word containsKey put:
+
+      Method: VMManagedConnectionAcceptor.accept()
+      Calls Location: VMManagedConnectionAcceptor.java:129 VMManagedConnectionAcceptor.java:134
+      Atomic: YES
+
+  Verifying word containsKey put:
+
+      Method: ResourceManager.prepare()
+      Calls Location: ResourceManager.java:1132 ResourceManager.java:348
+      Atomic: YES
+
+      Method: ResourceManager.start()
+      Calls Location: ResourceManager.java:1132 ResourceManager.java:348
+      Atomic: YES
+
+      Method: ResourceManager.commit()
+      Calls Location: ResourceManager.java:1132 ResourceManager.java:348
+      Atomic: YES
+
+      Method: ResourceManager.end()
+      Calls Location: ResourceManager.java:1132 ResourceManager.java:348
+      Atomic: YES
+
+      Method: ResourceManager.forget()
+      Calls Location: ResourceManager.java:1132 ResourceManager.java:348
+      Atomic: YES
+
+      Method: ResourceManager.rollback()
+      Calls Location: ResourceManager.java:1132 ResourceManager.java:348
+      Atomic: YES
+
+      Method: ResourceManager.prepare()
+      Calls Location: ResourceManager.java:1132 ResourceManager.java:1027
+      Atomic: YES
+
+      Method: ResourceManager.start()
+      Calls Location: ResourceManager.java:1132 ResourceManager.java:1027
+      Atomic: YES
+
+      Method: ResourceManager.commit()
+      Calls Location: ResourceManager.java:1132 ResourceManager.java:1027
+      Atomic: YES
+
+      Method: ResourceManager.end()
+      Calls Location: ResourceManager.java:1132 ResourceManager.java:1027
+      Atomic: YES
+
+      Method: ResourceManager.forget()
+      Calls Location: ResourceManager.java:1132 ResourceManager.java:1027
+      Atomic: YES
+
+      Method: ResourceManager.rollback()
+      Calls Location: ResourceManager.java:1132 ResourceManager.java:1027
+      Atomic: YES
+
+      Method: ResourceManager.prepare()
+      Calls Location: ResourceManager.java:1132 ResourceManager.java:1033
+      Atomic: YES
+
+      Method: ResourceManager.start()
+      Calls Location: ResourceManager.java:1132 ResourceManager.java:1033
+      Atomic: YES
+
+      Method: ResourceManager.commit()
+      Calls Location: ResourceManager.java:1132 ResourceManager.java:1033
+      Atomic: YES
+
+      Method: ResourceManager.end()
+      Calls Location: ResourceManager.java:1132 ResourceManager.java:1033
+      Atomic: YES
+
+      Method: ResourceManager.forget()
+      Calls Location: ResourceManager.java:1132 ResourceManager.java:1033
+      Atomic: YES
+
+      Method: ResourceManager.rollback()
+      Calls Location: ResourceManager.java:1132 ResourceManager.java:1033
+      Atomic: YES
+
+--
+
+  Verifying word containsKey put:
+
+      Method: DestinationManagerImpl.init()
+      Calls Location: DestinationManagerImpl.java:693 DestinationManagerImpl.java:694
+      Atomic: NO
+
+      Method: DestinationManagerImpl.messageAdded()
+      Calls Location: DestinationManagerImpl.java:693 DestinationManagerImpl.java:205
+      Atomic: NO
+
+      Method: DestinationManagerImpl.addToDestinations()
+      Calls Location: DestinationManagerImpl.java:693 DestinationManagerImpl.java:694
+      Atomic: YES
+
+--
+
+  Verifying word containsKey put:
+
+****  Method: ConsumerManagerImpl.addConsumerEntry()
+      Calls Location: ConsumerManagerImpl.java:653 ConsumerManagerImpl.java:665
+      Atomic: NO
+
+****  Method: ConsumerManagerImpl.addConsumerEntry()
+      Calls Location: ConsumerManagerImpl.java:653 ConsumerManagerImpl.java:659
+      Atomic: NO
+
+****  Method: ConsumerManagerImpl.addConsumerEntry()
+      Calls Location: ConsumerManagerImpl.java:653 ConsumerManagerImpl.java:671
+      Atomic: NO
+
+      Method: ConsumerManagerImpl.addDurableConsumer()
+      Calls Location: ConsumerManagerImpl.java:653 ConsumerManagerImpl.java:629
+      Atomic: NO
+
+****  Method: ConsumerManagerImpl.doStart()
+      Calls Location: ConsumerManagerImpl.java:653 ConsumerManagerImpl.java:665
+      Atomic: NO
+
+****  Method: ConsumerManagerImpl.doStart()
+      Calls Location: ConsumerManagerImpl.java:653 ConsumerManagerImpl.java:659
+      Atomic: NO
+
+****  Method: ConsumerManagerImpl.doStart()
+      Calls Location: ConsumerManagerImpl.java:653 ConsumerManagerImpl.java:671
+      Atomic: NO
+
+      Method: ConsumerManagerImpl.doStart()
+      Calls Location: ConsumerManagerImpl.java:653 ConsumerManagerImpl.java:629
+      Atomic: NO
+
+--
+
+  Verifying word containsKey put:
+
+      Method: TransactionLog.getOpenTransactionList()
+      Calls Location: TransactionLog.java:375 TransactionLog.java:381
+      Atomic: NO
+
+--
+
+  Verifying word containsKey put:
+
+      Method: Consumers.add()
+      Calls Location: Consumers.java:180 Consumers.java:181
+      Atomic: YES
+
+--
+
+  Verifying word containsKey put:
+
+      Method: AbstractDestinationCache.checkMessageExpiry()
+      Calls Location: AbstractDestinationCache.java:385 AbstractDestinationCache.java:393
+      Atomic: YES
+
+--
+
+  Verifying word containsKey put:
+
+      Method: RegistryImpl.doBind()
+      Calls Location: RegistryImpl.java:141 RegistryImpl.java:144
+      Atomic: YES
+
+--
+
+  Verifying word containsKey put:
+
+      Method: Multiplexer.open()
+      Calls Location: Multiplexer.java:803 Multiplexer.java:749
+      Atomic: YES
+
+--

@@ -1,0 +1,407 @@
+  Verifying word hasNext next:
+
+      Method: JDBC.dropUsingDMD()
+      Calls Location: JDBC.java:481 JDBC.java:483
+      Atomic: NO
+
+      Method: JDBC.dropSchema()
+      Calls Location: JDBC.java:481 JDBC.java:483
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: TestConfiguration.orderedSuite()
+      Calls Location: TestConfiguration.java:482 TestConfiguration.java:483
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: BaseJDBCTestCase.tearDown()
+      Calls Location: BaseJDBCTestCase.java:486 BaseJDBCTestCase.java:488
+      Atomic: NO
+
+      Method: BaseJDBCTestCase.tearDown()
+      Calls Location: BaseJDBCTestCase.java:477 BaseJDBCTestCase.java:488
+      Atomic: NO
+
+      Method: BaseJDBCTestCase.tearDown()
+      Calls Location: BaseJDBCTestCase.java:477 BaseJDBCTestCase.java:479
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: CleanDatabaseTestSetup.removeObjects()
+      Calls Location: CleanDatabaseTestSetup.java:253 CleanDatabaseTestSetup.java:254
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: EmbedConnection.clearLOBMapping()
+      Calls Location: EmbedConnection.java:3331 EmbedConnection.java:3332
+      Atomic: NO
+
+      Method: EmbedConnection.clearLOBMapping()
+      Calls Location: EmbedConnection.java:3346 EmbedConnection.java:3348
+      Atomic: NO
+
+      Method: EmbedConnection.clearLOBMapping()
+      Calls Location: EmbedConnection.java:3331 EmbedConnection.java:3348
+      Atomic: NO
+
+      Method: EmbedConnection.<init>()
+      Calls Location: EmbedConnection.java:3346 EmbedConnection.java:3332
+      Atomic: NO
+
+      Method: EmbedConnection.<init>()
+      Calls Location: EmbedConnection.java:3346 EmbedConnection.java:3348
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: JDBCDataSource.getDataSourceObject()
+      Calls Location: JDBCDataSource.java:175 JDBCDataSource.java:177
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: DerbyDistribution.hasRequiredJars()
+      Calls Location: DerbyDistribution.java:197 DerbyDistribution.java:198
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: TableDescriptor.selectivityForConglomerate()
+      Calls Location: TableDescriptor.java:1446 TableDescriptor.java:1448
+      Atomic: NO
+
+      Method: TableDescriptor.getAllRelevantTriggers()
+      Calls Location: TableDescriptor.java:727 TableDescriptor.java:728
+      Atomic: NO
+
+      Method: TableDescriptor.statisticsExist()
+      Calls Location: TableDescriptor.java:1413 TableDescriptor.java:1415
+      Atomic: NO
+
+      Method: TableDescriptor.markForIndexStatsUpdate()
+      Calls Location: TableDescriptor.java:1349 TableDescriptor.java:1350
+      Atomic: NO
+
+      Method: TableDescriptor.getQualifiedNumberOfIndexes()
+      Calls Location: TableDescriptor.java:685 TableDescriptor.java:686
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: ContextService.notifyAllActiveThreads()
+      Calls Location: ContextService.java:548 ContextService.java:550
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: NetworkServerControlImpl.blockingStart()
+      Calls Location: NetworkServerControlImpl.java:870 NetworkServerControlImpl.java:870
+      Atomic: NO
+
+      Method: NetworkServerControlImpl.buildRuntimeInfo()
+      Calls Location: NetworkServerControlImpl.java:4071 NetworkServerControlImpl.java:4071
+      Atomic: NO
+
+      Method: NetworkServerControlImpl.buildRuntimeInfo()
+      Calls Location: NetworkServerControlImpl.java:4061 NetworkServerControlImpl.java:4071
+      Atomic: NO
+
+      Method: NetworkServerControlImpl.buildRuntimeInfo()
+      Calls Location: NetworkServerControlImpl.java:4061 NetworkServerControlImpl.java:4061
+      Atomic: NO
+
+      Method: NetworkServerControlImpl.getPropertyValues()
+      Calls Location: NetworkServerControlImpl.java:3964 NetworkServerControlImpl.java:3964
+      Atomic: YES
+
+      Method: NetworkServerControlImpl.setLogConnections()
+      Calls Location: NetworkServerControlImpl.java:3603 NetworkServerControlImpl.java:3603
+      Atomic: YES
+
+      Method: NetworkServerControlImpl.setTrace()
+      Calls Location: NetworkServerControlImpl.java:3660 NetworkServerControlImpl.java:3660
+      Atomic: NO
+
+      Method: NetworkServerControlImpl.blockingStart()
+      Calls Location: NetworkServerControlImpl.java:857 NetworkServerControlImpl.java:870
+      Atomic: NO
+
+      Method: NetworkServerControlImpl.blockingStart()
+      Calls Location: NetworkServerControlImpl.java:857 NetworkServerControlImpl.java:857
+      Atomic: NO
+
+      Method: NetworkServerControlImpl.blockingStart()
+      Calls Location: NetworkServerControlImpl.java:1011 NetworkServerControlImpl.java:857
+      Atomic: NO
+
+      Method: NetworkServerControlImpl.blockingStart()
+      Calls Location: NetworkServerControlImpl.java:1011 NetworkServerControlImpl.java:870
+      Atomic: NO
+
+      Method: NetworkServerControlImpl.startNetworkServer()
+      Calls Location: NetworkServerControlImpl.java:1011 NetworkServerControlImpl.java:1011
+      Atomic: YES
+
+      Method: NetworkServerControlImpl.getBytesRead()
+      Calls Location: NetworkServerControlImpl.java:4098 NetworkServerControlImpl.java:4098
+      Atomic: NO
+
+      Method: NetworkServerControlImpl.getActiveSessions()
+      Calls Location: NetworkServerControlImpl.java:4114 NetworkServerControlImpl.java:4114
+      Atomic: NO
+
+      Method: NetworkServerControlImpl.getBytesWritten()
+      Calls Location: NetworkServerControlImpl.java:4106 NetworkServerControlImpl.java:4106
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: ColumnDescriptorList.getColumnDescriptor()
+      Calls Location: ColumnDescriptorList.java:101 ColumnDescriptorList.java:103
+      Atomic: NO
+
+      Method: ColumnDescriptorList.getColumnDescriptor()
+      Calls Location: ColumnDescriptorList.java:74 ColumnDescriptorList.java:76
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: ConglomerateDescriptorList.dropConglomerateDescriptor()
+      Calls Location: ConglomerateDescriptorList.java:201 ConglomerateDescriptorList.java:203
+      Atomic: NO
+
+      Method: ConglomerateDescriptorList.dropConglomerateDescriptorByUUID()
+      Calls Location: ConglomerateDescriptorList.java:226 ConglomerateDescriptorList.java:228
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: GenericDescriptorList.getUniqueTupleDescriptor()
+      Calls Location: GenericDescriptorList.java:67 GenericDescriptorList.java:69
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: DRDAConnThread.processCommands()
+      Calls Location: DRDAConnThread.java:1851 DRDAConnThread.java:1851
+      Atomic: NO
+
+      Method: DRDAConnThread.processCommands()
+      Calls Location: DRDAConnThread.java:1851 DRDAConnThread.java:1869
+      Atomic: NO
+
+      Method: DRDAConnThread.run()
+      Calls Location: DRDAConnThread.java:1851 DRDAConnThread.java:1851
+      Atomic: NO
+
+      Method: DRDAConnThread.run()
+      Calls Location: DRDAConnThread.java:1851 DRDAConnThread.java:1869
+      Atomic: NO
+--
+    No occurrences
+
+Checking class GeneratedMethod:
+
+  Verifying word hasNext next:
+--
+  Verifying word hasNext next:
+
+      Method: BackingStoreHashtable$BackingStoreHashtableEnumeration.nextElement()
+      Calls Location: BackingStoreHashtable.java:786 BackingStoreHashtable.java:787
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: BaseMonitor.determineSupportedServiceProviders()
+      Calls Location: BaseMonitor.java:1411 BaseMonitor.java:1413
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: RevokeRoleConstantAction.toString()
+      Calls Location: RevokeRoleConstantAction.java:216 RevokeRoleConstantAction.java:220
+      Atomic: NO
+
+      Method: RevokeRoleConstantAction.executeConstantAction()
+      Calls Location: RevokeRoleConstantAction.java:90 RevokeRoleConstantAction.java:91
+      Atomic: NO
+
+      Method: RevokeRoleConstantAction.executeConstantAction()
+      Calls Location: RevokeRoleConstantAction.java:82 RevokeRoleConstantAction.java:91
+      Atomic: NO
+
+      Method: RevokeRoleConstantAction.executeConstantAction()
+      Calls Location: RevokeRoleConstantAction.java:82 RevokeRoleConstantAction.java:83
+      Atomic: NO
+
+      Method: RevokeRoleConstantAction.executeConstantAction()
+      Calls Location: RevokeRoleConstantAction.java:90 RevokeRoleConstantAction.java:83
+      Atomic: NO
+
+      Method: RevokeRoleConstantAction.toString()
+      Calls Location: RevokeRoleConstantAction.java:224 RevokeRoleConstantAction.java:228
+      Atomic: NO
+
+      Method: RevokeRoleConstantAction.toString()
+      Calls Location: RevokeRoleConstantAction.java:216 RevokeRoleConstantAction.java:228
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: DropTableConstantAction.executeConstantAction()
+      Calls Location: DropTableConstantAction.java:191 DropTableConstantAction.java:192
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: GrantRoleConstantAction.executeConstantAction()
+      Calls Location: GrantRoleConstantAction.java:97 GrantRoleConstantAction.java:98
+      Atomic: NO
+
+      Method: GrantRoleConstantAction.executeConstantAction()
+      Calls Location: GrantRoleConstantAction.java:89 GrantRoleConstantAction.java:98
+      Atomic: NO
+
+      Method: GrantRoleConstantAction.executeConstantAction()
+      Calls Location: GrantRoleConstantAction.java:89 GrantRoleConstantAction.java:90
+      Atomic: NO
+
+      Method: GrantRoleConstantAction.executeConstantAction()
+      Calls Location: GrantRoleConstantAction.java:97 GrantRoleConstantAction.java:90
+      Atomic: NO
+
+      Method: GrantRoleConstantAction.toString()
+      Calls Location: GrantRoleConstantAction.java:229 GrantRoleConstantAction.java:233
+      Atomic: NO
+
+      Method: GrantRoleConstantAction.toString()
+      Calls Location: GrantRoleConstantAction.java:237 GrantRoleConstantAction.java:241
+      Atomic: NO
+
+      Method: GrantRoleConstantAction.toString()
+      Calls Location: GrantRoleConstantAction.java:229 GrantRoleConstantAction.java:241
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: AlterTableConstantAction.truncateTable()
+      Calls Location: AlterTableConstantAction.java:2363 AlterTableConstantAction.java:2364
+      Atomic: NO
+
+      Method: AlterTableConstantAction.dropColumnFromTable()
+      Calls Location: AlterTableConstantAction.java:1426 AlterTableConstantAction.java:1427
+      Atomic: NO
+
+      Method: AlterTableConstantAction.executeConstantActionBody()
+      Calls Location: AlterTableConstantAction.java:1426 AlterTableConstantAction.java:2364
+      Atomic: NO
+
+      Method: AlterTableConstantAction.executeConstantActionBody()
+      Calls Location: AlterTableConstantAction.java:1426 AlterTableConstantAction.java:1427
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: DDLConstantAction.storeConstraintDependenciesOnPrivileges()
+      Calls Location: DDLConstantAction.java:350 DDLConstantAction.java:352
+      Atomic: NO
+
+      Method: DDLConstantAction.adjustUDTDependencies()
+      Calls Location: DDLConstantAction.java:956 DDLConstantAction.java:958
+      Atomic: NO
+
+      Method: DDLConstantAction.adjustUDTDependencies()
+      Calls Location: DDLConstantAction.java:965 DDLConstantAction.java:967
+      Atomic: NO
+
+      Method: DDLConstantAction.adjustUDTDependencies()
+      Calls Location: DDLConstantAction.java:956 DDLConstantAction.java:967
+      Atomic: NO
+
+      Method: DDLConstantAction.storeViewTriggerDependenciesOnPrivileges()
+      Calls Location: DDLConstantAction.java:663 DDLConstantAction.java:665
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: ColumnInfo.getExpectedUDTClasses()
+      Calls Location: ColumnInfo.java:560 ColumnInfo.java:562
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: PredicateList.pushExpressionsIntoSelect()
+      Calls Location: PredicateList.java:1479 PredicateList.java:1481
+      Atomic: NO
+
+      Method: PredicateList.markReferencedColumns()
+      Calls Location: PredicateList.java:1654 PredicateList.java:1656
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: FromBaseTable.bindNonVTITables()
+      Calls Location: FromBaseTable.java:2385 FromBaseTable.java:2386
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: FromSubquery.bindExpressions()
+      Calls Location: FromSubquery.java:271 FromSubquery.java:273
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: JoinNode.getCommonColumnsForNaturalJoin()
+      Calls Location: JoinNode.java:986 JoinNode.java:987
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: OrderByColumn.bindOrderByColumn()
+      Calls Location: OrderByColumn.java:257 OrderByColumn.java:259
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: FromVTI.remapBaseTableColumns()
+      Calls Location: FromVTI.java:1614 FromVTI.java:1616
+      Atomic: NO
+
+      Method: FromVTI.bindExpressions()
+      Calls Location: FromVTI.java:906 FromVTI.java:908
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: MethodCallNode.getCorrelationTables()
+      Calls Location: MethodCallNode.java:240 MethodCallNode.java:242
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: UpdateNode.getUpdateReadMap()
+      Calls Location: UpdateNode.java:1094 UpdateNode.java:1095
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: GroupByNode.addNewColumnsForAggregation()
+      Calls Location: GroupByNode.java:585 GroupByNode.java:587
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: DMLModStatementNode.createTriggerDependencies()
+      Calls Location: DMLModStatementNode.java:1154 DMLModStatementNode.java:1155
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: VTIDeferModPolicy.deferIt()
+      Calls Location: VTIDeferModPolicy.java:95 VTIDeferModPolicy.java:97
+      Atomic: NO

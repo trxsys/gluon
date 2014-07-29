@@ -1,0 +1,83 @@
+  Verifying word setupContextStack getEmbedConnection restoreContextStack:
+
+      Method: EmbedResultSet.movePosition()
+      Calls Location: EmbedResultSet.java:406 EmbedResultSet.java:408 EmbedResultSet.java:524
+      Atomic: YES
+
+      Method: EmbedResultSet.updateRow()
+      Calls Location: EmbedResultSet.java:3737 EmbedResultSet.java:3738 EmbedResultSet.java:3817
+      Atomic: YES
+
+      Method: EmbedResultSet.updateRow()
+      Calls Location: EmbedResultSet.java:3737 EmbedResultSet.java:3738 EmbedResultSet.java:3817
+      Atomic: YES
+
+      Method: EmbedResultSet.moveToInsertRow()
+      Calls Location: EmbedResultSet.java:3987 EmbedResultSet.java:3996 EmbedResultSet.java:4001
+      Atomic: YES
+
+      Method: EmbedResultSet.deleteRow()
+      Calls Location: EmbedResultSet.java:3839 EmbedResultSet.java:3841 EmbedResultSet.java:3895
+      Atomic: YES
+
+      Method: EmbedResultSet.insertRow()
+      Calls Location: EmbedResultSet.java:3617 EmbedResultSet.java:3618 EmbedResultSet.java:3716
+      Atomic: YES
+
+      Method: EmbedResultSet.checkRowPosition()
+      Calls Location: EmbedResultSet.java:4582 EmbedResultSet.java:4584 EmbedResultSet.java:4619
+      Atomic: YES
+
+      Method: EmbedResultSet.close()
+      Calls Location: EmbedResultSet.java:568 EmbedResultSet.java:577 EmbedResultSet.java:621
+      Atomic: YES
+--
+  Verifying word setupContextStack getEmbedConnection restoreContextStack:
+
+      Method: EmbedStatement.executeStatement()
+      Calls Location: EmbedStatement.java:1294 EmbedStatement.java:1359 EmbedStatement.java:1439
+      Atomic: YES
+
+      Method: EmbedStatement.executeStatement()
+      Calls Location: EmbedStatement.java:1294 EmbedStatement.java:1380 EmbedStatement.java:1439
+      Atomic: YES
+
+      Method: EmbedStatement.executeStatement()
+      Calls Location: EmbedStatement.java:1294 EmbedStatement.java:1769 EmbedStatement.java:1439
+      Atomic: YES
+
+      Method: EmbedStatement.executeStatement()
+      Calls Location: EmbedStatement.java:1294 EmbedStatement.java:1694 EmbedStatement.java:1439
+      Atomic: YES
+--
+  Verifying word setupContextStack getEmbedConnection restoreContextStack:
+
+      Method: EmbedDatabaseMetaData.getPreparedQueryUsingSystemTables()
+      Calls Location: EmbedDatabaseMetaData.java:3560 EmbedDatabaseMetaData.java:3740 EmbedDatabaseMetaData.java:3584
+      Atomic: YES
+
+      Method: EmbedDatabaseMetaData.getPreparedQueryUsingSystemTables()
+      Calls Location: EmbedDatabaseMetaData.java:3560 EmbedDatabaseMetaData.java:3756 EmbedDatabaseMetaData.java:3584
+      Atomic: YES
+--
+    No occurrences
+
+Checking class GeneratedMethod:
+
+  Verifying word setupContextStack getEmbedConnection restoreContextStack:
+--
+  Verifying word getActivation executeSubStatement:
+
+      Method: EmbedResultSet.deleteRow()
+      Calls Location: EmbedResultSet.java:3872 EmbedResultSet.java:3878
+      Atomic: YES
+
+      Method: EmbedResultSet.insertRow()
+      Calls Location: EmbedResultSet.java:3689 EmbedResultSet.java:3705
+      Atomic: YES
+
+      Method: EmbedResultSet.updateRow()
+      Calls Location: EmbedResultSet.java:3786 EmbedResultSet.java:3797
+      Atomic: YES
+--
+    No occurrences

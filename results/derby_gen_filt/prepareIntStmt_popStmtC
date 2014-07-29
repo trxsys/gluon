@@ -1,0 +1,18 @@
+--
+  Verifying word prepareInternalStatement popStatementContext:
+
+      Method: EmbedResultSet.insertRow()
+      Calls Location: EmbedResultSet.java:3687 EmbedResultSet.java:3709
+      Atomic: YES
+
+      Method: EmbedResultSet.updateRow()
+      Calls Location: EmbedResultSet.java:3785 EmbedResultSet.java:3810
+      Atomic: YES
+
+      Method: EmbedResultSet.deleteRow()
+      Calls Location: EmbedResultSet.java:3870 EmbedResultSet.java:3888
+      Atomic: YES
+
+      Method: EmbedResultSet.updateRow()
+      Calls Location: EmbedResultSet.java:3785 EmbedResultSet.java:467
+      Atomic: YES

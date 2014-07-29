@@ -1,0 +1,13 @@
+  Verifying word iterator clear:
+
+      Method: NetworkServerControlImpl.startNetworkServer()
+      Calls Location: NetworkServerControlImpl.java:1011 NetworkServerControlImpl.java:1015
+      Atomic: YES
+
+      Method: NetworkServerControlImpl.blockingStart()
+      Calls Location: NetworkServerControlImpl.java:870 NetworkServerControlImpl.java:885
+      Atomic: YES
+
+      Method: NetworkServerControlImpl.blockingStart()
+      Calls Location: NetworkServerControlImpl.java:1011 NetworkServerControlImpl.java:885
+      Atomic: NO

@@ -1,0 +1,54 @@
+
+  Verifying word writeInt flush:
+
+      Method: Multiplexer.handlePingRequest()
+      Calls Location: Multiplexer.java:683 Multiplexer.java:684
+      Atomic: YES
+
+      Method: Multiplexer.run()
+      Calls Location: Multiplexer.java:683 Multiplexer.java:684
+      Atomic: NO
+
+      Method: Multiplexer.<init>()
+      Calls Location: Multiplexer.java:422 Multiplexer.java:499
+      Atomic: NO
+
+      Method: Multiplexer.<init>()
+      Calls Location: Multiplexer.java:422 Multiplexer.java:460
+      Atomic: NO
+
+      Method: Multiplexer.<init>()
+      Calls Location: Multiplexer.java:422 Multiplexer.java:502
+      Atomic: NO
+
+****  Method: Multiplexer.handshake()
+      Calls Location: Multiplexer.java:422 Multiplexer.java:423
+      Atomic: NO
+
+      Method: Multiplexer.<init>()
+      Calls Location: Multiplexer.java:421 Multiplexer.java:499
+      Atomic: NO
+
+      Method: Multiplexer.<init>()
+      Calls Location: Multiplexer.java:421 Multiplexer.java:460
+      Atomic: NO
+
+      Method: Multiplexer.<init>()
+      Calls Location: Multiplexer.java:421 Multiplexer.java:502
+      Atomic: NO
+
+      Method: Multiplexer.send()
+      Calls Location: Multiplexer.java:304 Multiplexer.java:306
+      Atomic: YES
+
+****  Method: Multiplexer.handshake()
+      Calls Location: Multiplexer.java:421 Multiplexer.java:423
+      Atomic: NO
+
+      Method: Multiplexer.ping()
+      Calls Location: Multiplexer.java:319 Multiplexer.java:320
+      Atomic: YES
+
+      Method: Multiplexer.send()
+      Calls Location: Multiplexer.java:280 Multiplexer.java:281
+      Atomic: YES

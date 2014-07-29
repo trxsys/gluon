@@ -1,0 +1,21 @@
+  Verifying word addAndGet get:
+
+      Method: BufferedUpdatesStream.prune()
+      Calls Location: BufferedUpdatesStream.java:366 BufferedUpdatesStream.java:108
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.prune()
+      Calls Location: BufferedUpdatesStream.java:366 BufferedUpdatesStream.java:589
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.prune()
+      Calls Location: BufferedUpdatesStream.java:366 BufferedUpdatesStream.java:367
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.push()
+      Calls Location: BufferedUpdatesStream.java:92 BufferedUpdatesStream.java:94
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.push()
+      Calls Location: BufferedUpdatesStream.java:92 BufferedUpdatesStream.java:589
+      Atomic: YES

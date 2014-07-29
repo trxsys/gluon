@@ -1,0 +1,22 @@
+
+  Verifying word getMessageId isPersistent:
+
+      Method: AbstractDestinationCache.onLeaseExpired()
+      Calls Location: AbstractDestinationCache.java:237 AbstractDestinationCache.java:246
+      Atomic: NO
+
+--
+
+  Verifying word getMessageId isPersistent:
+
+      Method: DefaultMessageCache.destroy()
+      Calls Location: DefaultMessageCache.java:184 DefaultMessageCache.java:186
+      Atomic: YES
+
+      Method: DefaultMessageCache.addMessage()
+      Calls Location: DefaultMessageCache.java:102 DefaultMessageCache.java:103
+      Atomic: YES
+
+      Method: DefaultMessageCache.getMessage()
+      Calls Location: DefaultMessageCache.java:141 DefaultMessageCache.java:143
+      Atomic: YES

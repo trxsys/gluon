@@ -1,0 +1,18 @@
+
+  Verifying word write flush:
+
+      Method: TransactionLog.logTransactionState()
+      Calls Location: TransactionLog.java:180 TransactionLog.java:181
+      Atomic: YES
+
+      Method: TransactionLog.logTransactionData()
+      Calls Location: TransactionLog.java:212 TransactionLog.java:213
+      Atomic: YES
+
+--
+
+  Verifying word write flush:
+
+      Method: Multiplexer.send()
+      Calls Location: Multiplexer.java:305 Multiplexer.java:306
+      Atomic: YES

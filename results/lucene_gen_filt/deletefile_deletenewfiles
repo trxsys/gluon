@@ -1,0 +1,156 @@
+--
+  Verifying word deleteFile deleteNewFiles:
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4136 IndexWriter.java:4137
+      Atomic: YES
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4135 IndexWriter.java:4137
+      Atomic: YES
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4135 IndexWriter.java:3576
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4135 IndexWriter.java:3515
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4135 IndexWriter.java:4151
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4135 IndexWriter.java:4182
+      Atomic: NO
+
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4157 IndexWriter.java:3576
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4157 IndexWriter.java:3515
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4157 IndexWriter.java:4182
+      Atomic: NO
+
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4136 IndexWriter.java:3576
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4136 IndexWriter.java:3515
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4136 IndexWriter.java:4151
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4136 IndexWriter.java:4182
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4135 IndexWriter.java:3576
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4135 IndexWriter.java:3515
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4135 IndexWriter.java:4151
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4135 IndexWriter.java:4182
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4136 IndexWriter.java:3576
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4136 IndexWriter.java:3515
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4136 IndexWriter.java:4151
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4136 IndexWriter.java:4182
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4135 IndexWriter.java:3576
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4135 IndexWriter.java:3515
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4135 IndexWriter.java:4151
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4135 IndexWriter.java:4182
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4136 IndexWriter.java:3576
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4136 IndexWriter.java:3515
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4136 IndexWriter.java:4151
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4136 IndexWriter.java:4182
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4136 IndexWriter.java:4137
+      Atomic: YES
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4136 IndexWriter.java:4137
+      Atomic: YES
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4136 IndexWriter.java:4137
+      Atomic: YES
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4135 IndexWriter.java:4137
+      Atomic: YES
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4135 IndexWriter.java:4137
+      Atomic: YES
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4135 IndexWriter.java:4137
+      Atomic: YES
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4158 IndexWriter.java:3576
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4158 IndexWriter.java:3515
+      Atomic: NO
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:4158 IndexWriter.java:4182
+      Atomic: NO

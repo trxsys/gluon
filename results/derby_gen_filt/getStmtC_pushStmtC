@@ -1,0 +1,29 @@
+  Verifying word getStatementContext pushStatementContext:
+
+      Method: EmbedResultSet.updateRow()
+      Calls Location: EmbedResultSet.java:3769 EmbedResultSet.java:3777
+      Atomic: YES
+
+      Method: EmbedResultSet.updateRow()
+      Calls Location: EmbedResultSet.java:3769 EmbedResultSet.java:417
+      Atomic: YES
+
+      Method: EmbedResultSet.deleteRow()
+      Calls Location: EmbedResultSet.java:3853 EmbedResultSet.java:3861
+      Atomic: YES
+
+      Method: EmbedResultSet.insertRow()
+      Calls Location: EmbedResultSet.java:3664 EmbedResultSet.java:3672
+      Atomic: YES
+--
+    No occurrences
+
+Checking class GeneratedMethod:
+
+  Verifying word getStatementContext pushStatementContext:
+--
+  Verifying word getStatementContext pushStatementContext:
+
+      Method: GenericPreparedStatement.executeSubStatement()
+      Calls Location: GenericPreparedStatement.java:285 GenericPreparedStatement.java:437
+      Atomic: NO

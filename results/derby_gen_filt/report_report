@@ -1,0 +1,15 @@
+
+Checking class GeneratedMethod:
+
+  Verifying word report report:
+--
+  Verifying word report report:
+
+      Method: TopService.bootModule()
+      Calls Location: TopService.java:314 TopService.java:315
+      Atomic: YES
+
+      Method: TopService.bootModule()
+      Calls Location: TopService.java:350 TopService.java:351
+      Atomic: YES
+--

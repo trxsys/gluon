@@ -1,0 +1,54 @@
+
+  Verifying word getAdapter getConnection:
+
+      Method: UserManager.createUser()
+      Calls Location: UserManager.java:120 UserManager.java:125
+      Atomic: YES
+
+      Method: UserManager.registerConfiguredUsers()
+      Calls Location: UserManager.java:120 UserManager.java:125
+      Atomic: NO
+
+      Method: UserManager.init()
+      Calls Location: UserManager.java:269 UserManager.java:125
+      Atomic: NO
+
+      Method: UserManager.updateUser()
+      Calls Location: UserManager.java:152 UserManager.java:157
+      Atomic: YES
+
+      Method: UserManager.deleteUser()
+      Calls Location: UserManager.java:179 UserManager.java:184
+      Atomic: YES
+
+--
+
+  Verifying word getAdapter getConnection:
+
+      Method: DestinationManagerImpl.createPersistentDestination()
+      Calls Location: DestinationManagerImpl.java:611 DestinationManagerImpl.java:619
+      Atomic: NO
+
+--
+
+  Verifying word getAdapter getConnection:
+
+      Method: ConsumerManagerImpl.createInactiveDurableConsumer()
+      Calls Location: ConsumerManagerImpl.java:211 ConsumerManagerImpl.java:594
+      Atomic: NO
+
+      Method: ConsumerManagerImpl.unsubscribe()
+      Calls Location: ConsumerManagerImpl.java:211 ConsumerManagerImpl.java:209
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.createInactiveDurableConsumer()
+      Calls Location: ConsumerManagerImpl.java:593 ConsumerManagerImpl.java:594
+      Atomic: NO
+
+--
+
+  Verifying word getAdapter getConnection:
+
+      Method: DefaultMessageCache.getMessage()
+      Calls Location: DefaultMessageCache.java:152 DefaultMessageCache.java:153
+      Atomic: YES

@@ -1,0 +1,116 @@
+  Verifying word initWritableLiveDocs delete getPendingDeleteCount:
+
+      Method: IndexWriter.commitMergedDeletesAndUpdates()
+      Calls Location: IndexWriter.java:3379 IndexWriter.java:3382 IndexWriter.java:3477
+      Atomic: YES
+
+      Method: IndexWriter.commitMergedDeletesAndUpdates()
+      Calls Location: IndexWriter.java:3375 IndexWriter.java:3382 IndexWriter.java:3477
+      Atomic: YES
+
+      Method: IndexWriter.commitMergedDeletesAndUpdates()
+      Calls Location: IndexWriter.java:3291 IndexWriter.java:3382 IndexWriter.java:3477
+      Atomic: YES
+
+      Method: IndexWriter.commitMergedDeletesAndUpdates()
+      Calls Location: IndexWriter.java:3287 IndexWriter.java:3382 IndexWriter.java:3477
+      Atomic: YES
+
+      Method: IndexWriter.commitMergedDeletesAndUpdates()
+      Calls Location: IndexWriter.java:3291 IndexWriter.java:3294 IndexWriter.java:3477
+      Atomic: YES
+
+      Method: IndexWriter.commitMergedDeletesAndUpdates()
+      Calls Location: IndexWriter.java:3287 IndexWriter.java:3294 IndexWriter.java:3477
+      Atomic: YES
+
+      Method: IndexWriter.commitMergedDeletesAndUpdates()
+      Calls Location: IndexWriter.java:3379 IndexWriter.java:3294 IndexWriter.java:3477
+      Atomic: YES
+
+      Method: IndexWriter.commitMergedDeletesAndUpdates()
+      Calls Location: IndexWriter.java:3375 IndexWriter.java:3294 IndexWriter.java:3477
+      Atomic: YES
+
+      Method: IndexWriter.tryDeleteDocument()
+      Calls Location: IndexWriter.java:1381 IndexWriter.java:1382 IndexWriter.java:1383
+      Atomic: YES
+
+      Method: IndexWriter.commitMergedDeletesAndUpdates()
+      Calls Location: IndexWriter.java:3379 IndexWriter.java:3382 IndexWriter.java:3365
+      Atomic: YES
+
+      Method: IndexWriter.commitMergedDeletesAndUpdates()
+      Calls Location: IndexWriter.java:3375 IndexWriter.java:3382 IndexWriter.java:3365
+      Atomic: YES
+
+      Method: IndexWriter.commitMergedDeletesAndUpdates()
+      Calls Location: IndexWriter.java:3291 IndexWriter.java:3382 IndexWriter.java:3365
+      Atomic: YES
+
+      Method: IndexWriter.commitMergedDeletesAndUpdates()
+      Calls Location: IndexWriter.java:3287 IndexWriter.java:3382 IndexWriter.java:3365
+      Atomic: YES
+
+      Method: IndexWriter.commitMergedDeletesAndUpdates()
+      Calls Location: IndexWriter.java:3291 IndexWriter.java:3294 IndexWriter.java:3365
+      Atomic: YES
+
+      Method: IndexWriter.commitMergedDeletesAndUpdates()
+      Calls Location: IndexWriter.java:3287 IndexWriter.java:3294 IndexWriter.java:3365
+      Atomic: YES
+
+      Method: IndexWriter.commitMergedDeletesAndUpdates()
+      Calls Location: IndexWriter.java:3379 IndexWriter.java:3294 IndexWriter.java:3365
+      Atomic: YES
+
+      Method: IndexWriter.commitMergedDeletesAndUpdates()
+      Calls Location: IndexWriter.java:3375 IndexWriter.java:3294 IndexWriter.java:3365
+      Atomic: YES
+
+      Method: IndexWriter.commitMerge()
+      Calls Location: IndexWriter.java:3287 IndexWriter.java:3382 IndexWriter.java:3529
+      Atomic: YES
+
+      Method: IndexWriter.commitMerge()
+      Calls Location: IndexWriter.java:3287 IndexWriter.java:3382 IndexWriter.java:627
+      Atomic: YES
+
+      Method: IndexWriter.merge()
+      Calls Location: IndexWriter.java:3287 IndexWriter.java:3382 IndexWriter.java:627
+      Atomic: NO
+--
+  Verifying word initWritableLiveDocs delete getPendingDeleteCount:
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:555 BufferedUpdatesStream.java:559 BufferedUpdatesStream.java:289
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:555 BufferedUpdatesStream.java:559 BufferedUpdatesStream.java:239
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:427 BufferedUpdatesStream.java:435 BufferedUpdatesStream.java:289
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:427 BufferedUpdatesStream.java:435 BufferedUpdatesStream.java:239
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:555 BufferedUpdatesStream.java:435 BufferedUpdatesStream.java:289
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:555 BufferedUpdatesStream.java:435 BufferedUpdatesStream.java:239
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:427 BufferedUpdatesStream.java:559 BufferedUpdatesStream.java:289
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:427 BufferedUpdatesStream.java:559 BufferedUpdatesStream.java:239
+      Atomic: YES
+--

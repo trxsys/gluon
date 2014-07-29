@@ -1,0 +1,68 @@
+--
+  Verifying word getEmbedConnection setupContextStack:
+
+      Method: EmbedBlob.getBytes()
+      Calls Location: EmbedBlob.java:1143 EmbedBlob.java:494
+      Atomic: NO
+
+      Method: EmbedBlob.position()
+      Calls Location: EmbedBlob.java:1143 EmbedBlob.java:642
+      Atomic: NO
+
+      Method: EmbedBlob.position()
+      Calls Location: EmbedBlob.java:1143 EmbedBlob.java:742
+      Atomic: NO
+
+      Method: EmbedBlob.getBinaryStream()
+      Calls Location: EmbedBlob.java:1143 EmbedBlob.java:577
+      Atomic: NO
+
+      Method: EmbedBlob.length()
+      Calls Location: EmbedBlob.java:1143 EmbedBlob.java:399
+      Atomic: NO
+
+      Method: EmbedBlob.getBytes()
+      Calls Location: EmbedBlob.java:491 EmbedBlob.java:494
+      Atomic: YES
+
+      Method: EmbedBlob.position()
+      Calls Location: EmbedBlob.java:638 EmbedBlob.java:642
+      Atomic: YES
+
+      Method: EmbedBlob.position()
+      Calls Location: EmbedBlob.java:738 EmbedBlob.java:742
+      Atomic: YES
+
+      Method: EmbedBlob.getBinaryStream()
+      Calls Location: EmbedBlob.java:574 EmbedBlob.java:577
+      Atomic: YES
+
+      Method: EmbedBlob.length()
+      Calls Location: EmbedBlob.java:396 EmbedBlob.java:399
+      Atomic: YES
+--
+  Verifying word getEmbedConnection setupContextStack:
+
+      Method: EmbedClob.position()
+      Calls Location: EmbedClob.java:328 EmbedClob.java:337
+      Atomic: NO
+--
+  Verifying word getEmbedConnection setupContextStack:
+
+      Method: EmbedResultSet.getClob()
+      Calls Location: EmbedResultSet.java:4126 EmbedResultSet.java:4141
+      Atomic: YES
+
+      Method: EmbedResultSet.getBlob()
+      Calls Location: EmbedResultSet.java:4070 EmbedResultSet.java:4084
+      Atomic: YES
+--
+  Verifying word getEmbedConnection setupContextStack:
+
+      Method: EmbedDatabaseMetaData.getPreparedQuery()
+      Calls Location: EmbedDatabaseMetaData.java:3756 EmbedDatabaseMetaData.java:3560
+      Atomic: NO
+
+      Method: EmbedDatabaseMetaData.getPreparedQuery()
+      Calls Location: EmbedDatabaseMetaData.java:2339 EmbedDatabaseMetaData.java:3560
+      Atomic: NO

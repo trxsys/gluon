@@ -1,0 +1,295 @@
+  Verifying word deleteFile deleteFile:
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:2751 IndexWriter.java:2751
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:2751 IndexWriter.java:2751
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:2751 IndexWriter.java:2471
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:2751 IndexWriter.java:2453
+      Atomic: NO
+
+      Method: IndexWriter.createCompoundFile()
+      Calls Location: IndexWriter.java:4609 IndexWriter.java:4613
+      Atomic: NO
+
+      Method: IndexWriter.copySegmentAsIs()
+      Calls Location: IndexWriter.java:2751 IndexWriter.java:2751
+      Atomic: NO
+
+      Method: IndexWriter.createCompoundFile()
+      Calls Location: IndexWriter.java:4609 IndexWriter.java:4613
+      Atomic: NO
+
+      Method: IndexWriter.createCompoundFile()
+      Calls Location: IndexWriter.java:4609 IndexWriter.java:4613
+      Atomic: NO
+
+      Method: IndexWriter.createCompoundFile()
+      Calls Location: IndexWriter.java:4609 IndexWriter.java:4613
+      Atomic: NO
+
+      Method: IndexWriter.createCompoundFile()
+      Calls Location: IndexWriter.java:4609 IndexWriter.java:4613
+      Atomic: NO
+
+      Method: IndexWriter.createCompoundFile()
+      Calls Location: IndexWriter.java:4609 IndexWriter.java:4613
+      Atomic: NO
+
+      Method: IndexWriter.copySegmentAsIs()
+      Calls Location: IndexWriter.java:2751 IndexWriter.java:2751
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:2471 IndexWriter.java:2471
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:2453 IndexWriter.java:2471
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:2453 IndexWriter.java:2453
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:2751 IndexWriter.java:2751
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:2751 IndexWriter.java:2751
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:2751 IndexWriter.java:2471
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:2751 IndexWriter.java:2453
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:2471 IndexWriter.java:2471
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:2453 IndexWriter.java:2453
+      Atomic: NO
+--
+  Verifying word deleteFile deleteFile:
+
+      Method: IOUtils.deleteFilesIgnoringExceptions()
+      Calls Location: IOUtils.java:321 IOUtils.java:321
+      Atomic: NO
+--
+  Verifying word deleteFile deleteFile:
+
+      Method: SegmentInfos.commit()
+      Calls Location: SegmentInfos.java:498 SegmentInfos.java:1015
+      Atomic: NO
+
+      Method: SegmentInfos.commit()
+      Calls Location: SegmentInfos.java:498 SegmentInfos.java:281
+      Atomic: NO
+
+      Method: SegmentInfos.commit()
+      Calls Location: SegmentInfos.java:498 SegmentInfos.java:1015
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:569 SegmentInfos.java:569
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:569 SegmentInfos.java:507
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:569 SegmentInfos.java:498
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:569 SegmentInfos.java:569
+      Atomic: NO
+
+      Method: SegmentInfos.commit()
+      Calls Location: SegmentInfos.java:569 SegmentInfos.java:1015
+      Atomic: NO
+
+      Method: SegmentInfos.commit()
+      Calls Location: SegmentInfos.java:569 SegmentInfos.java:281
+      Atomic: NO
+
+      Method: SegmentInfos.commit()
+      Calls Location: SegmentInfos.java:569 SegmentInfos.java:1015
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:569 SegmentInfos.java:569
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:569 SegmentInfos.java:507
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:569 SegmentInfos.java:498
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:569 SegmentInfos.java:569
+      Atomic: NO
+
+      Method: SegmentInfos.commit()
+      Calls Location: SegmentInfos.java:569 SegmentInfos.java:1015
+      Atomic: NO
+
+      Method: SegmentInfos.commit()
+      Calls Location: SegmentInfos.java:569 SegmentInfos.java:281
+      Atomic: NO
+
+      Method: SegmentInfos.commit()
+      Calls Location: SegmentInfos.java:569 SegmentInfos.java:1015
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:498 SegmentInfos.java:507
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:498 SegmentInfos.java:498
+      Atomic: NO
+
+      Method: SegmentInfos.commit()
+      Calls Location: SegmentInfos.java:507 SegmentInfos.java:1015
+      Atomic: NO
+
+      Method: SegmentInfos.commit()
+      Calls Location: SegmentInfos.java:507 SegmentInfos.java:281
+      Atomic: NO
+
+      Method: SegmentInfos.commit()
+      Calls Location: SegmentInfos.java:507 SegmentInfos.java:1015
+      Atomic: NO
+
+      Method: SegmentInfos.finishCommit()
+      Calls Location: SegmentInfos.java:1015 SegmentInfos.java:281
+      Atomic: NO
+
+      Method: SegmentInfos.commit()
+      Calls Location: SegmentInfos.java:498 SegmentInfos.java:1015
+      Atomic: NO
+
+      Method: SegmentInfos.commit()
+      Calls Location: SegmentInfos.java:498 SegmentInfos.java:281
+      Atomic: NO
+
+      Method: SegmentInfos.commit()
+      Calls Location: SegmentInfos.java:498 SegmentInfos.java:1015
+      Atomic: NO
+
+      Method: SegmentInfos.commit()
+      Calls Location: SegmentInfos.java:507 SegmentInfos.java:1015
+      Atomic: NO
+
+      Method: SegmentInfos.commit()
+      Calls Location: SegmentInfos.java:507 SegmentInfos.java:281
+      Atomic: NO
+
+      Method: SegmentInfos.commit()
+      Calls Location: SegmentInfos.java:507 SegmentInfos.java:1015
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:498 SegmentInfos.java:498
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:498 SegmentInfos.java:507
+      Atomic: NO
+--
+  Verifying word deleteFile deleteFile:
+
+      Method: IndexFileDeleter.deletePendingFiles()
+      Calls Location: IndexFileDeleter.java:584 IndexFileDeleter.java:584
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:584 IndexFileDeleter.java:584
+      Atomic: NO
+
+      Method: IndexFileDeleter.deleteCommits()
+      Calls Location: IndexFileDeleter.java:584 IndexFileDeleter.java:584
+      Atomic: NO
+
+      Method: IndexFileDeleter.decRef()
+      Calls Location: IndexFileDeleter.java:584 IndexFileDeleter.java:584
+      Atomic: NO
+
+      Method: IndexFileDeleter.close()
+      Calls Location: IndexFileDeleter.java:584 IndexFileDeleter.java:584
+      Atomic: NO
+
+      Method: IndexFileDeleter.decRef()
+      Calls Location: IndexFileDeleter.java:584 IndexFileDeleter.java:584
+      Atomic: NO
+
+      Method: IndexFileDeleter.checkpoint()
+      Calls Location: IndexFileDeleter.java:584 IndexFileDeleter.java:584
+      Atomic: NO
+
+      Method: IndexFileDeleter.refresh()
+      Calls Location: IndexFileDeleter.java:584 IndexFileDeleter.java:584
+      Atomic: NO
+
+      Method: IndexFileDeleter.deleteFiles()
+      Calls Location: IndexFileDeleter.java:584 IndexFileDeleter.java:584
+      Atomic: NO
+
+      Method: IndexFileDeleter.deleteNewFiles()
+      Calls Location: IndexFileDeleter.java:584 IndexFileDeleter.java:584
+      Atomic: NO
+--
+  Verifying word deleteFile deleteFile:
+
+      Method: ReadersAndUpdates.writeLiveDocs()
+      Calls Location: ReadersAndUpdates.java:331 ReadersAndUpdates.java:331
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeLiveDocs()
+      Calls Location: ReadersAndUpdates.java:331 ReadersAndUpdates.java:331
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:481 ReadersAndUpdates.java:481
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:481 ReadersAndUpdates.java:481
+      Atomic: YES
+--
+  Verifying word deleteFile deleteFile:
+
+      Method: CompoundFileWriter.prunePendingEntries()
+      Calls Location: CompoundFileWriter.java:195 CompoundFileWriter.java:195
+      Atomic: NO
+
+      Method: CompoundFileWriter.prunePendingEntries()
+      Calls Location: CompoundFileWriter.java:195 CompoundFileWriter.java:195
+      Atomic: NO
+
+      Method: CompoundFileWriter.prunePendingEntries()
+      Calls Location: CompoundFileWriter.java:195 CompoundFileWriter.java:195
+      Atomic: NO
+
+      Method: CompoundFileWriter.prunePendingEntries()
+      Calls Location: CompoundFileWriter.java:195 CompoundFileWriter.java:195
+      Atomic: NO

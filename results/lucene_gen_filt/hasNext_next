@@ -1,0 +1,2271 @@
+  Verifying word hasNext next:
+
+      Method: IndexSearcher.search()
+      Calls Location: IndexSearcher.java:460 IndexSearcher.java:460
+      Atomic: NO
+
+      Method: IndexSearcher.search()
+      Calls Location: IndexSearcher.java:610 IndexSearcher.java:610
+      Atomic: NO
+
+      Method: IndexSearcher.search()
+      Calls Location: IndexSearcher.java:550 IndexSearcher.java:550
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: IndexReader.reportCloseToParentReaders()
+      Calls Location: IndexReader.java:140 IndexReader.java:140
+      Atomic: YES
+
+      Method: IndexReader.decRef()
+      Calls Location: IndexReader.java:140 IndexReader.java:132
+      Atomic: NO
+
+      Method: IndexReader.notifyReaderClosedListeners()
+      Calls Location: IndexReader.java:132 IndexReader.java:132
+      Atomic: YES
+--
+  Verifying word hasNext next:
+
+      Method: Document.getFields()
+      Calls Location: Document.java:175 Document.java:175
+      Atomic: NO
+
+      Method: Document.removeFields()
+      Calls Location: Document.java:99 Document.java:100
+      Atomic: NO
+
+      Method: Document.getField()
+      Calls Location: Document.java:157 Document.java:157
+      Atomic: NO
+
+      Method: Document.removeField()
+      Calls Location: Document.java:79 Document.java:80
+      Atomic: NO
+
+      Method: Document.getValues()
+      Calls Location: Document.java:208 Document.java:208
+      Atomic: NO
+
+      Method: Document.getBinaryValue()
+      Calls Location: Document.java:141 Document.java:141
+      Atomic: NO
+
+      Method: Document.get()
+      Calls Location: Document.java:230 Document.java:230
+      Atomic: NO
+
+      Method: Document.getBinaryValues()
+      Calls Location: Document.java:119 Document.java:119
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: FSDirectory.sync()
+      Calls Location: FSDirectory.java:312 FSDirectory.java:312
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: CloseableThreadLocal.purge()
+      Calls Location: CloseableThreadLocal.java:113 CloseableThreadLocal.java:114
+      Atomic: YES
+--
+  Verifying word hasNext next:
+
+      Method: IndexWriter.updatePendingMerges()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3728
+      Atomic: YES
+
+      Method: IndexWriter.forceMergeDeletes()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3728
+      Atomic: YES
+
+      Method: IndexWriter.updatePendingMerges()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3172
+      Atomic: YES
+
+      Method: IndexWriter.forceMergeDeletes()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3172
+      Atomic: YES
+
+      Method: IndexWriter.updatePendingMerges()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3785
+      Atomic: YES
+
+      Method: IndexWriter.forceMergeDeletes()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3785
+      Atomic: YES
+
+      Method: IndexWriter.updatePendingMerges()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:4265
+      Atomic: YES
+
+      Method: IndexWriter.forceMergeDeletes()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:4265
+      Atomic: YES
+
+      Method: IndexWriter.updatePendingMerges()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3766
+      Atomic: YES
+
+      Method: IndexWriter.forceMergeDeletes()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3766
+      Atomic: YES
+
+      Method: IndexWriter.updatePendingMerges()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3776
+      Atomic: YES
+
+      Method: IndexWriter.forceMergeDeletes()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3776
+      Atomic: YES
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:2749
+      Atomic: NO
+
+      Method: IndexWriter.closeInternal()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3785
+      Atomic: NO
+
+      Method: IndexWriter.forceMerge()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3785
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:2430
+      Atomic: NO
+
+      Method: IndexWriter.forceMerge()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:1794
+      Atomic: NO
+
+      Method: IndexWriter.closeInternal()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:2203
+      Atomic: NO
+
+      Method: IndexWriter.forceMerge()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:1799
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:2749
+      Atomic: NO
+
+      Method: IndexWriter.closeInternal()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3766
+      Atomic: NO
+
+      Method: IndexWriter.forceMerge()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3766
+      Atomic: NO
+
+      Method: IndexWriter.closeInternal()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:4265
+      Atomic: NO
+
+      Method: IndexWriter.forceMerge()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:4265
+      Atomic: NO
+
+      Method: IndexWriter.closeInternal()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3776
+      Atomic: NO
+
+      Method: IndexWriter.forceMerge()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3776
+      Atomic: NO
+
+      Method: IndexWriter.closeInternal()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3918
+      Atomic: NO
+
+      Method: IndexWriter.closeInternal()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:4313
+      Atomic: NO
+
+      Method: IndexWriter.closeInternal()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3172
+      Atomic: NO
+
+      Method: IndexWriter.forceMerge()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3172
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:4595
+      Atomic: NO
+
+      Method: IndexWriter.closeInternal()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:4332
+      Atomic: NO
+
+      Method: IndexWriter.closeInternal()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3728
+      Atomic: NO
+
+      Method: IndexWriter.forceMerge()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3728
+      Atomic: NO
+
+      Method: IndexWriter.closeInternal()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:4329
+      Atomic: NO
+
+      Method: IndexWriter.closeInternal()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:3134
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:2441
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:2690
+      Atomic: NO
+
+      Method: IndexWriter.forceMerge()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:1729
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:2723
+      Atomic: NO
+
+      Method: IndexWriter.forceMerge()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:1736
+      Atomic: NO
+
+      Method: IndexWriter.forceMerge()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:1741
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:2469
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:2468
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:2451
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:2450
+      Atomic: NO
+
+      Method: IndexWriter.closeInternal()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:2212
+      Atomic: NO
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:2540
+      Atomic: NO
+
+      Method: IndexWriter.rollback()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:942
+      Atomic: NO
+
+      Method: IndexWriter.close()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:942
+      Atomic: YES
+
+      Method: IndexWriter.prepareCommitInternal()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:4265
+      Atomic: NO
+
+      Method: IndexWriter.prepareCommitInternal()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:4332
+      Atomic: NO
+
+      Method: IndexWriter.prepareCommitInternal()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:4313
+      Atomic: NO
+
+      Method: IndexWriter.prepareCommitInternal()
+      Calls Location: IndexWriter.java:3766 IndexWriter.java:4329
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: Fields.getUniqueTermCount()
+      Calls Location: Fields.java:59 Fields.java:59
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: IOUtils.close()
+      Calls Location: IOUtils.java:160 IOUtils.java:160
+      Atomic: NO
+
+      Method: IOUtils.closeWhileHandlingException()
+      Calls Location: IOUtils.java:104 IOUtils.java:104
+      Atomic: NO
+
+      Method: IOUtils.closeWhileHandlingException()
+      Calls Location: IOUtils.java:199 IOUtils.java:199
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: TermContext.build()
+      Calls Location: TermContext.java:88 TermContext.java:88
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: MultiFields.getIndexedFields()
+      Calls Location: MultiFields.java:257 MultiFields.java:273
+      Atomic: NO
+
+      Method: MultiFields.getIndexedFields()
+      Calls Location: MultiFields.java:273 MultiFields.java:273
+      Atomic: NO
+
+      Method: MultiFields.getFields()
+      Calls Location: MultiFields.java:74 MultiFields.java:74
+      Atomic: NO
+
+      Method: MultiFields.getMergedFieldInfos()
+      Calls Location: MultiFields.java:257 MultiFields.java:257
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: StandardDirectoryReader.open()
+      Calls Location: StandardDirectoryReader.java:120 StandardDirectoryReader.java:120
+      Atomic: NO
+
+      Method: StandardDirectoryReader.doClose()
+      Calls Location: StandardDirectoryReader.java:357 StandardDirectoryReader.java:357
+      Atomic: NO
+
+      Method: StandardDirectoryReader.toString()
+      Calls Location: StandardDirectoryReader.java:240 StandardDirectoryReader.java:240
+      Atomic: NO
+
+      Method: StandardDirectoryReader.open()
+      Calls Location: StandardDirectoryReader.java:120 StandardDirectoryReader.java:120
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:496 SegmentInfos.java:496
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:439 SegmentInfos.java:496
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:448 SegmentInfos.java:496
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:439 SegmentInfos.java:439
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:448 SegmentInfos.java:439
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:448 SegmentInfos.java:448
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:439 SegmentInfos.java:448
+      Atomic: NO
+
+      Method: SegmentInfos.read()
+      Calls Location: SegmentInfos.java:371 SegmentInfos.java:371
+      Atomic: NO
+
+      Method: SegmentInfos.clone()
+      Calls Location: SegmentInfos.java:590 SegmentInfos.java:590
+      Atomic: NO
+
+      Method: SegmentInfos.write()
+      Calls Location: SegmentInfos.java:496 SegmentInfos.java:496
+      Atomic: NO
+
+      Method: SegmentInfos.totalDocCount()
+      Calls Location: SegmentInfos.java:1082 SegmentInfos.java:1082
+      Atomic: NO
+
+      Method: SegmentInfos.addAll()
+      Calls Location: SegmentInfos.java:1165 SegmentInfos.java:1165
+      Atomic: NO
+
+      Method: SegmentInfos.createBackupSegmentInfos()
+      Calls Location: SegmentInfos.java:1129 SegmentInfos.java:1129
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: AttributeSource.equals()
+      Calls Location: AttributeSource.java:316 AttributeSource.java:319
+      Atomic: NO
+
+      Method: AttributeSource.cloneAttributes()
+      Calls Location: AttributeSource.java:316 AttributeSource.java:477
+      Atomic: NO
+
+      Method: AttributeSource.equals()
+      Calls Location: AttributeSource.java:316 AttributeSource.java:315
+      Atomic: NO
+
+      Method: AttributeSource.getCurrentState()
+      Calls Location: AttributeSource.java:316 AttributeSource.java:319
+      Atomic: NO
+
+      Method: AttributeSource.cloneAttributes()
+      Calls Location: AttributeSource.java:477 AttributeSource.java:477
+      Atomic: NO
+
+      Method: AttributeSource.addAttributeImpl()
+      Calls Location: AttributeSource.java:242 AttributeSource.java:242
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: IndexFileDeleter.deleteCommits()
+      Calls Location: IndexFileDeleter.java:285 IndexFileDeleter.java:285
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:240 IndexFileDeleter.java:285
+      Atomic: NO
+
+      Method: IndexFileDeleter.incRef()
+      Calls Location: IndexFileDeleter.java:476 IndexFileDeleter.java:476
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:240 IndexFileDeleter.java:476
+      Atomic: NO
+
+      Method: IndexFileDeleter.deleteNewFiles()
+      Calls Location: IndexFileDeleter.java:561 IndexFileDeleter.java:561
+      Atomic: NO
+
+      Method: IndexFileDeleter.deleteFiles()
+      Calls Location: IndexFileDeleter.java:552 IndexFileDeleter.java:552
+      Atomic: NO
+
+      Method: IndexFileDeleter.decRef()
+      Calls Location: IndexFileDeleter.java:501 IndexFileDeleter.java:501
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:240 IndexFileDeleter.java:501
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:240 IndexFileDeleter.java:240
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:501 IndexFileDeleter.java:285
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:476 IndexFileDeleter.java:285
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:476 IndexFileDeleter.java:476
+      Atomic: NO
+
+      Method: IndexFileDeleter.checkpoint()
+      Calls Location: IndexFileDeleter.java:476 IndexFileDeleter.java:501
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:476 IndexFileDeleter.java:501
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:476 IndexFileDeleter.java:240
+      Atomic: NO
+
+      Method: IndexFileDeleter.checkpoint()
+      Calls Location: IndexFileDeleter.java:476 IndexFileDeleter.java:285
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:285 IndexFileDeleter.java:285
+      Atomic: NO
+
+      Method: IndexFileDeleter.incRef()
+      Calls Location: IndexFileDeleter.java:483 IndexFileDeleter.java:483
+      Atomic: NO
+
+      Method: IndexFileDeleter.decRef()
+      Calls Location: IndexFileDeleter.java:524 IndexFileDeleter.java:524
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: MergePolicy.useCompoundFile()
+      Calls Location: MergePolicy.java:503 MergePolicy.java:503
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: IndexWriter$ReaderPool.dropAll()
+      Calls Location: IndexWriter.java:498 IndexWriter.java:499
+      Atomic: YES
+
+      Method: IndexWriter$ReaderPool.commit()
+      Calls Location: IndexWriter.java:553 IndexWriter.java:553
+      Atomic: YES
+
+      Method: IndexWriter$ReaderPool.noDups()
+      Calls Location: IndexWriter.java:608 IndexWriter.java:608
+      Atomic: NO
+
+      Method: IndexWriter$ReaderPool.anyPendingDeletes()
+      Calls Location: IndexWriter.java:448 IndexWriter.java:448
+      Atomic: YES
+--
+  Verifying word hasNext next:
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:541 BufferedUpdatesStream.java:471
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:541 BufferedUpdatesStream.java:392
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:541 BufferedUpdatesStream.java:541
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:541 BufferedUpdatesStream.java:584
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:392 BufferedUpdatesStream.java:471
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:392 BufferedUpdatesStream.java:392
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:392 BufferedUpdatesStream.java:541
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:392 BufferedUpdatesStream.java:584
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.prune()
+      Calls Location: BufferedUpdatesStream.java:335 BufferedUpdatesStream.java:335
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyNumericDocValuesUpdates()
+      Calls Location: BufferedUpdatesStream.java:471 BufferedUpdatesStream.java:471
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyTermDeletes()
+      Calls Location: BufferedUpdatesStream.java:392 BufferedUpdatesStream.java:392
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyQueryDeletes()
+      Calls Location: BufferedUpdatesStream.java:541 BufferedUpdatesStream.java:541
+      Atomic: NO
+
+      Method: BufferedUpdatesStream.checkDeleteStats()
+      Calls Location: BufferedUpdatesStream.java:584 BufferedUpdatesStream.java:584
+      Atomic: NO
+
+      Method: BufferedUpdatesStream.prune()
+      Calls Location: BufferedUpdatesStream.java:335 BufferedUpdatesStream.java:584
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.prune()
+      Calls Location: BufferedUpdatesStream.java:584 BufferedUpdatesStream.java:335
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:584 BufferedUpdatesStream.java:471
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:584 BufferedUpdatesStream.java:392
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:584 BufferedUpdatesStream.java:541
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.push()
+      Calls Location: BufferedUpdatesStream.java:584 BufferedUpdatesStream.java:584
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.prune()
+      Calls Location: BufferedUpdatesStream.java:584 BufferedUpdatesStream.java:584
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:584 BufferedUpdatesStream.java:584
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:471 BufferedUpdatesStream.java:471
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:471 BufferedUpdatesStream.java:392
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:471 BufferedUpdatesStream.java:541
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:471 BufferedUpdatesStream.java:584
+      Atomic: YES
+--
+  Verifying word hasNext next:
+
+      Method: SegmentCommitInfo.files()
+      Calls Location: SegmentCommitInfo.java:161 SegmentCommitInfo.java:161
+      Atomic: NO
+
+      Method: SegmentCommitInfo.sizeInBytes()
+      Calls Location: SegmentCommitInfo.java:140 SegmentCommitInfo.java:140
+      Atomic: NO
+
+      Method: SegmentCommitInfo.clone()
+      Calls Location: SegmentCommitInfo.java:261 SegmentCommitInfo.java:261
+      Atomic: NO
+
+      Method: SegmentCommitInfo.sizeInBytes()
+      Calls Location: SegmentCommitInfo.java:161 SegmentCommitInfo.java:140
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: MergePolicy$OneMerge.getMergeReaders()
+      Calls Location: MergePolicy.java:144 MergePolicy.java:144
+      Atomic: NO
+
+      Method: MergePolicy$OneMerge.totalNumDocs()
+      Calls Location: MergePolicy.java:274 MergePolicy.java:274
+      Atomic: NO
+
+      Method: MergePolicy$OneMerge.<init>()
+      Calls Location: MergePolicy.java:127 MergePolicy.java:127
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: FrozenBufferedUpdates.<init>()
+      Calls Location: FrozenBufferedUpdates.java:76 FrozenBufferedUpdates.java:76
+      Atomic: NO
+
+      Method: FrozenBufferedUpdates.<init>()
+      Calls Location: FrozenBufferedUpdates.java:88 FrozenBufferedUpdates.java:88
+      Atomic: NO
+
+      Method: FrozenBufferedUpdates.<init>()
+      Calls Location: FrozenBufferedUpdates.java:89 FrozenBufferedUpdates.java:88
+      Atomic: NO
+
+      Method: FrozenBufferedUpdates.<init>()
+      Calls Location: FrozenBufferedUpdates.java:76 FrozenBufferedUpdates.java:88
+      Atomic: NO
+
+      Method: FrozenBufferedUpdates.<init>()
+      Calls Location: FrozenBufferedUpdates.java:89 FrozenBufferedUpdates.java:89
+      Atomic: NO
+
+      Method: FrozenBufferedUpdates.<init>()
+      Calls Location: FrozenBufferedUpdates.java:88 FrozenBufferedUpdates.java:89
+      Atomic: NO
+
+      Method: FrozenBufferedUpdates.<init>()
+      Calls Location: FrozenBufferedUpdates.java:76 FrozenBufferedUpdates.java:89
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: ReadersAndUpdates.writeLiveDocs()
+      Calls Location: ReadersAndUpdates.java:329 ReadersAndUpdates.java:329
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:492 ReadersAndUpdates.java:492
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:479 ReadersAndUpdates.java:492
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:399 ReadersAndUpdates.java:492
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:386 ReadersAndUpdates.java:492
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:375 ReadersAndUpdates.java:492
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:379 ReadersAndUpdates.java:492
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:506 ReadersAndUpdates.java:506
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:492 ReadersAndUpdates.java:506
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:479 ReadersAndUpdates.java:506
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:399 ReadersAndUpdates.java:506
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:386 ReadersAndUpdates.java:506
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:375 ReadersAndUpdates.java:506
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:379 ReadersAndUpdates.java:506
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeLiveDocs()
+      Calls Location: ReadersAndUpdates.java:329 ReadersAndUpdates.java:329
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:479 ReadersAndUpdates.java:479
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:386 ReadersAndUpdates.java:386
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:375 ReadersAndUpdates.java:386
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:379 ReadersAndUpdates.java:386
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:375 ReadersAndUpdates.java:375
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:379 ReadersAndUpdates.java:375
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:379 ReadersAndUpdates.java:379
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:375 ReadersAndUpdates.java:379
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:399 ReadersAndUpdates.java:399
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:386 ReadersAndUpdates.java:399
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:375 ReadersAndUpdates.java:399
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:379 ReadersAndUpdates.java:399
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:479 ReadersAndUpdates.java:479
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:399 ReadersAndUpdates.java:479
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:386 ReadersAndUpdates.java:479
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:375 ReadersAndUpdates.java:479
+      Atomic: YES
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:379 ReadersAndUpdates.java:479
+      Atomic: YES
+--
+  Verifying word hasNext next:
+
+      Method: SegmentInfo.checkFileNames()
+      Calls Location: SegmentInfo.java:275 SegmentInfo.java:275
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: SegmentReader.initDocValuesProducers()
+      Calls Location: SegmentReader.java:183 SegmentReader.java:183
+      Atomic: NO
+
+      Method: SegmentReader.initDocValuesProducers()
+      Calls Location: SegmentReader.java:179 SegmentReader.java:183
+      Atomic: NO
+
+      Method: SegmentReader.initDocValuesProducers()
+      Calls Location: SegmentReader.java:179 SegmentReader.java:179
+      Atomic: NO
+
+      Method: SegmentReader.initDocValuesProducers()
+      Calls Location: SegmentReader.java:183 SegmentReader.java:179
+      Atomic: NO
+
+      Method: SegmentReader.getGenInfos()
+      Calls Location: SegmentReader.java:225 SegmentReader.java:225
+      Atomic: NO
+
+      Method: SegmentReader.initDocValuesProducers()
+      Calls Location: SegmentReader.java:225 SegmentReader.java:183
+      Atomic: NO
+
+      Method: SegmentReader.initDocValuesProducers()
+      Calls Location: SegmentReader.java:225 SegmentReader.java:179
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: DocumentsWriterFlushControl.abortPendingFlushes()
+      Calls Location: DocumentsWriterFlushControl.java:611 DocumentsWriterFlushControl.java:611
+      Atomic: YES
+
+      Method: DocumentsWriterFlushControl.abortPendingFlushes()
+      Calls Location: DocumentsWriterFlushControl.java:621 DocumentsWriterFlushControl.java:621
+      Atomic: YES
+
+      Method: DocumentsWriterFlushControl.abortPendingFlushes()
+      Calls Location: DocumentsWriterFlushControl.java:611 DocumentsWriterFlushControl.java:621
+      Atomic: YES
+
+      Method: DocumentsWriterFlushControl.markForFullFlush()
+      Calls Location: DocumentsWriterFlushControl.java:565 DocumentsWriterFlushControl.java:595
+      Atomic: YES
+
+      Method: DocumentsWriterFlushControl.finishFullFlush()
+      Calls Location: DocumentsWriterFlushControl.java:595 DocumentsWriterFlushControl.java:566
+      Atomic: YES
+
+      Method: DocumentsWriterFlushControl.assertBlockedFlushes()
+      Calls Location: DocumentsWriterFlushControl.java:595 DocumentsWriterFlushControl.java:595
+      Atomic: NO
+
+      Method: DocumentsWriterFlushControl.pruneBlockedQueue()
+      Calls Location: DocumentsWriterFlushControl.java:565 DocumentsWriterFlushControl.java:566
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: FlushPolicy.findLargestNonPendingWriter()
+      Calls Location: FlushPolicy.java:116 FlushPolicy.java:117
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:190 SegmentMerger.java:227
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:190 SegmentMerger.java:231
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:177 SegmentMerger.java:227
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:177 SegmentMerger.java:231
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:299 SegmentMerger.java:200
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:299 SegmentMerger.java:190
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:299 SegmentMerger.java:231
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:299 SegmentMerger.java:177
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:299 SegmentMerger.java:274
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:299 SegmentMerger.java:163
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:299 SegmentMerger.java:157
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:299 SegmentMerger.java:227
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:274 SegmentMerger.java:200
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:274 SegmentMerger.java:190
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:274 SegmentMerger.java:231
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:274 SegmentMerger.java:177
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:274 SegmentMerger.java:163
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:274 SegmentMerger.java:157
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:274 SegmentMerger.java:227
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:163 SegmentMerger.java:227
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:163 SegmentMerger.java:231
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:157 SegmentMerger.java:227
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:157 SegmentMerger.java:231
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:297 SegmentMerger.java:200
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:297 SegmentMerger.java:190
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:297 SegmentMerger.java:231
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:297 SegmentMerger.java:177
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:297 SegmentMerger.java:274
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:297 SegmentMerger.java:163
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:297 SegmentMerger.java:157
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:297 SegmentMerger.java:227
+      Atomic: NO
+
+      Method: SegmentMerger.mergeNorms()
+      Calls Location: SegmentMerger.java:231 SegmentMerger.java:231
+      Atomic: NO
+
+      Method: SegmentMerger.mergeNorms()
+      Calls Location: SegmentMerger.java:227 SegmentMerger.java:231
+      Atomic: NO
+
+      Method: SegmentMerger.setMatchingSegmentReaders()
+      Calls Location: SegmentMerger.java:274 SegmentMerger.java:274
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:177 SegmentMerger.java:177
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:157 SegmentMerger.java:177
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:200 SegmentMerger.java:177
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:190 SegmentMerger.java:177
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:163 SegmentMerger.java:177
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:163 SegmentMerger.java:163
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:157 SegmentMerger.java:163
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:200 SegmentMerger.java:163
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:177 SegmentMerger.java:163
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:190 SegmentMerger.java:163
+      Atomic: NO
+
+      Method: SegmentMerger.mergeNorms()
+      Calls Location: SegmentMerger.java:227 SegmentMerger.java:227
+      Atomic: NO
+
+      Method: SegmentMerger.mergeNorms()
+      Calls Location: SegmentMerger.java:231 SegmentMerger.java:227
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:157 SegmentMerger.java:157
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:200 SegmentMerger.java:157
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:177 SegmentMerger.java:157
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:190 SegmentMerger.java:157
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:163 SegmentMerger.java:157
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:200 SegmentMerger.java:200
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:157 SegmentMerger.java:200
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:177 SegmentMerger.java:200
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:190 SegmentMerger.java:200
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:163 SegmentMerger.java:200
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:190 SegmentMerger.java:190
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:157 SegmentMerger.java:190
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:200 SegmentMerger.java:190
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:177 SegmentMerger.java:190
+      Atomic: NO
+
+      Method: SegmentMerger.mergeDocValues()
+      Calls Location: SegmentMerger.java:163 SegmentMerger.java:190
+      Atomic: NO
+
+      Method: SegmentMerger.mergeFieldInfos()
+      Calls Location: SegmentMerger.java:297 SegmentMerger.java:297
+      Atomic: NO
+
+      Method: SegmentMerger.mergeFieldInfos()
+      Calls Location: SegmentMerger.java:299 SegmentMerger.java:297
+      Atomic: NO
+
+      Method: SegmentMerger.mergeFieldInfos()
+      Calls Location: SegmentMerger.java:299 SegmentMerger.java:299
+      Atomic: NO
+
+      Method: SegmentMerger.mergeFieldInfos()
+      Calls Location: SegmentMerger.java:297 SegmentMerger.java:299
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:200 SegmentMerger.java:227
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:200 SegmentMerger.java:231
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: DataOutput.writeStringSet()
+      Calls Location: DataOutput.java:295 DataOutput.java:295
+      Atomic: NO
+
+      Method: DataOutput.writeStringStringMap()
+      Calls Location: DataOutput.java:274 DataOutput.java:274
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: FieldInfos$Builder.add()
+      Calls Location: FieldInfos.java:269 FieldInfos.java:269
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: MergedIterator.pushTop()
+      Calls Location: MergedIterator.java:128 MergedIterator.java:129
+      Atomic: NO
+
+      Method: MergedIterator.<init>()
+      Calls Location: MergedIterator.java:66 MergedIterator.java:68
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: ArrayUtil.toIntArray()
+      Calls Location: ArrayUtil.java:606 ArrayUtil.java:606
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: Lucene3xSegmentInfoReader.readLegacySegmentInfo()
+      Calls Location: Lucene3xSegmentInfoReader.java:228 Lucene3xSegmentInfoReader.java:228
+      Atomic: NO
+
+      Method: Lucene3xSegmentInfoReader.readLegacyInfos()
+      Calls Location: Lucene3xSegmentInfoReader.java:228 Lucene3xSegmentInfoReader.java:228
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: DocumentsWriterPerThread.updateDocuments()
+      Calls Location: DocumentsWriterPerThread.java:291 DocumentsWriterPerThread.java:291
+      Atomic: NO
+
+      Method: DocumentsWriterPerThread.flush()
+      Calls Location: DocumentsWriterPerThread.java:443 DocumentsWriterPerThread.java:443
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: CompoundFileWriter.writeEntryTable()
+      Calls Location: CompoundFileWriter.java:206 CompoundFileWriter.java:206
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: SegmentCoreReaders.notifyCoreClosedListeners()
+      Calls Location: SegmentCoreReaders.java:177 SegmentCoreReaders.java:177
+      Atomic: YES
+--
+  Verifying word hasNext next:
+
+      Method: SegmentDocValues.ramBytesUsed()
+      Calls Location: SegmentDocValues.java:102 SegmentDocValues.java:102
+      Atomic: YES
+
+      Method: SegmentDocValues.decRef()
+      Calls Location: SegmentDocValues.java:83 SegmentDocValues.java:83
+      Atomic: YES
+--
+  Verifying word hasNext next:
+
+      Method: TieredMergePolicy.score()
+      Calls Location: TieredMergePolicy.java:433 TieredMergePolicy.java:433
+      Atomic: NO
+
+      Method: TieredMergePolicy.findMerges()
+      Calls Location: TieredMergePolicy.java:284 TieredMergePolicy.java:433
+      Atomic: NO
+
+      Method: TieredMergePolicy.findMerges()
+      Calls Location: TieredMergePolicy.java:412 TieredMergePolicy.java:433
+      Atomic: NO
+
+      Method: TieredMergePolicy.findMerges()
+      Calls Location: TieredMergePolicy.java:284 TieredMergePolicy.java:284
+      Atomic: NO
+
+      Method: TieredMergePolicy.findMerges()
+      Calls Location: TieredMergePolicy.java:412 TieredMergePolicy.java:412
+      Atomic: NO
+
+      Method: TieredMergePolicy.findMerges()
+      Calls Location: TieredMergePolicy.java:284 TieredMergePolicy.java:412
+      Atomic: NO
+
+      Method: TieredMergePolicy.findMerges()
+      Calls Location: TieredMergePolicy.java:433 TieredMergePolicy.java:433
+      Atomic: NO
+
+      Method: TieredMergePolicy.findMerges()
+      Calls Location: TieredMergePolicy.java:433 TieredMergePolicy.java:412
+      Atomic: NO
+
+      Method: TieredMergePolicy.findForcedDeletesMerges()
+      Calls Location: TieredMergePolicy.java:563 TieredMergePolicy.java:563
+      Atomic: NO
+
+      Method: TieredMergePolicy.findForcedMerges()
+      Calls Location: TieredMergePolicy.java:494 TieredMergePolicy.java:494
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: ConcurrentMergeScheduler.merge()
+      Calls Location: ConcurrentMergeScheduler.java:302 ConcurrentMergeScheduler.java:302
+      Atomic: YES
+
+      Method: ConcurrentMergeScheduler.sync()
+      Calls Location: ConcurrentMergeScheduler.java:272 ConcurrentMergeScheduler.java:272
+      Atomic: NO
+
+      Method: ConcurrentMergeScheduler.mergeThreadCount()
+      Calls Location: ConcurrentMergeScheduler.java:302 ConcurrentMergeScheduler.java:302
+      Atomic: YES
+--
+  Verifying word hasNext next:
+
+      Method: StoredFieldsWriter.merge()
+      Calls Location: StoredFieldsWriter.java:121 StoredFieldsWriter.java:121
+      Atomic: NO
+
+      Method: StoredFieldsWriter.merge()
+      Calls Location: StoredFieldsWriter.java:121 StoredFieldsWriter.java:86
+      Atomic: NO
+
+      Method: StoredFieldsWriter.merge()
+      Calls Location: StoredFieldsWriter.java:121 StoredFieldsWriter.java:113
+      Atomic: NO
+
+      Method: StoredFieldsWriter.merge()
+      Calls Location: StoredFieldsWriter.java:113 StoredFieldsWriter.java:121
+      Atomic: NO
+
+      Method: StoredFieldsWriter.merge()
+      Calls Location: StoredFieldsWriter.java:113 StoredFieldsWriter.java:86
+      Atomic: NO
+
+      Method: StoredFieldsWriter.merge()
+      Calls Location: StoredFieldsWriter.java:113 StoredFieldsWriter.java:113
+      Atomic: NO
+
+      Method: StoredFieldsWriter.addDocument()
+      Calls Location: StoredFieldsWriter.java:121 StoredFieldsWriter.java:121
+      Atomic: NO
+
+      Method: StoredFieldsWriter.addDocument()
+      Calls Location: StoredFieldsWriter.java:113 StoredFieldsWriter.java:121
+      Atomic: NO
+
+      Method: StoredFieldsWriter.merge()
+      Calls Location: StoredFieldsWriter.java:86 StoredFieldsWriter.java:121
+      Atomic: NO
+
+      Method: StoredFieldsWriter.merge()
+      Calls Location: StoredFieldsWriter.java:86 StoredFieldsWriter.java:86
+      Atomic: NO
+
+      Method: StoredFieldsWriter.addDocument()
+      Calls Location: StoredFieldsWriter.java:113 StoredFieldsWriter.java:113
+      Atomic: NO
+
+      Method: StoredFieldsWriter.merge()
+      Calls Location: StoredFieldsWriter.java:86 StoredFieldsWriter.java:113
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: TermVectorsWriter.merge()
+      Calls Location: TermVectorsWriter.java:230 TermVectorsWriter.java:230
+      Atomic: NO
+
+      Method: TermVectorsWriter.merge()
+      Calls Location: TermVectorsWriter.java:230 TermVectorsWriter.java:218
+      Atomic: NO
+
+      Method: TermVectorsWriter.addAllDocVectors()
+      Calls Location: TermVectorsWriter.java:230 TermVectorsWriter.java:230
+      Atomic: NO
+
+      Method: TermVectorsWriter.addAllDocVectors()
+      Calls Location: TermVectorsWriter.java:217 TermVectorsWriter.java:230
+      Atomic: NO
+
+      Method: TermVectorsWriter.addAllDocVectors()
+      Calls Location: TermVectorsWriter.java:217 TermVectorsWriter.java:218
+      Atomic: NO
+
+      Method: TermVectorsWriter.merge()
+      Calls Location: TermVectorsWriter.java:217 TermVectorsWriter.java:230
+      Atomic: NO
+
+      Method: TermVectorsWriter.merge()
+      Calls Location: TermVectorsWriter.java:217 TermVectorsWriter.java:218
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: FieldsConsumer.merge()
+      Calls Location: FieldsConsumer.java:66 FieldsConsumer.java:66
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: State.addEpsilon()
+      Calls Location: State.java:178 State.java:178
+      Atomic: NO
+
+      Method: State.toString()
+      Calls Location: State.java:267 State.java:267
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: Automaton.totalize()
+      Calls Location: Automaton.java:364 Automaton.java:364
+      Atomic: NO
+
+      Method: Automaton.getStartPoints()
+      Calls Location: Automaton.java:412 Automaton.java:412
+      Atomic: NO
+
+      Method: Automaton.getStartPoints()
+      Calls Location: Automaton.java:405 Automaton.java:412
+      Atomic: NO
+
+      Method: Automaton.toDot()
+      Calls Location: Automaton.java:606 Automaton.java:606
+      Atomic: NO
+
+      Method: Automaton.getStartPoints()
+      Calls Location: Automaton.java:405 Automaton.java:405
+      Atomic: NO
+
+      Method: Automaton.clone()
+      Calls Location: Automaton.java:650 Automaton.java:650
+      Atomic: NO
+
+      Method: Automaton.getAcceptStates()
+      Calls Location: Automaton.java:344 Automaton.java:344
+      Atomic: NO
+
+      Method: Automaton.getLiveStates()
+      Calls Location: Automaton.java:444 Automaton.java:444
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:126 BasicOperations.java:226
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:126 BasicOperations.java:222
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:103 BasicOperations.java:226
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:103 BasicOperations.java:222
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:96 BasicOperations.java:226
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:96 BasicOperations.java:222
+      Atomic: NO
+
+      Method: BasicOperations.sameLanguage()
+      Calls Location: BasicOperations.java:835 BasicOperations.java:835
+      Atomic: NO
+
+      Method: BasicOperations.sameLanguage()
+      Calls Location: BasicOperations.java:835 BasicOperations.java:832
+      Atomic: NO
+
+      Method: BasicOperations.addEpsilons()
+      Calls Location: BasicOperations.java:763 BasicOperations.java:763
+      Atomic: NO
+
+      Method: BasicOperations.addEpsilons()
+      Calls Location: BasicOperations.java:718 BasicOperations.java:763
+      Atomic: NO
+
+      Method: BasicOperations.addEpsilons()
+      Calls Location: BasicOperations.java:741 BasicOperations.java:763
+      Atomic: NO
+
+      Method: BasicOperations.addEpsilons()
+      Calls Location: BasicOperations.java:750 BasicOperations.java:763
+      Atomic: NO
+
+      Method: BasicOperations.addEpsilons()
+      Calls Location: BasicOperations.java:750 BasicOperations.java:750
+      Atomic: NO
+
+      Method: BasicOperations.addEpsilons()
+      Calls Location: BasicOperations.java:741 BasicOperations.java:750
+      Atomic: NO
+
+      Method: BasicOperations.addEpsilons()
+      Calls Location: BasicOperations.java:718 BasicOperations.java:750
+      Atomic: NO
+
+      Method: BasicOperations.addEpsilons()
+      Calls Location: BasicOperations.java:741 BasicOperations.java:741
+      Atomic: NO
+
+      Method: BasicOperations.addEpsilons()
+      Calls Location: BasicOperations.java:750 BasicOperations.java:741
+      Atomic: NO
+
+      Method: BasicOperations.addEpsilons()
+      Calls Location: BasicOperations.java:718 BasicOperations.java:741
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:172 BasicOperations.java:172
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:96 BasicOperations.java:96
+      Atomic: NO
+
+      Method: BasicOperations.union()
+      Calls Location: BasicOperations.java:439 BasicOperations.java:439
+      Atomic: NO
+
+      Method: BasicOperations.union()
+      Calls Location: BasicOperations.java:435 BasicOperations.java:439
+      Atomic: NO
+
+      Method: BasicOperations.union()
+      Calls Location: BasicOperations.java:435 BasicOperations.java:435
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:226 BasicOperations.java:226
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:222 BasicOperations.java:226
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:222 BasicOperations.java:222
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:76 BasicOperations.java:76
+      Atomic: NO
+
+      Method: BasicOperations.run()
+      Calls Location: BasicOperations.java:835 BasicOperations.java:835
+      Atomic: NO
+
+      Method: BasicOperations.run()
+      Calls Location: BasicOperations.java:832 BasicOperations.java:835
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:103 BasicOperations.java:103
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:96 BasicOperations.java:103
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:107 BasicOperations.java:107
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:96 BasicOperations.java:107
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:126 BasicOperations.java:126
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:118 BasicOperations.java:126
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:110 BasicOperations.java:126
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:107 BasicOperations.java:126
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:96 BasicOperations.java:126
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:118 BasicOperations.java:118
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:110 BasicOperations.java:118
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:107 BasicOperations.java:118
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:96 BasicOperations.java:118
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:126 BasicOperations.java:118
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:110 BasicOperations.java:110
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:107 BasicOperations.java:110
+      Atomic: NO
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:96 BasicOperations.java:110
+      Atomic: NO
+
+      Method: BasicOperations.run()
+      Calls Location: BasicOperations.java:832 BasicOperations.java:832
+      Atomic: NO
+
+      Method: BasicOperations.run()
+      Calls Location: BasicOperations.java:835 BasicOperations.java:832
+      Atomic: NO
+
+      Method: BasicOperations.addEpsilons()
+      Calls Location: BasicOperations.java:718 BasicOperations.java:718
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:107 BasicOperations.java:226
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:107 BasicOperations.java:222
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:110 BasicOperations.java:226
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:110 BasicOperations.java:222
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:172 BasicOperations.java:103
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:172 BasicOperations.java:96
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:172 BasicOperations.java:107
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:172 BasicOperations.java:126
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:172 BasicOperations.java:118
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:172 BasicOperations.java:110
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:118 BasicOperations.java:226
+      Atomic: NO
+
+      Method: BasicOperations.repeat()
+      Calls Location: BasicOperations.java:118 BasicOperations.java:222
+      Atomic: NO
+
+      Method: BasicOperations.sameLanguage()
+      Calls Location: BasicOperations.java:832 BasicOperations.java:835
+      Atomic: NO
+
+      Method: BasicOperations.sameLanguage()
+      Calls Location: BasicOperations.java:832 BasicOperations.java:832
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: BasicAutomata.makeInterval()
+      Calls Location: BasicAutomata.java:223 BasicAutomata.java:223
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: SpecialOperations.getFiniteStrings()
+      Calls Location: SpecialOperations.java:245 SpecialOperations.java:245
+      Atomic: NO
+
+      Method: SpecialOperations.getCommonSuffixBytesRef()
+      Calls Location: SpecialOperations.java:208 SpecialOperations.java:129
+      Atomic: NO
+
+      Method: SpecialOperations.getCommonSuffix()
+      Calls Location: SpecialOperations.java:208 SpecialOperations.java:105
+      Atomic: NO
+
+      Method: SpecialOperations.isFinite()
+      Calls Location: SpecialOperations.java:82 SpecialOperations.java:82
+      Atomic: NO
+
+      Method: SpecialOperations.getCommonSuffixBytesRef()
+      Calls Location: SpecialOperations.java:199 SpecialOperations.java:129
+      Atomic: NO
+
+      Method: SpecialOperations.getCommonSuffix()
+      Calls Location: SpecialOperations.java:199 SpecialOperations.java:105
+      Atomic: NO
+
+      Method: SpecialOperations.reverse()
+      Calls Location: SpecialOperations.java:199 SpecialOperations.java:199
+      Atomic: NO
+
+      Method: SpecialOperations.reverse()
+      Calls Location: SpecialOperations.java:208 SpecialOperations.java:208
+      Atomic: NO
+
+      Method: SpecialOperations.reverse()
+      Calls Location: SpecialOperations.java:199 SpecialOperations.java:208
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: FieldCacheImpl.getCacheEntries()
+      Calls Location: FieldCacheImpl.java:96 FieldCacheImpl.java:96
+      Atomic: YES
+
+      Method: FieldCacheImpl.getCacheEntries()
+      Calls Location: FieldCacheImpl.java:100 FieldCacheImpl.java:96
+      Atomic: YES
+
+      Method: FieldCacheImpl.getCacheEntries()
+      Calls Location: FieldCacheImpl.java:92 FieldCacheImpl.java:96
+      Atomic: YES
+
+      Method: FieldCacheImpl.getCacheEntries()
+      Calls Location: FieldCacheImpl.java:100 FieldCacheImpl.java:100
+      Atomic: YES
+
+      Method: FieldCacheImpl.getCacheEntries()
+      Calls Location: FieldCacheImpl.java:96 FieldCacheImpl.java:100
+      Atomic: YES
+
+      Method: FieldCacheImpl.getCacheEntries()
+      Calls Location: FieldCacheImpl.java:92 FieldCacheImpl.java:100
+      Atomic: YES
+
+      Method: FieldCacheImpl.purgeByCacheKey()
+      Calls Location: FieldCacheImpl.java:84 FieldCacheImpl.java:84
+      Atomic: YES
+
+      Method: FieldCacheImpl.getCacheEntries()
+      Calls Location: FieldCacheImpl.java:92 FieldCacheImpl.java:92
+      Atomic: YES
+
+      Method: FieldCacheImpl.getCacheEntries()
+      Calls Location: FieldCacheImpl.java:100 FieldCacheImpl.java:92
+      Atomic: YES
+
+      Method: FieldCacheImpl.getCacheEntries()
+      Calls Location: FieldCacheImpl.java:96 FieldCacheImpl.java:92
+      Atomic: YES
+--
+  Verifying word hasNext next:
+
+      Method: ByteBufferIndexInput.close()
+      Calls Location: ByteBufferIndexInput.java:286 ByteBufferIndexInput.java:287
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: WeakIdentityMap$1.setNext()
+      Calls Location: WeakIdentityMap.java:201 WeakIdentityMap.java:202
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: Lucene3xNormsProducer.<init>()
+      Calls Location: Lucene3xNormsProducer.java:78 Lucene3xNormsProducer.java:78
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: Lucene3xFields.<init>()
+      Calls Location: Lucene3xFields.java:99 Lucene3xFields.java:99
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: SPIClassIterator.next()
+      Calls Location: SPIClassIterator.java:133 SPIClassIterator.java:134
+      Atomic: NO
+
+      Method: SPIClassIterator.next()
+      Calls Location: SPIClassIterator.java:124 SPIClassIterator.java:134
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: SortedIntSet.computeHash()
+      Calls Location: SortedIntSet.java:144 SortedIntSet.java:144
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: DaciukMihovAutomatonBuilder.build()
+      Calls Location: DaciukMihovAutomatonBuilder.java:279 DaciukMihovAutomatonBuilder.java:279
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:155 MinimizationOperations.java:155
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:114 MinimizationOperations.java:155
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:136 MinimizationOperations.java:155
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:183 MinimizationOperations.java:155
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:114 MinimizationOperations.java:114
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:205 MinimizationOperations.java:205
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:194 MinimizationOperations.java:205
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:114 MinimizationOperations.java:205
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:136 MinimizationOperations.java:205
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:183 MinimizationOperations.java:205
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:155 MinimizationOperations.java:205
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:194 MinimizationOperations.java:194
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:114 MinimizationOperations.java:194
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:136 MinimizationOperations.java:194
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:183 MinimizationOperations.java:194
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:155 MinimizationOperations.java:194
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:183 MinimizationOperations.java:183
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:155 MinimizationOperations.java:183
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:114 MinimizationOperations.java:183
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:136 MinimizationOperations.java:183
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:136 MinimizationOperations.java:136
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:114 MinimizationOperations.java:136
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:183 MinimizationOperations.java:136
+      Atomic: NO
+
+      Method: MinimizationOperations.minimizeHopcroft()
+      Calls Location: MinimizationOperations.java:155 MinimizationOperations.java:136
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: Util.toDot()
+      Calls Location: Util.java:739 Util.java:739
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: FreqProxTermsWriter.flush()
+      Calls Location: FreqProxTermsWriter.java:47 FreqProxTermsWriter.java:47
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: DocFieldProcessor.processDocument()
+      Calls Location: DocFieldProcessor.java:185 DocFieldProcessor.java:185
+      Atomic: NO
+
+      Method: DocFieldProcessor.flush()
+      Calls Location: DocFieldProcessor.java:74 DocFieldProcessor.java:74
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: DocInverter.flush()
+      Calls Location: DocInverter.java:47 DocInverter.java:47
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: NormsConsumer.flush()
+      Calls Location: NormsConsumer.java:50 NormsConsumer.java:50
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: TermVectorsConsumer.flush()
+      Calls Location: TermVectorsConsumer.java:70 TermVectorsConsumer.java:70
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: TermsHash.flush()
+      Calls Location: TermsHash.java:108 TermsHash.java:108
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: DocValuesProcessor.abort()
+      Calls Location: DocValuesProcessor.java:169 DocValuesProcessor.java:169
+      Atomic: NO
+
+      Method: DocValuesProcessor.flush()
+      Calls Location: DocValuesProcessor.java:80 DocValuesProcessor.java:80
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: RAMDirectory.listAll()
+      Calls Location: RAMDirectory.java:112 RAMDirectory.java:112
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: FST.pack()
+      Calls Location: FST.java:1799 FST.java:1799
+      Atomic: NO
+
+      Method: FST.pack()
+      Calls Location: FST.java:1793 FST.java:1799
+      Atomic: NO
+
+      Method: FST.pack()
+      Calls Location: FST.java:1793 FST.java:1793
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:256 FieldCacheSanityChecker.java:256
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:255 FieldCacheSanityChecker.java:256
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:249 FieldCacheSanityChecker.java:256
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:242 FieldCacheSanityChecker.java:256
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:217 FieldCacheSanityChecker.java:256
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:222 FieldCacheSanityChecker.java:256
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:242 FieldCacheSanityChecker.java:242
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:217 FieldCacheSanityChecker.java:242
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:222 FieldCacheSanityChecker.java:242
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:255 FieldCacheSanityChecker.java:242
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:249 FieldCacheSanityChecker.java:242
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:256 FieldCacheSanityChecker.java:242
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:255 FieldCacheSanityChecker.java:255
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:249 FieldCacheSanityChecker.java:255
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:242 FieldCacheSanityChecker.java:255
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:217 FieldCacheSanityChecker.java:255
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:222 FieldCacheSanityChecker.java:255
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:256 FieldCacheSanityChecker.java:255
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:249 FieldCacheSanityChecker.java:249
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:242 FieldCacheSanityChecker.java:249
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:217 FieldCacheSanityChecker.java:249
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:222 FieldCacheSanityChecker.java:249
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:255 FieldCacheSanityChecker.java:249
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:256 FieldCacheSanityChecker.java:249
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:222 FieldCacheSanityChecker.java:222
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:217 FieldCacheSanityChecker.java:222
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:217 FieldCacheSanityChecker.java:217
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:222 FieldCacheSanityChecker.java:217
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.getAllDescendantReaderKeys()
+      Calls Location: FieldCacheSanityChecker.java:291 FieldCacheSanityChecker.java:291
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:217 FieldCacheSanityChecker.java:291
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:222 FieldCacheSanityChecker.java:291
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:291 FieldCacheSanityChecker.java:256
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:291 FieldCacheSanityChecker.java:242
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:291 FieldCacheSanityChecker.java:255
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:291 FieldCacheSanityChecker.java:249
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:291 FieldCacheSanityChecker.java:222
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:291 FieldCacheSanityChecker.java:217
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkSubreaders()
+      Calls Location: FieldCacheSanityChecker.java:291 FieldCacheSanityChecker.java:291
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:176 FieldCacheSanityChecker.java:256
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:176 FieldCacheSanityChecker.java:242
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:176 FieldCacheSanityChecker.java:255
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:176 FieldCacheSanityChecker.java:249
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:176 FieldCacheSanityChecker.java:222
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:176 FieldCacheSanityChecker.java:217
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:176 FieldCacheSanityChecker.java:291
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:178 FieldCacheSanityChecker.java:256
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:178 FieldCacheSanityChecker.java:242
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:178 FieldCacheSanityChecker.java:255
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:178 FieldCacheSanityChecker.java:249
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:178 FieldCacheSanityChecker.java:222
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:178 FieldCacheSanityChecker.java:217
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:178 FieldCacheSanityChecker.java:291
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:179 FieldCacheSanityChecker.java:256
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:179 FieldCacheSanityChecker.java:242
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:179 FieldCacheSanityChecker.java:255
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:179 FieldCacheSanityChecker.java:249
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:179 FieldCacheSanityChecker.java:222
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:179 FieldCacheSanityChecker.java:217
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.check()
+      Calls Location: FieldCacheSanityChecker.java:179 FieldCacheSanityChecker.java:291
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkValueMismatch()
+      Calls Location: FieldCacheSanityChecker.java:176 FieldCacheSanityChecker.java:176
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkValueMismatch()
+      Calls Location: FieldCacheSanityChecker.java:178 FieldCacheSanityChecker.java:176
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkValueMismatch()
+      Calls Location: FieldCacheSanityChecker.java:179 FieldCacheSanityChecker.java:176
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkValueMismatch()
+      Calls Location: FieldCacheSanityChecker.java:178 FieldCacheSanityChecker.java:178
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkValueMismatch()
+      Calls Location: FieldCacheSanityChecker.java:176 FieldCacheSanityChecker.java:178
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkValueMismatch()
+      Calls Location: FieldCacheSanityChecker.java:179 FieldCacheSanityChecker.java:178
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkValueMismatch()
+      Calls Location: FieldCacheSanityChecker.java:179 FieldCacheSanityChecker.java:179
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkValueMismatch()
+      Calls Location: FieldCacheSanityChecker.java:178 FieldCacheSanityChecker.java:179
+      Atomic: NO
+
+      Method: FieldCacheSanityChecker.checkValueMismatch()
+      Calls Location: FieldCacheSanityChecker.java:176 FieldCacheSanityChecker.java:179
+      Atomic: NO
+--
+  Verifying word hasNext next:
+
+      Method: BytesStore.writeTo()
+      Calls Location: BytesStore.java:341 BytesStore.java:341
+      Atomic: NO

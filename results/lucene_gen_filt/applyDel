@@ -1,0 +1,14 @@
+--
+  Verifying word applyDeletesAndUpdates prune:
+
+      Method: IndexWriter.applyAllDeletesAndUpdates()
+      Calls Location: IndexWriter.java:3126 IndexWriter.java:3146
+      Atomic: YES
+
+      Method: IndexWriter.closeInternal()
+      Calls Location: IndexWriter.java:3126 IndexWriter.java:3146
+      Atomic: YES
+
+      Method: IndexWriter._mergeInit()
+      Calls Location: IndexWriter.java:3844 IndexWriter.java:3879
+      Atomic: YES

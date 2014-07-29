@@ -1,0 +1,24 @@
+
+--
+
+  Verifying word values clear:
+
+      Method: ConsumerManagerImpl.doStop()
+      Calls Location: ConsumerManagerImpl.java:530 ConsumerManagerImpl.java:534
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.doStop()
+      Calls Location: ConsumerManagerImpl.java:530 ConsumerManagerImpl.java:538
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.doStop()
+      Calls Location: ConsumerManagerImpl.java:530 ConsumerManagerImpl.java:537
+      Atomic: YES
+
+--
+
+  Verifying word values clear:
+
+      Method: AbstractDestinationCache.destroy()
+      Calls Location: AbstractDestinationCache.java:219 AbstractDestinationCache.java:221
+      Atomic: YES

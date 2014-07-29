@@ -1,0 +1,250 @@
+--
+  Verifying word get put:
+
+      Method: IndexWriter.addIndexes()
+      Calls Location: IndexWriter.java:2652 IndexWriter.java:2654
+      Atomic: NO
+--
+  Verifying word get put:
+
+****  Method: MultiFields.terms()
+      Calls Location: MultiFields.java:211 MultiFields.java:236
+      Atomic: NO
+--
+  Verifying word get put:
+
+****  Method: AttributeSource.cloneAttributes()
+      Calls Location: AttributeSource.java:478 AttributeSource.java:478
+      Atomic: NO
+
+      Method: AttributeSource.addAttribute()
+      Calls Location: AttributeSource.java:263 AttributeSource.java:250
+      Atomic: NO
+
+      Method: AttributeSource.addAttribute()
+      Calls Location: AttributeSource.java:263 AttributeSource.java:251
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: FieldInfos$FieldNumbers.setDocValuesType()
+      Calls Location: FieldInfos.java:221 FieldInfos.java:248
+      Atomic: YES
+
+      Method: FieldInfos$FieldNumbers.setDocValuesType()
+      Calls Location: FieldInfos.java:221 FieldInfos.java:248
+      Atomic: YES
+
+      Method: FieldInfos$FieldNumbers.addOrGet()
+      Calls Location: FieldInfos.java:197 FieldInfos.java:212
+      Atomic: YES
+
+      Method: FieldInfos$FieldNumbers.setDocValuesType()
+      Calls Location: FieldInfos.java:221 FieldInfos.java:248
+      Atomic: YES
+
+      Method: FieldInfos$FieldNumbers.setDocValuesType()
+      Calls Location: FieldInfos.java:221 FieldInfos.java:248
+      Atomic: YES
+
+      Method: FieldInfos$FieldNumbers.addOrGet()
+      Calls Location: FieldInfos.java:190 FieldInfos.java:192
+      Atomic: YES
+
+      Method: FieldInfos$FieldNumbers.addOrGet()
+      Calls Location: FieldInfos.java:190 FieldInfos.java:212
+      Atomic: YES
+--
+  Verifying word get put:
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:545 IndexFileDeleter.java:543
+      Atomic: NO
+
+      Method: IndexFileDeleter.decRef()
+      Calls Location: IndexFileDeleter.java:545 IndexFileDeleter.java:543
+      Atomic: NO
+
+      Method: IndexFileDeleter.deleteCommits()
+      Calls Location: IndexFileDeleter.java:545 IndexFileDeleter.java:543
+      Atomic: NO
+
+      Method: IndexFileDeleter.decRef()
+      Calls Location: IndexFileDeleter.java:545 IndexFileDeleter.java:543
+      Atomic: NO
+
+      Method: IndexFileDeleter.checkpoint()
+      Calls Location: IndexFileDeleter.java:545 IndexFileDeleter.java:543
+      Atomic: NO
+
+      Method: IndexFileDeleter.incRef()
+      Calls Location: IndexFileDeleter.java:545 IndexFileDeleter.java:543
+      Atomic: NO
+
+      Method: IndexFileDeleter.incRef()
+      Calls Location: IndexFileDeleter.java:545 IndexFileDeleter.java:543
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: IndexWriter$ReaderPool.get()
+      Calls Location: IndexWriter.java:582 IndexWriter.java:589
+      Atomic: YES
+--
+  Verifying word get put:
+
+      Method: BufferedUpdatesStream.applyNumericDocValuesUpdates()
+      Calls Location: BufferedUpdatesStream.java:509 BufferedUpdatesStream.java:512
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:509 BufferedUpdatesStream.java:512
+      Atomic: YES
+--
+  Verifying word get put:
+
+      Method: ReadersAndUpdates.writeFieldUpdates()
+      Calls Location: ReadersAndUpdates.java:493 ReadersAndUpdates.java:495
+      Atomic: YES
+--
+  Verifying word get put:
+
+****  Method: SegmentReader.getBinaryDocValues()
+      Calls Location: SegmentReader.java:455 SegmentReader.java:458
+      Atomic: NO
+
+****  Method: SegmentReader.getDocsWithField()
+      Calls Location: SegmentReader.java:433 SegmentReader.java:436
+      Atomic: NO
+
+****  Method: SegmentReader.getNumericDocValues()
+      Calls Location: SegmentReader.java:406 SegmentReader.java:409
+      Atomic: NO
+
+****  Method: SegmentReader.getSortedSetDocValues()
+      Calls Location: SegmentReader.java:499 SegmentReader.java:502
+      Atomic: NO
+
+****  Method: SegmentReader.getSortedDocValues()
+      Calls Location: SegmentReader.java:477 SegmentReader.java:480
+      Atomic: NO
+
+****  Method: SegmentReader.getSortedSetDocValues()
+      Calls Location: SegmentReader.java:494 SegmentReader.java:502
+      Atomic: NO
+
+****  Method: SegmentReader.getSortedDocValues()
+      Calls Location: SegmentReader.java:472 SegmentReader.java:480
+      Atomic: NO
+
+****  Method: SegmentReader.getBinaryDocValues()
+      Calls Location: SegmentReader.java:450 SegmentReader.java:458
+      Atomic: NO
+
+****  Method: SegmentReader.getDocsWithField()
+      Calls Location: SegmentReader.java:428 SegmentReader.java:436
+      Atomic: NO
+
+****  Method: SegmentReader.getNumericDocValues()
+      Calls Location: SegmentReader.java:401 SegmentReader.java:409
+      Atomic: NO
+--
+  Verifying word get put:
+
+****  Method: ThreadAffinityDocumentsWriterThreadPool.getAndLock()
+      Calls Location: ThreadAffinityDocumentsWriterThreadPool.java:46 ThreadAffinityDocumentsWriterThreadPool.java:61
+      Atomic: NO
+--
+  Verifying word get put:
+
+****  Method: BufferedUpdates.addTerm()
+      Calls Location: BufferedUpdates.java:165 BufferedUpdates.java:177
+      Atomic: NO
+
+****  Method: BufferedUpdates.addNumericUpdate()
+      Calls Location: BufferedUpdates.java:188 BufferedUpdates.java:191
+      Atomic: NO
+--
+  Verifying word get put:
+
+****  Method: SegmentCoreReaders.getNormValues()
+      Calls Location: SegmentCoreReaders.java:157 SegmentCoreReaders.java:160
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: SegmentDocValues.getDocValuesProducer()
+      Calls Location: SegmentDocValues.java:66 SegmentDocValues.java:70
+      Atomic: YES
+--
+  Verifying word get put:
+
+****  Method: SortedIntSet.incr()
+      Calls Location: SortedIntSet.java:53 SortedIntSet.java:55
+      Atomic: NO
+
+****  Method: SortedIntSet.decr()
+      Calls Location: SortedIntSet.java:103 SortedIntSet.java:107
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: FieldCacheImpl$Cache.put()
+      Calls Location: FieldCacheImpl.java:178 FieldCacheImpl.java:179
+      Atomic: YES
+
+      Method: FieldCacheImpl$Cache.get()
+      Calls Location: FieldCacheImpl.java:200 FieldCacheImpl.java:204
+      Atomic: YES
+
+      Method: FieldCacheImpl$Cache.get()
+      Calls Location: FieldCacheImpl.java:192 FieldCacheImpl.java:204
+      Atomic: YES
+
+      Method: FieldCacheImpl$Cache.put()
+      Calls Location: FieldCacheImpl.java:171 FieldCacheImpl.java:175
+      Atomic: YES
+
+      Method: FieldCacheImpl$Cache.put()
+      Calls Location: FieldCacheImpl.java:171 FieldCacheImpl.java:179
+      Atomic: YES
+
+      Method: FieldCacheImpl$Cache.get()
+      Calls Location: FieldCacheImpl.java:192 FieldCacheImpl.java:196
+      Atomic: YES
+
+      Method: FieldCacheImpl$Cache.get()
+      Calls Location: FieldCacheImpl.java:192 FieldCacheImpl.java:213
+      Atomic: NO
+
+****  Method: FieldCacheImpl$Cache.get()
+      Calls Location: FieldCacheImpl.java:200 FieldCacheImpl.java:213
+      Atomic: NO
+--
+  Verifying word get put:
+
+****  Method: DocValuesProcessor.addSortedField()
+      Calls Location: DocValuesProcessor.java:115 DocValuesProcessor.java:119
+      Atomic: NO
+
+****  Method: DocValuesProcessor.addBinaryField()
+      Calls Location: DocValuesProcessor.java:101 DocValuesProcessor.java:105
+      Atomic: NO
+
+****  Method: DocValuesProcessor.addSortedSetField()
+      Calls Location: DocValuesProcessor.java:129 DocValuesProcessor.java:133
+      Atomic: NO
+
+****  Method: DocValuesProcessor.addNumericField()
+      Calls Location: DocValuesProcessor.java:143 DocValuesProcessor.java:147
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: DoubleBarrelLRUCache.get()
+      Calls Location: DoubleBarrelLRUCache.java:82 DoubleBarrelLRUCache.java:101
+      Atomic: NO
+
+      Method: DoubleBarrelLRUCache.get()
+      Calls Location: DoubleBarrelLRUCache.java:79 DoubleBarrelLRUCache.java:101
+      Atomic: NO

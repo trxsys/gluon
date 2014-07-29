@@ -1,0 +1,33 @@
+  Verifying word getActivation setActivation:
+
+      Method: EmbedResultSet.updateRow()
+      Calls Location: EmbedResultSet.java:3773 EmbedResultSet.java:3788
+      Atomic: YES
+
+      Method: EmbedResultSet.insertRow()
+      Calls Location: EmbedResultSet.java:3668 EmbedResultSet.java:3685
+      Atomic: YES
+
+      Method: EmbedResultSet.updateRow()
+      Calls Location: EmbedResultSet.java:3773 EmbedResultSet.java:3783
+      Atomic: YES
+
+      Method: EmbedResultSet.deleteRow()
+      Calls Location: EmbedResultSet.java:3857 EmbedResultSet.java:3868
+      Atomic: YES
+
+      Method: EmbedResultSet.insertRow()
+      Calls Location: EmbedResultSet.java:3668 EmbedResultSet.java:3691
+      Atomic: YES
+--
+    No occurrences
+
+Checking class GeneratedMethod:
+
+  Verifying word getActivation setActivation:
+--
+  Verifying word getActivation setActivation:
+
+      Method: GenericPreparedStatement.executeSubStatement()
+      Calls Location: GenericPreparedStatement.java:293 GenericPreparedStatement.java:440
+      Atomic: NO

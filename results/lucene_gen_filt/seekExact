@@ -1,0 +1,37 @@
+  Verifying word seekExact docs:
+
+****  Method: AtomicReader.termDocsEnum()
+      Calls Location: AtomicReader.java:172 AtomicReader.java:173
+      Atomic: NO
+--
+  Verifying word seekExact docs:
+
+****  Method: MultiFields.getTermDocsEnum()
+      Calls Location: MultiFields.java:154 MultiFields.java:155
+      Atomic: NO
+--
+  Verifying word seekExact docs:
+
+      Method: BufferedUpdatesStream.applyTermDeletes()
+      Calls Location: BufferedUpdatesStream.java:414 BufferedUpdatesStream.java:416
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:414 BufferedUpdatesStream.java:505
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:414 BufferedUpdatesStream.java:416
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyNumericDocValuesUpdates()
+      Calls Location: BufferedUpdatesStream.java:503 BufferedUpdatesStream.java:505
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:503 BufferedUpdatesStream.java:505
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:503 BufferedUpdatesStream.java:416
+      Atomic: YES

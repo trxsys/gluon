@@ -1,0 +1,76 @@
+
+  Verifying word put put:
+
+      Method: ServiceManager.getService()
+      Calls Location: ServiceManager.java:234 ServiceManager.java:234
+      Atomic: YES
+
+      Method: ServiceManager.createService()
+      Calls Location: ServiceManager.java:234 ServiceManager.java:234
+      Atomic: NO
+
+      Method: ServiceManager.getService()
+      Calls Location: ServiceManager.java:234 ServiceManager.java:234
+      Atomic: NO
+
+      Method: ServiceManager.invokeSetters()
+      Calls Location: ServiceManager.java:234 ServiceManager.java:234
+      Atomic: NO
+
+      Method: ServiceManager.doStart()
+      Calls Location: ServiceManager.java:234 ServiceManager.java:234
+      Atomic: NO
+
+      Method: ServiceManager.doStop()
+      Calls Location: ServiceManager.java:234 ServiceManager.java:234
+      Atomic: NO
+
+--
+
+  Verifying word put put:
+
+      Method: PooledExecutor.execute()
+      Calls Location: PooledExecutor.java:480 PooledExecutor.java:480
+      Atomic: NO
+
+      Method: PooledExecutor.createThreads()
+      Calls Location: PooledExecutor.java:480 PooledExecutor.java:480
+      Atomic: NO
+
+--
+
+  Verifying word put put:
+
+      Method: JmsServerStubImpl.getServerConnectionFactory()
+      Calls Location: JmsServerStubImpl.java:222 JmsServerStubImpl.java:223
+      Atomic: YES
+
+--
+
+  Verifying word put put:
+
+      Method: DefaultMessageCache.addMessage()
+      Calls Location: DefaultMessageCache.java:106 DefaultMessageCache.java:254
+      Atomic: YES
+
+      Method: DefaultMessageCache.addMessage()
+      Calls Location: DefaultMessageCache.java:104 DefaultMessageCache.java:254
+      Atomic: YES
+
+--
+
+  Verifying word put put:
+
+      Method: AbstractConnectionManager.addManagedConnectionFactory()
+      Calls Location: AbstractConnectionManager.java:334 AbstractConnectionManager.java:335
+      Atomic: YES
+
+--
+
+  Verifying word put put:
+
+      Method: DefaultConnectionPool.add()
+      Calls Location: DefaultConnectionPool.java:465 DefaultConnectionPool.java:473
+      Atomic: NO
+
+--

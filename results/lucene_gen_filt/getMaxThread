@@ -1,0 +1,15 @@
+--
+  Verifying word getMaxThreadStates getThreadState:
+
+      Method: DocumentsWriter.lockAndAbortAll()
+      Calls Location: DocumentsWriter.java:245 DocumentsWriter.java:248
+      Atomic: YES
+
+      Method: DocumentsWriter.unlockAllAfterAbortAll()
+      Calls Location: DocumentsWriter.java:292 DocumentsWriter.java:295
+      Atomic: YES
+
+      Method: DocumentsWriter.lockAndAbortAll()
+      Calls Location: DocumentsWriter.java:245 DocumentsWriter.java:295
+      Atomic: YES
+--

@@ -1,0 +1,230 @@
+  Verifying word begin commit:
+
+      Method: MessageMgr.add()
+      Calls Location: MessageMgr.java:174 MessageMgr.java:185
+      Atomic: NO
+
+--
+
+  Verifying word begin commit:
+
+      Method: UserManager.createUser()
+      Calls Location: UserManager.java:124 UserManager.java:128
+      Atomic: YES
+
+      Method: UserManager.registerConfiguredUsers()
+      Calls Location: UserManager.java:124 UserManager.java:128
+      Atomic: NO
+
+      Method: UserManager.deleteUser()
+      Calls Location: UserManager.java:183 UserManager.java:188
+      Atomic: YES
+
+      Method: UserManager.updateUser()
+      Calls Location: UserManager.java:156 UserManager.java:159
+      Atomic: YES
+
+      Method: UserManager.init()
+      Calls Location: UserManager.java:266 UserManager.java:270
+      Atomic: NO
+
+      Method: UserManager.init()
+      Calls Location: UserManager.java:266 UserManager.java:128
+      Atomic: NO
+
+--
+
+  Verifying word begin commit:
+
+      Method: DestinationManagerImpl.createPersistentDestination()
+      Calls Location: DestinationManagerImpl.java:618 DestinationManagerImpl.java:621
+      Atomic: NO
+
+      Method: DestinationManagerImpl.init()
+      Calls Location: DestinationManagerImpl.java:537 DestinationManagerImpl.java:542
+      Atomic: NO
+
+      Method: DestinationManagerImpl.removeDestination()
+      Calls Location: DestinationManagerImpl.java:329 DestinationManagerImpl.java:336
+      Atomic: NO
+
+--
+
+  Verifying word begin commit:
+
+      Method: ConsumerManagerImpl.createInactiveDurableConsumer()
+      Calls Location: ConsumerManagerImpl.java:592 ConsumerManagerImpl.java:597
+      Atomic: NO
+
+      Method: ConsumerManagerImpl.unsubscribe()
+      Calls Location: ConsumerManagerImpl.java:208 ConsumerManagerImpl.java:213
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.unsubscribe()
+      Calls Location: ConsumerManagerImpl.java:208 ConsumerManagerImpl.java:213
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.createInactiveDurableConsumer()
+      Calls Location: ConsumerManagerImpl.java:208 ConsumerManagerImpl.java:597
+      Atomic: NO
+
+      Method: ConsumerManagerImpl.closeConsumer()
+      Calls Location: ConsumerManagerImpl.java:407 ConsumerManagerImpl.java:430
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.doStop()
+      Calls Location: ConsumerManagerImpl.java:407 ConsumerManagerImpl.java:430
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.createConsumer()
+      Calls Location: ConsumerManagerImpl.java:282 ConsumerManagerImpl.java:305
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.createQueueBrowser()
+      Calls Location: ConsumerManagerImpl.java:374 ConsumerManagerImpl.java:382
+      Atomic: YES
+
+      Method: ConsumerManagerImpl.doStart()
+      Calls Location: ConsumerManagerImpl.java:484 ConsumerManagerImpl.java:517
+      Atomic: NO
+
+--
+
+  Verifying word begin commit:
+
+      Method: AdminConnection.getQueueMessageCount()
+      Calls Location: AdminConnection.java:235 AdminConnection.java:240
+      Atomic: NO
+
+      Method: AdminConnection.getAllUsers()
+      Calls Location: AdminConnection.java:563 AdminConnection.java:571
+      Atomic: NO
+
+      Method: AdminConnection.getAllDestinations()
+      Calls Location: AdminConnection.java:376 AdminConnection.java:384
+      Atomic: NO
+
+      Method: AdminConnection.getDurableConsumers()
+      Calls Location: AdminConnection.java:313 AdminConnection.java:322
+      Atomic: NO
+
+      Method: AdminConnection.getDurableConsumerMessageCount()
+      Calls Location: AdminConnection.java:193 AdminConnection.java:198
+      Atomic: NO
+
+--
+
+  Verifying word begin commit:
+
+      Method: AbstractDestinationCache.onLeaseExpired()
+      Calls Location: AbstractDestinationCache.java:245 AbstractDestinationCache.java:252
+      Atomic: NO
+
+--
+
+  Verifying word begin commit:
+
+      Method: SessionConsumer.browse()
+      Calls Location: SessionConsumer.java:404 SessionConsumer.java:416
+      Atomic: NO
+
+      Method: SessionConsumer.doReceive()
+      Calls Location: SessionConsumer.java:658 SessionConsumer.java:681
+      Atomic: NO
+
+      Method: SessionConsumer.close()
+      Calls Location: SessionConsumer.java:451 SessionConsumer.java:453
+      Atomic: YES
+
+      Method: SessionConsumer.rollback()
+      Calls Location: SessionConsumer.java:328 SessionConsumer.java:330
+      Atomic: YES
+
+      Method: SessionConsumer.recover()
+      Calls Location: SessionConsumer.java:289 SessionConsumer.java:291
+      Atomic: YES
+
+      Method: SessionConsumer.send()
+      Calls Location: SessionConsumer.java:594 SessionConsumer.java:596
+      Atomic: NO
+
+      Method: SessionConsumer.dispatch()
+      Calls Location: SessionConsumer.java:594 SessionConsumer.java:581
+      Atomic: NO
+
+      Method: SessionConsumer.dispatch()
+      Calls Location: SessionConsumer.java:594 SessionConsumer.java:569
+      Atomic: NO
+
+      Method: SessionConsumer.dispatch()
+      Calls Location: SessionConsumer.java:594 SessionConsumer.java:577
+      Atomic: NO
+
+      Method: SessionConsumer.dispatch()
+      Calls Location: SessionConsumer.java:594 SessionConsumer.java:596
+      Atomic: NO
+
+      Method: SessionConsumer.commit()
+      Calls Location: SessionConsumer.java:307 SessionConsumer.java:309
+      Atomic: YES
+
+      Method: SessionConsumer.acknowledge()
+      Calls Location: SessionConsumer.java:433 SessionConsumer.java:435
+      Atomic: YES
+
+      Method: SessionConsumer.send()
+      Calls Location: SessionConsumer.java:550 SessionConsumer.java:596
+      Atomic: NO
+
+      Method: SessionConsumer.send()
+      Calls Location: SessionConsumer.java:575 SessionConsumer.java:596
+      Atomic: NO
+
+      Method: SessionConsumer.send()
+      Calls Location: SessionConsumer.java:575 SessionConsumer.java:577
+      Atomic: NO
+
+      Method: SessionConsumer.send()
+      Calls Location: SessionConsumer.java:550 SessionConsumer.java:577
+      Atomic: NO
+
+      Method: SessionConsumer.send()
+      Calls Location: SessionConsumer.java:550 SessionConsumer.java:581
+      Atomic: NO
+
+      Method: SessionConsumer.send()
+      Calls Location: SessionConsumer.java:550 SessionConsumer.java:569
+      Atomic: NO
+
+      Method: SessionConsumer.dispatch()
+      Calls Location: SessionConsumer.java:575 SessionConsumer.java:581
+      Atomic: NO
+
+      Method: SessionConsumer.dispatch()
+      Calls Location: SessionConsumer.java:575 SessionConsumer.java:569
+      Atomic: NO
+
+      Method: SessionConsumer.dispatch()
+      Calls Location: SessionConsumer.java:575 SessionConsumer.java:577
+      Atomic: NO
+
+      Method: SessionConsumer.dispatch()
+      Calls Location: SessionConsumer.java:575 SessionConsumer.java:596
+      Atomic: NO
+
+      Method: SessionConsumer.dispatch()
+      Calls Location: SessionConsumer.java:550 SessionConsumer.java:581
+      Atomic: NO
+
+      Method: SessionConsumer.dispatch()
+      Calls Location: SessionConsumer.java:550 SessionConsumer.java:569
+      Atomic: NO
+
+      Method: SessionConsumer.dispatch()
+      Calls Location: SessionConsumer.java:550 SessionConsumer.java:577
+      Atomic: NO
+
+      Method: SessionConsumer.dispatch()
+      Calls Location: SessionConsumer.java:550 SessionConsumer.java:596
+      Atomic: NO
+

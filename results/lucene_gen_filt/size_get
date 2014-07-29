@@ -1,0 +1,489 @@
+  Verifying word size get:
+
+****  Method: IndexSearcher.slices()
+      Calls Location: IndexSearcher.java:170 IndexSearcher.java:172
+      Atomic: NO
+--
+  Verifying word size get:
+
+****  Method: Document.toString()
+      Calls Location: Document.java:243 Document.java:244
+      Atomic: NO
+
+****  Method: Document.toString()
+      Calls Location: Document.java:246 Document.java:244
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: IndexWriter.closeMergeReaders()
+      Calls Location: IndexWriter.java:3928 IndexWriter.java:3934
+      Atomic: YES
+
+      Method: IndexWriter.mergeMiddle()
+      Calls Location: IndexWriter.java:3928 IndexWriter.java:3934
+      Atomic: NO
+
+      Method: IndexWriter.merge()
+      Calls Location: IndexWriter.java:3928 IndexWriter.java:1971
+      Atomic: NO
+
+      Method: IndexWriter.merge()
+      Calls Location: IndexWriter.java:3928 IndexWriter.java:1960
+      Atomic: NO
+--
+  Verifying word size get:
+
+****  Method: CompositeReader.toString()
+      Calls Location: CompositeReader.java:81 CompositeReader.java:82
+      Atomic: NO
+--
+  Verifying word size get:
+
+****  Method: ReaderUtil.subIndex()
+      Calls Location: ReaderUtil.java:75 ReaderUtil.java:86
+      Atomic: NO
+
+****  Method: ReaderUtil.subIndex()
+      Calls Location: ReaderUtil.java:75 ReaderUtil.java:80
+      Atomic: NO
+--
+  Verifying word size get:
+
+****  Method: MultiFields.getLiveDocs()
+      Calls Location: MultiFields.java:105 MultiFields.java:108
+      Atomic: NO
+
+****  Method: MultiFields.getLiveDocs()
+      Calls Location: MultiFields.java:105 MultiFields.java:114
+      Atomic: NO
+
+****  Method: MultiFields.getFields()
+      Calls Location: MultiFields.java:64 MultiFields.java:70
+      Atomic: NO
+--
+  Verifying word size get:
+
+****  Method: StandardDirectoryReader.open()
+      Calls Location: StandardDirectoryReader.java:142 StandardDirectoryReader.java:143
+      Atomic: NO
+
+      Method: StandardDirectoryReader.open()
+      Calls Location: StandardDirectoryReader.java:142 StandardDirectoryReader.java:162
+      Atomic: NO
+--
+  Verifying word size get:
+
+****  Method: SegmentInfos.files()
+      Calls Location: SegmentInfos.java:1155 SegmentInfos.java:167
+      Atomic: NO
+
+****  Method: SegmentInfos.toString()
+      Calls Location: SegmentInfos.java:1155 SegmentInfos.java:167
+      Atomic: NO
+
+****  Method: SegmentInfos.applyMergeChanges()
+      Calls Location: SegmentInfos.java:1099 SegmentInfos.java:1101
+      Atomic: NO
+--
+  Verifying word size get:
+
+****  Method: IndexFileDeleter.deleteCommits()
+      Calls Location: IndexFileDeleter.java:274 IndexFileDeleter.java:281
+      Atomic: NO
+
+****  Method: IndexFileDeleter.deletePendingFiles()
+      Calls Location: IndexFileDeleter.java:402 IndexFileDeleter.java:407
+      Atomic: NO
+
+****  Method: IndexFileDeleter.deleteCommits()
+      Calls Location: IndexFileDeleter.java:292 IndexFileDeleter.java:299
+      Atomic: NO
+
+      Method: IndexFileDeleter.deleteCommits()
+      Calls Location: IndexFileDeleter.java:274 IndexFileDeleter.java:299
+      Atomic: NO
+
+****  Method: IndexFileDeleter.deleteCommits()
+      Calls Location: IndexFileDeleter.java:292 IndexFileDeleter.java:296
+      Atomic: NO
+
+      Method: IndexFileDeleter.deleteCommits()
+      Calls Location: IndexFileDeleter.java:274 IndexFileDeleter.java:296
+      Atomic: NO
+
+****  Method: IndexFileDeleter.deletePendingFiles()
+      Calls Location: IndexFileDeleter.java:402 IndexFileDeleter.java:405
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:274 IndexFileDeleter.java:299
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:274 IndexFileDeleter.java:296
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:274 IndexFileDeleter.java:281
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:402 IndexFileDeleter.java:299
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:402 IndexFileDeleter.java:296
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:402 IndexFileDeleter.java:281
+      Atomic: NO
+
+      Method: IndexFileDeleter.checkpoint()
+      Calls Location: IndexFileDeleter.java:402 IndexFileDeleter.java:299
+      Atomic: NO
+
+      Method: IndexFileDeleter.checkpoint()
+      Calls Location: IndexFileDeleter.java:402 IndexFileDeleter.java:296
+      Atomic: NO
+
+      Method: IndexFileDeleter.checkpoint()
+      Calls Location: IndexFileDeleter.java:402 IndexFileDeleter.java:281
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:292 IndexFileDeleter.java:299
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:292 IndexFileDeleter.java:296
+      Atomic: NO
+
+      Method: IndexFileDeleter.<init>()
+      Calls Location: IndexFileDeleter.java:292 IndexFileDeleter.java:281
+      Atomic: NO
+
+      Method: IndexFileDeleter.revisitPolicy()
+      Calls Location: IndexFileDeleter.java:391 IndexFileDeleter.java:281
+      Atomic: NO
+
+      Method: IndexFileDeleter.revisitPolicy()
+      Calls Location: IndexFileDeleter.java:391 IndexFileDeleter.java:299
+      Atomic: NO
+
+****  Method: IndexFileDeleter.revisitPolicy()
+      Calls Location: IndexFileDeleter.java:391 IndexFileDeleter.java:296
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: BufferedUpdatesStream.prune()
+      Calls Location: BufferedUpdatesStream.java:360 BufferedUpdatesStream.java:363
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:185 BufferedUpdatesStream.java:192
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.prune()
+      Calls Location: BufferedUpdatesStream.java:342 BufferedUpdatesStream.java:363
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.prune()
+      Calls Location: BufferedUpdatesStream.java:340 BufferedUpdatesStream.java:363
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.push()
+      Calls Location: BufferedUpdatesStream.java:89 BufferedUpdatesStream.java:89
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:172 BufferedUpdatesStream.java:192
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.applyDeletesAndUpdates()
+      Calls Location: BufferedUpdatesStream.java:158 BufferedUpdatesStream.java:192
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.prune()
+      Calls Location: BufferedUpdatesStream.java:342 BufferedUpdatesStream.java:344
+      Atomic: YES
+
+      Method: BufferedUpdatesStream.prune()
+      Calls Location: BufferedUpdatesStream.java:340 BufferedUpdatesStream.java:344
+      Atomic: YES
+--
+  Verifying word size get:
+
+****  Method: MergePolicy$OneMerge.segString()
+      Calls Location: MergePolicy.java:242 MergePolicy.java:245
+      Atomic: NO
+--
+  Verifying word size get:
+
+****  Method: MergePolicy$MergeSpecification.segString()
+      Calls Location: MergePolicy.java:316 MergePolicy.java:318
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:291 SegmentMerger.java:370
+      Atomic: NO
+
+****  Method: SegmentMerger.mergeTerms()
+      Calls Location: SegmentMerger.java:369 SegmentMerger.java:370
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:289 SegmentMerger.java:370
+      Atomic: NO
+
+****  Method: SegmentMerger.setMatchingSegmentReaders()
+      Calls Location: SegmentMerger.java:256 SegmentMerger.java:264
+      Atomic: NO
+
+****  Method: SegmentMerger.setDocMaps()
+      Calls Location: SegmentMerger.java:347 SegmentMerger.java:349
+      Atomic: NO
+
+****  Method: SegmentMerger.setDocMaps()
+      Calls Location: SegmentMerger.java:338 SegmentMerger.java:349
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:290 SegmentMerger.java:370
+      Atomic: NO
+
+      Method: SegmentMerger.merge()
+      Calls Location: SegmentMerger.java:256 SegmentMerger.java:370
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: CompositeReaderContext$Builder.build()
+      Calls Location: CompositeReaderContext.java:104 CompositeReaderContext.java:113
+      Atomic: NO
+
+****  Method: CompositeReaderContext$Builder.build()
+      Calls Location: CompositeReaderContext.java:112 CompositeReaderContext.java:113
+      Atomic: NO
+
+      Method: CompositeReaderContext$Builder.build()
+      Calls Location: CompositeReaderContext.java:97 CompositeReaderContext.java:113
+      Atomic: NO
+--
+  Verifying word size get:
+
+****  Method: KeepOnlyLastCommitDeletionPolicy.onCommit()
+      Calls Location: KeepOnlyLastCommitDeletionPolicy.java:51 KeepOnlyLastCommitDeletionPolicy.java:53
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: ConcurrentMergeScheduler.merge()
+      Calls Location: ConcurrentMergeScheduler.java:177 ConcurrentMergeScheduler.java:178
+      Atomic: YES
+
+      Method: ConcurrentMergeScheduler.updateMergeThreads()
+      Calls Location: ConcurrentMergeScheduler.java:177 ConcurrentMergeScheduler.java:178
+      Atomic: YES
+--
+  Verifying word size get:
+
+****  Method: TermVectorsWriter.merge()
+      Calls Location: TermVectorsWriter.java:182 TermVectorsWriter.java:183
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: BasicOperations.concatenate()
+      Calls Location: BasicOperations.java:112 BasicOperations.java:113
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: CoalescedUpdates$1.iterator()
+      Calls Location: CoalescedUpdates.java:62 CoalescedUpdates.java:63
+      Atomic: NO
+
+      Method: CoalescedUpdates$1.iterator()
+      Calls Location: CoalescedUpdates.java:61 CoalescedUpdates.java:63
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: MultiDocValues.getSortedSetValues()
+      Calls Location: MultiDocValues.java:282 MultiDocValues.java:287
+      Atomic: NO
+
+****  Method: MultiDocValues.getSortedValues()
+      Calls Location: MultiDocValues.java:238 MultiDocValues.java:243
+      Atomic: NO
+
+****  Method: MultiDocValues.getNormValues()
+      Calls Location: MultiDocValues.java:58 MultiDocValues.java:73
+      Atomic: NO
+
+****  Method: MultiDocValues.getNormValues()
+      Calls Location: MultiDocValues.java:58 MultiDocValues.java:62
+      Atomic: NO
+
+****  Method: MultiDocValues.getDocsWithField()
+      Calls Location: MultiDocValues.java:148 MultiDocValues.java:160
+      Atomic: NO
+
+****  Method: MultiDocValues.getSortedSetValues()
+      Calls Location: MultiDocValues.java:282 MultiDocValues.java:294
+      Atomic: NO
+
+****  Method: MultiDocValues.getSortedValues()
+      Calls Location: MultiDocValues.java:238 MultiDocValues.java:250
+      Atomic: NO
+
+****  Method: MultiDocValues.getBinaryValues()
+      Calls Location: MultiDocValues.java:193 MultiDocValues.java:205
+      Atomic: NO
+
+****  Method: MultiDocValues.getNumericValues()
+      Calls Location: MultiDocValues.java:104 MultiDocValues.java:115
+      Atomic: NO
+
+****  Method: MultiDocValues.getDocsWithField()
+      Calls Location: MultiDocValues.java:148 MultiDocValues.java:152
+      Atomic: NO
+
+****  Method: MultiDocValues.getBinaryValues()
+      Calls Location: MultiDocValues.java:193 MultiDocValues.java:198
+      Atomic: NO
+
+****  Method: MultiDocValues.getNumericValues()
+      Calls Location: MultiDocValues.java:104 MultiDocValues.java:108
+      Atomic: NO
+--
+  Verifying word size get:
+
+****  Method: DocValuesConsumer$1$1.setNext()
+      Calls Location: DocValuesConsumer.java:158 DocValuesConsumer.java:162
+      Atomic: NO
+
+****  Method: DocValuesConsumer$1$1.setNext()
+      Calls Location: DocValuesConsumer.java:152 DocValuesConsumer.java:162
+      Atomic: NO
+
+****  Method: DocValuesConsumer$1$1.setNext()
+      Calls Location: DocValuesConsumer.java:158 DocValuesConsumer.java:159
+      Atomic: NO
+
+****  Method: DocValuesConsumer$1$1.setNext()
+      Calls Location: DocValuesConsumer.java:152 DocValuesConsumer.java:159
+      Atomic: NO
+
+****  Method: DocValuesConsumer$1$1.setNext()
+      Calls Location: DocValuesConsumer.java:158 DocValuesConsumer.java:160
+      Atomic: NO
+
+****  Method: DocValuesConsumer$1$1.setNext()
+      Calls Location: DocValuesConsumer.java:152 DocValuesConsumer.java:160
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: DocValuesConsumer$2$1.setNext()
+      Calls Location: DocValuesConsumer.java:238 DocValuesConsumer.java:241
+      Atomic: NO
+
+      Method: DocValuesConsumer$2$1.setNext()
+      Calls Location: DocValuesConsumer.java:232 DocValuesConsumer.java:241
+      Atomic: NO
+
+      Method: DocValuesConsumer$2$1.setNext()
+      Calls Location: DocValuesConsumer.java:238 DocValuesConsumer.java:239
+      Atomic: NO
+
+****  Method: DocValuesConsumer$2$1.setNext()
+      Calls Location: DocValuesConsumer.java:232 DocValuesConsumer.java:239
+      Atomic: NO
+
+****  Method: DocValuesConsumer$2$1.setNext()
+      Calls Location: DocValuesConsumer.java:238 DocValuesConsumer.java:240
+      Atomic: NO
+
+****  Method: DocValuesConsumer$2$1.setNext()
+      Calls Location: DocValuesConsumer.java:232 DocValuesConsumer.java:240
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: PagedBytes$Reader.<init>()
+      Calls Location: PagedBytes.java:64 PagedBytes.java:66
+      Atomic: NO
+
+      Method: PagedBytes$Reader.<init>()
+      Calls Location: PagedBytes.java:64 PagedBytes.java:70
+      Atomic: NO
+--
+  Verifying word size get:
+
+      Method: BytesStore.copyBytes()
+      Calls Location: BytesStore.java:307 BytesStore.java:168
+      Atomic: NO
+
+      Method: BytesStore.copyBytes()
+      Calls Location: BytesStore.java:307 BytesStore.java:228
+      Atomic: NO
+
+      Method: BytesStore.copyBytes()
+      Calls Location: BytesStore.java:307 BytesStore.java:155
+      Atomic: NO
+
+      Method: BytesStore.reverse()
+      Calls Location: BytesStore.java:307 BytesStore.java:264
+      Atomic: NO
+
+      Method: BytesStore.reverse()
+      Calls Location: BytesStore.java:307 BytesStore.java:260
+      Atomic: NO
+
+      Method: BytesStore.truncate()
+      Calls Location: BytesStore.java:307 BytesStore.java:325
+      Atomic: NO
+
+      Method: BytesStore.reverse()
+      Calls Location: BytesStore.java:307 BytesStore.java:276
+      Atomic: NO
+
+      Method: BytesStore.writeBytes()
+      Calls Location: BytesStore.java:307 BytesStore.java:168
+      Atomic: NO
+
+      Method: BytesStore.reverse()
+      Calls Location: BytesStore.java:307 BytesStore.java:284
+      Atomic: NO
+
+      Method: BytesStore.writeBytes()
+      Calls Location: BytesStore.java:307 BytesStore.java:155
+      Atomic: NO
+
+****  Method: BytesStore.getReverseReader()
+      Calls Location: BytesStore.java:415 BytesStore.java:416
+      Atomic: NO
+
+****  Method: BytesStore.<init>()
+      Calls Location: BytesStore.java:69 BytesStore.java:69
+      Atomic: NO
+
+      Method: BytesStore.getForwardReader()
+      Calls Location: BytesStore.java:347 BytesStore.java:348
+      Atomic: NO
+
+      Method: BytesStore.truncate()
+      Calls Location: BytesStore.java:321 BytesStore.java:325
+      Atomic: NO
+--
+  Verifying word size get:
+
+****  Method: BytesStore$2.<init>()
+      Calls Location: BytesStore.java:419 BytesStore.java:419
+      Atomic: NO

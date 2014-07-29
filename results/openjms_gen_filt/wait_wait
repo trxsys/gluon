@@ -1,0 +1,176 @@
+
+--
+
+  Verifying word wait wait:
+
+      Method: LeaseManager.run()
+      Calls Location: LeaseManager.java:171 LeaseManager.java:171
+      Atomic: NO
+
+      Method: LeaseManager.expire()
+      Calls Location: LeaseManager.java:221 LeaseManager.java:221
+      Atomic: NO
+
+--
+
+  Verifying word wait wait:
+
+      Method: BasicEventManager.run()
+      Calls Location: BasicEventManager.java:237 BasicEventManager.java:237
+      Atomic: NO
+
+      Method: BasicEventManager.run()
+      Calls Location: BasicEventManager.java:217 BasicEventManager.java:237
+      Atomic: NO
+
+--
+
+  Verifying word wait wait:
+
+      Method: LinkedQueue.take()
+      Calls Location: LinkedQueue.java:122 LinkedQueue.java:122
+      Atomic: YES
+
+      Method: LinkedQueue.poll()
+      Calls Location: LinkedQueue.java:170 LinkedQueue.java:170
+      Atomic: YES
+
+--
+
+  Verifying word wait wait:
+
+      Method: Semaphore.attempt()
+      Calls Location: Semaphore.java:135 Semaphore.java:135
+      Atomic: YES
+
+      Method: Semaphore.acquire()
+      Calls Location: Semaphore.java:108 Semaphore.java:108
+      Atomic: YES
+
+--
+
+  Verifying word wait wait:
+
+      Method: WaiterPreferenceSemaphore.acquire()
+      Calls Location: WaiterPreferenceSemaphore.java:76 WaiterPreferenceSemaphore.java:76
+      Atomic: YES
+
+      Method: WaiterPreferenceSemaphore.attempt()
+      Calls Location: WaiterPreferenceSemaphore.java:111 WaiterPreferenceSemaphore.java:111
+      Atomic: YES
+
+--
+
+  Verifying word wait wait:
+
+      Method: SessionConsumer.removeConsumer()
+      Calls Location: SessionConsumer.java:197 SessionConsumer.java:197
+      Atomic: NO
+
+--
+
+  Verifying word wait wait:
+
+      Method: Mutex.acquire()
+      Calls Location: Mutex.java:118 Mutex.java:118
+      Atomic: YES
+
+      Method: Mutex.attempt()
+      Calls Location: Mutex.java:148 Mutex.java:148
+      Atomic: YES
+
+--
+
+  Verifying word wait wait:
+
+      Method: JmsSession.receive()
+      Calls Location: JmsSession.java:1066 JmsSession.java:1066
+      Atomic: NO
+
+      Method: JmsSession.receive()
+      Calls Location: JmsSession.java:1079 JmsSession.java:1066
+      Atomic: NO
+
+      Method: JmsSession.receive()
+      Calls Location: JmsSession.java:1066 JmsSession.java:1079
+      Atomic: NO
+
+      Method: JmsSession.receive()
+      Calls Location: JmsSession.java:1079 JmsSession.java:1079
+      Atomic: NO
+
+--
+
+  Verifying word wait wait:
+
+      Method: SerialTask.stop()
+      Calls Location: SerialTask.java:199 SerialTask.java:199
+      Atomic: YES
+
+--
+
+  Verifying word wait wait:
+
+      Method: QueuedSemaphore$WaitQueue$WaitNode.doTimedWait()
+      Calls Location: QueuedSemaphore.java:123 QueuedSemaphore.java:123
+      Atomic: YES
+
+      Method: QueuedSemaphore$WaitQueue$WaitNode.doWait()
+      Calls Location: QueuedSemaphore.java:152 QueuedSemaphore.java:152
+      Atomic: YES
+
+--
+
+  Verifying word wait wait:
+
+      Method: ClockDaemon.nextTask()
+      Calls Location: ClockDaemon.java:327 ClockDaemon.java:320
+      Atomic: YES
+
+      Method: ClockDaemon.nextTask()
+      Calls Location: ClockDaemon.java:320 ClockDaemon.java:320
+      Atomic: YES
+
+      Method: ClockDaemon.nextTask()
+      Calls Location: ClockDaemon.java:327 ClockDaemon.java:327
+      Atomic: YES
+
+      Method: ClockDaemon.nextTask()
+      Calls Location: ClockDaemon.java:320 ClockDaemon.java:327
+      Atomic: YES
+
+--
+
+  Verifying word wait wait:
+
+      Method: Latch.attempt()
+      Calls Location: Latch.java:79 Latch.java:79
+      Atomic: YES
+
+      Method: Latch.acquire()
+      Calls Location: Latch.java:64 Latch.java:64
+      Atomic: YES
+
+--
+
+  Verifying word wait wait:
+
+      Method: MultiplexInputStream.read()
+      Calls Location: MultiplexInputStream.java:232 MultiplexInputStream.java:232
+      Atomic: NO
+
+--
+
+  Verifying word wait wait:
+
+      Method: MultiplexOutputStream.flush()
+      Calls Location: MultiplexOutputStream.java:326 MultiplexOutputStream.java:326
+      Atomic: NO
+
+      Method: MultiplexOutputStream.write()
+      Calls Location: MultiplexOutputStream.java:326 MultiplexOutputStream.java:326
+      Atomic: NO
+
+      Method: MultiplexOutputStream.waitForSpace()
+      Calls Location: MultiplexOutputStream.java:326 MultiplexOutputStream.java:326
+      Atomic: NO

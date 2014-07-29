@@ -1,0 +1,17 @@
+  Verifying word flushAllThreads finishFullFlush:
+
+      Method: IndexWriter.prepareCommitInternal()
+      Calls Location: IndexWriter.java:2829 IndexWriter.java:2868
+      Atomic: YES
+
+      Method: IndexWriter.closeInternal()
+      Calls Location: IndexWriter.java:3082 IndexWriter.java:2868
+      Atomic: NO
+
+      Method: IndexWriter.doFlush()
+      Calls Location: IndexWriter.java:3082 IndexWriter.java:3085
+      Atomic: YES
+
+      Method: IndexWriter.getReader()
+      Calls Location: IndexWriter.java:370 IndexWriter.java:398
+      Atomic: YES
