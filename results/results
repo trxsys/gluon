@@ -24,7 +24,6 @@ Lucene USE   |    -      |    -  |    -   |        -       |      -       |     
 
 † The two additional violations detected by gluon seem to actually represent atomicity violations
 
-
 ============= Tomcat Gen ============= 
 
                Occurences  | # Violations  |  False Positives  |  Potencial Atomicity  |  Atomicity
@@ -96,7 +95,7 @@ ______ IGNORE: violations=0 ____________________________________________________
                    2       |        0      |      -     |   -  |         -             |       -        report report
                   17       |        0      |      -     |   -  |         -             |       -        setupContextStack getEmbedConnection restoreContextStack
 
-============= Openjms Gen ============= 
+============= Openjms Gen ============= (last release 2007)
 
                Occurences  | # Violations  |  False Positives  |  Potencial Atomicity  |  Atomicity
                 Already    |   Contract    |  points-to | ow   |      Violations       |  Violations
@@ -120,4 +119,20 @@ ______ IGNORE: violations=0 ____________________________________________________
                    2       |        0      |      -     |   -  |         -             |       -        writeLong flush
                    4       |        0      |      -     |   -  |         -             |       -        values clear
 
--> terça ~ 2:30
+============= Cache4j Gen =============
+
+============= Cassandra Gen =============
+               Occurences  | # Violations  |  False Positives  |  Potencial Atomicity  |  Atomicity
+                Already    |   Contract    |  points-to | ow   |      Violations       |  Violations
+                 Synch     |               |            |      |        ****           |     !!!! (captured by icfinder)
+______________________________________________________________________________________________________
+                   1       |        1      |      1     |   0  |         0             |       0        shutdown awaitTermination
+                   3       |        4      |      4     |   0  |         0             |       0        equals getHostAddress
+                   6       |       15      |     15     |   0  |         0             |       0        remove isEmpty
+                  13       |       60      |     24     |   0  |        15             |       2        get put
+______ IGNORE: no strong correlation ___________________________________________________________________
+                   7       |      188      |      -     |   -  |         -             |       -        get get
+
+-> sexta ~ 2:30
+-> tomcat v8.0. bugs
+-> mail. como gerar contratos

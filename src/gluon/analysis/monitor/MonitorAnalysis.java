@@ -197,15 +197,15 @@ public class MonitorAnalysis
                 int i;
 
                 /*
-                  ./gluon.sh --timeout 5 -t -p -s -y -r \
-                  --classpath ../db-derby-10.10.2.0-src/classes \
-                  --module java.util.List \
-                  --contract 'size size' \
-                  org.apache.derbyTesting.functionTests.harness.RunTest
+./gluon.sh --timeout 5 -t -p -s -y -r --classpath \
+    ../cassandra-2.0.9/build/test/classes:../cassandra-2.0.9/build/classes/main:../cassandra-2.0.9/build/classes/stress \
+    --module java.util.Map \
+    --contract "containsKey put" \
+    org.apache.cassandra.stress.StressServer
                  */
 
                 System.err.println("./gluon.sh --timeout 5 -t -p -s -y -r "
-                                   +"--classpath ../db-derby-10.10.2.0-src/classes \\");
+                                   +"--classpath ../cassandra-2.0.9/build/test/classes:../cassandra-2.0.9/build/classes/main:../cassandra-2.0.9/build/classes/stress \\");
                 System.err.println("    --module "+c.getName()+" \\");
                 System.err.print("    --contract \"");
 
@@ -214,7 +214,7 @@ public class MonitorAnalysis
                     System.err.print((i++ > 0 ? " " : "")+method.getName());
 
                 System.err.println("\" \\");
-                System.err.println("    org.apache.derbyTesting.functionTests.harness.RunTest "
+                System.err.println("    org.apache.cassandra.stress.StressServer "
                                    +">> tests_out");
                 System.err.println();
             }
@@ -254,9 +254,9 @@ public class MonitorAnalysis
                         analyzeUnit(m,head,cfg,null);
                 }
 
-        if (true)
+        if (false)
         {
-            // printSynchCalls();
+            printSynchCalls();
             System.exit(0);
         }
 

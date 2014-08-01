@@ -302,25 +302,38 @@ public class Main
                 catch (Exception _) {}
 
             for (SootClass c: Scene.v().getClasses())
-                for (soot.SootMethod m: c.getMethods())
-                    try { m.retrieveActiveBody(); }
-                    catch (Exception _) {}
+            {
+                try
+                {
+                    for (soot.SootMethod m: c.getMethods())
+                        try { m.retrieveActiveBody(); }
+                        catch (Exception _) {}
+                }
+                catch (Exception _) {}
+            }
 
             for (SootClass c: Scene.v().dynamicClasses())
-                for (soot.SootMethod m: c.getMethods())
-                    try { m.retrieveActiveBody(); }
-                    catch (Exception _) {}
+            {
+                try
+                {
+                    for (soot.SootMethod m: c.getMethods())
+                        try { m.retrieveActiveBody(); }
+                        catch (Exception _) {}
+                }
+                catch (Exception _) {}
+            }
         }
 
         /* Points-to analises */
         SparkTransformer.v().transform("",getSparkOptions());
 
+        /* TODO just for testing */
+        if (false)
         {
             int count=0;
 
             for (SootClass c: Scene.v().getClasses())
-                if (c.toString().contains("derby")
-                    && !c.toString().contains("Testing"))
+                if (c.toString().contains("cassandra"))
                     count++;
 
             System.out.println("classes: "+count);

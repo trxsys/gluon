@@ -1,8 +1,0 @@
-             |           |       |        |                        Missed by gluon
-             | ICF Total | Gluon | Common | Module/Methods | Calls inside | ICF gives wrong | Call Across       | ICF false positive
-             |           |       |        |   not found    |    module    |   call order    | Different Modules | due to lack of points-to
-___________________________________________________________________________________________________________________________________________
-Tomcat COMP  |    104    |   25  |   25   |       30       |     38       |       11 (‽)    |      0            |         0
-Tomcat USE   |    109    |    7 †|    5   |       37       |     50       |        0        |      1 (‽)        |         2
-
-† The two additional violations detected by gluon seem to actually represent atomicity violations
