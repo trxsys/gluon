@@ -1,0 +1,99 @@
+  Verifying word remove isEmpty:
+
+      Method: CompressionParameters.create()
+      Calls Location: CompressionParameters.java:63 CompressionParameters.java:160
+      Atomic: NO
+
+      Method: CompressionParameters.create()
+      Calls Location: CompressionParameters.java:62 CompressionParameters.java:160
+      Atomic: NO
+--
+  Verifying word remove isEmpty:
+
+      Method: CFPropDefs.validate()
+      Calls Location: CFPropDefs.java:91 CFPropDefs.java:97
+      Atomic: NO
+--
+  Verifying word remove isEmpty:
+
+      Method: CreateTableStatement$RawStatement.prepare()
+      Calls Location: CreateTableStatement.java:394 CreateTableStatement.java:246
+      Atomic: NO
+
+      Method: CreateTableStatement$RawStatement.prepare()
+      Calls Location: CreateTableStatement.java:394 CreateTableStatement.java:356
+      Atomic: NO
+
+      Method: CreateTableStatement$RawStatement.prepare()
+      Calls Location: CreateTableStatement.java:394 CreateTableStatement.java:351
+      Atomic: NO
+
+      Method: CreateTableStatement$RawStatement.prepare()
+      Calls Location: CreateTableStatement.java:394 CreateTableStatement.java:363
+      Atomic: NO
+
+      Method: CreateTableStatement$RawStatement.prepare()
+      Calls Location: CreateTableStatement.java:394 CreateTableStatement.java:326
+      Atomic: NO
+
+      Method: CreateTableStatement$RawStatement.prepare()
+      Calls Location: CreateTableStatement.java:344 CreateTableStatement.java:363
+      Atomic: NO
+--
+  Verifying word remove isEmpty:
+
+      Method: StreamResultFuture.maybeComplete()
+      Calls Location: StreamResultFuture.java:209 StreamResultFuture.java:210
+      Atomic: YES
+--
+  Verifying word remove isEmpty:
+
+      Method: Gossiper.doStatusCheck()
+      Calls Location: Gossiper.java:332 Gossiper.java:677
+      Atomic: NO
+
+      Method: Gossiper.doStatusCheck()
+      Calls Location: Gossiper.java:355 Gossiper.java:677
+      Atomic: NO
+
+      Method: Gossiper.doStatusCheck()
+      Calls Location: Gossiper.java:330 Gossiper.java:677
+      Atomic: NO
+--
+  Verifying word remove isEmpty:
+
+      Method: StreamSession.taskCompleted()
+      Calls Location: StreamSession.java:588 StreamSession.java:628
+      Atomic: YES
+
+      Method: StreamSession.taskCompleted()
+      Calls Location: StreamSession.java:594 StreamSession.java:628
+      Atomic: YES
+
+      Method: StreamSession.taskCompleted()
+      Calls Location: StreamSession.java:588 StreamSession.java:628
+      Atomic: YES
+
+      Method: StreamSession.taskCompleted()
+      Calls Location: StreamSession.java:594 StreamSession.java:628
+      Atomic: YES
+
+      Method: StreamSession.startStreamingFiles()
+      Calls Location: StreamSession.java:594 StreamSession.java:628
+      Atomic: NO
+
+      Method: StreamSession.startStreamingFiles()
+      Calls Location: StreamSession.java:594 StreamSession.java:628
+      Atomic: NO
+--
+  Verifying word remove isEmpty:
+
+      Method: RepairSession.syncComplete()
+      Calls Location: RepairSession.java:216 RepairSession.java:223
+      Atomic: NO
+--
+  Verifying word remove isEmpty:
+
+      Method: StreamTransferTask.complete()
+      Calls Location: StreamTransferTask.java:63 StreamTransferTask.java:68
+      Atomic: YES

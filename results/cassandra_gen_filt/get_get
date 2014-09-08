@@ -1,0 +1,864 @@
+--
+  Verifying word get get:
+
+      Method: CFMetaData.addDefaultIndexNames()
+      Calls Location: CFMetaData.java:1307 CFMetaData.java:1307
+      Atomic: NO
+
+      Method: CFMetaData.apply()
+      Calls Location: CFMetaData.java:1084 CFMetaData.java:1083
+      Atomic: NO
+
+      Method: CFMetaData.apply()
+      Calls Location: CFMetaData.java:1083 CFMetaData.java:1083
+      Atomic: NO
+
+      Method: CFMetaData.apply()
+      Calls Location: CFMetaData.java:1083 CFMetaData.java:1084
+      Atomic: NO
+
+      Method: CFMetaData.apply()
+      Calls Location: CFMetaData.java:1084 CFMetaData.java:1084
+      Atomic: NO
+
+      Method: CFMetaData.toSchemaUpdate()
+      Calls Location: CFMetaData.java:1233 CFMetaData.java:1233
+      Atomic: NO
+
+      Method: CFMetaData.renameColumn()
+      Calls Location: CFMetaData.java:1888 CFMetaData.java:1892
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: CompressionParameters.create()
+      Calls Location: CompressionParameters.java:61 CompressionParameters.java:88
+      Atomic: NO
+
+      Method: CompressionParameters.create()
+      Calls Location: CompressionParameters.java:60 CompressionParameters.java:61
+      Atomic: NO
+
+      Method: CompressionParameters.create()
+      Calls Location: CompressionParameters.java:60 CompressionParameters.java:88
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: CFDefinition.get()
+      Calls Location: CFDefinition.java:173 CFDefinition.java:176
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:95 AbstractCompactionStrategy.java:97
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:97 AbstractCompactionStrategy.java:399
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:95 AbstractCompactionStrategy.java:399
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:381 AbstractCompactionStrategy.java:97
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:381 AbstractCompactionStrategy.java:399
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:381 AbstractCompactionStrategy.java:93
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:381 AbstractCompactionStrategy.java:95
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:357 AbstractCompactionStrategy.java:97
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:357 AbstractCompactionStrategy.java:399
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:357 AbstractCompactionStrategy.java:93
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:357 AbstractCompactionStrategy.java:95
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:340 AbstractCompactionStrategy.java:97
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:340 AbstractCompactionStrategy.java:399
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:340 AbstractCompactionStrategy.java:93
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:340 AbstractCompactionStrategy.java:95
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:374 AbstractCompactionStrategy.java:97
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:374 AbstractCompactionStrategy.java:399
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:374 AbstractCompactionStrategy.java:93
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:374 AbstractCompactionStrategy.java:95
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.validateOptions()
+      Calls Location: AbstractCompactionStrategy.java:374 AbstractCompactionStrategy.java:381
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.validateOptions()
+      Calls Location: AbstractCompactionStrategy.java:357 AbstractCompactionStrategy.java:381
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.validateOptions()
+      Calls Location: AbstractCompactionStrategy.java:340 AbstractCompactionStrategy.java:381
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.validateOptions()
+      Calls Location: AbstractCompactionStrategy.java:340 AbstractCompactionStrategy.java:357
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:93 AbstractCompactionStrategy.java:97
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:93 AbstractCompactionStrategy.java:399
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.validateOptions()
+      Calls Location: AbstractCompactionStrategy.java:357 AbstractCompactionStrategy.java:374
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.validateOptions()
+      Calls Location: AbstractCompactionStrategy.java:340 AbstractCompactionStrategy.java:374
+      Atomic: NO
+
+      Method: AbstractCompactionStrategy.<init>()
+      Calls Location: AbstractCompactionStrategy.java:93 AbstractCompactionStrategy.java:95
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: ColumnFamilyStore.removeUnfinishedCompactionLeftovers()
+      Calls Location: ColumnFamilyStore.java:579 ColumnFamilyStore.java:577
+      Atomic: NO
+
+      Method: ColumnFamilyStore.removeUnfinishedCompactionLeftovers()
+      Calls Location: ColumnFamilyStore.java:577 ColumnFamilyStore.java:577
+      Atomic: NO
+
+      Method: ColumnFamilyStore.removeUnfinishedCompactionLeftovers()
+      Calls Location: ColumnFamilyStore.java:577 ColumnFamilyStore.java:579
+      Atomic: NO
+
+      Method: ColumnFamilyStore.removeUnfinishedCompactionLeftovers()
+      Calls Location: ColumnFamilyStore.java:579 ColumnFamilyStore.java:579
+      Atomic: NO
+
+      Method: ColumnFamilyStore.filter()
+      Calls Location: ColumnFamilyStore.java:984 ColumnFamilyStore.java:984
+      Atomic: NO
+
+      Method: ColumnFamilyStore.removeDroppedColumns()
+      Calls Location: ColumnFamilyStore.java:984 ColumnFamilyStore.java:984
+      Atomic: NO
+
+      Method: ColumnFamilyStore.removeDeletedColumnsOnly()
+      Calls Location: ColumnFamilyStore.java:984 ColumnFamilyStore.java:984
+      Atomic: NO
+
+      Method: ColumnFamilyStore.removeUnfinishedCompactionLeftovers()
+      Calls Location: ColumnFamilyStore.java:556 ColumnFamilyStore.java:577
+      Atomic: NO
+
+      Method: ColumnFamilyStore.removeUnfinishedCompactionLeftovers()
+      Calls Location: ColumnFamilyStore.java:556 ColumnFamilyStore.java:579
+      Atomic: NO
+
+      Method: ColumnFamilyStore.removeUnfinishedCompactionLeftovers()
+      Calls Location: ColumnFamilyStore.java:556 ColumnFamilyStore.java:556
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: TriggerDefinition.fromSchema()
+      Calls Location: TriggerDefinition.java:70 TriggerDefinition.java:70
+      Atomic: NO
+
+      Method: TriggerDefinition.fromThrift()
+      Calls Location: TriggerDefinition.java:113 TriggerDefinition.java:113
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: ColumnToCollectionType.isCompatibleWith()
+      Calls Location: ColumnToCollectionType.java:124 ColumnToCollectionType.java:124
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: Schema.clear()
+      Calls Location: Schema.java:247 Schema.java:247
+      Atomic: YES
+
+      Method: Schema.getCFMetaData()
+      Calls Location: Schema.java:308 Schema.java:183
+      Atomic: NO
+
+      Method: Schema.getCFMetaData()
+      Calls Location: Schema.java:183 Schema.java:184
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: SystemKeyspace.serializeSchema()
+      Calls Location: SystemKeyspace.java:815 SystemKeyspace.java:815
+      Atomic: NO
+
+      Method: SystemKeyspace.serializeSchema()
+      Calls Location: SystemKeyspace.java:815 SystemKeyspace.java:815
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: NetworkTopologyStrategy.calculateNaturalEndpoints()
+      Calls Location: NetworkTopologyStrategy.java:138 NetworkTopologyStrategy.java:157
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.calculateNaturalEndpoints()
+      Calls Location: NetworkTopologyStrategy.java:119 NetworkTopologyStrategy.java:157
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.calculateNaturalEndpoints()
+      Calls Location: NetworkTopologyStrategy.java:138 NetworkTopologyStrategy.java:119
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.calculateNaturalEndpoints()
+      Calls Location: NetworkTopologyStrategy.java:119 NetworkTopologyStrategy.java:119
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.hasSufficientReplicas()
+      Calls Location: NetworkTopologyStrategy.java:157 NetworkTopologyStrategy.java:178
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.calculateNaturalEndpoints()
+      Calls Location: NetworkTopologyStrategy.java:138 NetworkTopologyStrategy.java:178
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.calculateNaturalEndpoints()
+      Calls Location: NetworkTopologyStrategy.java:119 NetworkTopologyStrategy.java:178
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.calculateNaturalEndpoints()
+      Calls Location: NetworkTopologyStrategy.java:119 NetworkTopologyStrategy.java:138
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.calculateNaturalEndpoints()
+      Calls Location: NetworkTopologyStrategy.java:138 NetworkTopologyStrategy.java:138
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.hasSufficientReplicas()
+      Calls Location: NetworkTopologyStrategy.java:178 NetworkTopologyStrategy.java:157
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.calculateNaturalEndpoints()
+      Calls Location: NetworkTopologyStrategy.java:178 NetworkTopologyStrategy.java:157
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.calculateNaturalEndpoints()
+      Calls Location: NetworkTopologyStrategy.java:178 NetworkTopologyStrategy.java:119
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.hasSufficientReplicas()
+      Calls Location: NetworkTopologyStrategy.java:178 NetworkTopologyStrategy.java:178
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.calculateNaturalEndpoints()
+      Calls Location: NetworkTopologyStrategy.java:178 NetworkTopologyStrategy.java:178
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.calculateNaturalEndpoints()
+      Calls Location: NetworkTopologyStrategy.java:178 NetworkTopologyStrategy.java:138
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.hasSufficientReplicas()
+      Calls Location: NetworkTopologyStrategy.java:157 NetworkTopologyStrategy.java:157
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.calculateNaturalEndpoints()
+      Calls Location: NetworkTopologyStrategy.java:157 NetworkTopologyStrategy.java:157
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.calculateNaturalEndpoints()
+      Calls Location: NetworkTopologyStrategy.java:157 NetworkTopologyStrategy.java:119
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.hasSufficientReplicas()
+      Calls Location: NetworkTopologyStrategy.java:157 NetworkTopologyStrategy.java:178
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.calculateNaturalEndpoints()
+      Calls Location: NetworkTopologyStrategy.java:157 NetworkTopologyStrategy.java:178
+      Atomic: NO
+
+      Method: NetworkTopologyStrategy.calculateNaturalEndpoints()
+      Calls Location: NetworkTopologyStrategy.java:157 NetworkTopologyStrategy.java:138
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: StartupMessage.execute()
+      Calls Location: StartupMessage.java:71 StartupMessage.java:89
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: SelectStatement.orderResults()
+      Calls Location: SelectStatement.java:1257 SelectStatement.java:1257
+      Atomic: NO
+
+      Method: SelectStatement.pageCountQuery()
+      Calls Location: SelectStatement.java:1257 SelectStatement.java:1242
+      Atomic: NO
+
+      Method: SelectStatement.pageCountQuery()
+      Calls Location: SelectStatement.java:1257 SelectStatement.java:1257
+      Atomic: NO
+
+      Method: SelectStatement.getIndexExpressions()
+      Calls Location: SelectStatement.java:998 SelectStatement.java:998
+      Atomic: NO
+
+      Method: SelectStatement.execute()
+      Calls Location: SelectStatement.java:998 SelectStatement.java:1242
+      Atomic: NO
+
+      Method: SelectStatement.executeInternal()
+      Calls Location: SelectStatement.java:998 SelectStatement.java:1242
+      Atomic: NO
+
+      Method: SelectStatement.execute()
+      Calls Location: SelectStatement.java:998 SelectStatement.java:1257
+      Atomic: NO
+
+      Method: SelectStatement.executeInternal()
+      Calls Location: SelectStatement.java:998 SelectStatement.java:1257
+      Atomic: NO
+
+      Method: SelectStatement.pageCountQuery()
+      Calls Location: SelectStatement.java:1242 SelectStatement.java:1242
+      Atomic: NO
+
+      Method: SelectStatement.pageCountQuery()
+      Calls Location: SelectStatement.java:1242 SelectStatement.java:1257
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: StorageService.initServer()
+      Calls Location: StorageService.java:548 StorageService.java:548
+      Atomic: YES
+
+      Method: StorageService.getTokenToEndpointMap()
+      Calls Location: StorageService.java:1298 StorageService.java:1298
+      Atomic: NO
+
+      Method: StorageService.effectiveOwnership()
+      Calls Location: StorageService.java:3677 StorageService.java:3677
+      Atomic: NO
+
+      Method: StorageService.onJoin()
+      Calls Location: StorageService.java:1615 StorageService.java:1639
+      Atomic: NO
+
+      Method: StorageService.onJoin()
+      Calls Location: StorageService.java:1615 StorageService.java:1615
+      Atomic: NO
+
+      Method: StorageService.onJoin()
+      Calls Location: StorageService.java:1639 StorageService.java:1639
+      Atomic: NO
+
+      Method: StorageService.onJoin()
+      Calls Location: StorageService.java:1639 StorageService.java:1615
+      Atomic: NO
+
+      Method: StorageService.handleStateNormal()
+      Calls Location: StorageService.java:1615 StorageService.java:1639
+      Atomic: NO
+
+      Method: StorageService.handleStateNormal()
+      Calls Location: StorageService.java:1639 StorageService.java:1639
+      Atomic: NO
+
+      Method: StorageService.handleStateNormal()
+      Calls Location: StorageService.java:1639 StorageService.java:1615
+      Atomic: NO
+
+      Method: StorageService.handleStateNormal()
+      Calls Location: StorageService.java:1615 StorageService.java:1615
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: CFPropDefs.validate()
+      Calls Location: CFPropDefs.java:99 CFPropDefs.java:105
+      Atomic: NO
+
+      Method: CFPropDefs.validate()
+      Calls Location: CFPropDefs.java:86 CFPropDefs.java:105
+      Atomic: NO
+
+      Method: CFPropDefs.validate()
+      Calls Location: CFPropDefs.java:86 CFPropDefs.java:99
+      Atomic: NO
+
+      Method: CFPropDefs.applyToCFMetadata()
+      Calls Location: CFPropDefs.java:150 CFPropDefs.java:151
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: CreateTableStatement$RawStatement.prepare()
+      Calls Location: CreateTableStatement.java:395 CreateTableStatement.java:388
+      Atomic: NO
+
+      Method: CreateTableStatement$RawStatement.prepare()
+      Calls Location: CreateTableStatement.java:395 CreateTableStatement.java:395
+      Atomic: NO
+
+      Method: CreateTableStatement$RawStatement.getTypeAndRemove()
+      Calls Location: CreateTableStatement.java:388 CreateTableStatement.java:395
+      Atomic: NO
+
+      Method: CreateTableStatement$RawStatement.prepare()
+      Calls Location: CreateTableStatement.java:388 CreateTableStatement.java:388
+      Atomic: NO
+
+      Method: CreateTableStatement$RawStatement.prepare()
+      Calls Location: CreateTableStatement.java:388 CreateTableStatement.java:395
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: BatchStatement.addStatementMutations()
+      Calls Location: BatchStatement.java:187 BatchStatement.java:187
+      Atomic: NO
+
+      Method: BatchStatement.getMutations()
+      Calls Location: BatchStatement.java:187 BatchStatement.java:187
+      Atomic: NO
+
+      Method: BatchStatement.getMutations()
+      Calls Location: BatchStatement.java:187 BatchStatement.java:171
+      Atomic: NO
+
+      Method: BatchStatement.addStatementMutations()
+      Calls Location: BatchStatement.java:171 BatchStatement.java:187
+      Atomic: NO
+
+      Method: BatchStatement.getMutations()
+      Calls Location: BatchStatement.java:171 BatchStatement.java:187
+      Atomic: NO
+
+      Method: BatchStatement.getMutations()
+      Calls Location: BatchStatement.java:171 BatchStatement.java:171
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: SizeTieredCompactionStrategyOptions.validateOptions()
+      Calls Location: SizeTieredCompactionStrategyOptions.java:62 SizeTieredCompactionStrategyOptions.java:62
+      Atomic: NO
+
+      Method: SizeTieredCompactionStrategyOptions.<init>()
+      Calls Location: SizeTieredCompactionStrategyOptions.java:46 SizeTieredCompactionStrategyOptions.java:48
+      Atomic: NO
+
+      Method: SizeTieredCompactionStrategyOptions.<init>()
+      Calls Location: SizeTieredCompactionStrategyOptions.java:42 SizeTieredCompactionStrategyOptions.java:44
+      Atomic: NO
+
+      Method: SizeTieredCompactionStrategyOptions.validateOptions()
+      Calls Location: SizeTieredCompactionStrategyOptions.java:75 SizeTieredCompactionStrategyOptions.java:62
+      Atomic: NO
+
+      Method: SizeTieredCompactionStrategyOptions.<init>()
+      Calls Location: SizeTieredCompactionStrategyOptions.java:44 SizeTieredCompactionStrategyOptions.java:46
+      Atomic: NO
+
+      Method: SizeTieredCompactionStrategyOptions.<init>()
+      Calls Location: SizeTieredCompactionStrategyOptions.java:42 SizeTieredCompactionStrategyOptions.java:46
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: ConcurrentBiMap.putAll()
+      Calls Location: ConcurrentBiMap.java:95 ConcurrentBiMap.java:95
+      Atomic: YES
+--
+  Verifying word get get:
+
+      Method: DefsTables.mergeColumnFamilies()
+      Calls Location: DefsTables.java:282 DefsTables.java:426
+      Atomic: NO
+
+      Method: DefsTables.mergeColumnFamilies()
+      Calls Location: DefsTables.java:282 DefsTables.java:282
+      Atomic: NO
+
+      Method: DefsTables.mergeColumnFamilies()
+      Calls Location: DefsTables.java:426 DefsTables.java:426
+      Atomic: NO
+
+      Method: DefsTables.mergeColumnFamilies()
+      Calls Location: DefsTables.java:426 DefsTables.java:282
+      Atomic: NO
+
+      Method: DefsTables.mergeKeyspaces()
+      Calls Location: DefsTables.java:245 DefsTables.java:245
+      Atomic: NO
+
+      Method: DefsTables.mergeSchema()
+      Calls Location: DefsTables.java:245 DefsTables.java:426
+      Atomic: YES
+
+      Method: DefsTables.mergeSchema()
+      Calls Location: DefsTables.java:245 DefsTables.java:282
+      Atomic: YES
+--
+  Verifying word get get:
+
+      Method: MessagingService.logDroppedMessages()
+      Calls Location: MessagingService.java:853 MessagingService.java:853
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: ColumnFamilyMetrics.release()
+      Calls Location: ColumnFamilyMetrics.java:463 ColumnFamilyMetrics.java:463
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: SizeTieredCompactionStrategy$1.compare()
+      Calls Location: SizeTieredCompactionStrategy.java:102 SizeTieredCompactionStrategy.java:102
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: SizeTieredCompactionStrategy$3.compare()
+      Calls Location: SizeTieredCompactionStrategy.java:203 SizeTieredCompactionStrategy.java:203
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: TokenMetadata$Topology.<init>()
+      Calls Location: TokenMetadata.java:1126 TokenMetadata.java:1126
+      Atomic: NO
+
+      Method: TokenMetadata$Topology.addEndpoint()
+      Calls Location: TokenMetadata.java:1143 TokenMetadata.java:1151
+      Atomic: NO
+
+      Method: TokenMetadata$Topology.addEndpoint()
+      Calls Location: TokenMetadata.java:1138 TokenMetadata.java:1151
+      Atomic: NO
+
+      Method: TokenMetadata$Topology.addEndpoint()
+      Calls Location: TokenMetadata.java:1138 TokenMetadata.java:1143
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: SelectStatement$RawStatement.prepare()
+      Calls Location: SelectStatement.java:1612 SelectStatement.java:1631
+      Atomic: NO
+
+      Method: SelectStatement$RawStatement.prepare()
+      Calls Location: SelectStatement.java:1612 SelectStatement.java:1612
+      Atomic: NO
+
+      Method: SelectStatement$RawStatement.updateRestrictionsForRelation()
+      Calls Location: SelectStatement.java:1612 SelectStatement.java:1612
+      Atomic: NO
+
+      Method: SelectStatement$RawStatement.prepare()
+      Calls Location: SelectStatement.java:1631 SelectStatement.java:1631
+      Atomic: NO
+
+      Method: SelectStatement$RawStatement.prepare()
+      Calls Location: SelectStatement.java:1631 SelectStatement.java:1612
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: ModificationStatement.createClusteringPrefixBuilderInternal()
+      Calls Location: ModificationStatement.java:408 ModificationStatement.java:408
+      Atomic: NO
+
+      Method: ModificationStatement.createClusteringPrefixBuilder()
+      Calls Location: ModificationStatement.java:379 ModificationStatement.java:379
+      Atomic: NO
+
+      Method: ModificationStatement.getFirstEmptyKey()
+      Calls Location: ModificationStatement.java:436 ModificationStatement.java:436
+      Atomic: NO
+
+      Method: ModificationStatement.buildPartitionKeyNames()
+      Calls Location: ModificationStatement.java:324 ModificationStatement.java:324
+      Atomic: NO
+
+      Method: ModificationStatement.getMutations()
+      Calls Location: ModificationStatement.java:324 ModificationStatement.java:408
+      Atomic: NO
+
+      Method: ModificationStatement.executeWithCondition()
+      Calls Location: ModificationStatement.java:324 ModificationStatement.java:408
+      Atomic: NO
+
+      Method: ModificationStatement.getMutations()
+      Calls Location: ModificationStatement.java:324 ModificationStatement.java:379
+      Atomic: NO
+
+      Method: ModificationStatement.executeWithCondition()
+      Calls Location: ModificationStatement.java:324 ModificationStatement.java:379
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: CassandraDaemon.setup()
+      Calls Location: CassandraDaemon.java:285 CassandraDaemon.java:285
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: FailureDetector.toString()
+      Calls Location: FailureDetector.java:278 FailureDetector.java:278
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: Gossiper.doStatusCheck()
+      Calls Location: Gossiper.java:694 Gossiper.java:694
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: RowMutationVerbHandler.doVerb()
+      Calls Location: RowMutationVerbHandler.java:42 RowMutationVerbHandler.java:47
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: LegacyLeveledManifest.migrateManifests()
+      Calls Location: LegacyLeveledManifest.java:70 LegacyLeveledManifest.java:70
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: OutboundTcpConnection.run()
+      Calls Location: OutboundTcpConnection.java:184 OutboundTcpConnection.java:184
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: CommitLogReplayer.recover()
+      Calls Location: CommitLogReplayer.java:280 CommitLogReplayer.java:280
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: DataType.writeValue()
+      Calls Location: DataType.java:153 DataType.java:153
+      Atomic: NO
+
+      Method: DataType.serializedValueSize()
+      Calls Location: DataType.java:153 DataType.java:153
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: TriggerExecutor.executeInternal()
+      Calls Location: TriggerExecutor.java:210 TriggerExecutor.java:184
+      Atomic: NO
+
+      Method: TriggerExecutor.executeInternal()
+      Calls Location: TriggerExecutor.java:210 TriggerExecutor.java:209
+      Atomic: NO
+
+      Method: TriggerExecutor.execute()
+      Calls Location: TriggerExecutor.java:210 TriggerExecutor.java:184
+      Atomic: NO
+
+      Method: TriggerExecutor.execute()
+      Calls Location: TriggerExecutor.java:210 TriggerExecutor.java:209
+      Atomic: NO
+
+      Method: TriggerExecutor.execute()
+      Calls Location: TriggerExecutor.java:184 TriggerExecutor.java:184
+      Atomic: NO
+
+      Method: TriggerExecutor.execute()
+      Calls Location: TriggerExecutor.java:184 TriggerExecutor.java:209
+      Atomic: NO
+
+      Method: TriggerExecutor.executeInternal()
+      Calls Location: TriggerExecutor.java:209 TriggerExecutor.java:184
+      Atomic: NO
+
+      Method: TriggerExecutor.executeInternal()
+      Calls Location: TriggerExecutor.java:209 TriggerExecutor.java:209
+      Atomic: NO
+
+      Method: TriggerExecutor.execute()
+      Calls Location: TriggerExecutor.java:209 TriggerExecutor.java:184
+      Atomic: NO
+
+      Method: TriggerExecutor.execute()
+      Calls Location: TriggerExecutor.java:209 TriggerExecutor.java:209
+      Atomic: NO
+
+      Method: TriggerExecutor.loadTriggerInstance()
+      Calls Location: TriggerExecutor.java:209 TriggerExecutor.java:210
+      Atomic: YES
+
+      Method: TriggerExecutor.executeInternal()
+      Calls Location: TriggerExecutor.java:184 TriggerExecutor.java:184
+      Atomic: NO
+
+      Method: TriggerExecutor.executeInternal()
+      Calls Location: TriggerExecutor.java:184 TriggerExecutor.java:209
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: StreamSession.addTransferFiles()
+      Calls Location: StreamSession.java:310 StreamSession.java:310
+      Atomic: NO
+
+      Method: StreamSession.prepare()
+      Calls Location: StreamSession.java:310 StreamSession.java:310
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: CreateKeyspaceStatement.validate()
+      Calls Location: CreateKeyspaceStatement.java:63 CreateKeyspaceStatement.java:63
+      Atomic: NO
+
+      Method: CreateKeyspaceStatement.validate()
+      Calls Location: CreateKeyspaceStatement.java:58 CreateKeyspaceStatement.java:63
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: CreateColumnFamilyStatement.getCFMetaData()
+      Calls Location: CreateColumnFamilyStatement.java:134 CreateColumnFamilyStatement.java:187
+      Atomic: NO
+
+      Method: CreateColumnFamilyStatement.getColumns()
+      Calls Location: CreateColumnFamilyStatement.java:134 CreateColumnFamilyStatement.java:134
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: CommitLogReplayer$1.runMayThrow()
+      Calls Location: CommitLogReplayer.java:335 CommitLogReplayer.java:335
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: StreamTransferTask.createMessageForRetry()
+      Calls Location: StreamTransferTask.java:105 StreamTransferTask.java:108
+      Atomic: YES
+--
+  Verifying word get get:
+
+      Method: CassandraServer.getSliceInternal()
+      Calls Location: CassandraServer.java:275 CassandraServer.java:341
+      Atomic: NO
+
+      Method: CassandraServer.getSlice()
+      Calls Location: CassandraServer.java:275 CassandraServer.java:275
+      Atomic: NO
+--
+  Verifying word get get:
+
+      Method: CFPropDefs.getComparator()
+      Calls Location: CFPropDefs.java:217 CFPropDefs.java:217
+      Atomic: NO
+
+      Method: CFPropDefs.getValidator()
+      Calls Location: CFPropDefs.java:224 CFPropDefs.java:236
+      Atomic: NO
+
+      Method: CFPropDefs.getComparator()
+      Calls Location: CFPropDefs.java:217 CFPropDefs.java:236
+      Atomic: NO
+
+      Method: CFPropDefs.getValidator()
+      Calls Location: CFPropDefs.java:224 CFPropDefs.java:224
+      Atomic: NO
+
+      Method: CFPropDefs.getComparator()
+      Calls Location: CFPropDefs.java:236 CFPropDefs.java:217
+      Atomic: NO
+
+      Method: CFPropDefs.getValidator()
+      Calls Location: CFPropDefs.java:236 CFPropDefs.java:224
+      Atomic: NO
+
+      Method: CFPropDefs.getComparator()
+      Calls Location: CFPropDefs.java:236 CFPropDefs.java:217
+      Atomic: NO
+
+      Method: CFPropDefs.getValidator()
+      Calls Location: CFPropDefs.java:236 CFPropDefs.java:236
+      Atomic: NO
+
+      Method: CFPropDefs.getComparator()
+      Calls Location: CFPropDefs.java:236 CFPropDefs.java:236
+      Atomic: NO
+
+      Method: CFPropDefs.getValidator()
+      Calls Location: CFPropDefs.java:236 CFPropDefs.java:224
+      Atomic: NO
+
+      Method: CFPropDefs.validate()
+      Calls Location: CFPropDefs.java:134 CFPropDefs.java:273
+      Atomic: NO
+
+      Method: CFPropDefs.validate()
+      Calls Location: CFPropDefs.java:134 CFPropDefs.java:134
+      Atomic: NO
+
+      Method: CFPropDefs.validate()
+      Calls Location: CFPropDefs.java:273 CFPropDefs.java:273
+      Atomic: NO

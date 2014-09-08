@@ -1,0 +1,10 @@
+--
+  Verifying word shutdown awaitTermination:
+
+      Method: StorageService.drain()
+      Calls Location: StorageService.java:3577 StorageService.java:3578
+      Atomic: YES
+
+      Method: StorageService.onJoin()
+      Calls Location: StorageService.java:3577 StorageService.java:3578
+      Atomic: NO

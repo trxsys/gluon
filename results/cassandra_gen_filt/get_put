@@ -1,0 +1,358 @@
+--
+  Verifying word get put:
+
+****  Method: Operation.getPreparedStatement()
+      Calls Location: Operation.java:314 Operation.java:318
+      Atomic: NO
+
+****  Method: Operation.getPreparedStatement()
+      Calls Location: Operation.java:297 Operation.java:304
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: CFMetaData.apply()
+      Calls Location: CFMetaData.java:1084 CFMetaData.java:2029
+      Atomic: NO
+
+      Method: CFMetaData.apply()
+      Calls Location: CFMetaData.java:1083 CFMetaData.java:2029
+      Atomic: NO
+
+      Method: CFMetaData.renameColumn()
+      Calls Location: CFMetaData.java:1892 CFMetaData.java:1907
+      Atomic: NO
+
+      Method: CFMetaData.renameColumn()
+      Calls Location: CFMetaData.java:1888 CFMetaData.java:1907
+      Atomic: NO
+
+      Method: CFMetaData.apply()
+      Calls Location: CFMetaData.java:1084 CFMetaData.java:1992
+      Atomic: NO
+
+      Method: CFMetaData.apply()
+      Calls Location: CFMetaData.java:1083 CFMetaData.java:1992
+      Atomic: NO
+
+      Method: CFMetaData.apply()
+      Calls Location: CFMetaData.java:1084 CFMetaData.java:2014
+      Atomic: NO
+
+      Method: CFMetaData.apply()
+      Calls Location: CFMetaData.java:1083 CFMetaData.java:2014
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: TypeParser.parse()
+      Calls Location: TypeParser.java:68 TypeParser.java:92
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: RowMutation.addOrGet()
+      Calls Location: RowMutation.java:138 RowMutation.java:142
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: CompositeType.getInstance()
+      Calls Location: CompositeType.java:106 CompositeType.java:110
+      Atomic: YES
+--
+  Verifying word get put:
+
+      Method: ColumnToCollectionType.getInstance()
+      Calls Location: ColumnToCollectionType.java:49 ColumnToCollectionType.java:53
+      Atomic: YES
+--
+  Verifying word get put:
+
+****  Method: SystemKeyspace.serializeSchema()
+      Calls Location: SystemKeyspace.java:815 SystemKeyspace.java:819
+      Atomic: NO
+
+      Method: SystemKeyspace.serializeSchema()
+      Calls Location: SystemKeyspace.java:815 SystemKeyspace.java:819
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: ReversedType.getInstance()
+      Calls Location: ReversedType.java:47 ReversedType.java:51
+      Atomic: YES
+--
+  Verifying word get put:
+
+      Method: AbstractReplicationStrategy.getNaturalEndpoints()
+      Calls Location: AbstractReplicationStrategy.java:93 AbstractReplicationStrategy.java:114
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: BatchStatement.addStatementMutations()
+      Calls Location: BatchStatement.java:171 BatchStatement.java:175
+      Atomic: NO
+
+      Method: BatchStatement.addStatementMutations()
+      Calls Location: BatchStatement.java:187 BatchStatement.java:193
+      Atomic: NO
+
+      Method: BatchStatement.addStatementMutations()
+      Calls Location: BatchStatement.java:171 BatchStatement.java:193
+      Atomic: NO
+
+      Method: BatchStatement.getMutations()
+      Calls Location: BatchStatement.java:187 BatchStatement.java:175
+      Atomic: NO
+
+      Method: BatchStatement.getMutations()
+      Calls Location: BatchStatement.java:187 BatchStatement.java:193
+      Atomic: NO
+
+      Method: BatchStatement.getMutations()
+      Calls Location: BatchStatement.java:171 BatchStatement.java:175
+      Atomic: NO
+
+      Method: BatchStatement.getMutations()
+      Calls Location: BatchStatement.java:171 BatchStatement.java:193
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: ConcurrentBiMap.put()
+      Calls Location: ConcurrentBiMap.java:95 ConcurrentBiMap.java:101
+      Atomic: YES
+
+      Method: ConcurrentBiMap.put()
+      Calls Location: ConcurrentBiMap.java:95 ConcurrentBiMap.java:98
+      Atomic: YES
+
+      Method: ConcurrentBiMap.putAll()
+      Calls Location: ConcurrentBiMap.java:95 ConcurrentBiMap.java:101
+      Atomic: YES
+
+      Method: ConcurrentBiMap.putAll()
+      Calls Location: ConcurrentBiMap.java:95 ConcurrentBiMap.java:98
+      Atomic: YES
+--
+  Verifying word get put:
+
+      Method: ListType.getInstance()
+      Calls Location: ListType.java:50 ListType.java:54
+      Atomic: YES
+--
+  Verifying word get put:
+
+      Method: MapType.getInstance()
+      Calls Location: MapType.java:52 MapType.java:56
+      Atomic: YES
+--
+  Verifying word get put:
+
+      Method: SetType.getInstance()
+      Calls Location: SetType.java:49 SetType.java:53
+      Atomic: YES
+--
+  Verifying word get put:
+
+      Method: MessagingService.incrementRejectedMessages()
+      Calls Location: MessagingService.java:837 MessagingService.java:841
+      Atomic: NO
+
+      Method: MessagingService.logDroppedMessages()
+      Calls Location: MessagingService.java:853 MessagingService.java:859
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: TokenMetadata$Topology.addEndpoint()
+      Calls Location: TokenMetadata.java:1151 TokenMetadata.java:1153
+      Atomic: NO
+
+      Method: TokenMetadata$Topology.addEndpoint()
+      Calls Location: TokenMetadata.java:1143 TokenMetadata.java:1150
+      Atomic: NO
+
+      Method: TokenMetadata$Topology.addEndpoint()
+      Calls Location: TokenMetadata.java:1138 TokenMetadata.java:1150
+      Atomic: NO
+
+      Method: TokenMetadata$Topology.<init>()
+      Calls Location: TokenMetadata.java:1126 TokenMetadata.java:1126
+      Atomic: NO
+
+      Method: TokenMetadata$Topology.addEndpoint()
+      Calls Location: TokenMetadata.java:1143 TokenMetadata.java:1153
+      Atomic: NO
+
+      Method: TokenMetadata$Topology.addEndpoint()
+      Calls Location: TokenMetadata.java:1138 TokenMetadata.java:1153
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: ColumnGroupMap.add()
+      Calls Location: ColumnGroupMap.java:52 ColumnGroupMap.java:56
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: SelectStatement$RawStatement.prepare()
+      Calls Location: SelectStatement.java:1612 SelectStatement.java:1635
+      Atomic: NO
+
+      Method: SelectStatement$RawStatement.prepare()
+      Calls Location: SelectStatement.java:1612 SelectStatement.java:1910
+      Atomic: NO
+
+      Method: SelectStatement$RawStatement.prepare()
+      Calls Location: SelectStatement.java:1612 SelectStatement.java:1894
+      Atomic: NO
+
+      Method: SelectStatement$RawStatement.prepare()
+      Calls Location: SelectStatement.java:1631 SelectStatement.java:1635
+      Atomic: NO
+
+      Method: SelectStatement$RawStatement.prepare()
+      Calls Location: SelectStatement.java:1631 SelectStatement.java:1910
+      Atomic: NO
+
+      Method: SelectStatement$RawStatement.prepare()
+      Calls Location: SelectStatement.java:1631 SelectStatement.java:1894
+      Atomic: NO
+
+      Method: SelectStatement$RawStatement.updateRestrictionsForRelation()
+      Calls Location: SelectStatement.java:1631 SelectStatement.java:1635
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: FailureDetector.report()
+      Calls Location: FailureDetector.java:209 FailureDetector.java:215
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: StreamPlan.getOrCreateSession()
+      Calls Location: StreamPlan.java:167 StreamPlan.java:171
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: Gossiper.doStatusCheck()
+      Calls Location: Gossiper.java:694 Gossiper.java:372
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: SSTableLoader$Client.addRangeForEndpoint()
+      Calls Location: SSTableLoader.java:271 SSTableLoader.java:275
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: ListSerializer.getInstance()
+      Calls Location: ListSerializer.java:36 ListSerializer.java:40
+      Atomic: YES
+--
+  Verifying word get put:
+
+      Method: MapSerializer.getInstance()
+      Calls Location: MapSerializer.java:39 MapSerializer.java:43
+      Atomic: YES
+--
+  Verifying word get put:
+
+      Method: SetSerializer.getInstance()
+      Calls Location: SetSerializer.java:36 SetSerializer.java:40
+      Atomic: YES
+--
+  Verifying word get put:
+
+      Method: Directories$SSTableLister$1.accept()
+      Calls Location: Directories.java:424 Directories.java:428
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: CommitLogReplayer.recover()
+      Calls Location: CommitLogReplayer.java:280 CommitLogReplayer.java:284
+      Atomic: NO
+
+      Method: CommitLogReplayer.recover()
+      Calls Location: CommitLogReplayer.java:280 CommitLogReplayer.java:284
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: TriggerExecutor.executeInternal()
+      Calls Location: TriggerExecutor.java:210 TriggerExecutor.java:188
+      Atomic: NO
+
+      Method: TriggerExecutor.execute()
+      Calls Location: TriggerExecutor.java:210 TriggerExecutor.java:188
+      Atomic: NO
+
+      Method: TriggerExecutor.execute()
+      Calls Location: TriggerExecutor.java:184 TriggerExecutor.java:188
+      Atomic: NO
+
+      Method: TriggerExecutor.executeInternal()
+      Calls Location: TriggerExecutor.java:184 TriggerExecutor.java:188
+      Atomic: NO
+
+      Method: TriggerExecutor.executeInternal()
+      Calls Location: TriggerExecutor.java:209 TriggerExecutor.java:188
+      Atomic: NO
+
+      Method: TriggerExecutor.execute()
+      Calls Location: TriggerExecutor.java:209 TriggerExecutor.java:188
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: StreamSession.prepare()
+      Calls Location: StreamSession.java:310 StreamSession.java:314
+      Atomic: NO
+
+      Method: StreamSession.prepare()
+      Calls Location: StreamSession.java:310 StreamSession.java:666
+      Atomic: NO
+
+!!!!  Method: StreamSession.addTransferFiles()
+      Calls Location: StreamSession.java:310 StreamSession.java:314
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: CreateKeyspaceStatement.validate()
+      Calls Location: CreateKeyspaceStatement.java:63 CreateKeyspaceStatement.java:63
+      Atomic: NO
+
+      Method: CreateKeyspaceStatement.validate()
+      Calls Location: CreateKeyspaceStatement.java:58 CreateKeyspaceStatement.java:63
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: CustomClassLoader.loadClass()
+      Calls Location: CustomClassLoader.java:101 CustomClassLoader.java:119
+      Atomic: NO
+--
+  Verifying word get put:
+
+      Method: CFPropDefs.validate()
+      Calls Location: CFPropDefs.java:134 CFPropDefs.java:138
+      Atomic: NO
+
+      Method: CFPropDefs.validate()
+      Calls Location: CFPropDefs.java:134 CFPropDefs.java:144
+      Atomic: NO
+--
+  Verifying word get put:
+
+!!!!  Method: ThriftSessionManager.currentSession()
+      Calls Location: ThriftSessionManager.java:57 ThriftSessionManager.java:61
+      Atomic: NO

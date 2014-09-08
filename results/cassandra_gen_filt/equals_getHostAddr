@@ -1,0 +1,32 @@
+
+  Verifying word equals getHostAddress:
+
+      Method: SystemKeyspace.updatePeerInfo()
+      Calls Location: SystemKeyspace.java:373 SystemKeyspace.java:377
+      Atomic: YES
+
+      Method: SystemKeyspace.updateTokens()
+      Calls Location: SystemKeyspace.java:354 SystemKeyspace.java:424
+      Atomic: YES
+
+      Method: SystemKeyspace.updateTokens()
+      Calls Location: SystemKeyspace.java:354 SystemKeyspace.java:361
+      Atomic: YES
+--
+  Verifying word equals getHostAddress:
+
+      Method: StorageService.getRpcaddress()
+      Calls Location: StorageService.java:1092 StorageService.java:1095
+      Atomic: NO
+
+      Method: StorageService.describeRing()
+      Calls Location: StorageService.java:1092 StorageService.java:1269
+      Atomic: NO
+
+      Method: StorageService.getRangeToRpcaddressMap()
+      Calls Location: StorageService.java:1092 StorageService.java:1095
+      Atomic: NO
+
+      Method: StorageService.describeRing()
+      Calls Location: StorageService.java:1092 StorageService.java:1095
+      Atomic: NO
