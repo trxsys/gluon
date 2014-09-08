@@ -368,7 +368,7 @@ public class AnalysisMain
             {
                 checkThreadWord(thread,word,vEquiv);
             }
-            catch (ParserAbortedException _)
+            catch (ParserAbortedException e)
             {
                 System.out.println("    *** Timeout ***");
                 System.out.println();
@@ -538,7 +538,7 @@ public class AnalysisMain
             {
                 checkClassWord(c,word,vEquiv);
             }
-            catch (ParserAbortedException _)
+            catch (ParserAbortedException e)
             {
                 System.out.println("    *** Timeout ***");
                 System.out.println();

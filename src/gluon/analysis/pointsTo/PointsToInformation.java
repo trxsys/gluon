@@ -46,7 +46,7 @@ public class PointsToInformation
         Type leastCommonType;
 
         try { leastCommonType=module.merge(obj,Scene.v()); }
-        catch (Exception _) { return false; }
+        catch (Exception e) { return false; }
 
         return leastCommonType.equals(module);
     }

@@ -33,7 +33,7 @@ class GUI extends Thread {
             this.connection.resetSocket();
             this.connection.resetCounter();
         }
-        catch (Exception _)
+        catch (Exception e)
         {
 
         }

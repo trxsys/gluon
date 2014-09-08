@@ -94,7 +94,7 @@ public class Contract
         {
             Main.fatal("syntax error in contract: "+clause+": "+pe.getMessage());
         }
-        catch (java.io.IOException _)
+        catch (java.io.IOException e)
         {
             assert false : "this should not happen";
         }
@@ -129,7 +129,7 @@ public class Contract
                             Main.fatal(t.getName()
                                        +": wrong number of parameters!");
                     }
-                    catch (Exception _)
+                    catch (Exception e)
                     {
                         Main.warning(t.getName()+": ambiguous method!");
                     }

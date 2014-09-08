@@ -282,7 +282,7 @@ public class Main
         Scene.v().loadDynamicClasses();
 
         try { Scene.v().setMainClass(mainClass); }
-        catch (Exception _) { fatal("error loading main class"); }
+        catch (Exception e) { fatal("error loading main class"); }
 
         if (CLASS_SCOPE)
         {
@@ -296,20 +296,20 @@ public class Main
                         String c=sc.next();
 
                         try { Scene.v().loadClassAndSupport(c); }
-                        catch (Exception _) {};
+                        catch (Exception e) {};
                     }
                 }
-                catch (Exception _) {}
+                catch (Exception e) {}
 
             for (SootClass c: Scene.v().getClasses())
                 for (soot.SootMethod m: c.getMethods())
                     try { m.retrieveActiveBody(); }
-                    catch (Exception _) {}
+                    catch (Exception e) {}
 
             for (SootClass c: Scene.v().dynamicClasses())
                 for (soot.SootMethod m: c.getMethods())
                     try { m.retrieveActiveBody(); }
-                    catch (Exception _) {}
+                    catch (Exception e) {}
         }
 
         /* Points-to analises */
