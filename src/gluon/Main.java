@@ -327,19 +327,6 @@ public class Main
         /* Points-to analises */
         SparkTransformer.v().transform("",getSparkOptions());
 
-        /* TODO just for testing */
-        if (false)
-        {
-            int count=0;
-
-            for (SootClass c: Scene.v().getClasses())
-                if (c.toString().contains("cassandra"))
-                    count++;
-
-            System.out.println("classes: "+count);
-            System.exit(0);
-        }
-
         PackManager.v().runPacks();
     }
 

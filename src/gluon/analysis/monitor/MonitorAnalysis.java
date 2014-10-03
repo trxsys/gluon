@@ -64,6 +64,7 @@ public class MonitorAnalysis
 {
     private final Scene scene;
     private Map<EnterMonitorStmt,Collection<ExitMonitorStmt>> exitMon;
+    private Collection<SynchedSection> synchedSections;
 
     private Set<Unit> visited;
 
@@ -72,6 +73,7 @@ public class MonitorAnalysis
         scene=s;
         visited=null;
         exitMon=new HashMap<EnterMonitorStmt,Collection<ExitMonitorStmt>>();
+        synchedSections=new LinkedList<SynchedSection>();
     }
 
     private void analyzeUnit(SootMethod method, Unit unit, UnitGraph cfg,
@@ -111,6 +113,14 @@ public class MonitorAnalysis
         assert exitMon.containsKey(enterMon);
 
         return exitMon.get(enterMon);
+    }
+
+    public Collection<SynchedSection> getSynchedSections()
+    {
+        /* return set of (entry unit, unitgraph, set of exit units) */
+
+        // TODO
+        return null;
     }
 
     // synch -> type -> calls
@@ -247,13 +257,35 @@ public class MonitorAnalysis
                     cfg=new BriefUnitGraph(m.getActiveBody());
 
                     if (m.isSynchronized())
-                        for (Unit u: m.getActiveBody().getUnits())
-                            thisIsSynch(u,m);
+                        for (Unit head: cfg.getHeads())
+                        {
+                            SynchedSection synchSect;
+
+                            synchSect=new SynchedSection(head,cfg,cfg.getTails());
+                            synchedSections.add(synchSect);
+                        }
 
                     for (Unit head: cfg.getHeads())
                         analyzeUnit(m,head,cfg,null);
                 }
 
+        // private Map<EnterMonitorStmt,Collection<ExitMonitorStmt>> exitMon;
+
+
+        for (EnterMonitorStmt entMon: exitMon.keySet())
+        {
+            SynchedSection synchSect;
+            List<Unit> exits=new LinkedList<Unit>();
+
+            exits.addAll(exitMon.get(entMon));
+
+            // TODO: null
+            synchSect=new SynchedSection(entMon,null,exits);
+            synchedSections.add(synchSect);
+        }
+
+
+        // TODO
         if (false)
         {
             printSynchCalls();
