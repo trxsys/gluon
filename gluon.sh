@@ -1,8 +1,10 @@
 #!/bin/bash
 
+set -e
+
 cd "$(dirname "$0")"
 
-sbt assembly
+sbt --warn assembly
 
 jar=$(find target -name 'gluon-assembly-*.jar' | sort | tail -1)
 
