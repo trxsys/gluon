@@ -1,7 +1,9 @@
 #!/bin/bash
 
-export SBT_OPTS="-Xmx5048m"
+cd "$(dirname "$0")"
 
-args="$@"
+sbt assembly
 
-sbt "run $args"
+jar=$(find target -name 'gluon-assembly-*.jar' | sort | tail -1)
+
+java -Xmx5048m -jar "$jar" "$@"

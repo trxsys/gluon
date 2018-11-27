@@ -18,6 +18,9 @@ package gluon;
 
 import gnu.getopt.Getopt;
 import gnu.getopt.LongOpt;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.RegexFileFilter;
 import soot.*;
 import soot.jimple.spark.SparkTransformer;
 import soot.options.Options;
@@ -25,6 +28,7 @@ import soot.options.Options;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -220,6 +224,25 @@ public class Main
         return opt;
     }
 
+    private static String fullClasspath() {
+        StringBuilder cp = new StringBuilder();
+        String javaHome = System.getProperty("java.home");
+
+        Collection<File> jarFiles = FileUtils.listFiles(
+                new File(javaHome),
+                new RegexFileFilter("^.*\\.jar$"),
+                DirectoryFileFilter.DIRECTORY
+        );
+
+        for (File jarFile: jarFiles) {
+            cp.append(jarFile.getAbsolutePath()).append(File.pathSeparator);
+        }
+
+        cp.append(classPath);
+
+        return cp.toString();
+    }
+
     private static void run() throws IOException {
         Transform t;
 
@@ -249,12 +272,7 @@ public class Main
         /* For points-to analysis */
         PhaseOptions.v().setPhaseOption("cg.spark","enabled:true");
 
-        if (false)
-            Scene.v().setSootClassPath(classPath);
-        else
-            Scene.v().setSootClassPath(System.getProperty("java.class.path")
-                                       +java.io.File.pathSeparator
-                                       +classPath);
+        Scene.v().setSootClassPath(fullClasspath());
 
         t=new Transform("wstp.gluon",AnalysisMain.instance());
 
@@ -365,6 +383,7 @@ public class Main
  *
  *   * add install step to README
  *     * increase default max heap
+ *   * make sure it packages tests source code
  *   * rebase other branch
  *   * run validation test
  *   * write email w/ instructions
