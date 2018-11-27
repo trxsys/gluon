@@ -1,4 +1,5 @@
-Warning: java.dyn.InvokeDynamic is a phantom class!
+[0m[[0m[0minfo[0m] [0m[0mStrategy 'discard' was applied to 17 files (Run the task at debug level to see details)[0m
+[0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread Main.main():
 
   Verifying word hasOrders treatOrder:
@@ -27,23 +28,23 @@ Checking thread Supplier.run():
 
 
 Run Time:
-                                .buildTree       0.000s
-                                    .onLCA       0.001s
-                         analysis-behavior       0.061s
+                                .buildTree       0.001s
+                                    .onLCA       0.002s
+                         analysis-behavior       0.055s
                           analysis-threads       0.004s
                        build-parsing-table       0.003s
                        check-word-instance       0.000s
-                               grammar-opt       0.022s
-                        grammar-rm-epsilon       0.029s
-                                   parsing       0.001s
-                                 soot-init      39.616s
-                                     total      39.706s
+                               grammar-opt       0.013s
+                        grammar-rm-epsilon       0.033s
+                                   parsing       0.002s
+                                 soot-init      45.195s
+                                     total      45.343s
 
 Profiling Vars:
                                alloc-sites          4
-                                 cfg-nodes        559
-                       grammar-productions         15
-                            parse-branches          6
+                                 cfg-nodes        561
+                       grammar-productions         13
+                            parse-branches          8
                                parse-trees          1
-                      parsing-table-states         21
+                      parsing-table-states         18
                                    threads          4

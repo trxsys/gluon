@@ -1,4 +1,5 @@
-Warning: java.dyn.InvokeDynamic is a phantom class!
+[0m[[0m[0minfo[0m] [0m[0mStrategy 'discard' was applied to 17 files (Run the task at debug level to see details)[0m
+[0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread Main.main():
 
   Verifying word getBalance setBalance:
@@ -25,17 +26,17 @@ Checking thread Update.run():
 
 
 Run Time:
-                                .buildTree       0.001s
+                                .buildTree       0.000s
                                     .onLCA       0.001s
-                         analysis-behavior       0.010s
-                          analysis-threads       0.004s
-                       build-parsing-table       0.003s
-                       check-word-instance       0.001s
-                               grammar-opt       0.003s
-                        grammar-rm-epsilon       0.006s
-                                   parsing       0.002s
-                                 soot-init      39.165s
-                                     total      39.206s
+                         analysis-behavior       0.006s
+                          analysis-threads       0.003s
+                       build-parsing-table       0.005s
+                       check-word-instance       0.000s
+                               grammar-opt       0.001s
+                        grammar-rm-epsilon       0.003s
+                                   parsing       0.001s
+                                 soot-init      40.502s
+                                     total      40.578s
 
 Profiling Vars:
                                alloc-sites          8

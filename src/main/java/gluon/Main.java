@@ -385,6 +385,5 @@ public class Main
  *     * increase default max heap
  *   * make sure it packages tests source code
  *   * rebase other branch
- *   * run validation test
  *   * write email w/ instructions
  */

@@ -1,4 +1,5 @@
-Warning: java.dyn.InvokeDynamic is a phantom class!
+[0m[[0m[0minfo[0m] [0m[0mStrategy 'discard' was applied to 17 files (Run the task at debug level to see details)[0m
+[0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread Main.main():
 
   Verifying word get_max_key insert:
@@ -26,20 +27,20 @@ Checking thread Client.run():
 
 Run Time:
                                 .buildTree       0.000s
-                                    .onLCA       0.003s
-                         analysis-behavior       0.201s
-                          analysis-threads       0.005s
-                       build-parsing-table       0.036s
-                       check-word-instance       0.003s
-                               grammar-opt       0.070s
-                        grammar-rm-epsilon       0.099s
-                                   parsing       0.003s
-                                 soot-init      42.558s
-                                     total      42.830s
+                                    .onLCA       0.001s
+                         analysis-behavior       0.133s
+                          analysis-threads       0.004s
+                       build-parsing-table       0.016s
+                       check-word-instance       0.000s
+                               grammar-opt       0.041s
+                        grammar-rm-epsilon       0.077s
+                                   parsing       0.002s
+                                 soot-init      47.118s
+                                     total      47.342s
 
 Profiling Vars:
                                alloc-sites         12
-                                 cfg-nodes       2256
+                                 cfg-nodes       2262
                        grammar-productions        170
                             parse-branches          8
                                parse-trees          2

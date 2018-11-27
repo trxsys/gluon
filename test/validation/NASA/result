@@ -1,4 +1,5 @@
-Warning: java.dyn.InvokeDynamic is a phantom class!
+[0m[[0m[0minfo[0m] [0m[0mStrategy 'discard' was applied to 17 files (Run the task at debug level to see details)[0m
+[0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread Main.main():
 
   Verifying word setValue(_,X) setAchieved(_,X):
@@ -23,15 +24,15 @@ Checking thread Task.run():
 Run Time:
                                 .buildTree       0.000s
                                     .onLCA       0.001s
-                         analysis-behavior       0.011s
-                          analysis-threads       0.004s
+                         analysis-behavior       0.012s
+                          analysis-threads       0.007s
                        build-parsing-table       0.002s
                        check-word-instance       0.001s
-                               grammar-opt       0.001s
-                        grammar-rm-epsilon       0.005s
-                                   parsing       0.001s
-                                 soot-init      37.333s
-                                     total      37.368s
+                               grammar-opt       0.004s
+                        grammar-rm-epsilon       0.004s
+                                   parsing       0.002s
+                                 soot-init      46.734s
+                                     total      46.811s
 
 Profiling Vars:
                                alloc-sites          6

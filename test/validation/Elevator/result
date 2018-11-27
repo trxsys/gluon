@@ -1,4 +1,5 @@
-Warning: java.dyn.InvokeDynamic is a phantom class!
+[0m[[0m[0minfo[0m] [0m[0mStrategy 'discard' was applied to 17 files (Run the task at debug level to see details)[0m
+[0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread Elevator.main():
 
   Verifying word checkUp(X) claimUp(X):
@@ -27,19 +28,19 @@ Checking thread Lift.run():
 Run Time:
                                 .buildTree       0.000s
                                     .onLCA       0.001s
-                         analysis-behavior       0.269s
-                          analysis-threads       0.004s
-                       build-parsing-table       0.032s
-                       check-word-instance       0.001s
-                               grammar-opt       0.093s
-                        grammar-rm-epsilon       0.141s
-                                   parsing       0.003s
-                                 soot-init      40.038s
-                                     total      40.371s
+                         analysis-behavior       0.151s
+                          analysis-threads       0.003s
+                       build-parsing-table       0.014s
+                       check-word-instance       0.000s
+                               grammar-opt       0.046s
+                        grammar-rm-epsilon       0.093s
+                                   parsing       0.002s
+                                 soot-init      43.425s
+                                     total      43.654s
 
 Profiling Vars:
                                alloc-sites          8
-                                 cfg-nodes       2068
+                                 cfg-nodes       2092
                        grammar-productions        134
                             parse-branches          2
                                parse-trees          2

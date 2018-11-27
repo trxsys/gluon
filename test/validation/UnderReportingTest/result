@@ -1,4 +1,5 @@
-Warning: java.dyn.InvokeDynamic is a phantom class!
+[0m[[0m[0minfo[0m] [0m[0mStrategy 'discard' was applied to 17 files (Run the task at debug level to see details)[0m
+[0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread Main.main():
 
   Verifying word inc inc:
@@ -17,15 +18,15 @@ Checking thread Main.run():
 Run Time:
                                 .buildTree       0.000s
                                     .onLCA       0.001s
-                         analysis-behavior       0.005s
+                         analysis-behavior       0.004s
                           analysis-threads       0.004s
                        build-parsing-table       0.001s
-                       check-word-instance       0.001s
-                               grammar-opt       0.000s
-                        grammar-rm-epsilon       0.002s
-                                   parsing       0.002s
-                                 soot-init      38.921s
-                                     total      38.950s
+                       check-word-instance       0.000s
+                               grammar-opt       0.002s
+                        grammar-rm-epsilon       0.001s
+                                   parsing       0.001s
+                                 soot-init      44.105s
+                                     total      44.157s
 
 Profiling Vars:
                                alloc-sites          4
