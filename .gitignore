@@ -1,8 +1,11 @@
 *.class
 TODO
-bin/
+/.idea
 
-src/gluon/contract/parsing/analysis/
-src/gluon/contract/parsing/lexer/
-src/gluon/contract/parsing/node/
-src/gluon/contract/parsing/parser/
+/src/main/java/gluon/contract/parsing/analysis/
+/src/main/java/gluon/contract/parsing/lexer/
+/src/main/java/gluon/contract/parsing/node/
+/src/main/java/gluon/contract/parsing/parser/
+
+target/
+/sootOutput/

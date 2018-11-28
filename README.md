@@ -85,13 +85,13 @@ Compiling
 To compile gluon you need to run
 
 ```shell
-ant
+sbt compile
 ```
 
 Compiling the tests is equally easy:
 
 ```shell
-ant tests
+sbt compileTests
 ```
 
 Running the Example Test
@@ -103,7 +103,7 @@ After the compilation gluon and the tests the example test can be ran with
 ./test.sh example
 ```
 
-This example can be found in ```test/simple/example```. You are encouraged to
+This example can be found in `test/simple/example`. You are encouraged to
 modify and play with the example.
 
 Running the Validation Tests

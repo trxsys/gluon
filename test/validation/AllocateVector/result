@@ -1,4 +1,5 @@
-Warning: java.dyn.InvokeDynamic is a phantom class!
+[0m[[0m[0minfo[0m] [0m[0mStrategy 'discard' was applied to 17 files (Run the task at debug level to see details)[0m
+[0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread Main.main():
 
   Verifying word getFreeBlockIndex markAsAllocatedBlock:
@@ -20,20 +21,20 @@ Checking thread TestThread1.run():
 
 Run Time:
                                 .buildTree       0.000s
-                                    .onLCA       0.000s
-                         analysis-behavior       0.088s
+                                    .onLCA       0.001s
+                         analysis-behavior       0.053s
                           analysis-threads       0.004s
                        build-parsing-table       0.005s
-                       check-word-instance       0.000s
-                               grammar-opt       0.036s
-                        grammar-rm-epsilon       0.037s
+                       check-word-instance       0.001s
+                               grammar-opt       0.016s
+                        grammar-rm-epsilon       0.031s
                                    parsing       0.003s
-                                 soot-init      38.632s
-                                     total      38.752s
+                                 soot-init      44.712s
+                                     total      44.828s
 
 Profiling Vars:
                                alloc-sites          8
-                                 cfg-nodes        882
+                                 cfg-nodes        862
                        grammar-productions         44
                             parse-branches         15
                                parse-trees          2
