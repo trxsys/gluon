@@ -377,13 +377,3 @@ public class Main
             dumpProfilingVars();
     }
 }
-
-/*
- * WIP!
- *
- *   * add install step to README
- *     * increase default max heap
- *   * make sure it packages tests source code
- *   * rebase other branch
- *   * write email w/ instructions
- */
