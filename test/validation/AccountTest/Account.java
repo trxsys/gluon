@@ -26,12 +26,12 @@ public class Account {
 	}
 
 	@Atomic
-	public int getBalance() {
+	public synchronized int getBalance() {
 		return balance;
 	}
 
 	@Atomic
-    public void setBalance(int newValue) {
+    public synchronized void setBalance(int newValue) {
 		balance = newValue;
 	}
 }

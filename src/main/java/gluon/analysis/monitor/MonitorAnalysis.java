@@ -45,7 +45,7 @@ class StackNode<E>
     {
         return element;
     }
-};
+}
 
 public class MonitorAnalysis
 {
@@ -186,6 +186,8 @@ public class MonitorAnalysis
             int len=seq.size();
             SootClass c=seq.get(0).getDeclaringClass();
 
+            // If there is only one sequence of synchronized calls we skip it.  We want at least two to have a better
+            // chance of actually implying that these methods should be called in an atomic way.
             if (count < 2)
                 continue;
 
