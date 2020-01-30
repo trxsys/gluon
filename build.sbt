@@ -13,13 +13,8 @@ lazy val settings = Seq(
   autoScalaLibrary := false,
   crossPaths := false,
 
-  resolvers ++= Seq(
-    "Soot Releases" at "https://soot-build.cs.uni-paderborn.de/nexus/repository/soot-release/",
-    "Soot Snapshots" at "https://soot-build.cs.uni-paderborn.de/nexus/repository/soot-snapshot/"
-  ),
-
   libraryDependencies ++= Seq(
-    "ca.mcgill.sable" % "soot-j9"     % "4.0.0-SNAPSHOT",
+    "ca.mcgill.sable" % "soot"        % "4.0.0",
     "gnu.getopt"      % "java-getopt" % "1.0.13"
   ),
 
@@ -47,6 +42,12 @@ lazy val settings = Seq(
     generateSableCC.value
 
     (grammarDir ** "*.java").get
+  },
+
+  assemblyMergeStrategy in assembly := {
+    case PathList("META-INF", _*) => MergeStrategy.discard
+    case "module-info.class" => MergeStrategy.first
+    case path => (assemblyMergeStrategy in assembly).value(path)
   },
 
   cleanFiles ++= {
