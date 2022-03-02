@@ -14,7 +14,7 @@ lazy val settings = Seq(
   crossPaths := false,
 
   libraryDependencies ++= Seq(
-    "ca.mcgill.sable" % "soot"        % "4.0.0",
+    "ca.mcgill.sable" % "soot"        % "4.1.0",
     "gnu.getopt"      % "java-getopt" % "1.0.13"
   ),
 
