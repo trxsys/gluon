@@ -354,7 +354,7 @@ public class Main
         if (args.length == 0)
         {
             help();
-            System.exit(-1);
+            System.exit(0);
             return;
         }
 

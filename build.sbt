@@ -63,7 +63,9 @@ lazy val settings = Seq(
       )
   },
 
-  mappings in Universal += file("README.md") -> "README.md"
+  mappings in Universal += file("README.md") -> "README.md",
+
+  fork in run := true
 )
 
 lazy val gluonTests =
