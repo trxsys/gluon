@@ -8,7 +8,7 @@ lazy val gluon = (project in file("."))
 lazy val settings = Seq(
   name := ProjectName,
 
-  mainClass in (Compile, run) := Some("gluon.Main"),
+  Compile / mainClass / run := Some("gluon.Main"),
 
   autoScalaLibrary := false,
   crossPaths := false,
@@ -18,9 +18,9 @@ lazy val settings = Seq(
     "gnu.getopt"      % "java-getopt" % "1.0.13"
   ),
 
-  resourceGenerators in Compile += Def.task {
-    val javaSourceDir = (javaSource in Compile).value
-    val resourceDir = (resourceManaged in Compile).value
+  Compile / resourceGenerators += Def.task {
+    val javaSourceDir = (Compile / javaSource).value
+    val resourceDir = (Compile / resourceManaged).value
 
     generateSableCC.value
 
@@ -35,8 +35,8 @@ lazy val settings = Seq(
     }
   },
 
-  sourceGenerators in Compile += Def.task {
-    val javaSourceDir: File = (javaSource in Compile).value
+  Compile / sourceGenerators += Def.task {
+    val javaSourceDir: File = (Compile / javaSource).value
     val grammarDir = javaSourceDir / "gluon" / "contract" / "parsing"
 
     generateSableCC.value
@@ -44,14 +44,14 @@ lazy val settings = Seq(
     (grammarDir ** "*.java").get
   },
 
-  assemblyMergeStrategy in assembly := {
+  assembly / assemblyMergeStrategy := {
     case PathList("META-INF", _*) => MergeStrategy.discard
     case "module-info.class" => MergeStrategy.first
-    case path => (assemblyMergeStrategy in assembly).value(path)
+    case path => (assembly / assemblyMergeStrategy).value(path)
   },
 
   cleanFiles ++= {
-    val javaSourceDir = (javaSource in Compile).value
+    val javaSourceDir = (Compile / javaSource).value
     val grammarDir = javaSourceDir / "gluon" / "contract" / "parsing"
 
     (baseDirectory.value ** "target").get ++
@@ -63,9 +63,9 @@ lazy val settings = Seq(
       )
   },
 
-  mappings in Universal += file("README.md") -> "README.md",
+  Universal / mappings += file("README.md") -> "README.md",
 
-  fork in run := true
+  run / fork := true
 )
 
 lazy val gluonTests =
@@ -78,7 +78,7 @@ lazy val gluonTests =
 
       javacOptions += "-g",
 
-      javaSource in Compile := baseDirectory.value
+      Compile / javaSource := baseDirectory.value
     )
 
 val generateSableCCLock: ReentrantLock = new ReentrantLock
@@ -86,14 +86,14 @@ val generateSableCCLock: ReentrantLock = new ReentrantLock
 def generateSableCC: Def.Initialize[Task[Unit]] = Def.task {
   import org.sablecc.sablecc.SableCC
 
-  val javaSourceDir: File = (javaSource in Compile).value
+  val javaSourceDir: File = (Compile / javaSource).value
   val grammarDir = javaSourceDir / "gluon" / "contract" / "parsing"
   val grammarFile = grammarDir / "grammar.sablecc"
 
   generateSableCCLock.lock()
 
   try {
-    if (!(grammarDir / "parser").exists()) {
+    if (!(grammarDir / "parser" / "Parser.java").exists()) {
       SableCC.processGrammar(grammarFile.getAbsolutePath, javaSourceDir.getAbsolutePath)
     }
   } finally {
