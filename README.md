@@ -1,5 +1,4 @@
-Gluon
-=====
+# Gluon
 
 Gluon statically verifies the atomicity of the execution of sequences of calls
 to methods of a class.
@@ -79,8 +78,7 @@ Checking thread Main.main():
 
 ```
 
-Compiling
-=========
+# Compiling
 
 To compile gluon you need to run
 
@@ -94,8 +92,7 @@ Compiling the tests is equally easy:
 sbt compileTests
 ```
 
-Running the Example Test
-========================
+# Running the Example Test
 
 After the compilation gluon and the tests the example test can be ran with
 
@@ -106,8 +103,7 @@ After the compilation gluon and the tests the example test can be ran with
 This example can be found in `test/simple/example`. You are encouraged to
 modify and play with the example.
 
-Running the Validation Tests
-============================
+# Running the Validation Tests
 
 After the compilation a set of validation tests can be run with
 

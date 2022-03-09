@@ -1,4 +1,4 @@
-addSbtPlugin("com.typesafe.sbt" %  "sbt-native-packager" % "1.2.2")
-addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.8")
+addSbtPlugin("com.github.sbt" % "sbt-native-packager" % "1.9.4")
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "1.2.0")
 
 unmanagedJars in Compile += file("tools/sablecc.jar")

@@ -19,7 +19,7 @@ package gluon.analysis.programBehavior;
 /* This analysis creates a grammar that describes the access patterns to
  * to the module under analysis.
  *
- * The grammar is extracted from the flow control graph. It's terminals are
+ * The grammar is extracted from the flow control graph. Its terminals are
  * the methods of the module we are analyzing.
  */
 

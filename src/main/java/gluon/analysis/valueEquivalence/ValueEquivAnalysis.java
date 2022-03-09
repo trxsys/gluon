@@ -28,7 +28,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-/* Since the fields assingments to local variables are only done (statically)
+/* Since the fields assignments to local variables are only done (statically)
  * before they are used, and are using SSA we don't need a full data-flow
  * analysis.
  */
@@ -139,12 +139,8 @@ public class ValueEquivAnalysis
                        new ValueM(v.getMethod(),vBase));
     }
 
-
     public boolean equivTo(ValueM u, ValueM v)
     {
-        Value ua;
-        Value va;
-
         if (u == null || v == null)
             return u == v;
 

@@ -333,7 +333,7 @@ public class Main
             }
         }
 
-        /* Points-to analises */
+        /* Points-to analyses */
         SparkTransformer.v().transform("",getSparkOptions());
 
         PackManager.v().runPacks();
@@ -366,8 +366,7 @@ public class Main
         if (args.length == 0)
         {
             help();
-            System.exit(-1);
-            return;
+            System.exit(0);
         }
 
         parseArguments(args);
