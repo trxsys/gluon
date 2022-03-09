@@ -83,7 +83,7 @@ public class CfgRemoveEpsilons
         return combinations;
     }
 
-    /* Remove a epsilon production while preserving the same language.
+    /* Remove an epsilon production while preserving the same language.
      *
      * If we have
      *

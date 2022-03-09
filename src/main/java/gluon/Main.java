@@ -321,7 +321,7 @@ public class Main
                     catch (Exception e) {}
         }
 
-        /* Points-to analises */
+        /* Points-to analyses */
         SparkTransformer.v().transform("",getSparkOptions());
 
         PackManager.v().runPacks();
@@ -355,7 +355,6 @@ public class Main
         {
             help();
             System.exit(0);
-            return;
         }
 
         parseArguments(args);

@@ -93,7 +93,7 @@ public class CfgOptimizer
         return modified;
     }
 
-    /* Remove production of the from
+    /* Remove production of the form
      *
      *   A → A
      *
