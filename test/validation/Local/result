@@ -2,23 +2,23 @@
 [0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread Local.main():
 
-  Verifying word getValue setValue:
+  Verifying clause getValue setValue:
 
     No occurrences
 
-  Verifying word setValue getValue:
+  Verifying clause setValue getValue:
 
     No occurrences
 
 Checking thread Local.run():
 
-  Verifying word getValue setValue:
+  Verifying clause getValue setValue:
 
       Method: Local.run()
       Calls Location: Local.java:14 Local.java:16
       Atomic: NO
 
-  Verifying word setValue getValue:
+  Verifying clause setValue getValue:
 
     No occurrences
 

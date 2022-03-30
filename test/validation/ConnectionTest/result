@@ -2,23 +2,23 @@
 [0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread GUI.main():
 
-  Verifying word isConnected send:
+  Verifying clause isConnected send:
 
     No occurrences
 
-  Verifying word resetSocket resetCounter:
+  Verifying clause resetSocket resetCounter:
 
     No occurrences
 
 Checking thread GUI.run():
 
-  Verifying word isConnected send:
+  Verifying clause isConnected send:
 
       Method: GUI.trySendMsg()
       Calls Location: GUI.java:22 GUI.java:23
       Atomic: NO
 
-  Verifying word resetSocket resetCounter:
+  Verifying clause resetSocket resetCounter:
 
       Method: GUI.disconnect()
       Calls Location: GUI.java:33 GUI.java:34

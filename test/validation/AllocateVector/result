@@ -2,13 +2,13 @@
 [0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread Main.main():
 
-  Verifying word getFreeBlockIndex markAsAllocatedBlock:
+  Verifying clause getFreeBlockIndex markAsAllocatedBlock:
 
     No occurrences
 
 Checking thread TestThread1.run():
 
-  Verifying word getFreeBlockIndex markAsAllocatedBlock:
+  Verifying clause getFreeBlockIndex markAsAllocatedBlock:
 
       Method: TestThread1.run()
       Calls Location: TestThread1.java:43 TestThread1.java:45

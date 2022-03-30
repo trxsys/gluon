@@ -2,23 +2,23 @@
 [0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread Main.main():
 
-  Verifying word getBalance setBalance:
+  Verifying clause getBalance setBalance:
 
     No occurrences
 
-  Verifying word setBalance getBalance:
+  Verifying clause setBalance getBalance:
 
     No occurrences
 
 Checking thread Update.run():
 
-  Verifying word getBalance setBalance:
+  Verifying clause getBalance setBalance:
 
       Method: Update.update()
       Calls Location: Update.java:7 Update.java:9
       Atomic: NO
 
-  Verifying word setBalance getBalance:
+  Verifying clause setBalance getBalance:
 
       Method: Update.run()
       Calls Location: Update.java:9 Update.java:7

@@ -2,13 +2,13 @@
 [0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread Main.main():
 
-  Verifying word get_solution(X) set_solution(X,_):
+  Verifying clause get_solution(X) set_solution(X,_):
 
     No occurrences
 
 Checking thread Solver.run():
 
-  Verifying word get_solution(X) set_solution(X,_):
+  Verifying clause get_solution(X) set_solution(X,_):
 
       Method: Solver.check_and_set_solution()
       Calls Location: Solver.java:26 Solver.java:32

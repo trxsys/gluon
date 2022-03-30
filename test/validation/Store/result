@@ -2,19 +2,19 @@
 [0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread Main.main():
 
-  Verifying word hasOrders treatOrder:
+  Verifying clause hasOrders treatOrder:
 
     No occurrences
 
 Checking thread Client.run():
 
-  Verifying word hasOrders treatOrder:
+  Verifying clause hasOrders treatOrder:
 
     No occurrences
 
 Checking thread Worker.run():
 
-  Verifying word hasOrders treatOrder:
+  Verifying clause hasOrders treatOrder:
 
       Method: Worker.run()
       Calls Location: Worker.java:32 Worker.java:33
@@ -22,7 +22,7 @@ Checking thread Worker.run():
 
 Checking thread Supplier.run():
 
-  Verifying word hasOrders treatOrder:
+  Verifying clause hasOrders treatOrder:
 
     No occurrences
 

@@ -211,7 +211,7 @@ public class WordInstance
                     /* If control reaches here then the contract does specify a
                      * return value but the word in the client program does not
                      * assign the return value to a variable.  In this case
-                     * we don't fail immediatly because it is possible that the
+                     * we don't fail immediately because it is possible that the
                      * variable is not used elsewhere.  So we unify the variable
                      * with null.  That variable will not be able to be unified
                      * with anything but null values.

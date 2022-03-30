@@ -2,23 +2,23 @@
 [0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread Main.main():
 
-  Verifying word getMax getMin:
+  Verifying clause getMax getMin:
 
     No occurrences
 
-  Verifying word getMin getMax:
+  Verifying clause getMin getMax:
 
     No occurrences
 
 Checking thread MyThread.run():
 
-  Verifying word getMax getMin:
+  Verifying clause getMax getMin:
 
       Method: MyThread.run()
       Calls Location: MyThread.java:18 MyThread.java:19
       Atomic: NO
 
-  Verifying word getMin getMax:
+  Verifying clause getMin getMax:
 
     No occurrences
 

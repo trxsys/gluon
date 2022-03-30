@@ -2,23 +2,23 @@
 [0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread Elevator.main():
 
-  Verifying word checkUp(X) claimUp(X):
+  Verifying clause checkUp(X) claimUp(X):
 
     No occurrences
 
-  Verifying word checkDown(X) claimDown(X):
+  Verifying clause checkDown(X) claimDown(X):
 
     No occurrences
 
 Checking thread Lift.run():
 
-  Verifying word checkUp(X) claimUp(X):
+  Verifying clause checkUp(X) claimUp(X):
 
       Method: Lift.claimUp()
       Calls Location: Lift.java:256 Lift.java:257
       Atomic: NO
 
-  Verifying word checkDown(X) claimDown(X):
+  Verifying clause checkDown(X) claimDown(X):
 
       Method: Lift.claimDown()
       Calls Location: Lift.java:269 Lift.java:270

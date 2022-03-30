@@ -2,7 +2,7 @@
 [0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread Main.main():
 
-  Verifying word X=length getChars(_,X,_,_):
+  Verifying clause X=length getChars(_,X,_,_):
 
       Method: Main.append()
       Calls Location: Main.java:15 Main.java:21

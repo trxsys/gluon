@@ -2,23 +2,23 @@
 [0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread CoordMain.main():
 
-  Verifying word resetX resetY:
+  Verifying clause resetX resetY:
 
     No occurrences
 
-  Verifying word resetY resetX:
+  Verifying clause resetY resetX:
 
     No occurrences
 
 Checking thread CoordMain.run():
 
-  Verifying word resetX resetY:
+  Verifying clause resetX resetY:
 
       Method: CoordMain.reset()
       Calls Location: CoordMain.java:23 CoordMain.java:25
       Atomic: NO
 
-  Verifying word resetY resetX:
+  Verifying clause resetY resetX:
 
     No occurrences
 

@@ -2,13 +2,13 @@
 [0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread Main.main():
 
-  Verifying word checkClosed lookupEntry:
+  Verifying clause checkClosed lookupEntry:
 
     No occurrences
 
 Checking thread Runner.run():
 
-  Verifying word checkClosed lookupEntry:
+  Verifying clause checkClosed lookupEntry:
 
       Method: Runner.loadResourceStore()
       Calls Location: Main.java:12 Main.java:13

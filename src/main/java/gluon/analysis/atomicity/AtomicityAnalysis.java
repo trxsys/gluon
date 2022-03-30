@@ -66,7 +66,6 @@ public class AtomicityAnalysis
     private static final String ATOMIC_METHOD_ANNOTATION="Atomic";
 
     private Cfg grammar;
-    private boolean synchMode;
 
     private final Map<NonTerminal,Boolean> nontermsAtomicity;
 
@@ -75,7 +74,6 @@ public class AtomicityAnalysis
         int nonterms=2*grammar.getNonTerminals().size();
 
         this.grammar=grammar;
-        this.synchMode=false;
         this.nontermsAtomicity=new HashMap<NonTerminal,Boolean>(nonterms);
     }
 
@@ -94,11 +92,6 @@ public class AtomicityAnalysis
                 return true;
 
         return false;
-    }
-
-    public void setSynchMode()
-    {
-        synchMode=true;
     }
 
     public void analyze()

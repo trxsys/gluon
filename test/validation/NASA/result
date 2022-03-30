@@ -2,19 +2,19 @@
 [0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread Main.main():
 
-  Verifying word setValue(_,X) setAchieved(_,X):
+  Verifying clause setValue(_,X) setAchieved(_,X):
 
     No occurrences
 
 Checking thread Daemon.run():
 
-  Verifying word setValue(_,X) setAchieved(_,X):
+  Verifying clause setValue(_,X) setAchieved(_,X):
 
     No occurrences
 
 Checking thread Task.run():
 
-  Verifying word setValue(_,X) setAchieved(_,X):
+  Verifying clause setValue(_,X) setAchieved(_,X):
 
       Method: Task.run()
       Calls Location: Task.java:18 Task.java:20

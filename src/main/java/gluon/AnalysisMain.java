@@ -253,7 +253,7 @@ public class AnalysisMain
         Collection<AllocNode> moduleAllocSites;
         int reported=0;
 
-        System.out.println("  Verifying word "+WordInstance.wordStr(word)+":");
+        System.out.println("  Verifying clause "+WordInstance.wordStr(word)+":");
         System.out.println();
 
         moduleAllocSites=PointsToInformation.getModuleAllocationSites(module);
@@ -287,9 +287,6 @@ public class AnalysisMain
             grammar=ba.getGrammar();
 
             aa=new AtomicityAnalysis(grammar);
-
-            if (Main.ATOMICITY_SYNCH)
-                aa.setSynchMode();
 
             aa.analyze();
 
@@ -380,7 +377,7 @@ public class AnalysisMain
         AtomicityAnalysis aa;
         ParserCallbackCheckWord pcb;
 
-        System.out.println("  Verifying word "+WordInstance.wordStr(word)+":");
+        System.out.println("  Verifying clause "+WordInstance.wordStr(word)+":");
         System.out.println();
 
         ba=new ClassBehaviorAnalysis(c,module,wordToStrings(word));
@@ -398,9 +395,6 @@ public class AnalysisMain
         grammar=ba.getGrammar();
 
         aa=new AtomicityAnalysis(grammar);
-
-        if (Main.ATOMICITY_SYNCH)
-            aa.setSynchMode();
 
         aa.analyze();
 
@@ -427,7 +421,7 @@ public class AnalysisMain
         Collection<AllocNode> moduleAllocSites;
         int reported=0;
 
-        System.out.println("  Verifying word "+WordInstance.wordStr(word)+":");
+        System.out.println("  Verifying clause "+WordInstance.wordStr(word)+":");
         System.out.println();
 
         moduleAllocSites=PointsToInformation.getModuleAllocationSites(module);
@@ -460,9 +454,6 @@ public class AnalysisMain
             grammar=ba.getGrammar();
 
             aa=new AtomicityAnalysis(grammar);
-
-            if (Main.ATOMICITY_SYNCH)
-                aa.setSynchMode();
 
             aa.analyze();
 
@@ -567,6 +558,8 @@ public class AnalysisMain
         }
         else
         {
+            // TODO Since Java 8 the language also contains lambda functions that can be used as entrypoints for thread.
+            //      Are they also represented as a `SootMethod`?
             for (SootMethod m: threads)
                 checkThread(m);
         }

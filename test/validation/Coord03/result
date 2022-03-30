@@ -2,93 +2,93 @@
 [0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/orium/programming/univ/gluon/target/gluon-assembly-0.1.0-SNAPSHOT.jar[0m
 Checking thread Main.main():
 
-  Verifying word getX getY:
+  Verifying clause getX getY:
 
     No occurrences
 
-  Verifying word getY getX:
+  Verifying clause getY getX:
 
     No occurrences
 
-  Verifying word setX setY:
+  Verifying clause setX setY:
 
     No occurrences
 
-  Verifying word setY setX:
+  Verifying clause setY setX:
 
     No occurrences
 
 Checking thread T1.run():
 
-  Verifying word getX getY:
+  Verifying clause getX getY:
 
     No occurrences
 
-  Verifying word getY getX:
+  Verifying clause getY getX:
 
     No occurrences
 
-  Verifying word setX setY:
+  Verifying clause setX setY:
 
     No occurrences
 
-  Verifying word setY setX:
+  Verifying clause setY setX:
 
     No occurrences
 
 Checking thread T2.run():
 
-  Verifying word getX getY:
+  Verifying clause getX getY:
 
     No occurrences
 
-  Verifying word getY getX:
+  Verifying clause getY getX:
 
     No occurrences
 
-  Verifying word setX setY:
+  Verifying clause setX setY:
 
     No occurrences
 
-  Verifying word setY setX:
+  Verifying clause setY setX:
 
     No occurrences
 
 Checking thread T3.run():
 
-  Verifying word getX getY:
+  Verifying clause getX getY:
 
       Method: T3.run()
       Calls Location: T3.java:17 T3.java:18
       Atomic: NO
 
-  Verifying word getY getX:
+  Verifying clause getY getX:
 
     No occurrences
 
-  Verifying word setX setY:
+  Verifying clause setX setY:
 
     No occurrences
 
-  Verifying word setY setX:
+  Verifying clause setY setX:
 
     No occurrences
 
 Checking thread T4.run():
 
-  Verifying word getX getY:
+  Verifying clause getX getY:
 
     No occurrences
 
-  Verifying word getY getX:
+  Verifying clause getY getX:
 
     No occurrences
 
-  Verifying word setX setY:
+  Verifying clause setX setY:
 
     No occurrences
 
-  Verifying word setY setX:
+  Verifying clause setY setX:
 
     No occurrences
 

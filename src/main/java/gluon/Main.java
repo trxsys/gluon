@@ -291,7 +291,7 @@ public class Main
         Scene.v().loadDynamicClasses();
 
         try { Scene.v().setMainClass(mainClass); }
-        catch (Exception e) { fatal("error loading main class"); }
+        catch (Exception e) { fatal("error loading main class: " + e.getMessage()); }
 
         if (CLASS_SCOPE)
         {
