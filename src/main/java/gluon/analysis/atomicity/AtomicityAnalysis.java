@@ -149,6 +149,6 @@ public class AtomicityAnalysis
         assert word.getLCA() != null;
         assert nontermsAtomicity.containsKey(word.getLCA());
 
-        return nontermsAtomicity.get(word.getLCA());
+        return isAtomicAnnotated(word.getLCAMethod()) || word.getLCAMethod().isSynchronized() || nontermsAtomicity.get(word.getLCA());
     }
 }
