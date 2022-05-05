@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 public class Contract
 {
@@ -40,6 +42,7 @@ public class Contract
 
     private SootClass module;  // class of the module to analyze
     private Collection<List<Terminal>> contract;
+    private Set<String> nonExistingMethods = new HashSet<>();
 
     public Contract(SootClass mod, String rawContract)
     {
@@ -119,7 +122,7 @@ public class Contract
                         if (t.getArguments() != null
                             && t.getArguments().size() != m.getParameterCount())
                             Main.fatal(t.getName()
-                                       +": wrong number of parameters!");
+                                    +": wrong number of parameters!");
                     }
                     catch (Exception e)
                     {
@@ -127,7 +130,7 @@ public class Contract
                     }
                 }
                 else
-                    Main.fatal(t.getName()+": no such method!");
+                    nonExistingMethods.add(t.getName());
 
             contractWord=new ArrayList<Terminal>(word.size()+1);
 
@@ -150,15 +153,18 @@ public class Contract
 
             loadRawContractClause(clause);
         }
+        for (String method: nonExistingMethods) {
+            System.out.println(method+" no such method!");
+        }
 
         dprintln("contract: "+contract);
     }
 
     private String extractContractRaw()
     {
-         Tag tag=module.getTag("VisibilityAnnotationTag");
+        Tag tag=module.getTag("VisibilityAnnotationTag");
 
-         if (tag == null)
+        if (tag == null)
             return null;
 
         VisibilityAnnotationTag visibilityAnnotationTag=(VisibilityAnnotationTag) tag;

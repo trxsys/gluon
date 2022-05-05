@@ -212,7 +212,7 @@ public class AnalysisMain
         lcaMethod=wordInst.getLCAMethod();
 
         System.out.println("      Method: "+lcaMethod.getDeclaringClass().getShortName()
-                           +"."+lcaMethod.getName()+"()");
+                +"."+lcaMethod.getName()+"()");
 
         System.out.print("      Calls Location:");
 
@@ -271,8 +271,7 @@ public class AnalysisMain
 
             gluon.profiling.Profiling.inc("alloc-sites");
 
-            ba=new WholeProgramBehaviorAnalysis(thread,module,as,
-                                                wordToStrings(word));
+            ba=new WholeProgramBehaviorAnalysis(thread,module,as,wordToStrings(word));
 
             if (Main.ATOMICITY_SYNCH)
             {
@@ -293,7 +292,7 @@ public class AnalysisMain
             parser=makeParser(grammar);
 
             dprintln("Created parser for thread "+thread.getName()
-                     +"(), allocation site "+as+".");
+                    +"(), allocation site "+as+".");
 
             pcb=new ParserCallbackCheckWord(word,verifiedWords,aa,vEquiv,startTime);
 
@@ -322,7 +321,7 @@ public class AnalysisMain
         parsingTable.buildParsingTable();
 
         gluon.profiling.Profiling.inc("parsing-table-states",
-                                      parsingTable.numberOfStates());
+                parsingTable.numberOfStates());
 
         return new ParserSubwords(parsingTable);
     }
@@ -332,8 +331,8 @@ public class AnalysisMain
         ValueEquivAnalysis vEquiv=new ValueEquivAnalysis();
 
         System.out.println("Checking thread "
-                           +thread.getDeclaringClass().getShortName()
-                           +"."+thread.getName()+"():");
+                +thread.getDeclaringClass().getShortName()
+                +"."+thread.getName()+"():");
         System.out.println();
 
         for (List<Terminal> word: contract.getWords())
@@ -460,7 +459,7 @@ public class AnalysisMain
             parser=makeParser(grammar);
 
             dprintln("Created parser for class "+c.getName()
-                     +", allocation site "+as+".");
+                    +", allocation site "+as+".");
 
             pcb=new ParserCallbackCheckWord(word,verifiedWords,aa,vEquiv,startTime);
 
@@ -497,7 +496,7 @@ public class AnalysisMain
             return;
 
         System.out.println("Checking class "
-                           +c.getShortName()+":");
+                +c.getShortName()+":");
         System.out.println();
 
         for (List<Terminal> word: contract.getWords())

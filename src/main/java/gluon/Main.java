@@ -26,6 +26,8 @@ import soot.jimple.spark.SparkTransformer;
 import soot.options.Options;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Collection;
@@ -49,10 +51,12 @@ public class Main
     public static boolean ATOMICITY_SYNCH=false;
     public static boolean CONSERVATIVE_POINTS_TO=false;
     public static int TIMEOUT=0; /* timeout in seconds */
+    private static final String DEFAULT_PATH_CONTRACTS = "default_contract.txt";
 
     public static void fatal(String error)
     {
         System.err.println(PROGNAME+": "+error);
+        System.err.flush();
         System.exit(-1);
     }
 
@@ -63,42 +67,44 @@ public class Main
 
     private static void help()
     {
-		System.out.println("Usage: "+PROGNAME+" OPTIONS <main_class>");
-		System.out.println();
-		System.out.println("Options:");
-		System.out.println("  -m, --module <module>           "
-                           +"Module to verify");
-		System.out.println("  -c, --classpath <class_path>    "
-                           +"Java classpath");
-		System.out.println("  -j, --with-java-lib             "
-                           +"Do not refrain from analyzing java library code");
-		System.out.println("  -t, --time                      "
-                           +"Output information about several run times");
-		System.out.println("  -p, --prof-vars                 "
-                           +"Output profiling variables");
-		System.out.println("  -o, --contract <contract>       "
-                           +"Module's contract (overrides annotation)");
-		System.out.println("  -s, --class-scope               "
-                           +"Restrict analysis to each class");
-		System.out.println("  -y, --synch                     "
-                           +"Atomicity is based on java synchronized");
+        System.out.println("Usage: "+PROGNAME+" OPTIONS <main_class>");
+        System.out.println();
+        System.out.println("Options:");
+        System.out.println("  -m, --module <module>           "
+                +"Module to verify");
+        System.out.println("  -c, --classpath <class_path>    "
+                +"Java classpath");
+        System.out.println("  -j, --with-java-lib             "
+                +"Do not refrain from analyzing java library code");
+        System.out.println("  -t, --time                      "
+                +"Output information about several run times");
+        System.out.println("  -p, --prof-vars                 "
+                +"Output profiling variables");
+        System.out.println("  -o, --contract <contract>       "
+                +"Module's contract (overrides annotation)");
+        System.out.println("  -s, --class-scope               "
+                +"Restrict analysis to each class");
+        System.out.println("  -y, --synch                     "
+                +"Atomicity is based on java synchronized");
         System.out.println("  -r, --conservative-points-to    "
-                           +"Conservative points-to analysis.");
+                +"Conservative points-to analysis.");
         System.out.println("                                  "
-                           +"Use when there are classes loaded dynamically,");
+                +"Use when there are classes loaded dynamically,");
         System.out.println("                                  "
-                           +"which makes the regular points-to analysis");
+                +"which makes the regular points-to analysis");
         System.out.println("                                  "
-                           +"incomplete");
+                +"incomplete");
         System.out.println("  -i, --timeout                   "
-                           +"Timeout in mins for class scope analysis.");
-		System.out.println("  -h, --help                      "
-                           +"Display this help and exit");
+                +"Timeout in mins for class scope analysis.");
+        System.out.println("  -d, --default-contract          "
+                +"Uses the default contract with common dependencies");
+        System.out.println("  -h, --help                      "
+                +"Display this help and exit");
     }
 
     private static void parseArguments(String[] args)
     {
-        LongOpt[] options=new LongOpt[11];
+        LongOpt[] options=new LongOpt[12];
         Getopt g;
         int c;
 
@@ -112,8 +118,9 @@ public class Main
         options[7]=new LongOpt("class-scope",LongOpt.NO_ARGUMENT,null,'s');
         options[8]=new LongOpt("synch",LongOpt.NO_ARGUMENT,null,'y');
         options[9]=new LongOpt("conservative-points-to",LongOpt.NO_ARGUMENT,
-                                null,'r');
-        options[10]=new LongOpt("timeout",LongOpt.REQUIRED_ARGUMENT,null,'i');
+                null,'r');
+        options[10]=new LongOpt("default-contract",LongOpt.NO_ARGUMENT,null,'d');
+        options[11]=new LongOpt("timeout",LongOpt.REQUIRED_ARGUMENT,null,'i');
 
         g=new Getopt(PROGNAME,args,"hc:m:o:jtpsyri",options);
 
@@ -122,58 +129,80 @@ public class Main
         while ((c = g.getopt()) != -1)
             switch (c)
             {
-            case 'h':
+                case 'h':
                 {
                     help();
                     System.exit(0);
                     break;
                 }
-            case 'c':
+                case 'c':
                 {
                     classPath=g.getOptarg();
                     break;
                 }
-            case 'm':
+                case 'm':
                 {
                     moduleClassName=g.getOptarg();
                     break;
                 }
-            case 'j':
+                case 'j':
                 {
                     WITH_JAVA_LIB=true;
                     break;
                 }
-            case 't':
+                case 't':
                 {
                     TIME=true;
                     break;
                 }
-            case 'p':
+                case 'p':
                 {
                     PROFILING_VARS=true;
                     break;
                 }
-            case 'o':
+                case 'o':
                 {
                     contract=g.getOptarg();
                     break;
                 }
-            case 's':
+                case 'd':
+                {
+                    File savedContractFile = new File(DEFAULT_PATH_CONTRACTS);
+                    if(savedContractFile.isFile()) {
+                        try {
+                            FileReader reader = new FileReader(DEFAULT_PATH_CONTRACTS);
+                            Scanner in = new Scanner(reader);
+                            StringBuilder sb = new StringBuilder();
+                            String line;
+                            while(in.hasNextLine()) {
+                                line = in.nextLine();
+                                sb.append(line);
+                            }
+                            contract = sb.toString();
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else {
+                        fatal("The file of the default contract does not exist");
+                    }
+                }
+                case 's':
                 {
                     CLASS_SCOPE=true;
                     break;
                 }
-            case 'y':
+                case 'y':
                 {
                     ATOMICITY_SYNCH=true;
                     break;
                 }
-            case 'r':
+                case 'r':
                 {
                     CONSERVATIVE_POINTS_TO=true;
                     break;
                 }
-            case 'i':
+                case 'i':
                 {
                     String timeout=null;
 
@@ -189,7 +218,7 @@ public class Main
 
                     break;
                 }
-            case '?':
+                case '?':
                 {
                     /* getopt already printed an error */
                     System.exit(-1);
@@ -334,8 +363,8 @@ public class Main
 
         for (String id: gluon.profiling.Timer.getIds())
             System.out.printf("  %40s  %6d.%03ds\n",id,
-                              gluon.profiling.Timer.getTime(id)/1000,
-                              gluon.profiling.Timer.getTime(id)%1000);
+                    gluon.profiling.Timer.getTime(id)/1000,
+                    gluon.profiling.Timer.getTime(id)%1000);
     }
 
     private static void dumpProfilingVars()
@@ -345,7 +374,7 @@ public class Main
 
         for (String id: gluon.profiling.Profiling.getIds())
             System.out.printf("  %40s  %9d\n",id,
-                              gluon.profiling.Profiling.get(id));
+                    gluon.profiling.Profiling.get(id));
     }
 
     public static void main(String[] args)
