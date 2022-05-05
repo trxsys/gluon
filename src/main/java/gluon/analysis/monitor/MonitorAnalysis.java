@@ -16,6 +16,7 @@
 
 package gluon.analysis.monitor;
 
+import gluon.Main;
 import soot.*;
 import soot.jimple.EnterMonitorStmt;
 import soot.jimple.ExitMonitorStmt;
@@ -23,6 +24,8 @@ import soot.jimple.InstanceInvokeExpr;
 import soot.toolkits.graph.BriefUnitGraph;
 import soot.toolkits.graph.UnitGraph;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.*;
 
 class StackNode<E>
@@ -49,9 +52,13 @@ class StackNode<E>
 
 public class MonitorAnalysis
 {
+    private static final String FILE_THRESHOLD_NAME = "synchronizedBlocksPercentage.txt";
+
     private final Scene scene;
     private Map<EnterMonitorStmt,Collection<ExitMonitorStmt>> exitMon;
     private Collection<SynchedSection> synchedSections;
+    private File syncBlocksFile;
+    private FileOutputStream outputStreamFile;
 
     private Set<Unit> visited;
 
@@ -61,6 +68,25 @@ public class MonitorAnalysis
         visited=null;
         exitMon=new HashMap<EnterMonitorStmt,Collection<ExitMonitorStmt>>();
         synchedSections=new LinkedList<SynchedSection>();
+        syncBlocksFile=null;
+        outputStreamFile=null;
+
+        if(gluon.Main.SEARCH_BY.equals(gluon.Main.THRESHOLD)) {
+            initializeFile();
+        }
+    }
+
+    private void initializeFile() {
+        try {
+            syncBlocksFile = new File(FILE_THRESHOLD_NAME);
+            if(!syncBlocksFile.isFile()) {
+                syncBlocksFile.createNewFile();
+            }
+            outputStreamFile = new FileOutputStream(FILE_THRESHOLD_NAME);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void analyzeUnit(SootMethod method, Unit unit, UnitGraph cfg,
@@ -74,7 +100,7 @@ public class MonitorAnalysis
         if (unit instanceof EnterMonitorStmt)
             stack=new StackNode<EnterMonitorStmt>(stack,(EnterMonitorStmt)unit);
         else if (unit instanceof ExitMonitorStmt
-                 && stack != null)
+                && stack != null)
         {
             EnterMonitorStmt enter;
 
@@ -112,7 +138,7 @@ public class MonitorAnalysis
 
     // synch -> type -> calls
     private Map<Object,Map<Type,List<SootMethod>>> synchCalls
-        =new HashMap<Object,Map<Type,List<SootMethod>>>();
+            =new HashMap<Object,Map<Type,List<SootMethod>>>();
 
     private void thisIsSynch(Unit unit, Object synchContext)
     {
@@ -139,7 +165,7 @@ public class MonitorAnalysis
 
         if (!synchCalls.containsKey(synchContext))
             synchCalls.put(synchContext,
-                           new HashMap<Type,List<SootMethod>>());
+                    new HashMap<Type,List<SootMethod>>());
 
         Map<Type,List<SootMethod>> calls=synchCalls.get(synchContext);
 
@@ -147,6 +173,46 @@ public class MonitorAnalysis
             calls.put(t,new LinkedList<SootMethod>());
 
         calls.get(t).add(m);
+    }
+
+    /**
+     * For each sequence of methods that were previously stated as atomically executed at least once, we are going to see
+     * how many times in total they are executed, and then we are able to compare the times they are executed atomically or not
+     */
+    Map<List<SootMethod>, Integer> totalCounter = new HashMap<List<SootMethod>, Integer>();
+
+    /**
+     * See if the sequence passed by parameter is contained in the other (in the correct order) and how many times
+     * @param totalSootMethods - methods that were at least once executed atomically
+     * @param seq - sequence of methods we want to see if contained in each of the others (in the correct order)
+     */
+    private void subArrayCounter(SootMethod[] totalSootMethods, List<SootMethod> seq) {
+        SootMethod[] seqArray = seq.toArray(new SootMethod[seq.size()]);
+        int totalLength = totalSootMethods.length;
+        int syncLength = seqArray.length;
+        int i = 0, j = 0;
+
+        // Traverse both arrays simultaneously
+        while (i < totalLength && j < syncLength) {
+            if (totalSootMethods[i] == seqArray[j]) {
+                i++;
+                j++;
+
+                if (j == syncLength) {
+                    if (!totalCounter.containsKey(seq))
+                        totalCounter.put(seq, 0);
+
+                    totalCounter.put(seq, totalCounter.get(seq) + 1);
+
+                    i=i-j+1;
+                    j=0;
+                }
+            }
+            else {
+                i=i-j+1;
+                j=0;
+            }
+        }
     }
 
     private void printSynchCalls()
@@ -169,6 +235,56 @@ public class MonitorAnalysis
 
                 m.put(seq,m.get(seq)+1);
             }
+        }
+
+        if(gluon.Main.SEARCH_BY.equals(gluon.Main.THRESHOLD)) {
+            try {
+                String headerFile = "The chosen form of generation of contracts is based on the need of having a sequence executed atomically more than "
+                        + gluon.Main.RANGE_THRESHOLD +"% of times.\n\n"
+                        + "This file contains all the sequence of methods that were at least once executed atomically in this program and their atomic percentage.\n"
+                        + "Useful for a more detailed analysis.\n\n\n";
+                outputStreamFile.write(headerFile.getBytes());
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+
+            for (SootClass sC: scene.getClasses()) {
+                if (gluon.Main.WITH_JAVA_LIB || !sC.isJavaLibraryClass())
+                    for (SootMethod sM: sC.getMethods()) {
+                        List<SootMethod> listOfSootMethods = new LinkedList<>();
+                        for (Unit u :sM.getActiveBody().getUnits()) {
+                            soot.jimple.InstanceInvokeExpr invoke;
+                            soot.jimple.InvokeExpr expr;
+                            Type t;
+                            SootMethod mS;
+
+                            if (!((soot.jimple.Stmt)u).containsInvokeExpr())
+                                continue;
+
+                            expr=((soot.jimple.Stmt)u).getInvokeExpr();
+
+                            if (!(expr instanceof InstanceInvokeExpr))
+                                continue;
+
+                            invoke=(InstanceInvokeExpr)expr;
+                            mS=invoke.getMethod();
+
+                            if (mS.isConstructor())
+                                continue;
+
+                            listOfSootMethods.add(mS);
+                        }
+                        // After storing the methods that invoked in a method, we are going to see if they are contained in the sequences of methods that need to be executed atomically
+                        for (List<SootMethod> seq: m.keySet()) {
+                            if(listOfSootMethods.containsAll(seq)) {
+                                // Despite containing the methods it is necessary to see how many times they are executed and if they are called in the correct order
+                                subArrayCounter(listOfSootMethods.toArray(new SootMethod[listOfSootMethods.size()]), seq);
+                            }
+                        }
+                    }
+            }
+        }
 
         if (SCRIPT)
         {
@@ -186,25 +302,37 @@ public class MonitorAnalysis
             int len=seq.size();
             SootClass c=seq.get(0).getDeclaringClass();
 
-            // If there is only one sequence of synchronized calls we skip it.  We want at least two to have a better
-            // chance of actually implying that these methods should be called in an atomic way.
-            if (count < 2)
-                continue;
+            if((gluon.Main.SEARCH_BY).equals(gluon.Main.NUMBER_ATOMIC_BLOCKS)) {
+                // If a given sequence is executed atomically a number of times lower than what is defined, we ignore it
+                if (count < gluon.Main.RANGE_NUMBER_BLOCKS)
+                    continue;
+            }
+            else if((gluon.Main.SEARCH_BY).equals(gluon.Main.THRESHOLD)) {
+                int totalCount = totalCounter.get(seq);
+                double res = ((double)count/ totalCount);
+
+                // Body of the syncBlocksFile
+                String bodyFile = "Class "+c.getName()+": counter: "+res+" -> result: "+count+" / "+totalCount+".\n"
+                        + "     Synchronized methods: "+seq+"\n\n";
+                try {
+                    outputStreamFile.write(bodyFile.getBytes());
+                }
+                catch(Exception e) {
+                    e.printStackTrace();
+                }
+
+                // If the percentage of times this sequence is executed atomically is lower than the one defined, we ignore it
+                if( res < Main.RANGE_THRESHOLD) {
+                    continue;
+                }
+            }
 
             if (SCRIPT)
             {
                 int i;
 
-                /*
-./gluon.sh --timeout 5 -t -p -s -y -r --classpath \
-    ../cassandra-2.0.9/build/test/classes:../cassandra-2.0.9/build/classes/main:../cassandra-2.0.9/build/classes/stress \
-    --module java.util.Map \
-    --contract "containsKey put" \
-    org.apache.cassandra.stress.StressServer
-                 */
-
                 System.err.println("./gluon.sh --timeout 5 -t -p -s -y -r "
-                                   +"--classpath ../cassandra-2.0.9/build/test/classes:../cassandra-2.0.9/build/classes/main:../cassandra-2.0.9/build/classes/stress \\");
+                        +"--classpath ../cassandra-2.0.9/build/test/classes:../cassandra-2.0.9/build/classes/main:../cassandra-2.0.9/build/classes/stress \\");
                 System.err.println("    --module "+c.getName()+" \\");
                 System.err.print("    --contract \"");
 
@@ -214,7 +342,7 @@ public class MonitorAnalysis
 
                 System.err.println("\" \\");
                 System.err.println("    org.apache.cassandra.stress.StressServer "
-                                   +">> tests_out");
+                        +">> tests_out");
                 System.err.println();
             }
             else
@@ -227,6 +355,15 @@ public class MonitorAnalysis
                 System.err.println();
             }
         }
+
+        if(gluon.Main.SEARCH_BY.equals(gluon.Main.THRESHOLD)) {
+            try {
+                outputStreamFile.close();
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void analyze()
@@ -235,7 +372,7 @@ public class MonitorAnalysis
 
         for (SootClass c: scene.getClasses())
             if (!c.isJavaLibraryClass()
-                || gluon.Main.WITH_JAVA_LIB)
+                    || gluon.Main.WITH_JAVA_LIB)
                 for (SootMethod m: c.getMethods())
                 {
                     UnitGraph cfg;

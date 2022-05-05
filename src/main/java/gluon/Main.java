@@ -50,6 +50,20 @@ public class Main
     public static boolean CONSERVATIVE_POINTS_TO=false;
     public static int TIMEOUT=0; /* timeout in seconds */
 
+    /* Different alternatives to produce a contract */
+    // Search by the number of atomic blocks
+    public static final String NUMBER_ATOMIC_BLOCKS = "atomBlocksSearch";
+    // Number of times a sequence needs to be executed atomically in order to be considered in the analysis
+    public static final int RANGE_NUMBER_BLOCKS = 2;
+
+    // Search by the percentage of times a sequence is executed atomically
+    public static final String THRESHOLD = "thresholdSearch";
+    // Percentage of the times the sequence needs to be executed atomically
+    public static final double RANGE_THRESHOLD = 0.75;
+
+    /* The search will be made by ... */
+    public static final String SEARCH_BY = NUMBER_ATOMIC_BLOCKS;
+
     public static void fatal(String error)
     {
         System.err.println(PROGNAME+": "+error);
@@ -122,58 +136,58 @@ public class Main
         while ((c = g.getopt()) != -1)
             switch (c)
             {
-            case 'h':
+                case 'h':
                 {
                     help();
                     System.exit(0);
                     break;
                 }
-            case 'c':
+                case 'c':
                 {
                     classPath=g.getOptarg();
                     break;
                 }
-            case 'm':
+                case 'm':
                 {
                     moduleClassName=g.getOptarg();
                     break;
                 }
-            case 'j':
+                case 'j':
                 {
                     WITH_JAVA_LIB=true;
                     break;
                 }
-            case 't':
+                case 't':
                 {
                     TIME=true;
                     break;
                 }
-            case 'p':
+                case 'p':
                 {
                     PROFILING_VARS=true;
                     break;
                 }
-            case 'o':
+                case 'o':
                 {
                     contract=g.getOptarg();
                     break;
                 }
-            case 's':
+                case 's':
                 {
                     CLASS_SCOPE=true;
                     break;
                 }
-            case 'y':
+                case 'y':
                 {
                     ATOMICITY_SYNCH=true;
                     break;
                 }
-            case 'r':
+                case 'r':
                 {
                     CONSERVATIVE_POINTS_TO=true;
                     break;
                 }
-            case 'i':
+                case 'i':
                 {
                     String timeout=null;
 
@@ -189,7 +203,7 @@ public class Main
 
                     break;
                 }
-            case '?':
+                case '?':
                 {
                     /* getopt already printed an error */
                     System.exit(-1);
