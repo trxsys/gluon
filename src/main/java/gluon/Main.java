@@ -61,6 +61,10 @@ public class Main
     // Percentage of the times the sequence needs to be executed atomically
     public static final double RANGE_THRESHOLD = 0.75;
 
+    // Search by module, if a module always executes a given sequence atomically, and it exists other module where that
+    // sequence was never executed atomically, then it is quite probable that it was due to forgetfulness of the programmer
+    public static final String MODULE = "moduleSearch";
+
     /* The search will be made by ... */
     public static final String SEARCH_BY = NUMBER_ATOMIC_BLOCKS;
 
@@ -390,6 +394,9 @@ public class Main
 
         if (moduleClassName == null)
             fatal("No module specified!");
+
+        if(!SEARCH_BY.equals(NUMBER_ATOMIC_BLOCKS) && !SEARCH_BY.equals(THRESHOLD) && !SEARCH_BY.equals(MODULE))
+            fatal("Invalid option to produce a contract!");
 
         gluon.profiling.Timer.start("total");
         run();

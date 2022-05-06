@@ -57,10 +57,26 @@ public class MonitorAnalysis
     private final Scene scene;
     private Map<EnterMonitorStmt,Collection<ExitMonitorStmt>> exitMon;
     private Collection<SynchedSection> synchedSections;
+    private Set<Unit> visited;
+    /**
+     * File with all the percentage of times a sequence (executed at least once atomically) is executed atomically
+     */
     private File syncBlocksFile;
     private FileOutputStream outputStreamFile;
-
-    private Set<Unit> visited;
+    /**
+     * For each sequence of methods that were previously stated as atomically executed at least once, we are going to see
+     * how many times in total they are executed, and then we are able to compare the times they are executed atomically or not
+     */
+    private Map<List<SootMethod>, Integer> totalCounter;
+    /**
+     * For each sequence of methods that were previously stated as atomically executed at least once, we are going to see
+     * how many times they are executed in each module
+     */
+    private Map<String,Map<List<SootMethod>,Integer>> totalCounterByModule;
+    /**
+     * synch -> type -> (module name) -> calls
+     */
+    private Map<Object,Map<Type,Map<String,List<SootMethod>>>> synchCalls;
 
     public MonitorAnalysis(Scene s)
     {
@@ -70,9 +86,14 @@ public class MonitorAnalysis
         synchedSections=new LinkedList<SynchedSection>();
         syncBlocksFile=null;
         outputStreamFile=null;
+        totalCounter = new HashMap<List<SootMethod>, Integer>();
+        synchCalls=new HashMap<Object,Map<Type,Map<String,List<SootMethod>>>>();
 
         if(gluon.Main.SEARCH_BY.equals(gluon.Main.THRESHOLD)) {
             initializeFile();
+        }
+        else if(gluon.Main.SEARCH_BY.equals(gluon.Main.MODULE)) {
+            totalCounterByModule = new HashMap<String,Map<List<SootMethod>,Integer>>();
         }
     }
 
@@ -89,7 +110,7 @@ public class MonitorAnalysis
         }
     }
 
-    private void analyzeUnit(SootMethod method, Unit unit, UnitGraph cfg,
+    private void analyzeUnit(String module,SootMethod method, Unit unit, UnitGraph cfg,
                              StackNode<EnterMonitorStmt> stack)
     {
         if (visited.contains(unit))
@@ -115,10 +136,10 @@ public class MonitorAnalysis
         }
 
         if (stack != null)
-            thisIsSynch(unit,stack.element());
+            thisIsSynch(module,unit,stack.element());
 
         for (Unit succ: cfg.getSuccsOf(unit))
-            analyzeUnit(method,succ,cfg,stack);
+            analyzeUnit(module,method,succ,cfg,stack);
     }
 
     public Collection<ExitMonitorStmt> getExitMonitor(EnterMonitorStmt enterMon)
@@ -136,11 +157,7 @@ public class MonitorAnalysis
         return null;
     }
 
-    // synch -> type -> calls
-    private Map<Object,Map<Type,List<SootMethod>>> synchCalls
-            =new HashMap<Object,Map<Type,List<SootMethod>>>();
-
-    private void thisIsSynch(Unit unit, Object synchContext)
+    private void thisIsSynch(String module, Unit unit, Object synchContext)
     {
         soot.jimple.InstanceInvokeExpr invoke;
         soot.jimple.InvokeExpr expr;
@@ -165,28 +182,25 @@ public class MonitorAnalysis
 
         if (!synchCalls.containsKey(synchContext))
             synchCalls.put(synchContext,
-                    new HashMap<Type,List<SootMethod>>());
+                    new HashMap<Type, Map<String,List<SootMethod>>>());
 
-        Map<Type,List<SootMethod>> calls=synchCalls.get(synchContext);
+        Map<Type, Map<String, List<SootMethod>>> auxMap = synchCalls.get(synchContext);
+        if (!auxMap.containsKey(t))
+            auxMap.put(t, new HashMap<String,List<SootMethod>>());
 
-        if (!calls.containsKey(t))
-            calls.put(t,new LinkedList<SootMethod>());
+        Map<String, List<SootMethod>> auxMap2 = auxMap.get(t);
+        if (!auxMap2.containsKey(module))
+            auxMap2.put(module, new LinkedList<SootMethod>());
 
-        calls.get(t).add(m);
+        auxMap2.get(module).add(m);
     }
-
-    /**
-     * For each sequence of methods that were previously stated as atomically executed at least once, we are going to see
-     * how many times in total they are executed, and then we are able to compare the times they are executed atomically or not
-     */
-    Map<List<SootMethod>, Integer> totalCounter = new HashMap<List<SootMethod>, Integer>();
 
     /**
      * See if the sequence passed by parameter is contained in the other (in the correct order) and how many times
      * @param totalSootMethods - methods that were at least once executed atomically
      * @param seq - sequence of methods we want to see if contained in each of the others (in the correct order)
      */
-    private void subArrayCounter(SootMethod[] totalSootMethods, List<SootMethod> seq) {
+    private void subArrayCounter(String module, SootMethod[] totalSootMethods, List<SootMethod> seq) {
         SootMethod[] seqArray = seq.toArray(new SootMethod[seq.size()]);
         int totalLength = totalSootMethods.length;
         int syncLength = seqArray.length;
@@ -199,10 +213,15 @@ public class MonitorAnalysis
                 j++;
 
                 if (j == syncLength) {
-                    if (!totalCounter.containsKey(seq))
-                        totalCounter.put(seq, 0);
+                    if((gluon.Main.SEARCH_BY).equals(gluon.Main.MODULE)) {
+                        if(!totalCounterByModule.containsKey(module))
+                            totalCounterByModule.put(module, new HashMap<List<SootMethod>,Integer>());
 
-                    totalCounter.put(seq, totalCounter.get(seq) + 1);
+                        incSubArrayCounter(totalCounterByModule.get(module), seq);
+                    }
+                    else {
+                        incSubArrayCounter(totalCounter, seq);
+                    }
 
                     i=i-j+1;
                     j=0;
@@ -215,74 +234,100 @@ public class MonitorAnalysis
         }
     }
 
+    // Increment the map value by one
+    private void incSubArrayCounter(Map<List<SootMethod>, Integer> map, List<SootMethod> seq) {
+        if (!map.containsKey(seq))
+            map.put(seq, 0);
+
+        map.put(seq, map.get(seq) + 1);
+    }
+
     private void printSynchCalls()
     {
         final boolean SCRIPT=true;
 
-        Map<List<SootMethod>,Integer> m
-            =new HashMap<List<SootMethod>,Integer>();
+        Map<List<SootMethod>,Integer> m = new HashMap<List<SootMethod>,Integer>();
+        Map<String,Map<List<SootMethod>,Integer>> mModule = new HashMap<String,Map<List<SootMethod>,Integer>>();
+        Map<List<SootMethod>,Integer> auxMap;
 
-        for (Object synchContext: synchCalls.keySet())
-            for (Type t: synchCalls.get(synchContext).keySet())
-            {
-                List<SootMethod> seq=synchCalls.get(synchContext).get(t);
+        for (Object synchContext: synchCalls.keySet()) {
+            for (Type t: synchCalls.get(synchContext).keySet()) {
+                for (String module: synchCalls.get(synchContext).get(t).keySet()) {
+                    List<SootMethod> seq=synchCalls.get(synchContext).get(t).get(module);
 
-                if (seq.size() <= 1)
-                    continue;
+                    if (seq.size() <= 1)
+                        continue;
 
-                if (!m.containsKey(seq))
-                    m.put(seq,0);
+                    if((gluon.Main.SEARCH_BY).equals(gluon.Main.MODULE)) {
+                        if (!mModule.containsKey(module))
+                            mModule.put(module, new HashMap<List<SootMethod>, Integer>());
 
-                m.put(seq,m.get(seq)+1);
+                        auxMap = mModule.get(module);
+                        if (!auxMap.containsKey(seq))
+                            auxMap.put(seq, 0);
+
+                        auxMap.put(seq,auxMap.get(seq)+1);
+                    }
+                    if (!m.containsKey(seq))
+                        m.put(seq,0);
+
+                    m.put(seq,m.get(seq)+1);
+                }
+            }
+        }
+
+        if(!(gluon.Main.SEARCH_BY).equals(gluon.Main.NUMBER_ATOMIC_BLOCKS)) {
+            for (SootClass sC: scene.getClasses()) {
+                if (gluon.Main.WITH_JAVA_LIB || !sC.isJavaLibraryClass()) {
+                    for (SootMethod sM: sC.getMethods()) {
+                        List<SootMethod> listOfSootMethods = new LinkedList<>();
+                        if (sM.hasActiveBody()) {
+                            for (Unit u : sM.getActiveBody().getUnits()) {
+                                soot.jimple.InstanceInvokeExpr invoke;
+                                soot.jimple.InvokeExpr expr;
+                                Type t;
+                                SootMethod mS;
+
+                                if (!((soot.jimple.Stmt) u).containsInvokeExpr())
+                                    continue;
+
+                                expr = ((soot.jimple.Stmt) u).getInvokeExpr();
+
+                                if (!(expr instanceof InstanceInvokeExpr))
+                                    continue;
+
+                                invoke = (InstanceInvokeExpr) expr;
+                                mS = invoke.getMethod();
+
+                                if (mS.isConstructor())
+                                    continue;
+
+                                listOfSootMethods.add(mS);
+                            }
+                            if(!listOfSootMethods.isEmpty()){
+                                // After storing the methods that invoked in a method, we are going to see if they are contained in the sequences of methods that need to be executed atomically
+                                for (List<SootMethod> seq : m.keySet()) {
+                                    if (listOfSootMethods.containsAll(seq)) {
+                                        // Despite containing the methods it is necessary to see how many times they are executed and if they are called in the correct order
+                                        subArrayCounter(sC.getPackageName(), listOfSootMethods.toArray(new SootMethod[listOfSootMethods.size()]), seq);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
         if(gluon.Main.SEARCH_BY.equals(gluon.Main.THRESHOLD)) {
             try {
                 String headerFile = "The chosen form of generation of contracts is based on the need of having a sequence executed atomically more than "
-                        + gluon.Main.RANGE_THRESHOLD +"% of times.\n\n"
+                        + gluon.Main.RANGE_THRESHOLD + "% of times.\n\n"
                         + "This file contains all the sequence of methods that were at least once executed atomically in this program and their atomic percentage.\n"
                         + "Useful for a more detailed analysis.\n\n\n";
                 outputStreamFile.write(headerFile.getBytes());
-            }
-            catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-            }
-
-            for (SootClass sC: scene.getClasses()) {
-                if (gluon.Main.WITH_JAVA_LIB || !sC.isJavaLibraryClass())
-                    for (SootMethod sM: sC.getMethods()) {
-                        List<SootMethod> listOfSootMethods = new LinkedList<>();
-                        for (Unit u :sM.getActiveBody().getUnits()) {
-                            soot.jimple.InstanceInvokeExpr invoke;
-                            soot.jimple.InvokeExpr expr;
-                            Type t;
-                            SootMethod mS;
-
-                            if (!((soot.jimple.Stmt)u).containsInvokeExpr())
-                                continue;
-
-                            expr=((soot.jimple.Stmt)u).getInvokeExpr();
-
-                            if (!(expr instanceof InstanceInvokeExpr))
-                                continue;
-
-                            invoke=(InstanceInvokeExpr)expr;
-                            mS=invoke.getMethod();
-
-                            if (mS.isConstructor())
-                                continue;
-
-                            listOfSootMethods.add(mS);
-                        }
-                        // After storing the methods that invoked in a method, we are going to see if they are contained in the sequences of methods that need to be executed atomically
-                        for (List<SootMethod> seq: m.keySet()) {
-                            if(listOfSootMethods.containsAll(seq)) {
-                                // Despite containing the methods it is necessary to see how many times they are executed and if they are called in the correct order
-                                subArrayCounter(listOfSootMethods.toArray(new SootMethod[listOfSootMethods.size()]), seq);
-                            }
-                        }
-                    }
             }
         }
 
@@ -298,9 +343,8 @@ public class MonitorAnalysis
 
         for (List<SootMethod> seq: m.keySet())
         {
-            int count=m.get(seq);
-            int len=seq.size();
-            SootClass c=seq.get(0).getDeclaringClass();
+            int count = m.get(seq);
+            SootClass c = seq.get(0).getDeclaringClass();
 
             if((gluon.Main.SEARCH_BY).equals(gluon.Main.NUMBER_ATOMIC_BLOCKS)) {
                 // If a given sequence is executed atomically a number of times lower than what is defined, we ignore it
@@ -325,6 +369,35 @@ public class MonitorAnalysis
                 if( res < Main.RANGE_THRESHOLD) {
                     continue;
                 }
+            }
+            else /*if((gluon.Main.SEARCH_BY).equals(gluon.Main.MODULE))*/ {
+                boolean hasZeroAtomExec = false, hasMaxAtomExec = false;
+                Map<List<SootMethod>,Integer> auxM, auxTotal;
+
+                for (String module : totalCounterByModule.keySet()) {
+                    if(hasMaxAtomExec && hasZeroAtomExec)
+                        break;
+
+                    auxTotal = totalCounterByModule.get(module);
+                    if(!mModule.containsKey(module)) {
+                        hasZeroAtomExec = true;
+                        continue;
+                    }
+                    auxM = mModule.get(module);
+                    if(!auxM.containsKey(seq)) {
+                        hasZeroAtomExec = true;
+                        continue;
+                    }
+
+                    if(auxM.get(seq).intValue() == auxTotal.get(seq)) {
+                        hasMaxAtomExec = true;
+                    }
+                }
+
+                // This sequence does not have a module where it is always executed atomically and other were it
+                // is never executed atomically (signal of forgetfulness of the programmer)
+                if(!hasMaxAtomExec || !hasZeroAtomExec)
+                    continue;
             }
 
             if (SCRIPT)
@@ -392,7 +465,7 @@ public class MonitorAnalysis
                         }
 
                     for (Unit head: cfg.getHeads())
-                        analyzeUnit(m,head,cfg,null);
+                        analyzeUnit(c.getPackageName(),m,head,cfg,null);
                 }
 
         // private Map<EnterMonitorStmt,Collection<ExitMonitorStmt>> exitMon;
