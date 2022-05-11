@@ -14,8 +14,9 @@ lazy val settings = Seq(
   crossPaths := false,
 
   libraryDependencies ++= Seq(
-    "ca.mcgill.sable" % "soot"        % "4.1.0",
-    "gnu.getopt"      % "java-getopt" % "1.0.13"
+    "ca.mcgill.sable" % "soot"         % "4.1.0",
+    "gnu.getopt"      % "java-getopt"  % "1.0.13",
+    "org.slf4j"       % "slf4j-simple" % "1.6.1"
   ),
 
   Compile / resourceGenerators += Def.task {

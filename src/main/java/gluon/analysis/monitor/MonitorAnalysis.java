@@ -248,7 +248,6 @@ public class MonitorAnalysis
 
         Map<List<SootMethod>,Integer> m = new HashMap<List<SootMethod>,Integer>();
         Map<String,Map<List<SootMethod>,Integer>> mModule = new HashMap<String,Map<List<SootMethod>,Integer>>();
-        Map<List<SootMethod>,Integer> auxMap;
 
         for (Object synchContext: synchCalls.keySet()) {
             for (Type t: synchCalls.get(synchContext).keySet()) {
@@ -262,11 +261,10 @@ public class MonitorAnalysis
                         if (!mModule.containsKey(module))
                             mModule.put(module, new HashMap<List<SootMethod>, Integer>());
 
-                        auxMap = mModule.get(module);
-                        if (!auxMap.containsKey(seq))
-                            auxMap.put(seq, 0);
+                        if (!mModule.get(module).containsKey(seq))
+                            mModule.get(module).put(seq, 0);
 
-                        auxMap.put(seq,auxMap.get(seq)+1);
+                        mModule.get(module).put(seq,mModule.get(module).get(seq)+1);
                     }
                     if (!m.containsKey(seq))
                         m.put(seq,0);
@@ -276,42 +274,64 @@ public class MonitorAnalysis
             }
         }
 
-        if(!(gluon.Main.SEARCH_BY).equals(gluon.Main.NUMBER_ATOMIC_BLOCKS)) {
-            for (SootClass sC: scene.getClasses()) {
-                if (gluon.Main.WITH_JAVA_LIB || !sC.isJavaLibraryClass()) {
-                    for (SootMethod sM: sC.getMethods()) {
-                        List<SootMethod> listOfSootMethods = new LinkedList<>();
-                        if (sM.hasActiveBody()) {
-                            for (Unit u : sM.getActiveBody().getUnits()) {
-                                soot.jimple.InstanceInvokeExpr invoke;
-                                soot.jimple.InvokeExpr expr;
-                                Type t;
-                                SootMethod mS;
+        // Save the ValueBox (return value) of the methods invoked in the program
+        Map<SootMethod, ValueBox> returnValueBox = new HashMap<SootMethod,ValueBox>();
+        // Save the ValueBox list (parameters value) of the methods invoked in the program
+        Map<SootMethod, List<ValueBox>> paramValueBox = new HashMap<SootMethod,List<ValueBox>>();
 
-                                if (!((soot.jimple.Stmt) u).containsInvokeExpr())
-                                    continue;
+        for (SootClass sC: scene.getClasses()) {
+            if (gluon.Main.WITH_JAVA_LIB || !sC.isJavaLibraryClass()) {
+                for (SootMethod sM: sC.getMethods()) {
+                    List<SootMethod> listOfSootMethods = new LinkedList<>();
+                    if (sM.hasActiveBody()) {
+                        for (Unit u : sM.getActiveBody().getUnits()) {
+                            soot.jimple.InstanceInvokeExpr invoke;
+                            soot.jimple.InvokeExpr expr;
+                            Type t;
+                            SootMethod mS;
 
-                                expr = ((soot.jimple.Stmt) u).getInvokeExpr();
+                            if (!((soot.jimple.Stmt) u).containsInvokeExpr())
+                                continue;
 
-                                if (!(expr instanceof InstanceInvokeExpr))
-                                    continue;
+                            expr = ((soot.jimple.Stmt) u).getInvokeExpr();
 
-                                invoke = (InstanceInvokeExpr) expr;
-                                mS = invoke.getMethod();
+                            if (!(expr instanceof InstanceInvokeExpr))
+                                continue;
 
-                                if (mS.isConstructor())
-                                    continue;
+                            invoke = (InstanceInvokeExpr) expr;
+                            mS = invoke.getMethod();
 
-                                listOfSootMethods.add(mS);
-                            }
-                            if(!listOfSootMethods.isEmpty()){
-                                // After storing the methods that invoked in a method, we are going to see if they are contained in the sequences of methods that need to be executed atomically
-                                for (List<SootMethod> seq : m.keySet()) {
-                                    if (listOfSootMethods.containsAll(seq)) {
-                                        // Despite containing the methods it is necessary to see how many times they are executed and if they are called in the correct order
-                                        subArrayCounter(sC.getPackageName(), listOfSootMethods.toArray(new SootMethod[listOfSootMethods.size()]), seq);
-                                    }
+                            if (mS.isConstructor())
+                                continue;
+
+                            // Invoked method inside soot method (sM)
+                            listOfSootMethods.add(mS);
+
+                            if(Main.CONTRACT_WITH_PARAMETERS) {
+                                // If the method invoked has parameters then get their value boxes
+                                List<ValueBox> valueBoxList = new ArrayList<>(mS.getParameterCount());
+                                for(int index = 0; index < mS.getParameterCount(); index++) {
+                                    valueBoxList.add(invoke.getArgBox(index));
                                 }
+                                paramValueBox.putIfAbsent(mS, valueBoxList);
+
+                                // If the method invoked has a return value then get its value box
+                                for(UnitBox u2: u.getBoxesPointingToThis()) {
+                                    Unit u1 = u2.getUnit();
+                                    if (!(u1 instanceof soot.jimple.DefinitionStmt))
+                                        continue;
+
+                                    soot.jimple.DefinitionStmt defStmt;
+                                    defStmt = (soot.jimple.DefinitionStmt) u1;
+                                    returnValueBox.putIfAbsent(mS, defStmt.getLeftOpBox());
+                                }
+                            }
+                        }
+                        if(!(gluon.Main.SEARCH_BY).equals(Main.NUMBER_ATOMIC_BLOCKS) && !listOfSootMethods.isEmpty()){
+                            // After storing the methods that are invoked in a method, we are going to see if they are contained in the sequences of methods that need to be executed atomically
+                            // Despite containing the methods, it is necessary to see how many times they are executed and if they are called in the correct order
+                            for (List<SootMethod> seq : m.keySet()) {
+                                subArrayCounter(sC.getPackageName(), listOfSootMethods.toArray(new SootMethod[listOfSootMethods.size()]), seq);
                             }
                         }
                     }
@@ -371,32 +391,28 @@ public class MonitorAnalysis
                 }
             }
             else /*if((gluon.Main.SEARCH_BY).equals(gluon.Main.MODULE))*/ {
-                boolean hasZeroAtomExec = false, hasMaxAtomExec = false;
-                Map<List<SootMethod>,Integer> auxM, auxTotal;
+                boolean foundAlwaysSynchMod = false;
+                double res;
 
                 for (String module : totalCounterByModule.keySet()) {
-                    if(hasMaxAtomExec && hasZeroAtomExec)
+                    if(!mModule.containsKey(module))
+                        continue;
+
+                    if(!mModule.get(module).containsKey(seq))
+                        continue;
+
+                    res = ((double)(mModule.get(module).get(seq).intValue())/totalCounterByModule.get(module).get(seq));
+
+                    // If the percentage of times this sequence is executed atomically is higher than the one defined for a module
+                    // The sequence of methods is a clause in the contract
+                    if(res >= Main.RANGE_MODULE) {
+                        foundAlwaysSynchMod = true;
                         break;
-
-                    auxTotal = totalCounterByModule.get(module);
-                    if(!mModule.containsKey(module)) {
-                        hasZeroAtomExec = true;
-                        continue;
-                    }
-                    auxM = mModule.get(module);
-                    if(!auxM.containsKey(seq)) {
-                        hasZeroAtomExec = true;
-                        continue;
-                    }
-
-                    if(auxM.get(seq).intValue() == auxTotal.get(seq)) {
-                        hasMaxAtomExec = true;
                     }
                 }
 
-                // This sequence does not have a module where it is always executed atomically and other were it
-                // is never executed atomically (signal of forgetfulness of the programmer)
-                if(!hasMaxAtomExec || !hasZeroAtomExec)
+                // This sequence does not have a module where it is executed atomically Main.RANGE_MODULE %
+                if(!foundAlwaysSynchMod)
                     continue;
             }
 
@@ -409,10 +425,104 @@ public class MonitorAnalysis
                 System.err.println("    --module "+c.getName()+" \\");
                 System.err.print("    --contract \"");
 
-                i=0;
-                for (SootMethod method: seq)
-                    System.err.print((i++ > 0 ? " " : "")+method.getName());
+                if(Main.CONTRACT_WITH_PARAMETERS) {
+                    // Result variables to output the contract
+                    // Associates each method (return value) with an integer, producing a variable in the output       e.g. X=...
+                    Map<SootMethod, Integer> resReturn = new HashMap<SootMethod, Integer>();
+                    // Associates each method (parameter value) with an integer, producing a variable in the output    e.g. ...(X)
+                    Map<SootMethod, List<Integer>> resParam = new HashMap<SootMethod, List<Integer>>();
 
+                    SootMethod[] seqArray = seq.toArray(new SootMethod[seq.size()]);
+                    int auxLength = 0;
+
+                    // When the return value of a method is directly passed as a parameter to another function, they will have
+                    // the same value. Although when the return value is manipulated (e.g. incremented), Soot will make them
+                    // different values but with the same base name (e.g. variableName#1 and variableName#2). As such, a way found to
+                    // surround this problem was to activate the use of original names of variables and then split it with the
+                    // delimiter #.
+                    for (int j = 0; j < seqArray.length; j++) {
+                        if (returnValueBox.containsKey(seqArray[j])) {
+                            ValueBox returnVar = returnValueBox.get(seqArray[j]);
+                            String[] returnVarSplit = (returnVar.getValue().toString()).split("#");
+                            for (int auxInd = j + 1; auxInd < seqArray.length; auxInd++) {
+                                if (paramValueBox.containsKey(seqArray[auxInd])) {
+                                    List<ValueBox> listParam = paramValueBox.get(seqArray[auxInd]);
+                                    for (int k = 0; k < listParam.size(); k++) {
+                                        String[] listParamVarSplit = (listParam.get(k).getValue().toString()).split("#");
+                                        // (listParamVarSplit[1] > returnVarSplit[1], as the return value needs to happen before)
+                                        // Although this is already guaranteed by this implementation
+                                        if (listParamVarSplit[0].equals(returnVarSplit[0])) {
+                                            if (!resParam.containsKey(seqArray[j])) {
+                                                resParam.put(seqArray[auxInd], new ArrayList<>(paramValueBox.get(seqArray[auxInd]).size()));
+                                                for (int l = 0; l < paramValueBox.get(seqArray[auxInd]).size(); l++) {
+                                                    resParam.get(seqArray[auxInd]).add(l, -1);
+                                                }
+                                            }
+                                            // If it already has a variable associated we utilize that one
+                                            if(resReturn.containsKey(seqArray[j])) {
+                                                resParam.get(seqArray[auxInd]).set(k, resReturn.get(seqArray[j]));
+                                            }
+                                            else {
+                                                resReturn.putIfAbsent(seqArray[j], auxLength);
+                                                resParam.get(seqArray[auxInd]).set(k, auxLength);
+                                            }
+
+                                            auxLength++;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        /* Output the return value */
+                        if (resReturn.containsKey(seqArray[j])) {
+                            System.err.print(((char) ('A' + resReturn.get(seqArray[j])) + "="));
+                        }
+                        System.err.print(seqArray[j].getName());
+
+                        boolean hasParam = false;
+                        List<Integer> listParam = null;
+                        // Check if the method has parameters or not
+                        if (resParam.containsKey(seqArray[j])) {
+                            listParam = resParam.get(seqArray[j]);
+                            for (int ind = 0; ind < listParam.size(); ind++) {
+                                if (listParam.get(ind) >= 0) {
+                                    hasParam = true;
+                                }
+                            }
+                        }
+
+                        /* Output the parameters */
+                        if (hasParam) {
+                            System.err.print("(");
+                            boolean first = true;
+                            for (int ind = 0; ind < listParam.size(); ind++) {
+                                if (listParam.get(ind) < 0) {
+                                    if (!first) {
+                                        System.err.print(",");
+                                    }
+                                    System.err.print("_");
+                                    first = false;
+                                } else {
+                                    if (!first) {
+                                        System.err.print(",");
+                                    }
+                                    System.err.print((char) ('A' + listParam.get(ind)));
+                                    first = false;
+
+                                }
+                            }
+                            System.err.print(")");
+                        }
+                        System.err.print((j == seqArray.length - 1) ? "" : " ");
+                    }
+                }
+                else {
+                    i=0;
+                    for (SootMethod method: seq) {
+                        System.err.print((i++ > 0 ? " " : "")+method.getName());
+                    }
+                }
                 System.err.println("\" \\");
                 System.err.println("    org.apache.cassandra.stress.StressServer "
                         +">> tests_out");

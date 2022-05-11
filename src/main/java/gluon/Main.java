@@ -64,9 +64,14 @@ public class Main
     // Search by module, if a module always executes a given sequence atomically, and it exists other module where that
     // sequence was never executed atomically, then it is quite probable that it was due to forgetfulness of the programmer
     public static final String MODULE = "moduleSearch";
+    // Percentage of the times the sequence needs to be executed atomically in one module
+    public static final double RANGE_MODULE = 0.9;
 
     /* The search will be made by ... */
-    public static final String SEARCH_BY = NUMBER_ATOMIC_BLOCKS;
+    public static final String SEARCH_BY = MODULE;
+
+    /* The contracts are outputted with parameters or not */
+    public static final boolean CONTRACT_WITH_PARAMETERS = true;
 
     public static void fatal(String error)
     {
@@ -284,7 +289,8 @@ public class Main
         PhaseOptions.v().setPhaseOption("tag.ln","on");
 
         /* Soot bug workaround */
-        // PhaseOptions.v().setPhaseOption("jb","use-original-names:true");
+        // With this option the original names for local variables are retained
+        PhaseOptions.v().setPhaseOption("jb","use-original-names:true");
         PhaseOptions.v().setPhaseOption("jb.ulp","enabled:false");
 
         /* For points-to analysis */
