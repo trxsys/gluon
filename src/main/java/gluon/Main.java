@@ -186,6 +186,7 @@ public class Main
                     else {
                         fatal("The file of the default contract does not exist");
                     }
+                    break;
                 }
                 case 's':
                 {

@@ -156,6 +156,7 @@ public class Contract
         for (String method: nonExistingMethods) {
             System.out.println(method+" no such method!");
         }
+        System.out.println();
 
         dprintln("contract: "+contract);
     }

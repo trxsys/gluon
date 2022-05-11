@@ -5,4 +5,4 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-./gluon.sh --classpath test/target/classes/ --default-contract --module "test.simple.$1.Module" "test.simple.$1.Main"
+./gluon.sh --classpath test/target/classes/ --module "test.simple.$1.Module" --default-contract "test.simple.$1.Main"

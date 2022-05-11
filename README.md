@@ -140,6 +140,16 @@ Checking thread Main.main():
       Atomic: NO
 ```
 
+These contracts are more restrictive, exposing the correlation between
+the various methods and allowing us to verify the atomicity of the
+executions, exclusively when we manipulate the same object. Thus 
+preventing false positives from the more general analysis
+(without return values and parameter values), where all combinations
+along the execution flow are explored, even if they corresponded to
+different objects.
+
+The example exposed in `test/simple/withParams` and `test/simple/withoutParams` exemplify this particularity.
+
 # Compiling
 
 To compile gluon you need to run
@@ -156,7 +166,7 @@ sbt compileTests
 
 # Running the Example Test
 
-After the compilation gluon and the tests the example test can be ran with
+After the compilation of gluon and the tests, the example test can be run with
 
 ```shell
 ./test.sh example
@@ -164,6 +174,17 @@ After the compilation gluon and the tests the example test can be ran with
 
 This example can be found in `test/simple/example`. You are encouraged to
 modify and play with the example.
+
+# Running the Example Test using a Default Contract
+
+We can also perform the analysis
+using a default contract, whose clauses are common dependencies.
+
+In order to test this option, it can be run with
+
+```shell
+./test_default_contract.sh example
+```
 
 # Running the Validation Tests
 
@@ -176,3 +197,15 @@ cd test/validation
 
 The results are saved in each of the test directories, in a file
 named `result`.
+
+# Generation of Contracts
+
+The branch `tmp-mk-contract` is responsible for generating the clauses of a contract by quickly analysing the program.
+
+It is able to produce clauses based on:
+
+ - The number of times a given sequence is executed atomically;
+ - The percentage of times a sequence is executed atomically in the whole program;
+ - The percentage of times a sequence is executed atomically in a module;
+
+Besides, it is also able to produce clauses with parameters even though this option can be turned off if needed.
