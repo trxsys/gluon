@@ -1,4 +1,5 @@
-add(X) (indexOf(X) | contains(X) | get(X) | set(X,_));
+add(X) (indexOf(X) | contains(X));
+add(X,_) (get(X) | set(X,_));
 begin commit;
 contains(X) (add(X) | remove(X) | indexOf(X));
 containsKey(X) (put(X,_) | get(X));
