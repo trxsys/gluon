@@ -242,6 +242,23 @@ public class MonitorAnalysis
         map.put(seq, map.get(seq) + 1);
     }
 
+    // This method add the sequence of methods invoked in an atomic block to the variables
+    private void addMethodsToVariables(Map<String,Map<List<SootMethod>,Integer>> mModule, Map<List<SootMethod>,Integer> m, String module, List<SootMethod> list) {
+        if((gluon.Main.SEARCH_BY).equals(gluon.Main.MODULE)) {
+            if (!mModule.containsKey(module))
+                mModule.put(module, new HashMap<List<SootMethod>, Integer>());
+
+            if (!mModule.get(module).containsKey(list))
+                mModule.get(module).put(list, 0);
+
+            mModule.get(module).put(list,mModule.get(module).get(list)+1);
+        }
+        if (!m.containsKey(list))
+            m.put(list,0);
+
+        m.put(list,m.get(list)+1);
+    }
+
     private void printSynchCalls()
     {
         final boolean SCRIPT=true;
@@ -257,31 +274,42 @@ public class MonitorAnalysis
                     if (seq.size() <= 1)
                         continue;
 
-                    if((gluon.Main.SEARCH_BY).equals(gluon.Main.MODULE)) {
-                        if (!mModule.containsKey(module))
-                            mModule.put(module, new HashMap<List<SootMethod>, Integer>());
+                    if(Main.ATOMIC_COMBINATIONS) {
+                        // Instead of capturing the all the methods of an atomic block into a clause it obtains the subsequences
+                        SootMethod[] seqMethods = seq.toArray(new SootMethod[seq.size()]);
+                        for (int i = 0; i < seqMethods.length; i++) {
+                            for (int j = i+1; j < seqMethods.length; j++) {
+                                SootMethod[] seqAux = new SootMethod[2];
+                                seqAux[0] = seqMethods[i];
+                                seqAux[1] = seqMethods[j];
+                                List<SootMethod> list = Arrays.asList(seqAux);
 
-                        if (!mModule.get(module).containsKey(seq))
-                            mModule.get(module).put(seq, 0);
-
-                        mModule.get(module).put(seq,mModule.get(module).get(seq)+1);
+                                addMethodsToVariables(mModule, m, module, list);
+                            }
+                        }
                     }
-                    if (!m.containsKey(seq))
-                        m.put(seq,0);
-
-                    m.put(seq,m.get(seq)+1);
+                    else {
+                        addMethodsToVariables(mModule, m, module, seq);
+                    }
                 }
             }
         }
 
+        // Associates each method (return value) with an integer, producing a variable in the output       e.g. X=...
+        Map<SootMethod, Integer> resReturn = new HashMap<SootMethod, Integer>();
+        // Associates each method (parameter value) with an integer, producing a variable in the output    e.g. ...(X)
+        Map<SootMethod, List<Integer>> resParam = new HashMap<SootMethod, List<Integer>>();
         // Save the ValueBox (return value) of the methods invoked in the program
-        Map<SootMethod, ValueBox> returnValueBox = new HashMap<SootMethod,ValueBox>();
+        Map<SootMethod, List<ValueBox>> returnValueBox = new HashMap<SootMethod,List<ValueBox>>();
         // Save the ValueBox list (parameters value) of the methods invoked in the program
-        Map<SootMethod, List<ValueBox>> paramValueBox = new HashMap<SootMethod,List<ValueBox>>();
+        Map<SootMethod, List<List<ValueBox>>> paramValueBox = new HashMap<SootMethod,List<List<ValueBox>>>();
 
-        for (SootClass sC: scene.getClasses()) {
+        Iterator<SootClass> it = scene.getClasses().snapshotIterator();
+        while(it.hasNext())  {
+            SootClass sC = it.next();
             if (gluon.Main.WITH_JAVA_LIB || !sC.isJavaLibraryClass()) {
-                for (SootMethod sM: sC.getMethods()) {
+                List<SootMethod> sootMethodSet = new ArrayList<>(sC.getMethods());
+                for (SootMethod sM: sootMethodSet) {
                     List<SootMethod> listOfSootMethods = new LinkedList<>();
                     if (sM.hasActiveBody()) {
                         for (Unit u : sM.getActiveBody().getUnits()) {
@@ -308,12 +336,17 @@ public class MonitorAnalysis
                             listOfSootMethods.add(mS);
 
                             if(Main.CONTRACT_WITH_PARAMETERS) {
+                                List<List<ValueBox>> paramList = new LinkedList<>();
+                                if(paramValueBox.containsKey(mS)) {
+                                    paramList = paramValueBox.get(mS);
+                                }
                                 // If the method invoked has parameters then get their value boxes
                                 List<ValueBox> valueBoxList = new ArrayList<>(mS.getParameterCount());
                                 for(int index = 0; index < mS.getParameterCount(); index++) {
                                     valueBoxList.add(invoke.getArgBox(index));
                                 }
-                                paramValueBox.putIfAbsent(mS, valueBoxList);
+                                paramList.add(valueBoxList);
+                                paramValueBox.put(mS, paramList);
 
                                 // If the method invoked has a return value then get its value box
                                 for(UnitBox u2: u.getBoxesPointingToThis()) {
@@ -323,7 +356,12 @@ public class MonitorAnalysis
 
                                     soot.jimple.DefinitionStmt defStmt;
                                     defStmt = (soot.jimple.DefinitionStmt) u1;
-                                    returnValueBox.putIfAbsent(mS, defStmt.getLeftOpBox());
+                                    List<ValueBox> returnList = new LinkedList<>();
+                                    if(returnValueBox.containsKey(mS)) {
+                                        returnList = returnValueBox.get(mS);
+                                    }
+                                    returnList.add(defStmt.getLeftOpBox());
+                                    returnValueBox.put(mS, returnList);
                                 }
                             }
                         }
@@ -331,7 +369,20 @@ public class MonitorAnalysis
                             // After storing the methods that are invoked in a method, we are going to see if they are contained in the sequences of methods that need to be executed atomically
                             // Despite containing the methods, it is necessary to see how many times they are executed and if they are called in the correct order
                             for (List<SootMethod> seq : m.keySet()) {
-                                subArrayCounter(sC.getPackageName(), listOfSootMethods.toArray(new SootMethod[listOfSootMethods.size()]), seq);
+                                String packageName = sC.getPackageName();
+                                if(Main.EXPAND_SCOPE) {
+                                    int lastIndex = packageName.lastIndexOf(".");
+                                    if(lastIndex >= 0) {
+                                        subArrayCounter(packageName.substring(0,lastIndex), listOfSootMethods.toArray(new SootMethod[listOfSootMethods.size()]), seq);
+                                    }
+                                    else {
+                                        subArrayCounter(packageName, listOfSootMethods.toArray(new SootMethod[listOfSootMethods.size()]), seq);
+                                    }
+                                }
+                                else {
+                                    subArrayCounter(packageName, listOfSootMethods.toArray(new SootMethod[listOfSootMethods.size()]), seq);
+                                }
+
                             }
                         }
                     }
@@ -366,18 +417,27 @@ public class MonitorAnalysis
             int count = m.get(seq);
             SootClass c = seq.get(0).getDeclaringClass();
 
-            if((gluon.Main.SEARCH_BY).equals(gluon.Main.NUMBER_ATOMIC_BLOCKS)) {
-                // If a given sequence is executed atomically a number of times lower than what is defined, we ignore it
-                if (count < gluon.Main.RANGE_NUMBER_BLOCKS)
-                    continue;
-            }
-            else if((gluon.Main.SEARCH_BY).equals(gluon.Main.THRESHOLD)) {
-                int totalCount = totalCounter.get(seq);
-                double res = ((double)count/ totalCount);
+            // If a given sequence is executed atomically a number of times lower than what is defined, we ignore it
+            if (count < gluon.Main.RANGE_NUMBER_BLOCKS)
+                continue;
 
-                // Body of the syncBlocksFile
-                String bodyFile = "Class "+c.getName()+": counter: "+res+" -> result: "+count+" / "+totalCount+".\n"
-                        + "     Synchronized methods: "+seq+"\n\n";
+            if((gluon.Main.SEARCH_BY).equals(gluon.Main.THRESHOLD)) {
+                int totalCount;
+                double res;
+                String bodyFile;
+                if(totalCounter.containsKey(seq)) {
+                    totalCount = totalCounter.get(seq);
+                    res = ((double)count/totalCount);
+                    // Body of the syncBlocksFile
+                    bodyFile = "Class "+c.getName()+": counter: "+res+" -> result: "+count+" / "+totalCount+".\n"
+                            + "     Synchronized methods: "+seq+"\n\n";
+                }
+                else {
+                    // Body of the syncBlocksFile
+                    bodyFile = "Class "+c.getName()+": counter: 0 -> result: "+count+" / unknown.\n"
+                            + "     Synchronized methods: "+seq+"\n\n";
+                    continue;
+                }
                 try {
                     outputStreamFile.write(bodyFile.getBytes());
                 }
@@ -390,7 +450,7 @@ public class MonitorAnalysis
                     continue;
                 }
             }
-            else /*if((gluon.Main.SEARCH_BY).equals(gluon.Main.MODULE))*/ {
+            else if((gluon.Main.SEARCH_BY).equals(gluon.Main.MODULE)) {
                 boolean foundAlwaysSynchMod = false;
                 double res;
 
@@ -401,7 +461,12 @@ public class MonitorAnalysis
                     if(!mModule.get(module).containsKey(seq))
                         continue;
 
-                    res = ((double)(mModule.get(module).get(seq).intValue())/totalCounterByModule.get(module).get(seq));
+                    if(!totalCounterByModule.get(module).containsKey(seq)) {
+                        continue;
+                    }
+                    else {
+                        res = ((double)(mModule.get(module).get(seq).intValue())/totalCounterByModule.get(module).get(seq));
+                    }
 
                     // If the percentage of times this sequence is executed atomically is higher than the one defined for a module
                     // The sequence of methods is a clause in the contract
@@ -421,20 +486,15 @@ public class MonitorAnalysis
                 int i;
 
                 System.err.println("./gluon.sh --timeout 5 -t -p -s -y -r "
-                        +"--classpath ../cassandra-2.0.9/build/test/classes:../cassandra-2.0.9/build/classes/main:../cassandra-2.0.9/build/classes/stress \\");
+                        +"--classpath ../cassandra/apache-cassandra-2.0.9/ \\");
                 System.err.println("    --module "+c.getName()+" \\");
                 System.err.print("    --contract \"");
 
                 if(Main.CONTRACT_WITH_PARAMETERS) {
                     // Result variables to output the contract
-                    // Associates each method (return value) with an integer, producing a variable in the output       e.g. X=...
-                    Map<SootMethod, Integer> resReturn = new HashMap<SootMethod, Integer>();
-                    // Associates each method (parameter value) with an integer, producing a variable in the output    e.g. ...(X)
-                    Map<SootMethod, List<Integer>> resParam = new HashMap<SootMethod, List<Integer>>();
-
                     SootMethod[] seqArray = seq.toArray(new SootMethod[seq.size()]);
                     int auxLength = 0;
-
+                    boolean changed = false;
                     // When the return value of a method is directly passed as a parameter to another function, they will have
                     // the same value. Although when the return value is manipulated (e.g. incremented), Soot will make them
                     // different values but with the same base name (e.g. variableName#1 and variableName#2). As such, a way found to
@@ -442,56 +502,82 @@ public class MonitorAnalysis
                     // delimiter #.
                     for (int j = 0; j < seqArray.length; j++) {
                         if (returnValueBox.containsKey(seqArray[j])) {
-                            ValueBox returnVar = returnValueBox.get(seqArray[j]);
-                            String[] returnVarSplit = (returnVar.getValue().toString()).split("#");
-                            for (int auxInd = j + 1; auxInd < seqArray.length; auxInd++) {
-                                if (paramValueBox.containsKey(seqArray[auxInd])) {
-                                    List<ValueBox> listParam = paramValueBox.get(seqArray[auxInd]);
-                                    for (int k = 0; k < listParam.size(); k++) {
-                                        String[] listParamVarSplit = (listParam.get(k).getValue().toString()).split("#");
-                                        // (listParamVarSplit[1] > returnVarSplit[1], as the return value needs to happen before)
-                                        // Although this is already guaranteed by this implementation
-                                        if (listParamVarSplit[0].equals(returnVarSplit[0])) {
-                                            if (!resParam.containsKey(seqArray[j])) {
-                                                resParam.put(seqArray[auxInd], new ArrayList<>(paramValueBox.get(seqArray[auxInd]).size()));
-                                                for (int l = 0; l < paramValueBox.get(seqArray[auxInd]).size(); l++) {
-                                                    resParam.get(seqArray[auxInd]).add(l, -1);
+                            List<ValueBox> returnVar = returnValueBox.get(seqArray[j]);
+                            for (ValueBox returnBox : returnVar) {
+                                String[] returnVarSplit = (returnBox.getValue().toString()).split("_"); // "#"
+                                for (int auxInd = j + 1; auxInd < seqArray.length; auxInd++) {
+                                    if (paramValueBox.containsKey(seqArray[auxInd])) {
+                                        List<List<ValueBox>> listParam = paramValueBox.get(seqArray[auxInd]);
+                                        for (List<ValueBox> listParamBox : listParam) {
+                                            for (int k = 0; k < listParamBox.size(); k++) {
+                                                String[] listParamVarSplit = (listParamBox.get(k).getValue().toString()).split("_"); // "#"
+                                                if (listParamVarSplit[0].equals(returnVarSplit[0])) {
+                                                    if (!resParam.containsKey(seqArray[auxInd])) {
+                                                        resParam.put(seqArray[auxInd], new ArrayList<>(listParamBox.size()));
+                                                        for (int l = 0; l < listParamBox.size(); l++) {
+                                                            resParam.get(seqArray[auxInd]).add(l, -1);
+                                                        }
+                                                    }
+                                                    // If it already has a variable associated we utilize that one
+                                                    if (resReturn.containsKey(seqArray[j])) {
+                                                        resParam.get(seqArray[auxInd]).set(k, resReturn.get(seqArray[j]));
+                                                    } else {
+                                                        resReturn.put(seqArray[j], auxLength);
+                                                        resParam.get(seqArray[auxInd]).set(k, auxLength);
+                                                        changed = true;
+                                                    }
+
+                                                    if(changed) {
+                                                        auxLength++;
+                                                        changed = false;
+                                                    }
                                                 }
                                             }
-                                            // If it already has a variable associated we utilize that one
-                                            if(resReturn.containsKey(seqArray[j])) {
-                                                resParam.get(seqArray[auxInd]).set(k, resReturn.get(seqArray[j]));
-                                            }
-                                            else {
-                                                resReturn.putIfAbsent(seqArray[j], auxLength);
-                                                resParam.get(seqArray[auxInd]).set(k, auxLength);
-                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    for (int j = 0; j < seqArray.length; j++) {
+                        /* Output the return value */
+                        boolean hasReturn = false;
+                        boolean hasParam = false;
+                        boolean returnvarIsNeeded = false;
+                        List<Integer> listParam = null;
 
-                                            auxLength++;
+                        if (resReturn.containsKey(seqArray[j])) {
+                            hasReturn = true;
+                        }
+                        if(hasReturn) {
+                            for (int k = j+1; k < seqArray.length; k++) {
+                                if (resParam.containsKey(seqArray[k])) {
+                                    listParam = resParam.get(seqArray[k]);
+                                    for (int ind = 0; ind < listParam.size(); ind++) {
+                                        if (listParam.get(ind) >= 0 && (listParam.get(ind).intValue()==resReturn.get(seqArray[j]).intValue())) {
+                                            returnvarIsNeeded = true;
+                                            break;
                                         }
                                     }
                                 }
                             }
                         }
 
-                        /* Output the return value */
-                        if (resReturn.containsKey(seqArray[j])) {
+                        if(returnvarIsNeeded) {
                             System.err.print(((char) ('A' + resReturn.get(seqArray[j])) + "="));
                         }
                         System.err.print(seqArray[j].getName());
 
-                        boolean hasParam = false;
-                        List<Integer> listParam = null;
                         // Check if the method has parameters or not
                         if (resParam.containsKey(seqArray[j])) {
                             listParam = resParam.get(seqArray[j]);
                             for (int ind = 0; ind < listParam.size(); ind++) {
                                 if (listParam.get(ind) >= 0) {
                                     hasParam = true;
+                                    break;
                                 }
                             }
                         }
-
                         /* Output the parameters */
                         if (hasParam) {
                             System.err.print("(");

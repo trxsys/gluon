@@ -28,10 +28,7 @@ import soot.options.Options;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main
 {
@@ -42,6 +39,7 @@ public class Main
     private static String moduleClassName=null;
     private static String contract=null;
 
+    public static boolean ATOMIC_COMBINATIONS=false;
     public static boolean WITH_JAVA_LIB=false;
     public static boolean TIME=false;
     public static boolean PROFILING_VARS=false;
@@ -65,10 +63,12 @@ public class Main
     // sequence was never executed atomically, then it is quite probable that it was due to forgetfulness of the programmer
     public static final String MODULE = "moduleSearch";
     // Percentage of the times the sequence needs to be executed atomically in one module
-    public static final double RANGE_MODULE = 0.9;
+    public static final double RANGE_MODULE = 0.75;
+    // Expand the module scope
+    public static final boolean EXPAND_SCOPE = false;
 
     /* The search will be made by ... */
-    public static final String SEARCH_BY = MODULE;
+    public static final String SEARCH_BY = NUMBER_ATOMIC_BLOCKS;
 
     /* The contracts are outputted with parameters or not */
     public static final boolean CONTRACT_WITH_PARAMETERS = true;
@@ -115,13 +115,15 @@ public class Main
                            +"incomplete");
         System.out.println("  -i, --timeout                   "
                            +"Timeout in mins for class scope analysis.");
+        System.out.println("  -a, --atomic-combinations       "
+                           +"Consider the possible combinations of methods within a atomic block.");
 		System.out.println("  -h, --help                      "
                            +"Display this help and exit");
     }
 
     private static void parseArguments(String[] args)
     {
-        LongOpt[] options=new LongOpt[11];
+        LongOpt[] options=new LongOpt[12];
         Getopt g;
         int c;
 
@@ -136,9 +138,10 @@ public class Main
         options[8]=new LongOpt("synch",LongOpt.NO_ARGUMENT,null,'y');
         options[9]=new LongOpt("conservative-points-to",LongOpt.NO_ARGUMENT,
                                 null,'r');
-        options[10]=new LongOpt("timeout",LongOpt.REQUIRED_ARGUMENT,null,'i');
+        options[10]=new LongOpt("atomic-combinations",LongOpt.NO_ARGUMENT,null,'a');
+        options[11]=new LongOpt("timeout",LongOpt.REQUIRED_ARGUMENT,null,'i');
 
-        g=new Getopt(PROGNAME,args,"hc:m:o:jtpsyri",options);
+        g=new Getopt(PROGNAME,args,"hc:m:o:jtpsyria",options);
 
         g.setOpterr(true);
 
@@ -210,6 +213,11 @@ public class Main
                         fatal(timeout+": invalid format");
                     }
 
+                    break;
+                }
+                case 'a':
+                {
+                    ATOMIC_COMBINATIONS=true;
                     break;
                 }
                 case '?':
@@ -290,7 +298,7 @@ public class Main
 
         /* Soot bug workaround */
         // With this option the original names for local variables are retained
-        PhaseOptions.v().setPhaseOption("jb","use-original-names:true");
+        PhaseOptions.v().setPhaseOption("jb","use-original-names:false");
         PhaseOptions.v().setPhaseOption("jb.ulp","enabled:false");
 
         /* For points-to analysis */
@@ -334,8 +342,9 @@ public class Main
                 }
                 catch (Exception e) {}
 
-            for (SootClass c: Scene.v().getClasses())
-            {
+            Iterator<SootClass> it = Scene.v().getClasses().snapshotIterator();
+            while(it.hasNext()) {
+                SootClass c = it.next();
                 try
                 {
                     for (soot.SootMethod m: c.getMethods())
