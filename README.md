@@ -210,6 +210,7 @@ It is able to produce clauses based on:
 
 Besides, it is also able to produce clauses with parameters even though this option can be turned off if needed.
 
-# Acknowledgments
 
-Work partially funded by the Portuguese FCT-MEC project HiPSTr (High-performance Software Transactions — PTDC/CCI-COM/32456/2017)&LISBOA-01-0145-FEDER-032456).
+## Acknowledgments
+
+This work was partially funded by the Portuguese FCT-MEC project HiPSTr (High-performance Software Transactions — PTDC/CCI-COM/32456/2017)&LISBOA-01-0145-FEDER-032456).
